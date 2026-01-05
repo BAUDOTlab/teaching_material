@@ -180,6 +180,8 @@ apt-get autoclean -y
 2. On Linux, download the Python script, choosing AMU university.
 3. Run Python script with `python 3 eduroam-linux-AUA.py`
 4. As `userid`, provide your academic mail address, and as password, your `ENT password`. 
+
+
 # Git and GitHub
 
 ## Github configuration {#sec-git-config}
@@ -196,7 +198,34 @@ apt-get autoclean -y
   git config --global user.name "bastienchassagnol"
   git config --global user.email "bastien.chassagnol@univ-amu.fr"
   ```
-  ii. Or directly, using text editor, file `~/.gitconfig` (more error-prone to indentation errors). Find my default git config file here (for details on options, report to [Formation Git 2024](https://github.com/BAUDOTlab/teaching_material/blob/main/Git/formation_git_2024.pdf)). 
+  ii. Or directly, using text editor, file `~/.gitconfig` (more error-prone to indentation errors). Find my default git config file here (for comprehensive description of options, report to [Formation Git 2024, a tutorial by Benjamin](../Git/formation_git_2024.pdf)): 
+  
+  ```.gitconfig
+  [user]
+  	name = bastienchassagnol
+  	email = bastien.chassagnol@univ-amu.fr
+  # modern default git options
+  [init]
+    defaultBranch = main
+  
+  # simplifying solving git conflicts + troubleshoot solving
+  [merge]
+    conflictstyle = zdiff3
+  [rerere]
+    enabled = true
+  
+  # tolerate distinct end of lines  
+  [core]
+  	autocrlf = input
+  
+  # visualisation
+  [tag]
+    sort = version:refname
+  [branch]
+    sort = -committerdate
+  [credential]
+  	helper = store
+  ```
 
 4. Avoid typing your password for every login: 
 
@@ -250,9 +279,9 @@ sudo apt install --no-install-recommends --no-install-suggests onedrive
   ## Node.js / JavaScript build directories
   skip_dir = "node_modules|\.next"
   ## R virtual environments
-  skip_dir = "renv|.cache"
+  skip_dir = "renv|.cache|.Rproj.user"
   skip_file = "\.Rhistory$|\.RData$"
-  ## Import files not to sync
+  ## General files not to sync
   skip_file = "~*|.~*|*.tmp|*.swp|*.partial"
   # No sync the folder, if .nosync file is present
   check_nosync = "true"
@@ -466,13 +495,13 @@ Three recommended methods, depending on Ubuntu's support:
 
 | Feature                   | AppImage      | tar/build    | apt install | .deb    |
 | ------------------------- | ------------- | ------------ | ----------- | ------- |
-| Root required             | ❌             | ⚠️ sometimes | ✅           | ✅       |
+| Root required             | no            | sometimes |yes          |yes      |
 | Dependency handling       | Bundled       | Manual       | Automatic   | Partial |
-| Auto-updates              | ❌             | ❌            | ✅           | ❌       |
+| Auto-updates              | no            | no           |yes          | no      |
 | System integration        | Low           | Medium       | High        | High    |
 | Portability               | Excellent     | Low          | None        | Low     |
 | Stability                 | App-dependent | Variable     | Excellent   | Good    |
-| Recommended for beginners | ✅             | ❌            | ✅           | ⚠️      |
+| Recommended for beginners |yes            | no           |  yes        |        |
 
 : Pros and Cons of Package installations for `Ubuntu` users {#tbl-installation-comparison}
 
@@ -550,9 +579,20 @@ sudo apt install -f
 
 ## Image Editors (to replace Paint on Windows)
 
+Sorted from closest experience to Paint, to most generalist:
 
+1. [`Drawing`](https://en.ubunlog.com/drawing-alternative-microsoft-paint-ubuntu/)
+  i. Add Drawing to the `apt` repository of allowed PPAs: `sudo add-apt-repository ppa:cartes/drawing
+`
+  ii. Install running `sudo apt install drawing`
+2. `Libre Office Draw`
+3. `Gimp` (closer equivalent to `Photoshop`):
 
-- `Libre Office Draw`
+```bash
+sudo apt install gimp
+sudo apt install gimp-plugin-registry # add extensions
+```
+
 
 ## LibreOffice
 

@@ -1,0 +1,26 @@
+[user]
+	name = bastienchassagnol
+	email = bastien.chassagnol@univ-amu.fr
+	
+# modern default git options
+[init]
+  defaultBranch = main
+
+# simplifying solving git conflicts + troubleshoot solving
+[merge]
+  conflictstyle = zdiff3
+[rerere]
+  enabled = true
+
+# tolerate distinct end of lines  
+[core]
+	autocrlf = input
+
+# visualisation
+[tag]
+  sort = version:refname
+[branch]
+  sort = -committerdate
+[credential]
+	helper = store
+
