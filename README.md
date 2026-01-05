@@ -11,3 +11,7 @@ A hands-on to master SNF techniques and visualisation through Cytoscape. The dat
 ### [Git](/Git)
 
 Multiple resources to learn how to use Git and Github or Gitlab, as PDF documents. Some include practical examples too.
+
+### [Linux](/Linux)
+
+Resources to start (nearly) from scratch configuration, and installation of the most popular software with Linux distribution (focusing on Ubuntu architectures). Feel free to suggest inclusion of relevant applications, or report errors / better approaches. 
