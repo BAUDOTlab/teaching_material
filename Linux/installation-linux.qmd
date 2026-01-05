@@ -1,0 +1,809 @@
+---
+title: "Guidelines for Linux Installation"
+author: "Bastien Chassagnol, Benjamin Loire"
+quarto-required: ">= 1.8.0"
+format:
+  html:
+    embed-resources: true
+    # styling options
+    page-layout: full
+    # fig rendering
+    lightbox: true
+    smooth-scroll: true
+    # add comments
+    comments:
+      hypothesis: true
+    # code styling options
+    code-fold: true
+    code-tools: true
+    code-summary: "Show the code"
+    code-link: true # all functions can be directly clicked on
+    code-overflow: wrap
+    collapse: true
+    code-copy: hover
+    # Hovering effect
+    crossrefs-hover: true
+    footnotes-hover: true
+    citations-hover: true
+  pdf:
+    documentclass: article
+    pdf-engine: pdflatex
+    latex-auto-install: true
+    latex-max-runs: 5
+
+# Table options
+tbl-cap-location: bottom
+
+# Figure options
+fig-align: center
+out-width: "80%"
+dpi: 320
+fig-dpi: 320
+fig-pos: "h!"
+
+# Quarto extensions
+filters:
+  - highlight-text
+  
+execute:
+  echo: false
+  eval: true
+  message: false
+  warning: false
+  error: false
+  freeze: true # to avoid using lots of GH actions
+editor:
+  source: true
+  
+toc: true
+number-sections: true # Required for cross-referencing sections
+number-depth: 3 # chapter, section, and sub-sections, will be numbered
+toc-depth: 3 # chapter, section, and sub-sections, will be included in the toc
+---
+
+# Linux general guidelines
+
+## General Folder layout
+
+### System-wide location (for core programs)
+
+System-wide affects all users, are installed using `sudo`, on the root of the system. 
+
+| Location         | Purpose                  |
+| ---------------- | ------------------------ |
+| `/usr/bin`       | System executables (APT) |
+| `/etc`           | System-wide configuration (example: define repositories for `apt`) |
+| `/opt`           | Vendor (external) apps   |
+| `/usr/local/bin` | Admin-installed software |
+| `/var`           | Logs, caches, databases |
+
+: Main system-wide software locations {#tbl-system-wide-locations}
+
+- `/opt` for third-party application bundles, **self-contained** while `/usr/local` is for third-party **binaries**. Besides, `/opt` is not in the path by default.  
+
+### User-specific locations
+
+User does not require root
+
+| Location         | Purpose                  |
+| ---------------- | ------------------------ |
+| `~/Applications` | AppImages                |
+| `~/.local/bin`   | User executables         |
+| `~/scripts/tools`| Custom bash executables  |
+| `~/.local/share` | User app data, notably `~/.local/share/applications` storing desktop icons  |
+| `~/.config`      | User configuration       |
+
+: Main user-based software locations, to be compared with @tbl-system-wide-locations {#tbl-user-based-locations}
+
+### General remarks
+
+- `usr` folder stores *read-only* executables, while `/var` is regularly written upon changes:
+  - `/var/lib`: apt and dpkg databases, for instance, respectiely stored under `dpkg`, and `/apt`
+  - `/var/cache`: metadata caches for faster execution
+- `/usr/local/`, or `$HOME/.local` stores executables that require custom compilation with `make`, or `qmake`, rendered from manual archives:
+  - `bin`, `sbin` for executables
+  - `share` for icons (under subfolder `icons`) and desktop configuration, documention under `/doc`
+  - `lib` for extensions of a given executable (such as packages in R, or modules in Python)
+  - This folder hierachy follows [`XGD`Base Directory Npecification](https://specifications.freedesktop.org/basedir/latest/)
+- `/tmp` for temporary folders, cleaned after `reboot`
+- `/run` for sockets
+
+## Useful Ubuntu commands
+
+- `dpkg --print-architecture`: retrieve architecture, for package installation^[Returns `amd64` in my case].
+-  {{< kbd Ctrl-H >}} in **Gnome**, aka File Management, to list hidden files
+
+## General update of Ubuntu
+
+1. Create file `update_os.sh` with:
+
+```bash
+
+#!/bin/bash
+rm -rf /var/lib/dpkg/lock-frontend
+rm -rf /var/lib/dpkg/lock
+apt-get update
+apt-get upgrade -y
+apt-get dist-upgrade -y
+apt-get autoremove -y
+apt-get autoclean -y
+
+```
+
+2. Run having `sudo`rights
+  i. `chmod +x update_os.sh` to provide executive rights
+  ii. `sudo ./update_os.sh` to run the update file with **admin** rights
+3. Reboot the system with `reboot`
+
+## Network issues
+
+- Two IP protocols for Wi-FI: `IPv4` versus `IPv6`. 
+
+  ::: {.callout-tip title="The two Internet protocols, namely IPv4 vs IPv6"}
+  
+  IPv4 is older, but still prevailing in many websites, such as Github, or OneDrive:
+
+    * Uses 32-bit addresses (e.g. `192.168.1.10`)
+    * Used by **most websites**, CDNs, VPNs, corporate services
+    * But the 32-limitation hinders the number of avalaible IP addresses. 
+    
+  IPv6 is newer, but not universally supported:
+
+    * Uses 128-bit addresses (e.g. `2a01:cb14:86a7::1`)
+    * Supported by modern ISPs and operating systems
+    * Some networks provide **IPv6-only**, with no IPv4 fallback. Espaically the case with Microsoft services, governmental or academic websites. 
+  :::
+  
+- You can test if this is the issue to connect to some websites with `curl <webdomain>`, such as `curl https://onedrive.live.com`, returning *Cannot connect*
+
+- Recent modern routers return only IPv6 -> while Windows is able to able to auto-fall back to IPv4, this is not the case of IPv6. 
+  - *Temporary fix*: by running the following instructions, you solve this issue by automatically configuring a IPv4 upon failure. *Recommended only for short-term debugging*.
+
+  ```bash
+  install dhclient commands
+  sudo dhclient -4 wlp2s0f0 <Wifi-name> # in my case, wlp2s0f0  
+  ```
+  - *Permanent fix*^[Alternatively, you can rely on the GNOME Interface, `Wifi` section]: 
+  
+    ```bash
+    nmcli connection modify "Routeur/Livebox-FC77" ipv4.method auto 
+    nmcli connection modify "Routeur/Livebox-FC77" ipv6.method auto # connect automatically to IPv4 or IPv6, depending on the availitbity of the protocol
+    # re-start the connection, applying the new configuration parameters
+    nmcli connection down "Routeur/Livebox-FC77"
+    nmcli connection up "Routeur/Livebox-FC77"
+    ```
+    
+## Eduroam connexion
+
+0. **Ensure to delete beforehand any pre-existing installation: `rm -rf $HOME/.config/cat_installer`**.
+1. Go to <https://cat.eduroam.org/>, the website usually provides with the version fitting your OS distribution. 
+2. On Linux, download the Python script, choosing AMU university.
+3. Run Python script with `python 3 eduroam-linux-AUA.py`
+4. As `userid`, provide your academic mail address, and as password, your `ENT password`. 
+# Git and GitHub
+
+## Github configuration {#sec-git-config}
+
+1. Github often requires double authentication, that you can set on https://github.com/settings/security. Recommended to use *passkey* if supported by your device (unfortunately, Linux OS usually do not support it), or use authenticator app, such as Microsoft Authentificator. **Deterred against the use of SMS + mobile phones**.
+
+2. Configure your access to Github:
+  i. Choose either SSH, or HTTPs. 
+  ii. For HTTPS, configure one token per device, under <https://github.com/settings/tokens>. Give the token the name of your laptop, its configuration and originals owner. Assign it at least the repo and read scopes. Copy it once -> **it won't be available afterwards!!**. 
+  
+3. General options to configure: 
+  i. Use either the command line (create also automatically the file `~/.gitconfig`):
+  ```bash
+  git config --global user.name "bastienchassagnol"
+  git config --global user.email "bastien.chassagnol@univ-amu.fr"
+  ```
+  ii. Or directly, using text editor, file `~/.gitconfig` (more error-prone to indentation errors). Find my default git config file here (for details on options, report to [Formation Git 2024](https://github.com/BAUDOTlab/teaching_material/blob/main/Git/formation_git_2024.pdf)). 
+
+4. Avoid typing your password for every login: 
+
+  i. For HTTPS + PAT token protocol, use `git config --global credential.helper store` for **permanent** registration of the password (should we not encrypt the file??), or `git config --global credential.helper 'cache --timeout=3600'` for temporary access^[Time-out units are reported in seconds, accordingly, this amounts to one hour]. 
+  ii. Define SSH key. 
+
+
+# Synchronise files across devices
+
+## Serverless
+
+- Go for `Syncthing`. 
+
+## OneDrive and Nextcloud
+
+> If you already have a monthly pass, and are happy with onlien edition of the Office toolkit, go for it. Alternatively, `Nextcloud` also allows for interactive use of the Office toolkit, or [`Rclone`](https://rclone.org/) for syncing files across computers.
+
+1. Install dependencies: 
+
+```bash
+sudo apt install build-essential libcurl4-openssl-dev pkg-config git -y
+```
+
+2. Add the `OpenSuSE` Build Service repository release key
+
+```bash
+wget -qO - https://download.opensuse.org/repositories/home:/npreining:/debian-ubuntu-onedrive/xUbuntu_24.04/Release.key | gpg --dearmor | sudo tee /usr/share/keyrings/obs-onedrive.gpg > /dev/null
+
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/obs-onedrive.gpg] https://download.opensuse.org/repositories/home:/npreining:/debian-ubuntu-onedrive/xUbuntu_24.04/ ./" | sudo tee /etc/apt/sources.list.d/onedrive.list
+
+# update cache
+sudo apt-get update
+``` 
+
+3. Install `OneDrive`:
+
+```bash
+sudo apt install --no-install-recommends --no-install-suggests onedrive
+```
+
+4. Sync OneDrive:
+
+  i. Exclude large folders, and directories that are complex and are not recommended for syncing, `nano ~/.config/onedrive/config`
+  
+  My config file contains: 
+  
+  ```bash
+  # Exclude some configuration folders
+  ## Python virtual environments
+  skip_dir = "venv|\.venv|__pycache__"
+  ## Node.js / JavaScript build directories
+  skip_dir = "node_modules|\.next"
+  ## R virtual environments
+  skip_dir = "renv|.cache"
+  skip_file = "\.Rhistory$|\.RData$"
+  ## Import files not to sync
+  skip_file = "~*|.~*|*.tmp|*.swp|*.partial"
+  # No sync the folder, if .nosync file is present
+  check_nosync = "true"
+  # local folders take precedence over remote files
+  local_first = "true"
+  display_manager_integration = "true"
+  # keep temporarily deleted files in the local Bin trash
+  use_recycle_bin = "true"
+  # latency and monitoring
+  ## check every 10 seconds local -> server changes
+  monitor_fullscan_frequency = "10"
+  ## check every minute server -> local changes
+  monitor_interval = "60"
+  ```
+  Note that **Comments must be placed in separated lines, not inline**. Alternatively, you may use [`sync_list` file](https://github.com/abraunegg/onedrive/blob/master/docs/usage.md#performing-a-selective-synchronisation-via-sync_list-file), to be stored as well in `~/.config/onedrive` folder 
+  
+  ii. Authenticate, and run OneDrive once
+  
+  ```bash
+  onedrive --sync --dry-run # optional, list folders that will be synchronsied
+  onedrive --sync --verbose # first initialisation, usually time-consuming, one-shot
+  ```
+
+4. Permanent synchronization using `systemtcl` facilities. **Highly recommended to remove folders at the local level, rather than on the server**. 
+
+```bash
+systemctl --user enable onedrive
+systemctl --user start onedrive # in the back end, use onedrive --monitor
+```
+
+5. Monitor currently uploaded files: 
+
+```bash
+journalctl --user-unit onedrive -f (continous) # equivalent to systemctl --user status onedrive (single-shot)
+
+onedrive --display-config
+onedrive --version
+```
+
+6. Other useful OneDrive instructions:
+
+  - `onedrive --create-share-link <path/to/file>` for read-only shareable links, and `onedrive --create-share-link <path/to/file> --with-editing-perms` to add writing rights. 
+
+7. (Optional) Visual interaction of OneDrive synchronization:
+  i. [OneDrive system tray program](https://github.com/DanielBorgesOliveira/onedrive_tray) adds a simple icon returning the status of synchronization for OneDrive, that can be controlled with by clicking with the right button of the mouse. 
+    - You'll need to install, and run `qmake` version 5 (by default, on recent Ubuntu configurations, it's the 6th that is used, which does not compile successfully the program). 
+    
+    ```bash
+    # install the 5th version of qmake
+    sudo apt install qt5-qmake qtbase5-dev
+    
+    # explicity use the qmake version 5, by calling the entire absolute path
+    # usually located under folder /usr/lib/qt5/bin
+    # avoid switching from qmake version 6 to qmake version 5 as default
+    # using symbolic links, as most recent projects use version 6 of qmake
+    ```
+    
+  - Run following bash file:
+  
+    ```bash
+    # create the runnable executive file
+    git clone https://github.com/DanielBorgesOliveira/onedrive_tray.git
+    cd onedrive_tray
+    mkdir build
+    cd build
+    /usr/lib/qt5/bin/qmake ../systray.pro # prepare the configuration, such as Makefile
+    make # build the software
+    
+    # execute it, such that it runs whenever log in
+    sudo make install # deploy the software, such as copying files -> here's the sudo incentive
+    systemctl enable --user onedrive_tray.service
+    ```
+    
+    ```scss
+    Source code
+       ↓
+    qmake (.pro → Makefile)
+       ↓
+    make (Makefile → binary)
+       ↓
+    make install (binary → system)
+       ↓
+    systemctl enable (autostart)
+    ``` 
+    
+  ii. Customise the logs output reported on the terminal, with the following script that reports in *real-time* a colourised OneDrive activity of the logs:
+    a. Install dependencies: `sudo apt install silversearcher-ag ccze`
+    b. Add [`onedrive_log`](https://github.com/zzzdeb/dotfiles/blob/master/scripts/tools/onedrive_log) bash file into folder `~/scripts/tools`. This script is a coloured wrapper of `journalctl` command. 
+    c. Add to the `$PATH` using local `.bashrc` the folder `~/scripts/tools`
+
+### Troubleshoots for OneDrive
+
+- Call `systemctl --user restart onedrive` after modifying the `.config` file to account for changes within it. For retro-application of configuration changes, use `onedrive --resync --sync --verbose` with parsimony. 
+- Warning "onedrive application is already running, please check process list" means that several concurrent onedrive are running in the background:
+  - List existing processes using onedrive: `ps aux | grep onedrive`
+  - Force kill (-9) processes that do no not use `systemtcl` 
+  
+- Configure [webhooks](https://github.com/abraunegg/onedrive/blob/master/docs/webhooks.md), if you want *real-time* synchronisation with the server, `server -> local`. **Not recommended generally, as complex to configure, and usually irrelevant for daily use cases**. Instead, reduce the latency for synchronisation. 
+
+- Git and OneDrive do not interfere well for 3 reasons at least, especially when synchronising files on multiple platforms. Linux (and Mac) machines end lines with `LF (Line Feed): \n`, while Windows uses `CRLF (Carriage Return + Lien Feed): \r\n`, Linux tracks file permissions for executables while Windows doesn't (only problematic for shell scripts), finally, `.git` and `.Rproj` folders are complex binary repositories with challenging access and encoding. Three heuristic approaches to solve most issues:
+
+  i. Exclude `.git` folders^[Adding argument `skip_dir = ".git"` to OneDrive config file] (or even completely code folders) from the synchronisation. **Note that in this case, the folder will no longer be detected as tracked by `Git` processes.**
+  
+  ii. Configure globally the `.gitconfig` configuration file to allow both end of lines indicators, using `git config --global core.autocrlf input` on Linux and Mac machines collaborating with Windows machines^[Accept as EOL CRLF, but always commit as LF], and `git config --global core.autocrlf true` on Windows machines^[on Windows machines, checked out as `CRLF`, but committed as `LF`]. The argument tolerates `CRLF` as it appears, otherwise use by default Linux-like `LF` endings. **This approach solves most of my synchronisation conflicts**. 
+  
+  iii. **Best practice**: per project, create a `.gitattributes` defining explicitly the encoding of EOL, removing the dependency to the machine OS^[Detailled information is avalaible [here](https://docs.github.com/en/get-started/git-basics/configuring-git-to-handle-line-endings?platform=windows)]. By default, you should opt in ofr the `LF` EOL:
+  
+  ```gitattributes
+  # 3 columns: file extension, file type (text, or binary), eol definition for text documents
+  * text=auto eol=lf # modify EOL both globally, as the default behaviour, if `core.autocrlf` is not set
+  # AND custom configuration, per file extension
+  *.sh   text eol=lf
+  *.py   text eol=lf
+  *.js   text eol=lf
+  *.ts   text eol=lf
+  *.java text eol=lf
+  ```
+  
+  Apply changes with the following commands:
+  
+  ```bash
+  git add --renormalize .
+  git status # display files being impacted by the change of EOL encoding
+  git commit -m "Normalize line endings"
+  ```
+  
+  iv. **Discard local changes**, induced by degenerate EOL diffs, with:
+
+  ```bash
+  git status # Review of existing changes
+  git clean -fd # Optional, remove untracked files and directories as well
+  git reset --hard HEAD
+  ```
+  to discard all local modifications to **tracked, but unstaged files**, practically bringing the working tree back to the last commit. 
+  
+  v. Configure the editor:
+   
+   i. VS Code → `Settings > Text Editor > Files > Eol`, go for the `\n`, or `auto` option. To apply it on pre-existing files, use *Change End Of Line Sequence command*. 
+   ii. RStudio: `Tools → Global Options → Code → Saving -> Line ending Conversion → (Posix) LF`. 
+
+
+
+::: {.callout-warning title="Graphical Interaces for OneDrive"}
+
+Avoid using graphical interfaces, such as [OneDriveGUI](https://github.com/bpozdena/OneDriveGUI), they poorly concur with local installation of `onedrive` on my personal experiment. 
+
+Instead, rely on the terminal, as it usually provides the user with better customisation, and control on OneDrive configuration. 
+
+:::
+
+
+## Monitor processes in the long-run
+
+- `systemctl list-unit-files --type=service --state=running --user` to list all processes running in the background, even after rebooting, restrained to the user-level.
+  - Alternatively, processes at the system-level are stored under `/lib/systemd/system/`
+
+- `systemctl status <service>` retrieves current status
+
+# Software to install
+
+> **General recommendation*: avoid using `ChatGPT`, as the instructions for installing software are often deprecated and/or not following Ubuntu best guidelines.
+
+::: {.callout-note title="Install software on Ubuntu, some guidelines"}
+
+Three recommended methods, depending on Ubuntu's support:
+
+1. If supported by Ubuntu, go for `apt install` for system software^[`apt-get` works similarly, but is now deprecated]:
+  - *automatic updates* and security patches -> **it's the only method allowing it in a systematic way**. 
+  - easiest method for installation
+  - signed and verified packages 
+  - recommended for *core system*, long-term software
+  - If **not directly available on Ubuntu’s native package manager, or using in the back-end `snap` commands**, switch to pre-built tarball installation^[Fetch the latest stable archive, extract it, and add executables to your `PATH`, see example under @sec-Zotero], or add the repository (only if **trusted**) to `apt allowed keys` folder. Example for `Docker`, @sec-Docker, or [custom Zotero installation file](https://github.com/retorquere/zotero-deb/blob/master/install.sh).
+  
+  
+- **.deb files** are intended for Linux distributions derived from Debian (such as Ubuntu, Linux Mint, etc.), while **.rpm files** are mainly used by distributions derived from Red Hat–based systems (such as Fedora, CentOS, and RHEL) + `openSUSE` distribution:
+
+  - No auto-updates
+  - Potential dependency issues
+  - **Always install with `sudo apt install`, rather than `sudo dpkg -i`, to better solve dependencies, fix broken installs, and ensures system consistency.** 
+
+---
+  
+2. `AppImages` are standalone executable files, bundling the application and most of its dependencies: 
+  - Recommended for *desktop applications* to be installed only on the user account -> does not require `sudo` rights in most cases
+  - Portable
+  - Works across many distributions
+  - `AppImageLauncher` can help in organising all AppImages within the same folder + integrate them into the system menus:
+    - Relevant if using multiple AppImages
+    - Using menu integrations and icons
+    - Avoid `Snap`
+
+---
+
+3. Pre-built tarball (`.tar(gz|xz)`) archives: 
+  - Stronger customisation
+  - Works without distribution packages
+  - May fail when built / requires manual handling/no automatic updates
+  - **Only recommended for developers, or if nothing else exists**. 
+
+---  
+  
+- And now, the not recommended installations: 
+  - `snap` stores pre-compiled versions of tools, but are less recommended compared to standard installation with `sudo apt install`
+  - `FlatPak+Flathub`
+  
+---
+
+*Conclusion*: APT first (if not directly available, add the repository to the trusted keys of `apt`) -> AppImage second -> `.deb` if AppImage is not available -> source build in the worst case. 
+
+---
+
+| Feature                   | AppImage      | tar/build    | apt install | .deb    |
+| ------------------------- | ------------- | ------------ | ----------- | ------- |
+| Root required             | ❌             | ⚠️ sometimes | ✅           | ✅       |
+| Dependency handling       | Bundled       | Manual       | Automatic   | Partial |
+| Auto-updates              | ❌             | ❌            | ✅           | ❌       |
+| System integration        | Low           | Medium       | High        | High    |
+| Portability               | Excellent     | Low          | None        | Low     |
+| Stability                 | App-dependent | Variable     | Excellent   | Good    |
+| Recommended for beginners | ✅             | ❌            | ✅           | ⚠️      |
+
+: Pros and Cons of Package installations for `Ubuntu` users {#tbl-installation-comparison}
+
+---
+
+- Other choices of importance:
+  - `portable`, or not. Portable installation is not managed by `apt`, easier to remove (does not leave leftovers/footprints, as only installed locally, in the home directory), but does easily enable desktop integration (with icons, for instance), nor allows for automatic updates
+  - Non-portable applications are usually better for daily/intensive use, but not *sandboxed*, and harder to remove (configuration files installed in root directories)
+
+:::
+
+## Shell-customisation (including `$PATH`)
+
+### Zsh (advanced bash configuration)
+
+```bash
+sudo apt update
+sudo apt install zsh
+
+# define this shell shebang by default
+chsh -s $(which zsh) # modify /etc/passwd repository
+``` 
+
+### Add executables 
+
+- System-wide: 
+  - `/usr`, and manual installs under `/usr/local` are in the `$PATH` by default
+  - For third-party GUI, *self-contained* apps stored under `/opt`, add a symlink: `sudo ln -s /opt/<appName> /usr/local/bin/<appName>`, requires **`sudo` rights**.
+
+- User-level: 
+  - Customise `.bashrc` (or `.zshrc`) configuration files to modify the `$PATH` -> **Only affects the user, and interactive shell**. Examples:
+  
+  ```bash
+  export PATH="$PATH:$HOME/scripts/tools"
+  alias ll='ls -lah'
+  ```
+  - AppImages may be integrated using AppImageLauncher, or `.desktop` configuration. 
+
+- Deal with multiple versions of the same program (for instance, `Java`): use `update-alternatives --list <AppName>` to list executables. 
+
+## AppImageLauncher
+
+```bash
+
+# download the .deb archive, with the proper architecture configuration
+# https://github.com/TheAssassin/AppImageLauncher/releases/tag/v3.0.0-beta-3
+ 
+sudo apt install appimagelauncher_3.0.0-beta-2-gha287.96cb937_amd64.deb  
+
+# update dependencies
+sudo apt update
+sudo apt install -f
+```
+
+- For deleting apps installed with AppImage Launcher, you'll need to delete both *Applications* folder, and `~/.local/share/applications/` that stores executables.
+
+## PDF management
+
+### Sioyek as PDF Viewer
+
+[`Sioyek`](https://sioyek.info/) is an open-source PDF viewer focusing on technical papers with mathematical formulas. Major uses cases are coloured *highlights* of text sections with `h` shortcut, smart jump to figures by clicking on them, and bookmark text sections with shortcut `b`. 
+
+1. Choose between portable (for isolated environment), or standard distribution under [Sioyek releases](https://github.com/ahrm/sioyek/releases)
+2. Unzip the archive, within it, make it executable with `chmod +x`. 
+3. Run it
+
+### Sejda for editing PDFs in an interactive way
+
+- [Web version](https://www.sejda.com/pdf-editor)
+- [Sedja *add-on* for Chrome](https://workspace.google.com/marketplace/app/sejda_pdf_editor/8721525582)
+
+### PDFtk
+
+- To edit PDFs, if you prefer the command line. 
+
+## Image Editors (to replace Paint on Windows)
+
+
+
+- `Libre Office Draw`
+
+## LibreOffice
+
+1. Install main software (such as Libre Office Write, or Calc) with `sudo apt install libreoffice libreoffice-gtk3`
+
+2. Relevant extensions, that you can add using `Tools -> Extensions`
+
+  i. Rotate Images in free text documents with [*Rotate* extension](https://extensions.libreoffice.org/en/extensions/show/writerrotationtool)
+  ii. Install dictionaries + extension [Grammalecte and LanguageTool](https://doc.ubuntu-fr.org/correction_grammaticale)^[You may configure the Java version used by default under `Tools -> Options -> Advanced`]. *needs to check if LanguageTool is truly relevant, is AI-based, but also resource-consuming*.
+  
+  ```bash
+  # French dictionary
+  sudo apt update
+  sudo apt install libreoffice-l10n-fr # add French hyphenation
+
+  ```
+  iii. Install [Latex extension](https://extensions.libreoffice.org/en/extensions/show/texmaths-1)
+
+## Docker {#sec-Docker}
+
+1. Download dependencies, configuration files and add repository to apt for automatic updates:
+
+```bash
+
+sudo apt update
+sudo apt install ca-certificates curl # dependencies for downloading packages, and verifying HTTPS protocols
+
+# Part I: create, download and make Docker apt key readable for verifying its integrity
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Part II: define where, and which version of Docker, should be donwloaded + how to verify its integrity
+sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/ubuntu
+Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+Components: stable
+Signed-By: /etc/apt/keyrings/docker.asc # folder previously defined
+EOF
+
+# Part III: update with newer configuration
+sudo apt update
+
+```
+
+2. Install Docker toolkit with `sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin`
+
+3. Check installation with `sudo docker run hello-world`. If not running by default upon login, enable automated start with `sudo systemctl start docker`. More details [here](https://docs.docker.com/engine/install/ubuntu/#upgrade-docker-engine).
+
+## Zoom
+
+1. Retrieve latest version, choosing proper Linux distributions and OS architecture under [Zoom downloads](https://zoom.us/download?os=linux)
+2. Run `sudo apt install ./zoom_amd64.deb`
+3. Log-in using your university email address, using `SSO`. The account is provided with unlimited meetings available by default, use following domain: `univ-amu-fr`. ^[Alternatively, use the web version available [here](https://univ-amu-fr.zoom.us/meeting#/upcoming)]
+
+## Teams
+
+- **Use the web version, as Microsoft no longer supports .deb versions for Linux.** 
+
+## Firefox
+
+> **Avoid running directly `sudo apt install firefox` -> it installs by default `snapd`, and will use not stable, beta `Snap` version of Firefox.**
+
+1. Import, and add Mozilla APT signing key:
+
+```bash
+# Download APT key
+wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | sudo tee /etc/apt/keyrings/packages.mozilla.org.asc > /dev/null
+
+# Add it to the Apt registry
+cat <<EOF | sudo tee /etc/apt/sources.list.d/mozilla.sources
+Types: deb
+URIs: https://packages.mozilla.org/apt
+Suites: mozilla
+Components: main
+Signed-By: /etc/apt/keyrings/packages.mozilla.org.asc
+EOF
+
+# Provide higher priority to Mozilla Firefox
+
+echo '
+Package: *
+Pin: origin packages.mozilla.org
+Pin-Priority: 1000
+' | sudo tee /etc/apt/preferences.d/mozilla
+```
+
+2. Install Firefox using Mozilla provider:
+
+```bash
+sudo apt update
+sudo apt install firefox
+
+which firefox # should not report `snapd` folder
+apt policy firefox
+
+```
+
+## Slack
+
+1. Download [Slack application](https://slack.com/downloads/instructions/linux?ddl=1&build=deb)
+2. Run it with `sudo apt install slack-desktop-4.47.69-amd64.deb`
+3. Update with:
+
+```bash
+
+sudo apt-get update
+sudo apt-get upgrade slack-desktop
+
+```
+
+
+## Zulip 
+
+1. Run following instructions: 
+
+  ```bash
+  
+  sudo apt install curl # if not already installed
+  sudo curl -fL -o /etc/apt/trusted.gpg.d/zulip-desktop.asc \
+      https://download.zulip.com/desktop/apt/zulip-desktop.asc
+  echo "deb https://download.zulip.com/desktop/apt stable main" | \
+      sudo tee /etc/apt/sources.list.d/zulip-desktop.list
+  sudo apt update
+  sudo apt install zulip
+  
+  ```
+  
+2. Log-in (recommended with your Github profile) on each of the channels you want to connect, to keep notified about newest posts. 
+
+## Cytoscape
+
+> Major default: only supported by Java version 17 (and not by more recent, and stable Java versions!!)
+
+1. Install Java version 17 with `sudo apt install openjdk-17-jdk`^[On Ubuntu, a more modern version of Java, the 21, was installed]
+2. Follow this [tutorial](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
+  i. Retrieve the [latest version](http://www.cytoscape.org/download.html)
+  ii. Make it executable with `chmod u+x <filename.sh>`
+  iii. Execute with `sh`, or simply `./ ` (avoid using `sudo` if irrelevant for other users of the computer)
+  iv. Launch with `Cytoscape &`.
+
+## Zotero {#sec-Zotero}
+
+1. `sudo apt install libreoffice-java-common -y` adds Java dependencies to seamlessly integrate Zotero with Libre Office *plug-in* (for instance, automated retrieval of bibliographic references).
+
+2. Retrieve the latest stable version on <https://www.zotero.org/download/>^[Alternatively, download with `curl`]. 
+
+3. Run following instructions + Synchronise by installing Zotero Connector on your website:
+
+```bash
+
+#!/bin/bash
+
+# part I: extract archive
+sudo tar -xjf zotero.tar.bz2 -C /opt
+sudo mv /opt/Zotero_linux-x86_64 /opt/zotero
+
+# Part II: add the executable
+sudo ln -s /opt/zotero/zotero /usr/local/bin/zotero
+
+```
+
+4. (Optional: add a custom Desktop, and launcher icon for an executable) Create file `~/.local/share/applications/zotero.desktop`, with the following content. Make the launcher executable with `chmod +x ~/.local/share/applications/zotero.desktop`
+
+```bash
+[Desktop Entry]
+Name=Zotero
+Exec=/usr/local/bin/zotero
+Icon=/opt/zotero/icons/icon128.png
+StartupWMClass=Zotero
+Type=Application
+Terminal=false
+Categories=Office;
+MimeType=text/plain;x-scheme-handler/zotero;application/x-research-info-systems;text/x-research-info-systems;text/ris;application/x-endnote-refer;application/x-inst-for-Scientific-info;application/mods+xml;application/rdf+xml;application/x-bibtex;text/x-bibtex;application/marc;application/vnd.citationstyles.style+xml
+X-GNOME-SingleWindow=true
+```
+
+5. Inspired from [Zotero hacks tutorial](https://habr.com/en/articles/443798/), enable unlimited synced storage for articles on multiple machines.  
+  i. Add required plug-ins, `Better BibTeX` (mandatory for custom expert as a plain .bib file) + `Zotmoov` (**optional**, replace Zotfile for renaming files, for example, sorting articles by authors' names). 
+  ii. Edit Zotero preferences^[*What matters the most here is uniformity across platforms]: 
+    - Uncheck the option to create automatic web page snapshots (increases cluttering with lots of small files added)
+    - Uncheck full-text sync
+    - Set apart in `Edit->Settings->Advanced` the 
+      - Base directory (should be the folder synced by your File sharing software), with
+      - Custom Data directory location. This local folder should be located in a different position, and will be managed by Zotero itself
+      
+    ![Zotero Database Configuration](zotero-advanced-configuration.png)
+    
+  iii. Edit `Better BixTex` *plug-in*: 
+    - Personally, use `[auth:lower][year][journal:lower:abbr]`
+    - Should be the same across machines. 
+      
+  
+    
+
+ 
+## Quarto, R and RStudio
+
+1. To get the latest R Versions, add the signing key, along with the repository:
+
+```bash
+sudo mkdir -p /etc/apt/keyrings
+sudo wget -O /etc/apt/keyrings/cran.gpg https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc
+echo "deb [signed-by=/etc/apt/keyrings/cran.gpg] https://cloud.r-project.org/bin/linux/ubuntu jammy-cran40/" | sudo tee /etc/apt/sources.list.d/cran.list
+```
+
+2. Install R:
+
+```bash
+sudo apt update
+sudo apt install r-base r-base-dev -y
+R --version
+```
+
+3. Install RStudio (Desktop IDE)
+
+  i. Go to: [https://www.rstudio.com/products/rstudio/download/#download](https://www.rstudio.com/products/rstudio/download/#download)/ Choose the **Ubuntu/Debian `.deb` package** for your architecture (amd64).
+  ii. Step 2 — Install the `.deb` package:
+
+```bash
+sudo apt install ./rstudio-2025.09.0-422-amd64.deb
+```
+
+3. Install Quarto, Go to [https://quarto.org/docs/get-started/](https://quarto.org/docs/get-started/)
+
+```bash
+sudo apt install ./quarto-1.3.496-linux-amd64.deb
+quarto check
+```
+
+## Latex
+
+```bash
+sudo apt install texlive-full -y
+# other commonly used packages
+sudo apt install texlive-latex-extra texlive-fonts-recommended texlive-science biber latexmk -y
+
+```
+
+## WhatsApp
+
+- No supported local Linux installation
+- Instead, recommended to use the [Web version of WhatsApp](https://web.whatsapp.com/), then pair it with your mobile device.
+
+## Cursor
+
+1. Download [DEB extension](https://cursor.com/download). 
+2. Run it:
+
+```bash
+sudo apt install ./cursor_2.0.77_amd64.deb
+```
+
