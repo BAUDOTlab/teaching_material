@@ -377,7 +377,7 @@ onedrive --version
 - Call `systemctl --user restart onedrive` after modifying the `.config` file to account for changes within it. For retro-application of configuration changes, use `onedrive --resync --sync --verbose` with parsimony. 
 - Warning "onedrive application is already running, please check process list" means that several concurrent onedrive are running in the background:
   - List existing processes using onedrive: `ps aux | grep onedrive`
-  - Force kill (-9) processes that do no not use `systemtcl` 
+  - Force kill processes that do no not use `systemtcl`: kill -9 <pid> 
   
 - Configure [webhooks](https://github.com/abraunegg/onedrive/blob/master/docs/webhooks.md), if you want *real-time* synchronisation with the server, `server -> local`. **Not recommended generally, as complex to configure, and usually irrelevant for daily use cases**. Instead, reduce the latency for synchronisation. 
 
@@ -771,25 +771,31 @@ MimeType=text/plain;x-scheme-handler/zotero;application/x-research-info-systems;
 X-GNOME-SingleWindow=true
 ```
 
-5. Inspired from [Zotero hacks tutorial](https://habr.com/en/articles/443798/), enable unlimited synced storage for articles on multiple machines.  
-  i. Add required plug-ins, `Better BibTeX` (mandatory for custom expert as a plain .bib file) + `Zotmoov` (**optional**, replace Zotfile for renaming files, for example, sorting articles by authors' names). 
-  ii. Edit Zotero preferences^[*What matters the most here is uniformity across platforms]: 
-    - Uncheck the option to create automatic web page snapshots (increases cluttering with lots of small files added)
-    - Uncheck full-text sync
-    - Set apart in `Edit->Settings->Advanced` the 
-      - Base directory (should be the folder synced by your File sharing software), with
-      - Custom Data directory location. This local folder should be located in a different position, and will be managed by Zotero itself
-      
-    ![Zotero Database Configuration](zotero-advanced-configuration.png)
-    
-  iii. Edit `Better BixTex` *plug-in*: 
-    - Personally, use `[auth:lower][year][journal:lower:abbr]`
-    - Should be the same across machines. 
-      
-  
-    
+5. Add plug-in `Better BibTeX` for custom exports of plain .bib files, tailored for distinct conferences formats:
 
- 
+  - [Plug-in installation tutorial](https://retorque.re/zotero-better-bibtex/installation/index.html)
+  - My custom `.bib` output is stored under [Better BibTeX preferences](../Config/better_bibtex_preferences.json). You can import it by going down to the `Settings/Better Bibtex` menu.
+  - Should be the same output across machines. 
+  
+6. Recommended Zotero configurations^[*What matters the most here is uniformity across platforms]: 
+    - Uncheck the option to create automatic web page snapshots (increases cluttering with lots of small files added)
+    - Uncheck "Sync attachment files in My Library" in the Sync settings if you are on a free version of Zotero's native cloud file storage (limited to 500Mo only)
+
+
+6. (**Optional**) Enable **unlimited synced storage** for articles on multiple machines,  
+  -  [`Zotmoov` installation](https://github.com/wileyyugioh/zotmoov/blob/master/README.md#installation) extension now replaces `Zotfile` (no longer maintained) for renaming files, and is required for this renaming trick
+  - Tick in `Edit->Settings->ZotMoov->Advanced Options` "Strip diacritics from File Names" option 
+  - Other important options are listed in following figure. Notably: 
+    - Set the directory to move in a synced repository such that it can be shared across devices.
+    - Choose wildcard for ordering, and renaming files -> in my case, one folder per first author. 
+  - **Once done, `Ctrl+A` to select all documents, then Right click, then `ZotMoov: Move to Selected Directory` to update the localisation of all documents (otherwise, not modified automatically)**
+  - **Also note that this trick is not working for Shared groups**
+
+![`ZotMoov` core options](Zotmov_preferences.png)
+
+7. Install [`Inciteful`](https://github.com/inciteful-xyz/inciteful-zotero-plugin), then Right Click to access to the connected graph of papers
+
+
 ## Quarto, R and RStudio
 
 1. To get the latest R Versions, add the signing key, along with the repository:
