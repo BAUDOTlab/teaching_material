@@ -15,3 +15,7 @@ Multiple resources to learn how to use Git and Github or Gitlab, as PDF document
 ### [Linux](/Linux)
 
 Resources to start (nearly) from scratch configuration, and installation of the most popular software with Linux distribution (focusing on Ubuntu architectures). Feel free to suggest inclusion of relevant applications, or report errors / better approaches. 
+
+### [Package development](/PackageDevelopment)
+
+This workshop is about how to create a (basic) package in R and Python using the package development tools. It will present the development ecosystem and it's not going deeper in each key point. At the end of the workshop, users create a package :).
