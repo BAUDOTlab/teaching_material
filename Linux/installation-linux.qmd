@@ -107,6 +107,7 @@ User does not require root
   - This folder hierachy follows [`XGD`Base Directory Npecification](https://specifications.freedesktop.org/basedir/latest/)
 - `/tmp` for temporary folders, cleaned after `reboot`
 - `/run` for sockets
+- `~/.config/systemd`: lists all processes that keep on running in the background, such as Cursor updates, or Onedrive synchronisations.
 
 ## Useful Ubuntu commands
 
@@ -326,7 +327,8 @@ onedrive --version
   - `onedrive --create-share-link <path/to/file>` for read-only shareable links, and `onedrive --create-share-link <path/to/file> --with-editing-perms` to add writing rights. 
 
 7. (Optional) Visual interaction of OneDrive synchronization:
-  i. [OneDrive system tray program](https://github.com/DanielBorgesOliveira/onedrive_tray) adds a simple icon returning the status of synchronization for OneDrive, that can be controlled with by clicking with the right button of the mouse. 
+  i. [OneDrive system tray program](https://github.com/DanielBorgesOliveira/onedrive_tray) adds a simple icon returning the status of synchronization for OneDrive, that can be controlled with by clicking with the right button of the mouse. **If you decide to use this process, do not run `systemctl --user enable onedrive
+systemctl --user start onedrive`, as it will generate otherwise concurrent processes**.
     - You'll need to install, and run `qmake` version 5 (by default, on recent Ubuntu configurations, it's the 6th that is used, which does not compile successfully the program). 
     
     ```bash
@@ -366,6 +368,8 @@ onedrive --version
        ↓
     systemctl enable (autostart)
     ``` 
+    
+   
     
   ii. Customise the logs output reported on the terminal, with the following script that reports in *real-time* a colourised OneDrive activity of the logs:
     a. Install dependencies: `sudo apt install silversearcher-ag ccze`
@@ -653,7 +657,10 @@ sudo apt update
 
 - **Use the web version, as Microsoft no longer supports .deb versions for Linux.** 
 
-## Firefox
+
+## Web browsers
+
+### Firefox
 
 > **Avoid running directly `sudo apt install firefox` -> it installs by default `snapd`, and will use not stable, beta `Snap` version of Firefox.**
 
@@ -690,6 +697,27 @@ sudo apt install firefox
 which firefox # should not report `snapd` folder
 apt policy firefox
 
+```
+
+### Google Chrome
+
+1. Install Google Chrome, by downloading [the .deb archive](https://www.google.com/chrome/), then run it:
+
+```bash
+sudo apt install google-chrome-stable_current_amd64.deb`
+```
+
+2. Download, and add Google Chrome APT signing key, for automatic updates:
+
+```bash
+# Download APT key
+wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o /usr/share/keyrings/google-linux-signing-key.gpg
+
+# Add it to the Apt registry
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-linux-signing-key.gpg] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
+
+# Update to the most recent version
+sudo apt update
 ```
 
 ## Slack
@@ -771,31 +799,25 @@ MimeType=text/plain;x-scheme-handler/zotero;application/x-research-info-systems;
 X-GNOME-SingleWindow=true
 ```
 
-5. Add plug-in `Better BibTeX` for custom exports of plain .bib files, tailored for distinct conferences formats:
-
-  - [Plug-in installation tutorial](https://retorque.re/zotero-better-bibtex/installation/index.html)
-  - My custom `.bib` output is stored under [Better BibTeX preferences](../Config/better_bibtex_preferences.json). You can import it by going down to the `Settings/Better Bibtex` menu.
-  - Should be the same output across machines. 
-  
-6. Recommended Zotero configurations^[*What matters the most here is uniformity across platforms]: 
+5. Inspired from [Zotero hacks tutorial](https://habr.com/en/articles/443798/), enable unlimited synced storage for articles on multiple machines.  
+  i. Add required plug-ins, `Better BibTeX` (mandatory for custom expert as a plain .bib file) + `Zotmoov`, which replaces previous extension `Zotfile` for classifying articles per author's name. 
+  ii. Edit Zotero preferences^[What matters the most here is uniformity across platforms]: 
     - Uncheck the option to create automatic web page snapshots (increases cluttering with lots of small files added)
-    - Uncheck "Sync attachment files in My Library" in the Sync settings if you are on a free version of Zotero's native cloud file storage (limited to 500Mo only)
+    - Uncheck full-text sync
+    - Set apart in `Edit->Settings->Advanced` the 
+      - Base directory (should be the folder synced by your File sharing software), with
+      - Custom Data directory location. This local folder should be located in a different position, and will be managed by Zotero itself
+      
+    ![Zotero Database Configuration](zotero-advanced-configuration.png)
+    
+  iii. Edit `Better BixTex` *plug-in*: 
+    - Personally, use `[auth:lower][year][journal:lower:abbr]`
+    - Should be the same across machines. 
+      
+  
+    
 
-
-6. (**Optional**) Enable **unlimited synced storage** for articles on multiple machines,  
-  -  [`Zotmoov` installation](https://github.com/wileyyugioh/zotmoov/blob/master/README.md#installation) extension now replaces `Zotfile` (no longer maintained) for renaming files, and is required for this renaming trick
-  - Tick in `Edit->Settings->ZotMoov->Advanced Options` "Strip diacritics from File Names" option 
-  - Other important options are listed in following figure. Notably: 
-    - Set the directory to move in a synced repository such that it can be shared across devices.
-    - Choose wildcard for ordering, and renaming files -> in my case, one folder per first author. 
-  - **Once done, `Ctrl+A` to select all documents, then Right click, then `ZotMoov: Move to Selected Directory` to update the localisation of all documents (otherwise, not modified automatically)**
-  - **Also note that this trick is not working for Shared groups**
-
-![`ZotMoov` core options](Zotmov_preferences.png)
-
-7. Install [`Inciteful`](https://github.com/inciteful-xyz/inciteful-zotero-plugin), then Right Click to access to the connected graph of papers
-
-
+ 
 ## Quarto, R and RStudio
 
 1. To get the latest R Versions, add the signing key, along with the repository:
@@ -807,12 +829,43 @@ echo "deb [signed-by=/etc/apt/keyrings/cran.gpg] https://cloud.r-project.org/bin
 ```
 
 2. Install R:
+  
+  i. Install basic dependencies
+  ```bash
+  sudo apt update
+  sudo apt install r-base r-base-dev -y
+  R --version
+  ```
+  
+  ii. Install recommended Ubuntu system libraries for scientific computing and/or connection:
+  
+  ```bash
+  # Compilation tool
+  sudo apt install cmake 
+  
+  Network, imaging, and plotting libraries
+  sudo apt install \
+  build-essential \
+  libpng-dev \
+  libjpeg-dev \
+  libtiff-dev \
+  libcairo2-dev \
+  libcurl4-openssl-dev \
+  libssl-dev \
+  libxml2-dev \
+  zlib1g-dev
 
-```bash
-sudo apt update
-sudo apt install r-base r-base-dev -y
-R --version
-```
+  # scientificic libraries
+  sudo apt install \
+    build-essential \
+    gfortran \
+    libblas-dev \
+    liblapack-dev \
+    libgsl-dev
+    
+  
+  ```
+  
 
 3. Install RStudio (Desktop IDE)
 
@@ -829,6 +882,197 @@ sudo apt install ./rstudio-2025.09.0-422-amd64.deb
 sudo apt install ./quarto-1.3.496-linux-amd64.deb
 quarto check
 ```
+
+## Python
+
+Yes — the message you’re seeing is **expected on modern Debian/Ubuntu (Python ≥3.11/3.12)** because of **PEP 668**.
+It prevents `pip` from modifying the **system Python**, which could break packages installed by `apt`.
+
+The **best practice today** is to use **three different methods depending on what you're installing**.
+
+---
+
+# Recommended Python Package Guidelines (Debian/Ubuntu)
+
+## 1️⃣ System packages → use `apt`
+
+Use this when the package exists in Debian repositories.
+
+```bash
+sudo apt install python3-requests
+```
+
+Pros:
+
+* Stable
+* Managed by the OS
+* Safe for system tools
+
+Cons:
+
+* Often outdated versions.
+
+---
+
+## 2️⃣ Project dependencies → use **virtual environments** (best practice)
+
+This is the **standard approach for development**.
+
+### Install required tools
+
+```bash
+sudo apt install python3-full python3-venv python3-pip
+```
+
+### Create a project environment
+
+```bash
+python3 -m venv .venv
+```
+
+Activate it:
+
+```bash
+source .venv/bin/activate
+```
+
+Now install packages safely:
+
+```bash
+pip install fastapi uvicorn pandas
+```
+
+Check:
+
+```bash
+which python
+```
+
+You should see something like:
+
+```
+/home/user/project/.venv/bin/python
+```
+
+Pros:
+
+* Isolated
+* Reproducible
+* Doesn't touch system Python
+
+This is **the recommended workflow for most developers**.
+
+---
+
+## 3️⃣ CLI Python tools → use **pipx**
+
+`pipx` installs each tool in its **own virtual environment automatically**.
+
+Install it:
+
+```bash
+sudo apt install pipx
+pipx ensurepath
+```
+
+Example installs:
+
+```bash
+pipx install poetry
+pipx install black
+pipx install httpie
+```
+
+Pros:
+
+* Isolated
+* Easy updates
+* Perfect for developer tools.
+
+---
+
+# What NOT to do
+
+Avoid:
+
+```bash
+pip install package
+```
+
+outside a virtual environment.
+
+Avoid forcing it with:
+
+```bash
+pip install --break-system-packages
+```
+
+That defeats the safety mechanism.
+
+---
+
+# Recommended workflow (simple)
+
+For most people:
+
+```
+System tools     → apt
+Dev tools       → pipx
+Project deps    → venv + pip
+```
+
+Example project:
+
+```
+myproject/
+ ├── .venv
+ ├── requirements.txt
+ └── app.py
+```
+
+Install deps:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+# Bonus (modern workflow used by many Python devs)
+
+Many developers now use:
+
+* **Poetry**
+* **Rye**
+* **uv**
+
+These tools **automatically manage virtual environments and dependencies**.
+
+Example with `uv` (very fast):
+
+```bash
+pipx install uv
+uv venv
+uv pip install requests
+```
+
+---
+
+✅ **My practical recommendation for your system**
+
+Install once:
+
+```bash
+sudo apt install python3-full python3-venv python3-pip pipx
+pipx ensurepath
+```
+
+Then:
+
+* `pipx` → CLI tools
+* `venv` → projects
+* `apt` → system packages
+
 
 ## Latex
 
