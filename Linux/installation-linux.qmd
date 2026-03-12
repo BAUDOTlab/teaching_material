@@ -136,6 +136,44 @@ apt-get autoclean -y
   ii. `sudo ./update_os.sh` to run the update file with **admin** rights
 3. Reboot the system with `reboot`
 
+### Troubleshoots when updating Ubuntu
+
+> Partial updates breaking key driver components occur more often with Ubuntu compared to Microsoft, since Linux tends to provide lots of separate, modular packages while Windows ships large and standalone bundles -> **Consequence: more issues with updates, especially if the network connection dropped, and the newest versions of the packages were not fully installed.**
+
+::: {.callout-tip}
+## Avoid critical update misfunctions with Ubuntu
+
+1. Run daily the following commands: 
+
+```bash
+sudo apt update
+sudo apt upgrade
+```
+
+2. Run monthly:
+
+```bash
+`sudo apt full-upgrade`
+
+
+# dependences no longer required
+sudo apt autoremove
+sudo apt autoclean
+```
+
+3. 3 commands to solve most driver issues after partial update:
+
+```bash
+# Check for Broken Packages
+sudo dpkg --configure -a
+# Install missing dependencies
+sudo apt -f install
+
+# List all Hardware Driver Errors
+dmesg -l err,crit,alert,emerg
+```
+:::
+
 ## Network issues
 
 - Two IP protocols for Wi-FI: `IPv4` versus `IPv6`. 
@@ -572,6 +610,80 @@ sudo apt install -f
 2. Unzip the archive, within it, make it executable with `chmod +x`. 
 3. Run it
 
+::: {.callout-note collapse="true"}
+## A step-bystep tutorial for the installation from source an Ubuntu application, from downloading the archive to adding it to the Path, and to the Start programm
+
+
+To turn any exec into a **desktop application** on Ubuntu-GNOME, follow this steps:
+
+1. Relocate everything under **`/opt/sioyek`**^[default repo for third-party apps, preventing conflicts with distributed, native packages]. **Note that the structure of a package may not follow exactly this of `sioyek`!!
+
+```bash
+# create required folders
+
+sudo mkdir -p /opt/sioyek
+sudo mkdir -p /etc/sioyek
+sudo mkdir -p /usr/share/sioyek
+
+# relocate, if not already done, the sioyek builds
+
+## core executables
+sudo cp ~/sioyek/build/sioyek /opt/sioyek/
+sudo chmod +x /opt/sioyek/sioyek
+
+## confgiuration files
+sudo cp ~/sioyek/build/prefs.config /etc/sioyek/
+sudo cp ~/sioyek/build/keys.config  /etc/sioyek/
+sudo cp -r ~/sioyek/build/shaders /usr/share/sioyek/
+sudo cp ~/sioyek/build/tutorial.pdf /usr/share/sioyek/
+```
+
+3. Add a distinctive icon, and customise the native Ubuntu launcher 'Gnome' 
+
+```bash
+sudo mkdir -p /usr/share/icons/hicolor/256x256/apps # folder to store the siokey.png, downloaded from the web
+
+sudo tee /usr/share/applications/sioyek.desktop > /dev/null <<'EOF'
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Sioyek
+GenericName=PDF Viewer
+Comment=Fast keyboard-driven PDF viewer
+Exec=/opt/sioyek/sioyek %path to the sioyek exe
+Icon=sioyek
+Terminal=false
+Categories=Office;Viewer;
+MimeType=application/pdf;
+StartupNotify=true
+EOF
+
+# Refresh desktop database
+sudo update-desktop-database
+```
+
+4. (Optional) Make Sioyek the default **PDF viewer**, using either:
+   a. GUI method:
+      1. Right-click any PDF
+      2. **Properties → Open With**
+      3. Select **Sioyek**
+      4. Click **Set as default**
+    b. or the command line: 
+
+    ```bash
+    xdg-mime default sioyek.desktop application/pdf
+    
+    # to check default
+    xdg-mime query default application/pdf
+    ```
+    
+5. add to the Path, creating a symbolic link
+
+  ```bash
+  sudo ln -s /opt/sioyek/sioyek /usr/local/bin/sioyek
+  ```
+:::
+
 ### Sejda for editing PDFs in an interactive way
 
 - [Web version](https://www.sejda.com/pdf-editor)
@@ -646,12 +758,6 @@ sudo apt update
 2. Install Docker toolkit with `sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin`
 
 3. Check installation with `sudo docker run hello-world`. If not running by default upon login, enable automated start with `sudo systemctl start docker`. More details [here](https://docs.docker.com/engine/install/ubuntu/#upgrade-docker-engine).
-
-## Zoom
-
-1. Retrieve latest version, choosing proper Linux distributions and OS architecture under [Zoom downloads](https://zoom.us/download?os=linux)
-2. Run `sudo apt install ./zoom_amd64.deb`
-3. Log-in using your university email address, using `SSO`. The account is provided with unlimited meetings available by default, use following domain: `univ-amu-fr`. ^[Alternatively, use the web version available [here](https://univ-amu-fr.zoom.us/meeting#/upcoming)]
 
 ## Teams
 
@@ -885,193 +991,62 @@ quarto check
 
 ## Python
 
-Yes — the message you’re seeing is **expected on modern Debian/Ubuntu (Python ≥3.11/3.12)** because of **PEP 668**.
-It prevents `pip` from modifying the **system Python**, which could break packages installed by `apt`.
+> From **PEP 668**. guidelines, applied to modern Debian/Ubuntu distributions with native Python installed above the 3.11 version,  `pip` is prevented from modifying the **system Python** as it could interfere with te core installation program `apt`.
 
-The **best practice today** is to use **three different methods depending on what you're installing**.
+::: {.callout-tip collapse="false" title="Python installation per use case"}
 
----
+For System packages, use `apt`, with `sudo apt install python3-requests`, returning only stable versions, safer for system tools (but outdated versions). 
 
-# Recommended Python Package Guidelines (Debian/Ubuntu)
+--- 
 
-## 1️⃣ System packages → use `apt`
+For user-wide level, use `pipx`. `pipx ensurepath` guarantees that the programs installed with `pipx` are automatically added to the user's `PATH`. 
 
-Use this when the package exists in Debian repositories.
-
-```bash
-sudo apt install python3-requests
-```
-
-Pros:
-
-* Stable
-* Managed by the OS
-* Safe for system tools
-
-Cons:
-
-* Often outdated versions.
+> **pipx is only for applications, not libraries, contrary to `pip`**. So, no `pipx instal numpy` for instance**. 
 
 ---
 
-## 2️⃣ Project dependencies → use **virtual environments** (best practice)
-
-This is the **standard approach for development**.
-
-### Install required tools
-
-```bash
-sudo apt install python3-full python3-venv python3-pip
-```
-
-### Create a project environment
-
-```bash
-python3 -m venv .venv
-```
-
-Activate it:
-
-```bash
-source .venv/bin/activate
-```
-
-Now install packages safely:
-
-```bash
-pip install fastapi uvicorn pandas
-```
-
-Check:
-
-```bash
-which python
-```
-
-You should see something like:
-
-```
-/home/user/project/.venv/bin/python
-```
-
-Pros:
-
-* Isolated
-* Reproducible
-* Doesn't touch system Python
-
-This is **the recommended workflow for most developers**.
-
----
-
-## 3️⃣ CLI Python tools → use **pipx**
-
-`pipx` installs each tool in its **own virtual environment automatically**.
-
-Install it:
-
-```bash
-sudo apt install pipx
-pipx ensurepath
-```
-
-Example installs:
-
-```bash
-pipx install poetry
-pipx install black
-pipx install httpie
-```
-
-Pros:
-
-* Isolated
-* Easy updates
-* Perfect for developer tools.
-
----
-
-# What NOT to do
-
-Avoid:
-
-```bash
-pip install package
-```
-
-outside a virtual environment.
-
-Avoid forcing it with:
-
-```bash
-pip install --break-system-packages
-```
-
-That defeats the safety mechanism.
-
----
-
-# Recommended workflow (simple)
-
-For most people:
-
-```
-System tools     → apt
-Dev tools       → pipx
-Project deps    → venv + pip
-```
-
-Example project:
-
-```
-myproject/
- ├── .venv
- ├── requirements.txt
- └── app.py
-```
-
-Install deps:
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-# Bonus (modern workflow used by many Python devs)
-
-Many developers now use:
-
-* **Poetry**
-* **Rye**
-* **uv**
-
-These tools **automatically manage virtual environments and dependencies**.
-
-Example with `uv` (very fast):
-
-```bash
-pipx install uv
-uv venv
-uv pip install requests
-```
-
----
-
-✅ **My practical recommendation for your system**
-
-Install once:
+For project dependencies, use **virtual environments**, requiring the installation of the following development tools: 
 
 ```bash
 sudo apt install python3-full python3-venv python3-pip pipx
 pipx ensurepath
 ```
 
-Then:
+To use a Python environment, follow:
 
-* `pipx` → CLI tools
-* `venv` → projects
-* `apt` → system packages
+```bash
+# 1) creation
+python3 -m venv <environment_name>
+
+# 2) Activation:
+
+source .venv/bin/activate
+
+which python # should return an exec version living in your environment, such as `/home/user/project/.venv/bin/python`
+
+
+# 3) package installation
+pip install fastapi uvicorn pandas
+
+```
+
+> **In any case, avoid forcing the installation of specific Python versions sytem-wide with `pip install --break-system-packages`**. 
+:::
+
+
+### Recommended modern Python toolkit
+
+- `JupyterLab` outdated previous `JupterNotebook` as a web, and user-friendly interface, to run Python scripts
+
+- `Poetry` is for managing dependencies within a Python package
+
+- `Cookiecutter` is relevant for creating a default template from scratch adhering to modern Python packaging guidelines.  
+
+```bash
+pipx install jupyterlab
+```
+
+
 
 
 ## Latex
@@ -1098,150 +1073,32 @@ sudo apt install ./cursor_2.0.77_amd64.deb
 ```
 
 
-## Server connexion
+# Key numerical tools provided by Aix Marseille Université
 
-### Identity
+> List of [numerical tools used in Amu](https://www.univ-amu.fr/fr/public/les-outils-numeriques-damu)
 
-``` bash
-id ${USER}
-uid=1001(bastien) gid=1001(bastien) groups=1001(bastien),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),122(lpadmin),135(lxd),136(sambashare)
-```
+## AMUZoom
 
-- list of groups on the server, identify is defined by the combination of an username, `UID` (user ID), and `GID` (group ID) on both servers.
+1. Retrieve latest version, choosing proper Linux distributions and OS architecture under [Zoom downloads](https://zoom.us/download?os=linux). Also avalaible [online](https://univ-amu-fr.zoom.us/). Strongly recommended to install Zoom locally. 
+2. Run `sudo apt install ./zoom_amd64.deb`
+3. **Log-in using your university email address, using `SSO`.** The account is provided with unlimited meetings available by default, use following domain: `univ-amu-fr`. ^[Alternatively, use the web version available [here](https://univ-amu-fr.zoom.us/meeting#/upcoming)]
 
-``` bash
-id ${USER}
-uid=1007(bastienc) gid=1007(bastienc) groupes=1007(bastienc),1043(dtoo_project)
-```
+> 2 elements, listed below, to keep in in mind, when creating a Zoom meeting to enable any external user, with the password, to ling-in, and share its screen, see @fig-zoom:
 
-### SSH protocol
+::: {#fig-zoom layout-ncol=2}
 
-- Core CLI command for connecting on the Server (see details at @tbl-ssh-connexion)
- 
-  ```bash
-  ssh -p 22218 -XC bastienc@139.124.156.52
-  ```
-   
-  with: 
-  - `139.124.156.52` the port (`139.124.156.52` is for the new server, recommended over `139.124.156.51`, as benefiting from larger data storage, and larger computational resources, such as graphical cards)
-  - `bastienc` the user ID
-  - `22218` the port
+![Zoom first login](zoom_options_amu_1.png)
 
-| Option | Purpose                    | Effect on X11                                                    |
-| ------ | -------------------------- | ---------------------------------------------------------------- |
-| `-X`   | X11 forwarding (untrusted) | Runs GUI apps remotely                                           |
-| `-Y`   | X11 forwarding (trusted)   | Runs all GUI apps remotely                                       |
-| `-C`   | Compression                | Reduces network usage and can speed up GUI over slow connections |
+![Zoom second step of login](zoom_options_amu_2.png)
 
-: Comparison side-by-side of the main options for customised `ssh`connexion {#tbl-ssh-connexion}
-
-- Both `-Y` and `-X` options are required for allowing the use of remote GUIs, such as `RStudio`. -`-Y`is more secure than `-X`, but on our server, **the `-Y` option induces strong latency, and windows freezing*. 
-- Always use the -`C` (for compression), allowing faster data transfer between local, and remote server. 
-
-### Run graphical applications remotely
-
-> In @tbl-remote-graphical, we compare side-by-side approaches for using `RStudio` with files stored remotely on the server:
-
-| Method                        | Where RStudio runs | Speed       | Setup difficulty | Pros                     | Cons                               |
-| ----------------------------- | ------------------ | ----------- | ---------------- | ------------------------ | ---------------------------------- |
-| **SSH + X11 (`ssh -YC`)**     | Server             | Slow        | Very easy        | No setup required        | Laggy UI, slow plots               |
-| **SSHFS + local RStudio**     | Local machine      | Fast UI     | Easy             | Edit remote files easily | Local computation                  |
-| **RStudio Server (web)**      | Server             | Fast        | Medium           | Best remote workflow     | Requires installation              |
-| **Terminal + Rscript**        | Server             | Fast        | Very easy        | Simple, reliable         | No IDE                             |
-| **Git + Github**              | Custom choice      | Fast        | Medium           | File versioning          | Code sharing mostly                |
-
-: Remote connexion to distant server, a comprehensive review {#tbl-remote-graphical}
-
-
-::: {#tip-sshfs .callout-tip}
-## Configure, and use `SSHFS` in practice
-
-> `SSHFS` protocol uses a combination of the following operators: SSH, SFTP (for file opeartations) and FUSE (Filesystem in Userspace). 
-
-1. Install `sshfs` with 
-
-```bash
-
-sudo apt install sshfs
-
-```
-
-1. Create the *mounting point*: 
-
-   ```bash
-   sshfs -p 22218 bastienc@139.124.156.52:<"remote-URL-absolute-path"> <"local-url-path"> -o reconect
-   ```
-
-   will create the following virtual filesystem connection^[the `-o`option guarantees that the connection is re-established if interrupted]: 
-  
-   ```bash
-    Remote server                     Your computer
-    ------------------                ---------------------
-    /home/bastienc/project  <--SSH--> ~/remote_project
-    # 3-layered structure mounting
-    Application (RStudio, editor)
-            │
-            ▼
-    FUSE filesystem
-            │
-            ▼
-    SSHFS driver
-            │
-            ▼
-    SSH connection
-            │
-            ▼
-    Remote filesystem (server)
-   ```
-
-2. Open the project you want to edit with `RStudio` (if `RStudio` is already opened, reload your session to have the latest version fo the files). Every change is reported back with the *remote server*, without syncing delay. Same if the file is modified remotely. **Refresh regularly to witness any remote change**. 
-
-
-3. Once done, unmount the project: 
-
-  ```bash
-  fusermount -u <"local-url-path"> # OR
-  umount "<"local-url-path">
-  ```
-  If the folder was not empty, it returns back to the stage previous mounting. 
-
-4. List all currently moundted file systems with: 
-
-```bash
-findmnt -t  #OR 
-mount | grep sshfs
-
-```
-  
-> You may use the R package [`ssh`](install.packages("ssh") if you don't enjoy using the CLI command. **beware of much limited features**. 
-
-> Optionally, on startup, you can mount remote files, editing the `/etc/fstab` file, but this requires `root` rights, and SSH automated key authentication (no prompting of the password is allowed). It can also be done on-demand (when the folder is actually accessed)
-
-```bash
-# startup mounting 
-sshfs#bastienc@139.124.156.52:/home/bastienc/project /mnt/cluster_project fuse.sshfs _netdev,port=22218,users,idmap=user,IdentityFile=/home/bastien/.ssh/id_rsa,allow_other,reconnect 0 0
-
-# on-demand mounting 
-sshfs#bastienc@139.124.156.52:/home/bastienc/project /mnt/cluster_project fuse.sshfs _netdev,port=22218,x-systemd.automount,_reconnect,users,IdentityFile=/home/bastien/.ssh/id_rsa 0 0
-
-# test the automated mounting
-sudo mount -a
-```
-
-
+Be careful about selecting the second, non-default option, if you want to allow external suers without any Amu mail address to connect on your Zoom session. 
 :::
 
-> We report under @wrn-sshfs-dos the key guidelines to enable a smooth edition workflow:
 
-::: {#wrn-sshfs-dos .callout-caution collapse="true"}
-## DO and DON'ts of using `sshfs`
 
-- It's not a synchronisation, nor a duplication of the files. Once unmounted, the local system returns to its initial state. 
-  - `rsync` creates duplicates and copies across system, only transferring the differences. However, it's must be manually reset each time a change is brought to a file
-  - Better for large datasets, bvut worse for automated and immediate synchornisation of small texts
-- There is no automatic conflict management (last wins), hence, it's recommend to combine it with `Git`in collaborative projects. 
-- Do not forget to unmount the files once done to close the SSH remote connexion
-- It's fast for editing small text files, such as code snippets. But consumes a lost of resources for large datasets. 
-- Favour absolute paths, as `sshfs` does not expand well HOME directory `~` on a remote machine.
+To go further, check the following online resources: 
 
-:::
+- [Guidelines for Zoom Meeting creation, and management](https://dud.univ-amu.fr/fr/amuzoom-animer-reunion-classe-virtuelle#section-1.1)
+- [Video tutorial](https://amupod.univ-amu.fr/video/6375-expresso-cipe-016-webinaire-que-pouvez-vous-faire-avec-zoom/)
+- [Guidelines for students](https://dud.univ-amu.fr/se-connecter-classe-virtuelle-amu-zoom-etudiants?check_logged_in=1)
+
