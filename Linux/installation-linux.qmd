@@ -280,7 +280,7 @@ dmesg -l err,crit,alert,emerg
 
 ## OneDrive and Nextcloud
 
-> If you already have a monthly pass, and are happy with onlien edition of the Office toolkit, go for it. Alternatively, `Nextcloud` also allows for interactive use of the Office toolkit, or [`Rclone`](https://rclone.org/) for syncing files across computers.
+> If you already have a monthly pass, and are happy with online edition of the Office toolkit, go for it. Alternatively, `Nextcloud` also allows for interactive use of the Office toolkit, or [`Rclone`](https://rclone.org/) for syncing files across computers.
 
 1. Install dependencies: 
 
@@ -307,35 +307,7 @@ sudo apt install --no-install-recommends --no-install-suggests onedrive
 
 4. Sync OneDrive:
 
-  i. Exclude large folders, and directories that are complex and are not recommended for syncing, `nano ~/.config/onedrive/config`
-  
-  My config file contains: 
-  
-  ```bash
-  # Exclude some configuration folders
-  ## Python virtual environments
-  skip_dir = "venv|\.venv|__pycache__"
-  ## Node.js / JavaScript build directories
-  skip_dir = "node_modules|\.next"
-  ## R virtual environments
-  skip_dir = "renv|.cache|.Rproj.user"
-  skip_file = "\.Rhistory$|\.RData$"
-  ## General files not to sync
-  skip_file = "~*|.~*|*.tmp|*.swp|*.partial"
-  # No sync the folder, if .nosync file is present
-  check_nosync = "true"
-  # local folders take precedence over remote files
-  local_first = "true"
-  display_manager_integration = "true"
-  # keep temporarily deleted files in the local Bin trash
-  use_recycle_bin = "true"
-  # latency and monitoring
-  ## check every 10 seconds local -> server changes
-  monitor_fullscan_frequency = "10"
-  ## check every minute server -> local changes
-  monitor_interval = "60"
-  ```
-  Note that **Comments must be placed in separated lines, not inline**. Alternatively, you may use [`sync_list` file](https://github.com/abraunegg/onedrive/blob/master/docs/usage.md#performing-a-selective-synchronisation-via-sync_list-file), to be stored as well in `~/.config/onedrive` folder 
+  i. Exclude large folders, and directories that are complex and are not recommended for syncing, `nano ~/.config/onedrive/config`. You can see the actual content of my config file under [onedrive-custom-config](../Config/onedrive-config).^[Note that **Comments must be placed in separated lines, not inline**.]
   
   ii. Authenticate, and run OneDrive once
   
@@ -414,6 +386,8 @@ systemctl --user start onedrive`, as it will generate otherwise concurrent proce
     b. Add [`onedrive_log`](https://github.com/zzzdeb/dotfiles/blob/master/scripts/tools/onedrive_log) bash file into folder `~/scripts/tools`. This script is a coloured wrapper of `journalctl` command. 
     c. Add to the `$PATH` using local `.bashrc` the folder `~/scripts/tools`
 
+
+
 ### Troubleshoots for OneDrive
 
 - Call `systemctl --user restart onedrive` after modifying the `.config` file to account for changes within it. For retro-application of configuration changes, use `onedrive --resync --sync --verbose` with parsimony. 
@@ -473,6 +447,55 @@ Avoid using graphical interfaces, such as [OneDriveGUI](https://github.com/bpozd
 Instead, rely on the terminal, as it usually provides the user with better customisation, and control on OneDrive configuration. 
 
 :::
+
+::: {.callout-warning title="Compatibility with Applications Using Atomic Save Operations"}
+
+Many modern editors, such as `LibreOffice` and `Rstudio` use [**atomic save strategies**](https://github.com/abraunegg/onedrive/blob/eb029bbe2ff5ba54844ae66667dce4dcb5eb78cf/docs/usage.md#compatibility-with-editors-and-applications-using-atomic-save-operations) to preserve data integrity when writing files. 
+
+```bash
+file.qmd
+↓ edit
+file.qmd.tmp # If OneDrive synchrnoises in the meantime, it believes that the file had been discarded
+↓ rename
+file.qmd
+
+
+# Architecture causing this problem
+RStudio
+   │
+   │ save
+   ▼
+Local file (.qmd)
+   │
+   │ filesystem event
+   ▼
+onedrive client
+   │
+   │ sync
+   ▼
+OneDrive cloud
+   │
+   │ sync back
+   ▼
+local overwrite
+```
+
+
+This process is likely to interfere with the regular synchronisation protocol of the `onedrive` client relying on **inotify**, triggering editor warnings, or even temporary removal of files contents.
+
+Three complementary solutions to address these issues, and reduce conflicts between editor saves and sync detection.
+
+1. Do not put active projects inside `OneDrive`, setting apart large documents storage synchronised with OneDrive, from source code version by Git. 
+2. Pause sync while coding. **But you need to think about restarting the synchronisation afterwards**. 
+3. Twist the configuration file, helping with editors using atomic saves:
+
+```bash
+force_session_upload = "true" # avoid overwriting by older cloud versions, when RStudio is on its way of saving
+delay_inotify_processing = "true" # wait for RStudio to finalise the saving of tmp files before synchornising to OneDrive
+```
+
+:::
+
 
 
 ## Monitor processes in the long-run
