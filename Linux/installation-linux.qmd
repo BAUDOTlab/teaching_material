@@ -27,7 +27,9 @@ format:
     citations-hover: true
   pdf:
     documentclass: article
-    pdf-engine: pdflatex
+    # Use a Unicode-capable engine so box-drawing characters
+    pdf-engine: lualatex
+    monofont: "DejaVu Sans Mono"
     latex-auto-install: true
     latex-max-runs: 5
 
@@ -455,7 +457,7 @@ Many modern editors, such as `LibreOffice` and `Rstudio` use [**atomic save stra
 ```bash
 file.qmd
 ↓ edit
-file.qmd.tmp # If OneDrive synchrnoises in the meantime, it believes that the file had been discarded
+file.qmd.tmp # If OneDrive synchronises in the meantime, it believes that the file had been discarded
 ↓ rename
 file.qmd
 
@@ -1060,11 +1062,14 @@ uv
 
 ::: {#fig-python-layers layout="[[1,1], [1]]"}
 
-![Each tool used to have its perimeter, hence the diversity of Python execs](python-development-layers.png)
+![Each tool used to have its perimeter, hence the diversity of Python execs](python-development-layers.png){#fig-python-layers-a}
 
-![The three levels of Python environments, from system-wide (not to be modified) to the project level](python-dependencies-use-cases.png)
-![Side-by-side compariosn of the core use cases of each Python tool -> `uv` supersedes them all!!](python-managers-summary-table.png)
-Comparison of Python managers. 
+![The three levels of Python environments, from system-wide (not to be modified) to the project level](python-dependencies-use-cases.png){#fig-python-layers-b}
+
+![Side-by-side compariosn of the core use cases of each Python tool -> `uv` supersedes them all.](python-managers-summary-table.png){#fig-python-layers-c}
+
+Comparison of Python managers.
+
 :::
 
 
