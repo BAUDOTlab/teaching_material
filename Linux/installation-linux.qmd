@@ -751,6 +751,39 @@ sudo apt install gimp-plugin-registry # add extensions
 
   ```
   iii. Install [Latex extension](https://extensions.libreoffice.org/en/extensions/show/texmaths-1)
+  
+3. Fonts customisation:
+  i. Install core Windows fonts: 
+  ```bash
+  sudo apt update
+  sudo apt install ttf-mscorefonts-installer # Install Microsoft core fonts
+  fc-cache -f -v # rebuild font cache, such that the fonts now appear In Libre Office
+  ```
+  ii. Extra fonts installation^[Alternatively, you also have the native Fonts manager tool under GNOME launch start]. Most popular fonts can be found under [Every-Font GH repository](https://github.com/serendipious/every-font/):
+  ```bash
+  mkdir -p ~/.local/share/fonts # ensure personal fonts folder is created
+  wget -P ~/.local/share/fonts "https://raw.githubusercontent.com/serendipious/every-font/master/CenturyGothic-Italic%20-%20Century%20Gothic%20-%20Italic.ttf" # download the original TFF files
+  fc-cache -f -v # update font cache
+  ```
+  
+::: {.callout-caution collapse="true" title="Core typographic options"}
+
+The main stylistic variants of fonts you can play with are:
+
+1. Weight (Light, Regular, Bold, ...)
+2. Angle or shape of the letters (regular versus italic) 
+3. Width
+4. Serif vs Sans-Serif. This property is structural to a font, for instance, `Times New Roman`is Serif, and 	
+	`Century Gothic` is `Sans-serif`. **For data visualizations, or presentations, `Sans-serif` typefaces are favoured, while it's the reverse for printed documents.**
+5. Advanced font options and customisations, such as controlling for *ligatures* connecting two letters, can be accessed in `LibreOffice → Format → Character → Features` (see @fig-typographic-options):
+
+
+> Make sure, if avalaible, to download for each font, the regular, bold, italic-bold, and italic versions at the very least.
+---
+
+![Main typographic options](typographic_options.png){#fig-typographic-options}
+:::
+
 
 ## Docker {#sec-Docker}
 
