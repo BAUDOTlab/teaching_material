@@ -1,6 +1,6 @@
 ---
-title: "Guidelines for Linux Installation"
-author: "Bastien Chassagnol, Benjamin Loire"
+title: "Guidelines for new Linux Machine setup (centred around Ubuntu)"
+author: "Bastien Chassagnol, Benjamin Loire, Morgane, Philippe"
 quarto-required: ">= 1.8.0"
 format:
   html:
@@ -1014,63 +1014,132 @@ quarto check
 
 ## Python
 
-> From **PEP 668**. guidelines, applied to modern Debian/Ubuntu distributions with native Python installed above the 3.11 version,  `pip` is prevented from modifying the **system Python** as it could interfere with te core installation program `apt`.
+> From **PEP 668**. guidelines, applied to modern Debian/Ubuntu distributions with native Python installed above the `3.11/3.12` version,  `pip` is prevented from modifying the **system Python** as it could interfere with te core installation program `apt`.
 
-::: {.callout-tip collapse="false" title="Python installation per use case"}
+> **This section is certainly the most controversial of this whole Ubuntu tutorial, as guidelines for a modern programmatic use of Python evolve rapidly, without reaching a full agreement**
 
-For System packages, use `apt`, with `sudo apt install python3-requests`, returning only stable versions, safer for system tools (but outdated versions). 
+### Python dependency core tools
 
---- 
+::: {.callout-tip collapse="false" title="Modern Python development guidelines"}
 
-For user-wide level, use `pipx`. `pipx ensurepath` guarantees that the programs installed with `pipx` are automatically added to the user's `PATH`. 
-
-> **pipx is only for applications, not libraries, contrary to `pip`**. So, no `pipx instal numpy` for instance**. 
-
----
-
-For project dependencies, use **virtual environments**, requiring the installation of the following development tools: 
+1. The latest versions of Ubuntu, including `Noble`, strongly deter from installing system-wide versions of recent Python packages. In other words, avoid running `sudo apt install python3.14-full`, and updating Deadsnakes PPA. 
+2. `uv` fully replaces the functionalities and features brought by a variety of slower, standalone Python tools (`pip`, `poetry`, `virtualenv`, `pipx`, ...), providing a faster, versatile and unified framework, see @fig-uv-development. **The features provided by `poetry` for package development may still not be fully covered by `uv`, and `pip`remains the legacy solution in older HPC systems:** 
 
 ```bash
-sudo apt install python3-full python3-venv python3-pip pipx
-pipx ensurepath
+/usr/bin ## Pre-installed Ubuntu system
+ └── system Python (used by OS)
+
+uv
+ ├── managed Python versions
+ ├── CLI tools (black, ruff, jupyterlab)
+ └── project environments
+
+~/.local/share/uv/python/
+   ├── python3.14
 ```
 
-To use a Python environment, follow:
-
-```bash
-# 1) creation
-python3 -m venv <environment_name>
-
-# 2) Activation:
-
-source .venv/bin/activate
-
-which python # should return an exec version living in your environment, such as `/home/user/project/.venv/bin/python`
+3. `conda`, and even `mamba` have been outdated by `pixi` for multi-language projects. **`uv` is definitely the go-to solution for Python-centric projects, but does not support yet cross-language project managements**. Of note, `uv` natively enforces the use of virtual environments when running Python scripts, see @tbl-python-tools. 
+4. The field renews fast -> stay alert, and up-to-date to the latest trends in this tech world. 
 
 
-# 3) package installation
-pip install fastapi uvicorn pandas
+| Feature                | uv     | Poetry | Pixi |
+|------------------------|--------|--------|------|
+| Speed                  | ⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐ |
+| Dependency management  | ✓ | ✓ | ✓ |
+| Virtual environments   | ✓ | ✓ | ✓ |
+| Python version install | ✓ | ✗ | ✓ |
+| Package publishing     | ⚠ Acceptable | ⭐ Best | ⚠ Limited |
+| Non-Python dependencies| ✗ | ✗ | ✓ |
+| CI performance         | ⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐ |
+| Maturity               | Medium | High | Medium |
 
-```
+: Comparison of Python environment and dependency management tools {#tbl-python-tools}
 
-> **In any case, avoid forcing the installation of specific Python versions sytem-wide with `pip install --break-system-packages`**. 
 :::
 
 
-### Recommended modern Python toolkit
+::: {#fig-python-layers layout="[[1,1], [1]]"}
 
-- `JupyterLab` outdated previous `JupterNotebook` as a web, and user-friendly interface, to run Python scripts
+![Each tool used to have its perimeter, hence the diversity of Python execs](python-development-layers.png)
 
-- `Poetry` is for managing dependencies within a Python package
+![The three levels of Python environments, from system-wide (not to be modified) to the project level](python-dependencies-use-cases.png)
+![Side-by-side compariosn of the core use cases of each Python tool -> `uv` supersedes them all!!](python-managers-summary-table.png)
+Comparison of Python managers. 
+:::
 
-- `Cookiecutter` is relevant for creating a default template from scratch adhering to modern Python packaging guidelines.  
+
+::: {#fig-uv-development layout-ncol=2}
+
+![Main commands to replace old-fahsioned Python tools by `uv`.](uv cheatsheet.png)
+
+![Caricature illustrating the recent domination of `uv`](python-dust-bin.png)
+:::
+
+
+### Python, and relevant Python tools, installation
+
+> I now describe the core steps to use the latest stable Python version (currently, 3.14), without breaking core Linux dependencies using pre-installed Python version. 
+
+1. Install `uv` with the following command: `curl -LsSf https://astral.sh/uv/install.sh | sh`. 
+2. Install latest Python version with `uv`: `uv python install 3.14`. 
+3. Two configuration levels for setting up the Python version
+  i. At the project level, run `uv python pin 3.14`. 
+  ii. At the user level: 
+    ```bash
+    cd ~
+    echo "3.14" > ~/.python-version
+    ```
+4. Use `uv` instead of `pipx` to install core Python tools for package dependency, web IDEs, modern Python formatting and styling, .... As `pipx`, all these tools are automatically added to the user's `PATH`:
+  ```bash
+  uv tool install ruff # ~ equivalent to pipx install ruff
+  uv tool install black
+  uv tool install jupyterlab # `JupyterLab` outdates previous `JupterNotebook` as a web-based, and user-friendly interface
+  uv tool install ipython
+  uv tool install pre-commit
+  uv tool install poetry
+  uv tool install cookiecutter `Cookiecutter` generates Python templates for modern packaging.  
+  ```
+
+
+::: {.callout-tip collapse="false" title="Python version maangement: core checks"}
+
+- Check integrity of system Python:
 
 ```bash
-pipx install jupyterlab
+ls /usr/bin/python* # -> # only one version expected, Python 3.12 with modern Linux
+/usr/bin/python
+/usr/bin/python3
+/usr/bin/python3.12
+```
+
+- Check version used by `uv`: 
+
+```bash
+ls -la ~/.local/share/uv/python* # path returned should be located within the HOME directory
 ```
 
 
+:::
 
+
+### Checking Python versions currently in use
+
+- From the terminal (system-wide), run `ls -d /usr/lib/python3.*`, or `which -a python`. This command should only return a unique version of Python, the one used by Ubuntu. 
+
+- From a Python shell (including Jupyter Lab): 
+
+  ```python
+  import sys
+  print(sys.version)
+  print(sys.executable)
+  print(sys.path)
+  ```
+
+### Relevant sources for Python tools
+
+- [From Pip to Lightning: How `uv` Opened My Eyes to Better Python Workflows](https://viveksinghpathania.medium.com/from-pip-to-lightning-how-uv-opened-my-eyes-to-better-python-workflows-dfa50e8a5893)
+- [LinkedIn portfolio on Python dependencies management tools](https://www.linkedin.com/posts/basilemarchand_pythongestionnaire-activity-7432314684441047040-u53A)
+ 
 
 ## Latex
 
@@ -1095,8 +1164,205 @@ sudo apt install texlive-latex-extra texlive-fonts-recommended texlive-science b
 sudo apt install ./cursor_2.0.77_amd64.deb
 ```
 
+# Working with the remove server
 
-# Key numerical tools provided by Aix Marseille Université
+::: {.callout-note collapse="true" title="Retrive its identity on the server"}
+
+``` bash
+id ${USER}
+uid=1001(bastien) gid=1001(bastien) groups=1001(bastien),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),122(lpadmin),135(lxd),136(sambashare)
+```
+
+- list of groups on the server, identify is defined by the combination of an username, `UID` (user ID), and `GID` (group ID) on both servers.
+
+``` bash
+id ${USER}
+uid=1007(bastienc) gid=1007(bastienc) groupes=1007(bastienc),1043(dtoo_project)
+```
+
+> More information avalaible under [Server Management tutorial](../Server Management/Server_Management.pdf).
+
+:::
+
+## Connexion to the server 
+
+- SSH protocol (see details at @tbl-ssh-connexion)
+ 
+  ```bash
+  ssh -p 22218 -XC bastienc@139.124.156.52
+  ```
+   
+  with: 
+  - `139.124.156.52` the port (`139.124.156.52` is for the new server, recommended over `139.124.156.51`, as benefiting from larger data storage, and larger computational resources, such as graphical cards)
+  - `bastienc` the user ID
+  - `22218` the port^[Commont port is 22, so it's likely one that is going to be hacked. Hence our change to the canonical port]
+  - Both `-Y` and `-X` options are required for allowing the use of remote GUIs, such as `RStudio`. -`-Y`is more secure than `-X`, but on our server, **the `-Y` option induces strong latency, and windows freezing*. 
+  - Always use the -`C` (for compression), allowing faster data transfer between local, and remote server. 
+
+
+| Option | Purpose                    | Effect on X11                                                    |
+| ------ | -------------------------- | ---------------------------------------------------------------- |
+| `-X`   | X11 forwarding (untrusted) | Runs GUI apps remotely                                           |
+| `-Y`   | X11 forwarding (trusted)   | Runs all GUI apps remotely                                       |
+| `-C`   | Compression                | Reduces network usage and can speed up GUI over slow connections |
+
+: Comparison side-by-side of the main options for customised `ssh`connexion {#tbl-ssh-connexion}
+
+## Run RStudio remotely
+
+> In @tbl-remote-graphical, we compare side-by-side approaches for using `RStudio` with files stored remotely on the server:
+
+| Method                        | Where RStudio runs | Speed       | Setup difficulty | Pros                     | Cons                               |
+| ----------------------------- | ------------------ | ----------- | ---------------- | ------------------------ | ---------------------------------- |
+| **SSH + X11 (`ssh -YC`)**     | Server             | Slow        | Very easy        | No setup required        | Laggy UI, slow plots               |
+| **SSHFS + local RStudio**     | Local machine      | Fast UI     | Easy             | Edit remote files easily | Local computation                  |
+| **RStudio Server (web)**      | Server             | Fast        | Medium           | Best remote workflow     | Requires installation              |
+| **Terminal + Rscript**        | Server             | Fast        | Very easy        | Simple, reliable         | No IDE                             |
+| **Git + Github**              | Custom choice      | Fast        | Medium           | File versioning          | Code sharing mostly                |
+
+: Remote connexion to distant server, a comprehensive review {#tbl-remote-graphical}
+
+
+::: {#tip-sshfs .callout-tip title="Configure, and use `SSHFS` in practice" collapse="true"}
+
+> `SSHFS` protocol uses a combination of the following operators: SSH, SFTP (for file opeartations) and FUSE (Filesystem in Userspace). 
+
+1. Install `sshfs` with 
+
+```bash
+
+sudo apt install sshfs
+
+```
+
+1. Create the *mounting point*: 
+
+   ```bash
+   sshfs -p 22218 bastienc@139.124.156.52:<"remote-URL-absolute-path"> <"local-url-path"> -o reconect
+   ```
+
+   will create the following virtual filesystem connection^[the `-o`option guarantees that the connection is re-established if interrupted]: 
+  
+   ```bash
+    Remote server                     Your computer
+    ------------------                ---------------------
+    /home/bastienc/project  <--SSH--> ~/remote_project
+    # 3-layered structure mounting
+    Application (RStudio, editor)
+            │
+            ▼
+    FUSE filesystem
+            │
+            ▼
+    SSHFS driver
+            │
+            ▼
+    SSH connection
+            │
+            ▼
+    Remote filesystem (server)
+   ```
+
+2. Open the project you want to edit with `RStudio` (if `RStudio` is already opened, reload your session to have the latest version fo the files). Every change is reported back with the *remote server*, without syncing delay. Same if the file is modified remotely. **Refresh regularly to witness any remote change**. 
+
+
+3. Once done, unmount the project: 
+
+  ```bash
+  fusermount -u <"local-url-path"> # OR
+  umount "<"local-url-path">
+  ```
+  If the folder was not empty, it returns back to the stage previous mounting. 
+
+4. List all currently moundted file systems with: 
+
+```bash
+findmnt -t  #OR 
+mount | grep sshfs
+
+```
+  
+> You may use the R package [`ssh`](install.packages("ssh") if you don't enjoy using the CLI command. **beware of much limited features**. 
+
+> Optionally, on startup, you can mount remote files, editing the `/etc/fstab` file, but this requires `root` rights, and SSH automated key authentication (no prompting of the password is allowed). It can also be done on-demand (when the folder is actually accessed)
+
+```bash
+# startup mounting 
+sshfs#bastienc@139.124.156.52:/home/bastienc/project /mnt/cluster_project fuse.sshfs _netdev,port=22218,users,idmap=user,IdentityFile=/home/bastien/.ssh/id_rsa,allow_other,reconnect 0 0
+
+# on-demand mounting 
+sshfs#bastienc@139.124.156.52:/home/bastienc/project /mnt/cluster_project fuse.sshfs _netdev,port=22218,x-systemd.automount,_reconnect,users,IdentityFile=/home/bastien/.ssh/id_rsa 0 0
+
+# test the automated mounting
+sudo mount -a
+```
+
+
+:::
+
+> We report under @wrn-sshfs-dos the key guidelines to enable a smooth edition workflow:
+
+::: {#wrn-sshfs-dos .callout-caution collapse="true" title="DO and DON'ts of using `sshfs`"}
+
+- It's not a synchronisation, nor a duplication of the files. Once unmounted, the local system returns to its initial state. 
+- There is no automatic conflict management (last wins), hence, it's recommended to combine it with `Git`in collaborative projects. 
+- Do not forget to unmount the files once done to close the SSH remote connexion
+- It's fast for editing small text files, such as code snippets. But consumes a lost of resources for large datasets. 
+- Favour absolute paths, as `sshfs` does not expand well HOME directory `~` on a remote machine.
+
+:::
+
+## Run `JupyterLab` remotely
+
+I replaced the **older Conda-centric workflow**  provided by Philippe with this more **modern, minimal workflow**, using safer connection protocols, removing the requirement for Conda, manual kernel installation, and permanent connexion with `autossh`: 
+
+1. Create the environment on the server: 
+  i. With `Pixi`: 
+    ```bash
+    # environement creation, with some custom Python modules
+    pixi init
+    pixi add python jupyterlab ipykernel numpy pandas matplotlib
+    
+    # environment activation
+    pixi shell
+    ```
+  
+  ii. With **uv**:
+
+    ```bash
+    uv venv
+    source .venv/bin/activate
+    
+    uv pip install jupyterlab ipykernel
+    python -m ipykernel install --user --name project_env # optional, specifiying which Python kernel to use
+    ```
+    
+2. Run JupterLab remotely:
+
+```bash
+ssh -p 22218 bastienc@139.124.156.52
+jupyter lab --no-browser --port=8888
+```
+
+3. Create a permanent SSH tunnel connection: 
+
+```bash
+ssh -L 8888:localhost:8888 -p 22218 bastienc@139.124.156.52 # creates connection local computer port 8888 → server port 8888
+
+# go to local web browser, and copy paste the token previously identified
+http://localhost:8888
+
+# stabilise the connection, by running Jupyter in the background (detach terminal)
+tmux | jupyter lab --no-browser --port=8888 ## create another terminal windows
+Ctrl + b d # detach it in the backe-end
+
+# optional: add an alias in `~/.bashrc` to connect directly to remote jupyter lab
+alias jlab-server='ssh -L 8888:localhost:8888 -p 22218 bastienc@139.124.156.52'
+```
+
+> Remaining question: replace this workflow with **JupyterLab Desktop**??
+
+# Core numerical tools provided by Aix Marseille Université
 
 > List of [numerical tools used in Amu](https://www.univ-amu.fr/fr/public/les-outils-numeriques-damu)
 
