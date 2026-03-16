@@ -1076,7 +1076,7 @@ Comparison of Python managers.
 :::
 
 
-### Python, and relevant Python tools, installation
+### Use `uv` to manage core Python tools, and version management {#sec-uv}
 
 > I now describe the core steps to use the latest stable Python version (currently, 3.14), without breaking core Linux dependencies using pre-installed Python version. 
 
@@ -1134,11 +1134,63 @@ ls -la ~/.local/share/uv/python* # path returned should be located within the HO
   print(sys.executable)
   print(sys.path)
   ```
-
+  
 ### Relevant sources for Python tools
 
 - [From Pip to Lightning: How `uv` Opened My Eyes to Better Python Workflows](https://viveksinghpathania.medium.com/from-pip-to-lightning-how-uv-opened-my-eyes-to-better-python-workflows-dfa50e8a5893)
 - [LinkedIn portfolio on Python dependencies management tools](https://www.linkedin.com/posts/basilemarchand_pythongestionnaire-activity-7432314684441047040-u53A)
+
+### Python IDE (PyCharm)
+
+::: {.callout-note title="PyCharm versus Spyder" collapse="true"}
+
+Historically, the two main IDEs for developing in Python are `Sypder` and `PyCharm`.
+
+
+Spyder is recommended for individual and temporary projects, such as running short-term data analysis scripts, and was commonly used in the research community. 
+
+
+However, `PyCharm`, while having a steeper learning curve, is much more scalable to larger, and collaborative projects. If you plan to use Git, or connect to databases, or develop tools addressed to the wide research community, or work in remote sessions, or within containerised environments, it's definitely the tool to pick up. Besides, it now supports native integration with AI-coding agents. 
+
+> In conclusion, `PyCharm` is far more common in modern professional programming for Python-centric projects, an dhas mostly superseded Spyder. 
+> Again, if you need multi-language to run your analyses, switch to VS Code for smoother and integrated development process. 
+
+:::
+
+
+::: {.callout-info title="PyCharm Installation" collapse="false"}
+
+1. [Ask for a complete PyCharm pro installation, providing your own academic mail](https://www.jetbrains.com/academy/student-pack/). 
+2. Extract, and install PyCharm: 
+
+```bash
+tar -xzf pycharm-*.tar.gz
+sudo mv pycharm-* /opt/pycharm # recommended folder in Ubuntu for external applications
+bash /opt/pycharm/bin/pycharm.sh # installation script
+sudo ln -s /opt/pycharm/bin/pycharm.sh /usr/local/bin/pycharm # add PyCharm to the PATH for direct CLI launching
+```
+
+3. (Optional) Use `Tools → Create Desktop Entry` to add PyCharm to the GNOM Application Menu. 
+
+:::
+
+> Recommended mondern setup of Python projects within `PyCharm`, when using `uv` as dependency manager (see @sec-uv), and following modern programming framework:
+
+1. Create a virtual environment, and project with `uv venv`. 
+2. Under `File → Settings → Project → Python Interpreter` (also available as shortcut {{< kbd Ctrl-Alt-S >}}), ensure that `Add Interpreter → Existing` explicitly points to the `python` version stored with the `venv project`: `<project path>/.venv/bin/python` -> that way, you ensure the project is fully isolated, and does not conflict with pre-existing dependencies. 
+3. The project structure should look like as (seel also @fig-uv-pycharm): 
+
+```bash
+project/
+ ├── .venv/ # stores Python dependencies
+ ├── pyproject.toml # stores Python module versions
+ └── src/ # stores Python scripts for running the application
+```
+
+
+![`uv + PyCharm` setup, representing the different layers in which Python Interpreter live, and the modern and recommended workflow for creating Python projects fully solated, and reproducible](uv-pycharm-structure.png){#fig-uv-pycharm}
+
+
  
 
 ## Latex
