@@ -1040,7 +1040,38 @@ echo "deb [signed-by=/etc/apt/keyrings/cran.gpg] https://cloud.r-project.org/bin
 sudo apt install ./rstudio-2025.09.0-422-amd64.deb
 ```
 
-3. Install Quarto, Go to [https://quarto.org/docs/get-started/](https://quarto.org/docs/get-started/)
+4. Install Air, as the recommended, fast and modern formatter for R code. Then, customise your RStudio settings, explicitly reporting the path location of Air formatter, see @tip-Rstudio-settings. 
+
+```bash
+uv tool install air-formatter
+```
+
+
+::: {#tip-Rstudio-settings .callout-tip title="Sync RStudio options across platforms"}
+
+1. **Locate the repository on your system that stores RStudio settings**. There's no direct means for exporting RStudio parameters that have been modified by the user. Instead, the key directory storing core RStudio settings is located under `~/.config/rstudio/` for Linux, and `%AppData%\RStudio` for Windows^[`%AppData%` is a shortened alias for this expanded path on Windows: `C:\Users\<YourUser>\AppData\Roaming\RStudio`]. The key files in this repository are: 
+
+| File                 | Purpose                                            |
+| -------------------- | -------------------------------------------------- |
+| `rstudio-prefs.json` | Global preferences modified by the user            |
+| `keybindings/`       | Custom keyboard shortcuts                          |
+| `themes/`            | Custom themes (if any)                             |
+| `snippets/`          | Code snippets                                      |
+| `dictionaries/`      | Custom dictionaries beyond English, and French     |
+
+2. **Identify what it's worth relevant for syncing**: indeed, while you could export all the RStudio settings for a complete backup, most of them are optional, or barely modified by regular users. Instead, I would identify, and retrieve only the settings explicitly changed by the user. 
+  > Would use local, or online diff editors, such as [diffcheckers](https://www.diffchecker.com/) to quickly identify what changed between personal configurations. 
+  > Specifically, all external tools that complement the functionalities of RStudio, such as pdf previewer, or external formatters such as Air, are hard-coded as absolute paths, and are accordingly highly specific to a personal laptop. 
+
+3. **Homogenise settings across machines**: once you've finalised the customisation of the RStudio settings to your specific OS configuration, simply overwrite pre-existing *user-specific* settings file `rstudio-prefs.json`.  **Restart RStudio** to check if changes were properly integrated into the graphical interface^[If some of the setting changes were not applied, you can usually access them from the Menu options with `Tools > Global Options...`]. 
+
+> To simplify the syncing across machines (especially for teams with shared computing environment), use either: 
+  1. Git-based sync, storing your dotfiles. This is the recommended approach. You can find my settings files under []
+  2. use symbolic links, or cloud sync (but you have fewer options to adjust for changes)
+
+:::
+
+4. Install Quarto, Go to [https://quarto.org/docs/get-started/](https://quarto.org/docs/get-started/)
 
 ```bash
 sudo apt install ./quarto-1.3.496-linux-amd64.deb
