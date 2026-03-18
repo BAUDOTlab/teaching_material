@@ -1,38 +1,90 @@
 {
-    "jobs_tab_visibility": "shown",
-    "default_project_location": "C:/Users/basti/OneDrive/04. BNCL (Post Doc)/Research Projects",
-    "initial_working_directory": "~",
-    "spelling_dictionary_language": "en_GB",
-    "windows_terminal_shell": "win-cmd",
-    "document_author": "bastien chassagnol",
-    "python_project_environment_automatic_activate": false,
-    "pdf_previewer": "none",
-    "save_files_before_build": true,
-    "check_for_updates": false,
-    "auto_detect_indentation": true,
-    "rainbow_parentheses": true,
-    "save_workspace": "never",
-    "load_workspace": false,
-    "insert_native_pipe_operator": true,
-    "rmd_auto_date": true,
-    "copilot_indexing_enabled": true,
-    "copilot_completions_delay": 200,
-    "copilot_completions_trigger": "manual",
-    "show_hidden_files": true,
-    "ignore_uppercase_words": false,
-    "check_unexpected_assignment_in_function_call": true,
-    "warn_if_no_such_variable_in_scope": true,
-    "warn_variable_defined_but_not_used": true,
-    "code_formatter": "external",
-    "show_rmd_render_command": true,
-    "doc_outline_show": "sections_and_chunks",
-    "visual_markdown_editing_show_doc_outline": false,
-    "highlight_r_function_calls": true,
-    "show_help_tooltip_on_idle": true,
-    "code_completion_include_already_used": true,
-    "check_arguments_to_r_function_calls": true,
-    "style_diagnostics": true,
-    "show_diagnostics_other": true,
-    "source_with_echo": true,
-    "code_formatter_external_command": "C:/Users/basti/.local/bin/air.exe format"
+  // ===============================
+  // 🧠 GENERAL SESSION & WORKSPACE
+  // ===============================
+  "default_encoding": "UTF-8",                // Default file encoding
+  "initial_working_directory": "~",           // Start R in home directory
+  "save_workspace": "never",                  // Do not save .RData on exit
+  "load_workspace": false,                    // Do not restore workspace on startup
+  "auto_save_on_blur": true,                  // Auto-save when editor loses focus
+  "check_for_updates": true,                  // Check for RStudio updates
+
+  // ===============================
+  // 📁 PROJECTS DEFAULT SETTINGS
+  // ===============================
+  "default_project_location": "~/OneDrive/04. BNCL (Post Doc)/Research Projects", // Default project folder (Linux path OK)
+  "new_proj_git_init": true,                 // Initialize Git repo for new projects
+  "new_proj_use_renv": true,                 // Use renv for dependency management
+
+  // ===============================
+  // 🖥️ TERMINAL
+  // ===============================
+  "posix_terminal_shell": "bash",            // Default shell for Linux/macOS
+  // "windows_terminal_shell": "win-cmd" Default shell for Linux/macOS
+
+  // ===============================
+  // ✍️ EDITOR BEHAVIOR
+  // ===============================
+  "auto_detect_indentation": true,           // Detect indentation style automatically
+  "rainbow_parentheses": true,               // Color matching parentheses
+  "highlight_r_function_calls": true,        // Highlight function calls
+  "show_help_tooltip_on_idle": true,         // Show function help on hover
+  "insert_native_pipe_operator": true,       // Use |> instead of %>%
+  "show_hidden_files": true,                 // Show hidden files in file pane
+
+  // ===============================
+  // 🧪 CODE DIAGNOSTICS & LINTING
+  // ===============================
+  "style_diagnostics": true,                 // Enable style checks
+  "line_ending_conversion": "posix", // obliterate irrelevant commits related to distinct conventions for encoding end of lines across platforms
+  // Validate function arguments and structure
+  "check_arguments_to_r_function_calls": true, 
+  "check_unexpected_assignment_in_function_call": true,
+  "warn_if_no_such_variable_in_scope": true,
+  "warn_variable_defined_but_not_used": true,
+  "show_diagnostics_other": true,    
+
+  // ===============================
+  // 🎨 CODE FORMATTING
+  // ===============================
+  "code_formatter": "external",              // Use external formatter
+  "reformat_on_save": true, // apply formatter when saving the document
+  "code_formatter_external_command": "/home/bastien/.local/bin/air format", // to be customised on your laptop
+
+  // ===============================
+  // 🔤 COMPLETION & INTELLISENSE (aka integration with AI tools)
+  // ===============================
+  "copilot_enabled": true, // (you'll need to explicitly sign in to pair your account)
+  "code_completion_include_already_used": true, // Include already used symbols
+  "copilot_indexing_enabled": true,             // Enable Copilot indexing
+  "copilot_completions_delay": 200,             // Delay in ms before suggestions
+  "copilot_completions_trigger": "manual",      // Trigger manually (not automatic)
+
+  // ===============================
+  // 📄 R MARKDOWN / DOCUMENTS
+  // ===============================
+  "rmd_auto_date": true,                       // Auto-insert date in Rmd
+  "show_rmd_render_command": true,             // Show render command
+  "doc_outline_show": "sections_and_chunks",   // Show sections + chunks
+  "visual_markdown_editing_show_doc_outline": true,
+  "pdf_previewer": "none",                     // No internal PDF previewer
+
+  // ===============================
+  // 🔠 SPELLING & LANGUAGE & authoring
+  // ===============================
+  "spelling_dictionary_language": "en_GB",     // British English dictionary
+  "ignore_uppercase_words": false,            // Check uppercase words too
+  "document_author": "bastien chassagnol",    // Default author name
+
+  // ===============================
+  // ⚙️ BUILD & EXECUTION & JOBS
+  // ===============================
+  "save_files_before_build": true,            // Save before build
+  "source_with_echo": true,                   // Echo commands when sourcing
+  "jobs_tab_visibility": "shown",             // Show Jobs tab
+
+  // ===============================
+  // 🐍 PYTHON
+  // ===============================
+  "python_project_environment_automatic_activate": false
 }
