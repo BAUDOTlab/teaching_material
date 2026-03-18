@@ -1066,8 +1066,19 @@ uv tool install air-formatter
 3. **Homogenise settings across machines**: once you've finalised the customisation of the RStudio settings to your specific OS configuration, simply overwrite pre-existing *user-specific* settings file `rstudio-prefs.json`.  **Restart RStudio** to check if changes were properly integrated into the graphical interface^[If some of the setting changes were not applied, you can usually access them from the Menu options with `Tools > Global Options...`]. 
 
 > To simplify the syncing across machines (especially for teams with shared computing environment), use either: 
-  1. Git-based sync, storing your dotfiles. This is the recommended approach. You can find my settings files under []
+  1. Git-based sync, storing your dotfiles. This is the recommended approach. You can find my settings files under [`rstudio-prefs.json`](../Config/RStudio/rstudio-prefs.json). See also @fig-Rstudio-options for a more comprehensive explantion of core changes brought to a default, native RStudio configuration. 
   2. use symbolic links, or cloud sync (but you have fewer options to adjust for changes)
+  
+---
+
+::: {#fig-Rstudio-options layout-ncol=2}
+
+![In yellow, core reproducibility options. Notably, avoid loading your R session, and objects on start, for reduced use of memory](Rstudio-config-1.png)
+
+![Styling and linting of R code with [`Air Posit`](https://posit-dev.github.io/air/), and integration with AI helpers.](Rstudio-config-2.png)
+
+Core options to change the default behaviour of RStudio, enabling enhanced compatibility across projects, R Versions, and OS platforms. 
+:::
 
 :::
 
