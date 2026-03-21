@@ -1,6 +1,6 @@
 ---
 title: "Guidelines for new Linux Machine setup (centred around Ubuntu)"
-author: "Bastien Chassagnol, Benjamin Loire, Morgane, Philippe"
+author: "Bastien Chassagnol, Benjamin Loire, Morgane, Philippe, Marielle"
 quarto-required: ">= 1.8.0"
 format:
   html:
