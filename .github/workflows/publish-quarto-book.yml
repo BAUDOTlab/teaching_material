@@ -1,6 +1,10 @@
-# Render the Quarto book and publish to the gh-pages branch.
-# Repository settings → Pages: deploy from branch "gh-pages", folder "/ (root)".
-# https://quarto.org/docs/publishing/github-pages.html
+# Render Quarto to ./docs then deploy as static files (no Jekyll build of ./docs).
+#
+# GitHub repo → Settings → Pages:
+#   Build and deployment → Source: "GitHub Actions"
+#
+# Do NOT use "Deploy from a branch" → /docs unless you commit ./docs to git.
+# Do NOT use the default "Jekyll" starter workflow (it expects ./docs in the checkout).
 
 name: Quarto Publish Book for best practices with Linux
 
@@ -10,16 +14,24 @@ on:
       - main
       - master
   pull_request:
-    branches: 
+    branches:
       - main
       - master
   schedule:
     - cron: "0 17 * * 5"
-# manually trigger the workflow
   workflow_dispatch:
 
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
-  build-and-publish:
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -33,10 +45,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tinytex: true # required for pdf outputs
+          tinytex: true
 
       - name: Render book (HTML + PDF)
-        run: quarto render --to html,pdf
+        run: quarto render
 
       - name: Publish to GitHub Pages
         uses: quarto-dev/quarto-actions/publish@v2
