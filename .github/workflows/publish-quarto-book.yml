@@ -2,7 +2,7 @@
 # Repository settings → Pages: deploy from branch "gh-pages", folder "/ (root)".
 # https://quarto.org/docs/publishing/github-pages.html
 
-name: Publish Quarto book
+name: Quarto Publish Book for best practices with Linux
 
 on:
   push:
@@ -17,8 +17,6 @@ on:
     - cron: "0 17 * * 5"
 # manually trigger the workflow
   workflow_dispatch:
-
-name: Quarto Publish Book for best practices with Linux
 
 jobs:
   build-and-publish:
@@ -37,8 +35,8 @@ jobs:
         with:
           tinytex: true # required for pdf outputs
 
-      - name: Render book
-        run: quarto render
+      - name: Render book (HTML + PDF)
+        run: quarto render --to html,pdf
 
       - name: Publish to GitHub Pages
         uses: quarto-dev/quarto-actions/publish@v2

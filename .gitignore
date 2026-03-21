@@ -5,7 +5,7 @@
 .Rproj
 
 # Quarto book / site build output (published via GitHub Actions, not committed)
-_book/
+docs/
 .quarto/
 
 
