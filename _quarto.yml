@@ -1,0 +1,30 @@
+# Quarto book project — only these sources are rendered (see project.render).
+# https://quarto.org/docs/books/
+
+project:
+  type: book
+  output-dir: docs
+  render:
+    - index.qmd
+    - Linux/installation-linux.qmd
+
+book:
+  title: "Team teaching material"
+  description: "Teaching resources (Linux installation guide and more)."
+  chapters:
+    - index.qmd
+    - Linux/installation-linux.qmd
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+
+# If running R scripts, must be run locally to avoid using too many GH actions.
+execute:
+  freeze: true
+  echo: false
+  eval: true
+  message: false
+  warning: false
+  error: false
