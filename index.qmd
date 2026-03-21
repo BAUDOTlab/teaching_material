@@ -1,0 +1,7 @@
+---
+title: "Welcome"
+---
+
+This site is built with [Quarto](https://quarto.org) as a **book** project. Use the table of contents to open the Linux installation guide.
+
+For other materials in this repository (SNF, Git, package development, etc.), see the project `README.md` in the repository root.
