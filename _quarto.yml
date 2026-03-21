@@ -11,6 +11,8 @@ project:
 book:
   title: "Team teaching material"
   description: "Teaching resources (Linux installation guide and more)."
+  # Stable PDF basename on the site (e.g. docs/team-teaching-material.pdf)
+  output-file: team-teaching-material
   chapters:
     - index.qmd
     - Linux/installation-linux.qmd
@@ -19,6 +21,11 @@ format:
   html:
     theme: cosmo
     toc: true
+  pdf:
+    documentclass: scrbook
+    pdf-engine: lualatex
+    latex-auto-install: true
+    monofont: "DejaVu Sans Mono"
 
 # If running R scripts, must be run locally to avoid using too many GH actions.
 execute:
