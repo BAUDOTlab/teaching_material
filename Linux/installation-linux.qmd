@@ -108,7 +108,7 @@ User does not require root
   - `lib` for extensions of a given executable (such as packages in R, or modules in Python)
   - This folder hierachy follows [`XGD`Base Directory Npecification](https://specifications.freedesktop.org/basedir/latest/)
 - `/tmp` for temporary folders, cleaned after `reboot`
-- `/run` for sockets
+- `/run` for sockets, namely used for controlling all the portocols running in the background for connecting to a server, such as the `ssh-agent`
 - `~/.config/systemd`: lists all processes that keep on running in the background, such as Cursor updates, or Onedrive synchronisations.
 
 ## Useful Ubuntu commands
@@ -1522,4 +1522,91 @@ To go further, check the following online resources:
 - [Guidelines for Zoom Meeting creation, and management](https://dud.univ-amu.fr/fr/amuzoom-animer-reunion-classe-virtuelle#section-1.1)
 - [Video tutorial](https://amupod.univ-amu.fr/video/6375-expresso-cipe-016-webinaire-que-pouvez-vous-faire-avec-zoom/)
 - [Guidelines for students](https://dud.univ-amu.fr/se-connecter-classe-virtuelle-amu-zoom-etudiants?check_logged_in=1)
+
+
+
+# Miscelleaneous
+
+## SSH configuration
+
+> Objective is dual: avoid typing your password each time you're connecting to a remote cluster, and keep a safe storage of all registered remote hosts:
+
+1. 🔐 Set up SSH remote access (with key-based auth)
+
+  ```bash
+  # remote server must have openssh-server installed
+  sudo apt install openssh-server
+  ```
+
+2. Generate a pair of public-private SSH key on your local machine^[Using a passphrase is not compuslory, but safer]
+
+  ```bash
+  ssh-keygen -t ed25519 -C "your_email@example.com"
+  ```
+  This creates:
+  
+    - `~/.ssh/id_ed25519` (private key)
+    - `~/.ssh/id_ed25519.pub` (public key)
+
+3. Copy your key to the server with `ssh-copy-id username@server_ip`. You'll no longer need typing your password once typed once. 
+
+4. (Optional) Keep under `~/.ssh/config` file the key features describing each remote cluster. For instance, my configuration for the IFB is the following, and to connect to it, I only need typing now `ssh ifb-core`. A second advantage of using this format for storing hosts is that it can be readily used by `VS Code SSH Remote` connection extensions.  
+
+  ```bash
+# 🎯 alias for the host connection, either "ifb-core" or "ifb"
+Host ifb-core ifb
+
+    # 🌍 The real hostname (or IP) of the remote server
+    HostName core.cluster.france-bioinformatique.fr
+
+    # 👤 Username used on the remote machine
+    User bchassagnol
+
+    # 🔑 Path to your private SSH key
+    IdentityFile ~/.ssh/id_ed25519
+
+    # 🚫 Force SSH to use ONLY the specified key above, avoiding complex managing of key version
+    IdentitiesOnly yes
+
+    # 🔄 Order of authentication methods: SSH key, then keyboard-interactive, then fallback to password
+    PreferredAuthentications publickey,keyboard-interactive,password
+
+    # 🤖 Automatically add this key to ssh-agent when used
+    AddKeysToAgent yes
+  ```
+
+> My host configuration, enabling by default graphical interfaces to run on the remote server, is avalaible under [config-ssh](../Config/ssh-hosts/.ssh/config)
+
+---
+
+::: {.callout-tip collapse="true" title="Ssh configuration recommendations"}
+
+> On older Ubuntu configurations, the `shh-agent`, and `shh-add` processes are not activated by default on startup. Check this by running this command: 
+
+```bash
+systemctl --user enable ssh-agent
+```
+
+> Use `GNOME Keyring` to store SSH keys securely
+
+> Report to @tbl-ssh-guidelines, and @fig-ssh-connection for further details
+
+---
+
+| Practice                         | Why                                                  |
+|----------------------------------|------------------------------------------------------|
+| **Prefer Ed25519 keys**          | Small, fast, modern default.                         |
+| **Use a passphrase on the key**  | Protects the key if the disk is copied or stolen.    |
+| **`~/.ssh/config` per host**     | Aliases, and login recommendations                   |
+| **Never commit private keys**    | Keep `id_*` out of git and cloud-synced folders.     |
+| **`ssh-copy-id` once per host**  | Standard way to populate `authorized_keys`.          |
+
+: SSH recommended practices {#tbl-ssh-guidelines}
+
+---
+
+![Overview of an initial SSH connection](./ssh-initiate-connection.png){#fig-ssh-connection}
+
+:::
+
 
