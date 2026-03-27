@@ -173,6 +173,8 @@ sudo apt -f install
 
 # List all Hardware Driver Errors
 dmesg -l err,crit,alert,emerg
+
+# You may also compare MDS5 identification sums
 ```
 :::
 
@@ -401,7 +403,7 @@ systemctl --user start onedrive`, as it will generate otherwise concurrent proce
 
 - Git and OneDrive do not interfere well for 3 reasons at least, especially when synchronising files on multiple platforms. Linux (and Mac) machines end lines with `LF (Line Feed): \n`, while Windows uses `CRLF (Carriage Return + Lien Feed): \r\n`, Linux tracks file permissions for executables while Windows doesn't (only problematic for shell scripts), finally, `.git` and `.Rproj` folders are complex binary repositories with challenging access and encoding. Three heuristic approaches to solve most issues:
 
-  i. Exclude `.git` folders^[Adding argument `skip_dir = ".git"` to OneDrive config file] (or even completely code folders) from the synchronisation. **Note that in this case, the folder will no longer be detected as tracked by `Git` processes.**
+  i. Exclude `.git` folders^[Adding argument `skip_dir = ".git"` to OneDrive config file] (or even completely code folders) from the synchronisation. **Note that in this case, the folder will no longer be tracked as a `Git` processes.**
   
   ii. Configure globally the `.gitconfig` configuration file to allow both end of lines indicators, using `git config --global core.autocrlf input` on Linux and Mac machines collaborating with Windows machines^[Accept as EOL CRLF, but always commit as LF], and `git config --global core.autocrlf true` on Windows machines^[on Windows machines, checked out as `CRLF`, but committed as `LF`]. The argument tolerates `CRLF` as it appears, otherwise use by default Linux-like `LF` endings. **This approach solves most of my synchronisation conflicts**. 
   
@@ -493,7 +495,7 @@ Three complementary solutions to address these issues, and reduce conflicts betw
 
 ```bash
 force_session_upload = "true" # avoid overwriting by older cloud versions, when RStudio is on its way of saving
-delay_inotify_processing = "true" # wait for RStudio to finalise the saving of tmp files before synchornising to OneDrive
+delay_inotify_processing = "true" # wait for RStudio to finalise the saving of tmp files before synchronising to OneDrive
 ```
 
 :::
@@ -506,6 +508,9 @@ delay_inotify_processing = "true" # wait for RStudio to finalise the saving of t
   - Alternatively, processes at the system-level are stored under `/lib/systemd/system/`
 
 - `systemctl status <service>` retrieves current status
+
+
+
 
 # Software to install
 
@@ -635,9 +640,7 @@ sudo apt install -f
 2. Unzip the archive, within it, make it executable with `chmod +x`. 
 3. Run it
 
-::: {.callout-note collapse="true"}
-## A step-bystep tutorial for the installation from source an Ubuntu application, from downloading the archive to adding it to the Path, and to the Start programm
-
+::: {.callout-note collapse="true" title="A step-bystep tutorial for the installation from source an Ubuntu application, from downloading the archive to adding it to the Path, and to the Start program"}
 
 To turn any exec into a **desktop application** on Ubuntu-GNOME, follow this steps:
 
@@ -733,6 +736,14 @@ Sorted from closest experience to Paint, to most generalist:
 sudo apt install gimp
 sudo apt install gimp-plugin-registry # add extensions
 ```
+
+4. `Inkscape` for generating **vectorial**, and fully deformable icons
+
+```bash
+sudo apt update
+sudo apt install inkscape
+```
+
 
 
 ## LibreOffice
@@ -1148,11 +1159,13 @@ Comparison of Python managers.
 :::
 
 
-::: {#fig-uv-development layout-ncol=2}
+::: {#fig-uv-development layout-ncol=3}
 
 ![Main commands to replace old-fahsioned Python tools by `uv`.](uv cheatsheet.png)
 
 ![Caricature illustrating the recent domination of `uv`](python-dust-bin.png)
+![Decision tree for the choice of Python tool, depending on the scope: `uv` for pure Python projects (for instance, running bioinformatic analyses), `poetry` (and `uv` with less support) for Python packages, and `pixi` for cross-language projects. **Note that both `conda` and `mamba` ar eno longer required in the modern Programmer stack.](./poetry_vs_uv_vs_pixi.png)
+
 :::
 
 
@@ -1181,14 +1194,12 @@ Comparison of Python managers.
   ```
 
 
-::: {.callout-tip collapse="false" title="Python version maangement: core checks"}
+::: {.callout-tip collapse="false" title="Python version management: core checks"}
 
 - Check integrity of system Python:
 
 ```bash
 ls /usr/bin/python* # -> # only one version expected, Python 3.12 with modern Linux
-/usr/bin/python
-/usr/bin/python3
 /usr/bin/python3.12
 ```
 
@@ -1199,12 +1210,11 @@ ls -la ~/.local/share/uv/python* # path returned should be located within the HO
 ```
 
 
-:::
+---
 
+> Checking current Python version used:
 
-### Checking Python versions currently in use
-
-- From the terminal (system-wide), run `ls -d /usr/lib/python3.*`, or `which -a python`. This command should only return a unique version of Python, the one used by Ubuntu. 
+- From the terminal (system-wide), `ls -d /usr/lib/python3.*`, or `which -a python` should only return a unique version of Python, the one used by Ubuntu. 
 
 - From a Python shell (including Jupyter Lab): 
 
@@ -1220,58 +1230,55 @@ ls -la ~/.local/share/uv/python* # path returned should be located within the HO
 - [From Pip to Lightning: How `uv` Opened My Eyes to Better Python Workflows](https://viveksinghpathania.medium.com/from-pip-to-lightning-how-uv-opened-my-eyes-to-better-python-workflows-dfa50e8a5893)
 - [LinkedIn portfolio on Python dependencies management tools](https://www.linkedin.com/posts/basilemarchand_pythongestionnaire-activity-7432314684441047040-u53A)
 
-### Python IDE (PyCharm)
+<!-- ### Python IDE (PyCharm) -->
 
-::: {.callout-note title="PyCharm versus Spyder" collapse="true"}
+<!-- ::: {.callout-note title="PyCharm versus Spyder" collapse="true"} -->
 
-Historically, the two main IDEs for developing in Python are `Sypder` and `PyCharm`.
-
-
-Spyder is recommended for individual and temporary projects, such as running short-term data analysis scripts, and was commonly used in the research community. 
+<!-- Historically, the two main IDEs for developing in Python are `Sypder` and `PyCharm`. -->
 
 
-However, `PyCharm`, while having a steeper learning curve, is much more scalable to larger, and collaborative projects. If you plan to use Git, or connect to databases, or develop tools addressed to the wide research community, or work in remote sessions, or within containerised environments, it's definitely the tool to pick up. Besides, it now supports native integration with AI-coding agents. 
-
-> In conclusion, `PyCharm` is far more common in modern professional programming for Python-centric projects, an dhas mostly superseded Spyder. 
-> Again, if you need multi-language to run your analyses, switch to VS Code for smoother and integrated development process. 
-
-:::
+<!-- Spyder is recommended for individual and temporary projects, such as running short-term data analysis scripts, and was commonly used in the research community.  -->
 
 
-::: {.callout-info title="PyCharm Installation" collapse="false"}
+<!-- However, `PyCharm`, while having a steeper learning curve, is much more scalable to larger, and collaborative projects. If you plan to use Git, or connect to databases, or develop tools addressed to the wide research community, or work in remote sessions, or within containerised environments, it's definitely the tool to pick up. Besides, it now supports native integration with AI-coding agents.  -->
 
-1. [Ask for a complete PyCharm pro installation, providing your own academic mail](https://www.jetbrains.com/academy/student-pack/). 
-2. Extract, and install PyCharm: 
+<!-- > In conclusion, `PyCharm` is far more common in modern professional programming for Python-centric projects, an dhas mostly superseded Spyder.  -->
+<!-- > Again, if you need multi-language to run your analyses, switch to VS Code for smoother and integrated development process.  -->
 
-```bash
-tar -xzf pycharm-*.tar.gz
-sudo mv pycharm-* /opt/pycharm # recommended folder in Ubuntu for external applications
-bash /opt/pycharm/bin/pycharm.sh # installation script
-sudo ln -s /opt/pycharm/bin/pycharm.sh /usr/local/bin/pycharm # add PyCharm to the PATH for direct CLI launching
-```
-
-3. (Optional) Use `Tools → Create Desktop Entry` to add PyCharm to the GNOM Application Menu. 
-
-:::
-
-> Recommended mondern setup of Python projects within `PyCharm`, when using `uv` as dependency manager (see @sec-uv), and following modern programming framework:
-
-1. Create a virtual environment, and project with `uv venv`. 
-2. Under `File → Settings → Project → Python Interpreter` (also available as shortcut {{< kbd Ctrl-Alt-S >}}), ensure that `Add Interpreter → Existing` explicitly points to the `python` version stored with the `venv project`: `<project path>/.venv/bin/python` -> that way, you ensure the project is fully isolated, and does not conflict with pre-existing dependencies. 
-3. The project structure should look like as (seel also @fig-uv-pycharm): 
-
-```bash
-project/
- ├── .venv/ # stores Python dependencies
- ├── pyproject.toml # stores Python module versions
- └── src/ # stores Python scripts for running the application
-```
+<!-- ::: -->
 
 
-![`uv + PyCharm` setup, representing the different layers in which Python Interpreter live, and the modern and recommended workflow for creating Python projects fully solated, and reproducible](uv-pycharm-structure.png){#fig-uv-pycharm}
+<!-- ::: {.callout-info title="PyCharm Installation" collapse="false"} -->
+
+<!-- 1. [Ask for a complete PyCharm pro installation, providing your own academic mail](https://www.jetbrains.com/academy/student-pack/).  -->
+<!-- 2. Extract, and install PyCharm:  -->
+
+<!-- ```bash -->
+<!-- tar -xzf pycharm-*.tar.gz -->
+<!-- sudo mv pycharm-* /opt/pycharm # recommended folder in Ubuntu for external applications -->
+<!-- bash /opt/pycharm/bin/pycharm.sh # installation script -->
+<!-- sudo ln -s /opt/pycharm/bin/pycharm.sh /usr/local/bin/pycharm # add PyCharm to the PATH for direct CLI launching -->
+<!-- ``` -->
+
+<!-- 3. (Optional) Use `Tools → Create Desktop Entry` to add PyCharm to the GNOM Application Menu.  -->
+
+<!-- ::: -->
+
+<!-- > Recommended mondern setup of Python projects within `PyCharm`, when using `uv` as dependency manager (see @sec-uv), and following modern programming framework: -->
+
+<!-- 1. Create a virtual environment, and project with `uv venv`.  -->
+<!-- 2. Under `File → Settings → Project → Python Interpreter` (also available as shortcut {{< kbd Ctrl-Alt-S >}}), ensure that `Add Interpreter → Existing` explicitly points to the `python` version stored with the `venv project`: `<project path>/.venv/bin/python` -> that way, you ensure the project is fully isolated, and does not conflict with pre-existing dependencies.  -->
+<!-- 3. The project structure should look like as (seel also @fig-uv-pycharm):  -->
+
+<!-- ```bash -->
+<!-- project/ -->
+<!--  ├── .venv/ # stores Python dependencies -->
+<!--  ├── pyproject.toml # stores Python module versions -->
+<!--  └── src/ # stores Python scripts for running the application -->
+<!-- ``` -->
 
 
- 
+<!-- ![`uv + PyCharm` setup, representing the different layers in which Python Interpreter live, and the modern and recommended workflow for creating Python projects fully isolated, and reproducible](uv-pycharm-structure.png){#fig-uv-pycharm} -->
 
 ## Latex
 
@@ -1324,7 +1331,8 @@ flatpak run com.bitwarden.desktop
 # Export, then import your password database from other web browsers
 ```
 
-> About global Parameters configuration, leave unticked the option `Do not auto-fill on page load` + prefer storing logins based on complete URL domain to avoid ambiguities.   
+> In the `Auto-fill` tab of the Parameters configuration, leave unticked the option `Do not auto-fill on page load` + choose `Default URI detection` option as `Exact` to avoid ambiguities. 
+> Counterintuitively, go to [Web Vault BitWarden](https://vault.bitwarden.com/) to bulk remove passwords. This option is not proposed by default in the regular BitWarden. 
 
 
 
