@@ -1356,7 +1356,7 @@ To go further, check the following online resources:
 - [Video tutorial](https://amupod.univ-amu.fr/video/6375-expresso-cipe-016-webinaire-que-pouvez-vous-faire-avec-zoom/)
 - [Guidelines for students](https://dud.univ-amu.fr/se-connecter-classe-virtuelle-amu-zoom-etudiants?check_logged_in=1)
 
-### WooClap
+### WooClap for QCMs
 
 Go to [Wooclap](https://drive.google.com/uc?export=download&id=123po0Fa9jxYq5rzOMnwzDuIZCfUJnEuO), and use your **instutional mail adress** for single sign-on across platforms. 
 
@@ -1379,135 +1379,6 @@ uid=1007(bastienc) gid=1007(bastienc) groupes=1007(bastienc),1043(dtoo_project)
 > More information avalaible under [Server Management tutorial](../Server Management/Server_Management.pdf).
 
 :::
-
-### Connexion to the server 
-
-- SSH protocol (see details at @tbl-ssh-connexion)
- 
-  ```bash
-  ssh -p 22218 -XC bastienc@139.124.156.52
-  ```
-   
-  with: 
-  - `139.124.156.52` the port (`139.124.156.52` is for the new server, recommended over `139.124.156.51`, as benefiting from larger data storage, and larger computational resources, such as graphical cards)
-  - `bastienc` the user ID
-  - `22218` the port^[Commont port is 22, so it's likely one that is going to be hacked. Hence our change to the canonical port]
-  - Both `-Y` and `-X` options are required for allowing the use of remote GUIs, such as `RStudio`. -`-Y`is more secure than `-X`, but on our server, **the `-Y` option induces strong latency, and windows freezing*. 
-  - Always use the -`C` (for compression), allowing faster data transfer between local, and remote server. 
-
-
-| Option | Purpose                    | Effect on X11                                                    |
-| ------ | -------------------------- | ---------------------------------------------------------------- |
-| `-X`   | X11 forwarding (untrusted) | Runs GUI apps remotely                                           |
-| `-Y`   | X11 forwarding (trusted)   | Runs all GUI apps remotely                                       |
-| `-C`   | Compression                | Reduces network usage and can speed up GUI over slow connections |
-
-: Comparison side-by-side of the main options for customised `ssh`connexion {#tbl-ssh-connexion}
-
-### Run RStudio remotely
-
-> In @tbl-remote-graphical, we compare side-by-side approaches for using `RStudio` with files stored remotely on the server:
-
-| Method                        | Where RStudio runs | Speed       | Setup difficulty | Pros                     | Cons                               |
-| ----------------------------- | ------------------ | ----------- | ---------------- | ------------------------ | ---------------------------------- |
-| **SSH + X11 (`ssh -YC`)**     | Server             | Slow        | Very easy        | No setup required        | Laggy UI, slow plots               |
-| **SSHFS + local RStudio**     | Local machine      | Fast UI     | Easy             | Edit remote files easily | Local computation                  |
-| **RStudio Server (web)**      | Server             | Fast        | Medium           | Best remote workflow     | Requires installation              |
-| **Terminal + Rscript**        | Server             | Fast        | Very easy        | Simple, reliable         | No IDE                             |
-| **Git + Github**              | Custom choice      | Fast        | Medium           | File versioning          | Code sharing mostly                |
-
-: Remote connexion to distant server, a comprehensive review {#tbl-remote-graphical}
-
-
-::: {#tip-sshfs .callout-tip title="Configure, and use `SSHFS` in practice" collapse="true"}
-
-> `SSHFS` protocol uses a combination of the following operators: SSH, SFTP (for file opeartations) and FUSE (Filesystem in Userspace). 
-
-1. Install `sshfs` with 
-
-```bash
-
-sudo apt install sshfs
-
-```
-
-1. Create the *mounting point*: 
-
-   ```bash
-   sshfs -p 22218 bastienc@139.124.156.52:<"remote-URL-absolute-path"> <"local-url-path"> -o reconect
-   ```
-
-   will create the following virtual filesystem connection^[the `-o`option guarantees that the connection is re-established if interrupted]: 
-  
-   ```bash
-    Remote server                     Your computer
-    ------------------                ---------------------
-    /home/bastienc/project  <--SSH--> ~/remote_project
-    ## 3-layered structure mounting
-    Application (RStudio, editor)
-            │
-            ▼
-    FUSE filesystem
-            │
-            ▼
-    SSHFS driver
-            │
-            ▼
-    SSH connection
-            │
-            ▼
-    Remote filesystem (server)
-   ```
-
-2. Open the project you want to edit with `RStudio` (if `RStudio` is already opened, reload your session to have the latest version fo the files). Every change is reported back with the *remote server*, without syncing delay. Same if the file is modified remotely. **Refresh regularly to witness any remote change**. 
-
-
-3. Once done, unmount the project: 
-
-  ```bash
-  fusermount -u <"local-url-path"> ## OR
-  umount "<"local-url-path">
-  ```
-  If the folder was not empty, it returns back to the stage previous mounting. 
-
-4. List all currently moundted file systems with: 
-
-```bash
-findmnt -t  #OR 
-mount | grep sshfs
-
-```
-  
-> You may use the R package [`ssh`](install.packages("ssh") if you don't enjoy using the CLI command. **beware of much limited features**. 
-
-> Optionally, on startup, you can mount remote files, editing the `/etc/fstab` file, but this requires `root` rights, and SSH automated key authentication (no prompting of the password is allowed). It can also be done on-demand (when the folder is actually accessed)
-
-```bash
-## startup mounting 
-sshfs#bastienc@139.124.156.52:/home/bastienc/project /mnt/cluster_project fuse.sshfs _netdev,port=22218,users,idmap=user,IdentityFile=/home/bastien/.ssh/id_rsa,allow_other,reconnect 0 0
-
-## on-demand mounting 
-sshfs#bastienc@139.124.156.52:/home/bastienc/project /mnt/cluster_project fuse.sshfs _netdev,port=22218,x-systemd.automount,_reconnect,users,IdentityFile=/home/bastien/.ssh/id_rsa 0 0
-
-## test the automated mounting
-sudo mount -a
-```
-
-
-:::
-
-> We report under @wrn-sshfs-dos the key guidelines to enable a smooth edition workflow:
-
-::: {#wrn-sshfs-dos .callout-caution collapse="true" title="DO and DON'ts of using `sshfs`"}
-
-- It's not a synchronisation, nor a duplication of the files. Once unmounted, the local system returns to its initial state. 
-- There is no automatic conflict management (last wins), hence, it's recommended to combine it with `Git`in collaborative projects. 
-- Do not forget to unmount the files once done to close the SSH remote connexion
-- It's fast for editing small text files, such as code snippets. But consumes a lost of resources for large datasets. 
-- Favour absolute paths, as `sshfs` does not expand well HOME directory `~` on a remote machine.
-
-:::
-
 
 ### SSH configuration
 
@@ -1555,7 +1426,21 @@ Host ifb-core ifb
 
     ## 🤖 Automatically add this key to ssh-agent when used
     AddKeysToAgent yes
-  ```
+    
+# Host configuration for the new server
+Host mmg-sb-05 new-mmg-cluster
+  HostName 139.124.156.52
+  Port 22218 # is the port, avoiding, unlike the popular 22, to be hacked.
+  User bastienc
+  IdentityFile ~/.ssh/id_ed25519
+  IdentitiesOnly yes
+  PubkeyAuthentication yes
+  PreferredAuthentications publickey,keyboard-interactive,password
+  AddKeysToAgent yes
+  ForwardX11 yes
+  ForwardX11Trusted yes
+  
+```
 
 > My host configuration, enabling by default graphical interfaces to run on the remote server, is avalaible under [config-ssh](../Config/ssh-hosts/.ssh/config)
 
@@ -1563,13 +1448,7 @@ Host ifb-core ifb
 
 ::: {.callout-tip collapse="true" title="Ssh configuration recommendations"}
 
-> On older Ubuntu configurations, the `shh-agent`, and `shh-add` processes are not activated by default on startup. Check this by running this command: 
-
-```bash
-systemctl --user enable ssh-agent
-```
-
-> Use `GNOME Keyring` to store SSH keys securely
+> On older Ubuntu configurations, the `shh-agent`, and `shh-add` processes are not activated by default on startup. Check this by running `systemctl --user enable ssh-agent`.
 
 > Report to @tbl-ssh-guidelines, and @fig-ssh-connection for further details
 
@@ -1578,7 +1457,7 @@ systemctl --user enable ssh-agent
 | Practice                         | Why                                                  |
 |----------------------------------|------------------------------------------------------|
 | **Prefer Ed25519 keys**          | Small, fast, modern default.                         |
-| **Use a passphrase on the key**  | Protects the key if the disk is copied or stolen.    |
+| **Use a pass phrase on the key**  | Protects the key if the disk is copied or stolen.    |
 | **`~/.ssh/config` per host**     | Aliases, and login recommendations                   |
 | **Never commit private keys**    | Keep `id_*` out of git and cloud-synced folders.     |
 | **`ssh-copy-id` once per host**  | Standard way to populate `authorized_keys`.          |
@@ -1589,6 +1468,119 @@ systemctl --user enable ssh-agent
 
 ![Overview of an initial SSH connection](./ssh-initiate-connection.png){#fig-ssh-connection}
 
+---
+
+| Option | Purpose                    | Effect on X11                                                    |
+| ------ | -------------------------- | ---------------------------------------------------------------- |
+| `-X`   | X11 forwarding (untrusted) | Runs GUI apps remotely                                           |
+| `-Y`   | X11 forwarding (trusted)   | Runs all GUI apps remotely                                       |
+| `-C`   | Compression                | Reduces network usage and can speed up GUI over slow connections |
+
+: Comparison side-by-side of the main options for customised `ssh`connexion {#tbl-ssh-connexion}
+
 :::
+
+
+<!-- ### Run RStudio remotely -->
+
+<!-- > In @tbl-remote-graphical, we compare side-by-side approaches for using `RStudio` with files stored remotely on the server: -->
+
+<!-- | Method                        | Where RStudio runs | Speed       | Setup difficulty | Pros                     | Cons                               | -->
+<!-- | ----------------------------- | ------------------ | ----------- | ---------------- | ------------------------ | ---------------------------------- | -->
+<!-- | **SSH + X11 (`ssh -YC`)**     | Server             | Slow        | Very easy        | No setup required        | Laggy UI, slow plots               | -->
+<!-- | **SSHFS + local RStudio**     | Local machine      | Fast UI     | Easy             | Edit remote files easily | Local computation                  | -->
+<!-- | **RStudio Server (web)**      | Server             | Fast        | Medium           | Best remote workflow     | Requires installation              | -->
+<!-- | **Terminal + Rscript**        | Server             | Fast        | Very easy        | Simple, reliable         | No IDE                             | -->
+<!-- | **Git + Github**              | Custom choice      | Fast        | Medium           | File versioning          | Code sharing mostly                | -->
+
+<!-- : Remote connexion to distant server, a comprehensive review {#tbl-remote-graphical} -->
+
+
+<!-- ::: {#tip-sshfs .callout-tip title="Configure, and use `SSHFS` in practice" collapse="true"} -->
+
+<!-- > `SSHFS` protocol uses a combination of the following operators: SSH, SFTP (for file opeartations) and FUSE (Filesystem in Userspace).  -->
+
+<!-- 1. Install `sshfs` with  -->
+
+<!-- ```bash -->
+
+<!-- sudo apt install sshfs -->
+
+<!-- ``` -->
+
+<!-- 2. Create the *mounting point*:  -->
+
+<!--    ```bash -->
+<!--    sshfs -p 22218 bastienc@139.124.156.52:<"remote-URL-absolute-path"> <"local-url-path"> -o reconect -->
+<!--    ``` -->
+
+<!--    will create the following virtual filesystem connection^[the `-o`option guarantees that the connection is re-established if interrupted]:  -->
+
+<!--    ```bash -->
+<!--     Remote server                     Your computer -->
+<!--     ------------------                --------------------- -->
+<!--     /home/bastienc/project  <--SSH--> ~/remote_project -->
+<!--     ## 3-layered structure mounting -->
+<!--     Application (RStudio, editor) -->
+<!--             │ -->
+<!--             ▼ -->
+<!--     FUSE filesystem -->
+<!--             │ -->
+<!--             ▼ -->
+<!--     SSHFS driver -->
+<!--             │ -->
+<!--             ▼ -->
+<!--     SSH connection -->
+<!--             │ -->
+<!--             ▼ -->
+<!--     Remote filesystem (server) -->
+<!--    ``` -->
+
+<!-- 3. Open the project you want to edit with `RStudio` (if `RStudio` is already opened, reload your session to have the latest version fo the files). Every change is reported back with the *remote server*, without syncing delay. Same if the file is modified remotely. **Refresh regularly to witness any remote change**.  -->
+
+
+<!-- 4. Once done, unmount the project:  -->
+
+<!--   ```bash -->
+<!--   fusermount -u <"local-url-path"> ## OR -->
+<!--   umount "<"local-url-path"> -->
+<!--   ``` -->
+<!--   If the folder was not empty, it returns back to the stage previous mounting.  -->
+
+<!-- 4. List all currently mounted file systems with:  -->
+
+<!-- ```bash -->
+<!-- findmnt -t  #OR  -->
+<!-- mount | grep sshfs -->
+
+<!-- ``` -->
+
+<!-- > Optionally, on startup, you can mount remote files, editing the `/etc/fstab` file, but this requires `root` rights, and SSH automated key authentication (no prompting of the password is allowed). It can also be done on-demand (when the folder is actually accessed) -->
+
+<!-- ```bash -->
+<!-- ## startup mounting  -->
+<!-- sshfs#bastienc@139.124.156.52:/home/bastienc/project /mnt/cluster_project fuse.sshfs _netdev,port=22218,users,idmap=user,IdentityFile=/home/bastien/.ssh/id_rsa,allow_other,reconnect 0 0 -->
+
+<!-- ## on-demand mounting  -->
+<!-- sshfs#bastienc@139.124.156.52:/home/bastienc/project /mnt/cluster_project fuse.sshfs _netdev,port=22218,x-systemd.automount,_reconnect,users,IdentityFile=/home/bastien/.ssh/id_rsa 0 0 -->
+
+<!-- ## test the automated mounting -->
+<!-- sudo mount -a -->
+<!-- ``` -->
+
+<!-- ::: -->
+
+<!-- > We report under @wrn-sshfs-dos the key guidelines to enable a smooth edition workflow: -->
+
+<!-- ::: {#wrn-sshfs-dos .callout-caution collapse="true" title="DO and DON'ts of using `sshfs`"} -->
+
+<!-- - It's not a synchronisation, nor a duplication of the files. Once unmounted, the local system returns to its initial state.  -->
+<!-- - There is no automatic conflict management (last wins), hence, it's recommended to combine it with `Git`in collaborative projects.  -->
+<!-- - Do not forget to unmount the files to close the SSH remote connexion -->
+<!-- - It's fast for editing small text files, such as code snippets. But consumes a lost of resources for large datasets.  -->
+<!-- - Favour absolute paths, as `sshfs` does not expand well HOME path alais `~` on a remote machine. -->
+
+<!-- ::: -->
+
 
 
