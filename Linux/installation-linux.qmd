@@ -511,7 +511,7 @@ delay_inotify_processing = "true" # wait for RStudio to finalise the saving of t
 
 > **General recommendation*: avoid using `ChatGPT`, as the instructions for installing software are often deprecated and/or not following Ubuntu best guidelines.
 
-::: {.callout-note title="Install software on Ubuntu, some guidelines"}
+::: {#nte-sofware-installation .callout-note title="Install software on Ubuntu, some guidelines"}
 
 Three recommended methods, depending on Ubuntu's support:
 
@@ -550,7 +550,7 @@ Three recommended methods, depending on Ubuntu's support:
 
 ---  
   
-- And now, the not recommended installations: 
+- And now, the least recommended installations: 
   - `snap` stores pre-compiled versions of tools, but are less recommended compared to standard installation with `sudo apt install`
   - `FlatPak+Flathub`
   
@@ -1296,7 +1296,39 @@ sudo apt install texlive-latex-extra texlive-fonts-recommended texlive-science b
 sudo apt install ./cursor_2.0.77_amd64.deb
 ```
 
-# Working with the remove server
+
+## Password Manager for Linux -> BitWarden
+
+> `BitWarden is the recommended password manager for Linux systems for a variety of reasons: it's mostly free, compliant with most web browsers (Firefox, Chrome, Opera, ...), including native Google password manager, and can sync your password database over an endless number of devices. There's even a lightweight application for Iphone, and Android mobile phones. Besides, the storage expends beyond raw passwords, ranging from passkeys, to SSH secrets, or credit card information. Finally, it's compatible with most OS, including Windows and Linux. 
+
+> Accordingly, all these features fax expand the facilities delivered by native Ubuntu Gnome `Passwords and Keys` application manager, which besides can only be installed locally. 
+
+> One major drawback, though, is that it does not check for duplicated values in an automated way. 
+
+> Follow the following steps for its installation^[Contrary to best guidelines suggested in @nte-sofware-installation, only the `flatpak` and `snap` installation are supported for Ubuntu devices -> no automatic updates with native `apt` Ubuntu dependency manager]
+
+```bash
+# Install Flatpak, and Gnome Flatpak plugin
+sudo apt install flatpak
+sudo apt install gnome-software-plugin-flatpak
+
+# Add Flatbu repository for software storage
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+# Install and run BitWarden locally
+flatpak install flathub com.bitwarden.desktop
+flatpak run com.bitwarden.desktop
+
+# Install Web Add-on, going to https://chromewebstore.google.com/detail/bitwarden-password-manage/nngceckbapebfimnlniiiahkandclblb?hl=en, then pin in your Booktabs
+
+# Export, then import your password database from other web browsers
+```
+
+> About global Parameters configuration, leave unticked the option `Do not auto-fill on page load` + prefer storing logins based on complete URL domain to avoid ambiguities.   
+
+
+
+# Working with the remote server
 
 ::: {.callout-note collapse="true" title="Retrive its identity on the server"}
 
