@@ -5,45 +5,45 @@ quarto-required: ">= 1.8.0"
 format:
   html:
     embed-resources: true
-    # styling options
+    ## styling options
     page-layout: full
-    # fig rendering
+    ## fig rendering
     lightbox: true
     smooth-scroll: true
-    # add comments
+    ## add comments
     comments:
       hypothesis: true
-    # code styling options
+    ## code styling options
     code-fold: true
     code-tools: true
     code-summary: "Show the code"
-    code-link: true # all functions can be directly clicked on
+    code-link: true ## all functions can be directly clicked on
     code-overflow: wrap
     collapse: true
     code-copy: hover
-    # Hovering effect
+    ## Hovering effect
     crossrefs-hover: true
     footnotes-hover: true
     citations-hover: true
   pdf:
     documentclass: article
-    # Use a Unicode-capable engine so box-drawing characters
+    ## Use a Unicode-capable engine so box-drawing characters
     pdf-engine: lualatex
     monofont: "DejaVu Sans Mono"
     latex-auto-install: true
     latex-max-runs: 5
 
-# Table options
+## Table options
 tbl-cap-location: bottom
 
-# Figure options
+## Figure options
 fig-align: center
 out-width: "80%"
 dpi: 320
 fig-dpi: 320
 fig-pos: "h!"
 
-# Quarto extensions
+## Quarto extensions
 filters:
   - highlight-text
   
@@ -53,21 +53,24 @@ execute:
   message: false
   warning: false
   error: false
-  freeze: true # to avoid using lots of GH actions
+  freeze: true ## to avoid using lots of GH actions
 editor:
   source: true
   
 toc: true
-number-sections: true # Required for cross-referencing sections
-number-depth: 3 # chapter, section, and sub-sections, will be numbered
-toc-depth: 3 # chapter, section, and sub-sections, will be included in the toc
+number-sections: true ## Required for cross-referencing sections
+number-depth: 3 ## chapter, section, and sub-sections, will be numbered
+toc-depth: 3 ## chapter, section, and sub-sections, will be included in the toc
 ---
 
-# Linux general guidelines
+- `dpkg --print-architecture`: retrieve architecture, for package installation^[Returns `amd64` in my case].
+-  {{< kbd Ctrl-H >}} in **Gnome**, aka File Management, to list hidden files
 
-## General Folder layout
+## Linux general guidelines
 
-### System-wide location (for core programs)
+### General Folder layout for application, and package installation
+
+#### System-wide location (for core programs)
 
 System-wide affects all users, are installed using `sudo`, on the root of the system. 
 
@@ -83,7 +86,7 @@ System-wide affects all users, are installed using `sudo`, on the root of the sy
 
 - `/opt` for third-party application bundles, **self-contained** while `/usr/local` is for third-party **binaries**. Besides, `/opt` is not in the path by default.  
 
-### User-specific locations
+#### User-specific locations
 
 User does not require root
 
@@ -97,26 +100,22 @@ User does not require root
 
 : Main user-based software locations, to be compared with @tbl-system-wide-locations {#tbl-user-based-locations}
 
-### General remarks
+#### General remarks
 
 - `usr` folder stores *read-only* executables, while `/var` is regularly written upon changes:
   - `/var/lib`: apt and dpkg databases, for instance, respectiely stored under `dpkg`, and `/apt`
   - `/var/cache`: metadata caches for faster execution
 - `/usr/local/`, or `$HOME/.local` stores executables that require custom compilation with `make`, or `qmake`, rendered from manual archives:
   - `bin`, `sbin` for executables
-  - `share` for icons (under subfolder `icons`) and desktop configuration, documention under `/doc`
+  - `share` for icons (under subfolder `icons`) and desktop configuration, document ion under `/doc`
   - `lib` for extensions of a given executable (such as packages in R, or modules in Python)
-  - This folder hierachy follows [`XGD`Base Directory Npecification](https://specifications.freedesktop.org/basedir/latest/)
+  - This folder hierarchy follows [`XGD`Base Directory Npecification](https://specifications.freedesktop.org/basedir/latest/)
 - `/tmp` for temporary folders, cleaned after `reboot`
 - `/run` for sockets, namely used for controlling all the portocols running in the background for connecting to a server, such as the `ssh-agent`
 - `~/.config/systemd`: lists all processes that keep on running in the background, such as Cursor updates, or Onedrive synchronisations.
 
-## Useful Ubuntu commands
 
-- `dpkg --print-architecture`: retrieve architecture, for package installation^[Returns `amd64` in my case].
--  {{< kbd Ctrl-H >}} in **Gnome**, aka File Management, to list hidden files
-
-## General update of Ubuntu
+### Recommended Updating policy of Ubuntu
 
 1. Create file `update_os.sh` with:
 
@@ -138,47 +137,44 @@ apt-get autoclean -y
   ii. `sudo ./update_os.sh` to run the update file with **admin** rights
 3. Reboot the system with `reboot`
 
-### Troubleshoots when updating Ubuntu
+::: {.callout-caution collapse="true" title="Ubuntu partial updates"}
 
 > Partial updates breaking key driver components occur more often with Ubuntu compared to Microsoft, since Linux tends to provide lots of separate, modular packages while Windows ships large and standalone bundles -> **Consequence: more issues with updates, especially if the network connection dropped, and the newest versions of the packages were not fully installed.**
 
-::: {.callout-tip}
-## Avoid critical update misfunctions with Ubuntu
+---
 
-1. Run daily the following commands: 
+> General recommendations:
 
 ```bash
+# to be run daily
 sudo apt update
 sudo apt upgrade
-```
 
-2. Run monthly:
+# to be run monthly
+sudo apt full-upgrade
 
-```bash
-`sudo apt full-upgrade`
-
-
-# dependences no longer required
+## clean deprecated dependencies
 sudo apt autoremove
 sudo apt autoclean
 ```
 
-3. 3 commands to solve most driver issues after partial update:
+---
+
+> Deal driver issues
 
 ```bash
-# Check for Broken Packages
+## Check for Broken Packages
 sudo dpkg --configure -a
-# Install missing dependencies
+## Install missing dependencies
 sudo apt -f install
 
-# List all Hardware Driver Errors
+## List all Hardware Driver Errors
 dmesg -l err,crit,alert,emerg
 
-# You may also compare MDS5 identification sums
 ```
 :::
 
-## Network issues
+### Network protocols, and connexion troubleshoots
 
 - Two IP protocols for Wi-FI: `IPv4` versus `IPv6`. 
 
@@ -204,19 +200,19 @@ dmesg -l err,crit,alert,emerg
 
   ```bash
   install dhclient commands
-  sudo dhclient -4 wlp2s0f0 <Wifi-name> # in my case, wlp2s0f0  
+  sudo dhclient -4 wlp2s0f0 <Wifi-name> ## in my case, wlp2s0f0  
   ```
   - *Permanent fix*^[Alternatively, you can rely on the GNOME Interface, `Wifi` section]: 
   
     ```bash
     nmcli connection modify "Routeur/Livebox-FC77" ipv4.method auto 
-    nmcli connection modify "Routeur/Livebox-FC77" ipv6.method auto # connect automatically to IPv4 or IPv6, depending on the availitbity of the protocol
-    # re-start the connection, applying the new configuration parameters
+    nmcli connection modify "Routeur/Livebox-FC77" ipv6.method auto ## connect automatically to IPv4 or IPv6, depending on the availitbity of the protocol
+    ## re-start the connection, applying the new configuration parameters
     nmcli connection down "Routeur/Livebox-FC77"
     nmcli connection up "Routeur/Livebox-FC77"
     ```
     
-## Eduroam connexion
+#### Eduroam connexion
 
 0. **Ensure to delete beforehand any pre-existing installation: `rm -rf $HOME/.config/cat_installer`**.
 1. Go to <https://cat.eduroam.org/>, the website usually provides with the version fitting your OS distribution. 
@@ -224,67 +220,39 @@ dmesg -l err,crit,alert,emerg
 3. Run Python script with `python 3 eduroam-linux-AUA.py`
 4. As `userid`, provide your academic mail address, and as password, your `ENT password`. 
 
+### Shell-customisation (including `$PATH`)
 
-# Git and GitHub
+#### Zsh (advanced bash configuration)
 
-## Github configuration {#sec-git-config}
+```bash
+sudo apt update
+sudo apt install zsh
 
-1. Github often requires double authentication, that you can set on https://github.com/settings/security. Recommended to use *passkey* if supported by your device (unfortunately, Linux OS usually do not support it), or use authenticator app, such as Microsoft Authentificator. **Deterred against the use of SMS + mobile phones**.
+## define this shell shebang by default
+chsh -s $(which zsh) ## modify /etc/passwd repository
+``` 
 
-2. Configure your access to Github:
-  i. Choose either SSH, or HTTPs. 
-  ii. For HTTPS, configure one token per device, under <https://github.com/settings/tokens>. Give the token the name of your laptop, its configuration and originals owner. Assign it at least the repo and read scopes. Copy it once -> **it won't be available afterwards!!**. 
+#### Add executables 
+
+- System-wide: 
+  - `/usr`, and manual installs under `/usr/local` are in the `$PATH` by default
+  - For third-party GUI, *self-contained* apps stored under `/opt`, add a symlink: `sudo ln -s /opt/<appName> /usr/local/bin/<appName>`, requires **`sudo` rights**.
+
+- User-level: 
+  - Customise `.bashrc` (or `.zshrc`) configuration files to modify the `$PATH` -> **Only affects the user, and interactive shell**. Examples:
   
-3. General options to configure: 
-  i. Use either the command line (create also automatically the file `~/.gitconfig`):
   ```bash
-  git config --global user.name "bastienchassagnol"
-  git config --global user.email "bastien.chassagnol@univ-amu.fr"
+  export PATH="$PATH:$HOME/scripts/tools"
+  alias ll='ls -lah'
   ```
-  ii. Or directly, using text editor, file `~/.gitconfig` (more error-prone to indentation errors). Find my default git config file here (for comprehensive description of options, report to [Formation Git 2024, a tutorial by Benjamin](../Git/formation_git_2024.pdf)): 
-  
-  ```.gitconfig
-  [user]
-  	name = bastienchassagnol
-  	email = bastien.chassagnol@univ-amu.fr
-  # modern default git options
-  [init]
-    defaultBranch = main
-  
-  # simplifying solving git conflicts + troubleshoot solving
-  [merge]
-    conflictstyle = zdiff3
-  [rerere]
-    enabled = true
-  
-  # tolerate distinct end of lines  
-  [core]
-  	autocrlf = input
-  
-  # visualisation
-  [tag]
-    sort = version:refname
-  [branch]
-    sort = -committerdate
-  [credential]
-  	helper = store
-  ```
+  - AppImages may be integrated using AppImageLauncher, or `.desktop` configuration. 
 
-4. Avoid typing your password for every login: 
-
-  i. For HTTPS + PAT token protocol, use `git config --global credential.helper store` for **permanent** registration of the password (should we not encrypt the file??), or `git config --global credential.helper 'cache --timeout=3600'` for temporary access^[Time-out units are reported in seconds, accordingly, this amounts to one hour]. 
-  ii. Define SSH key. 
+- Deal with multiple versions of the same program (for instance, `Java`): use `update-alternatives --list <AppName>` to list executables. 
 
 
-# Synchronise files across devices
+## Synchronise files across devices with OneDrive 
 
-## Serverless
-
-- Go for `Syncthing`. 
-
-## OneDrive and Nextcloud
-
-> If you already have a monthly pass, and are happy with online edition of the Office toolkit, go for it. Alternatively, `Nextcloud` also allows for interactive use of the Office toolkit, or [`Rclone`](https://rclone.org/) for syncing files across computers.
+### OneDrive open-source installation for Ubuntu
 
 1. Install dependencies: 
 
@@ -299,7 +267,7 @@ wget -qO - https://download.opensuse.org/repositories/home:/npreining:/debian-ub
 
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/obs-onedrive.gpg] https://download.opensuse.org/repositories/home:/npreining:/debian-ubuntu-onedrive/xUbuntu_24.04/ ./" | sudo tee /etc/apt/sources.list.d/onedrive.list
 
-# update cache
+## update cache
 sudo apt-get update
 ``` 
 
@@ -316,21 +284,21 @@ sudo apt install --no-install-recommends --no-install-suggests onedrive
   ii. Authenticate, and run OneDrive once
   
   ```bash
-  onedrive --sync --dry-run # optional, list folders that will be synchronsied
-  onedrive --sync --verbose # first initialisation, usually time-consuming, one-shot
+  onedrive --sync --dry-run ## optional, list folders that will be synchronsied
+  onedrive --sync --verbose ## first initialisation, usually time-consuming, one-shot
   ```
 
 4. Permanent synchronization using `systemtcl` facilities. **Highly recommended to remove folders at the local level, rather than on the server**. 
 
 ```bash
 systemctl --user enable onedrive
-systemctl --user start onedrive # in the back end, use onedrive --monitor
+systemctl --user start onedrive ## in the back end, use onedrive --monitor
 ```
 
 5. Monitor currently uploaded files: 
 
 ```bash
-journalctl --user-unit onedrive -f (continous) # equivalent to systemctl --user status onedrive (single-shot)
+journalctl --user-unit onedrive -f (continous) ## equivalent to systemctl --user status onedrive (single-shot)
 
 onedrive --display-config
 onedrive --version
@@ -346,28 +314,28 @@ systemctl --user start onedrive`, as it will generate otherwise concurrent proce
     - You'll need to install, and run `qmake` version 5 (by default, on recent Ubuntu configurations, it's the 6th that is used, which does not compile successfully the program). 
     
     ```bash
-    # install the 5th version of qmake
+    ## install the 5th version of qmake
     sudo apt install qt5-qmake qtbase5-dev
     
-    # explicity use the qmake version 5, by calling the entire absolute path
-    # usually located under folder /usr/lib/qt5/bin
-    # avoid switching from qmake version 6 to qmake version 5 as default
-    # using symbolic links, as most recent projects use version 6 of qmake
+    ## explicity use the qmake version 5, by calling the entire absolute path
+    ## usually located under folder /usr/lib/qt5/bin
+    ## avoid switching from qmake version 6 to qmake version 5 as default
+    ## using symbolic links, as most recent projects use version 6 of qmake
     ```
     
   - Run following bash file:
   
     ```bash
-    # create the runnable executive file
+    ## create the runnable executive file
     git clone https://github.com/DanielBorgesOliveira/onedrive_tray.git
     cd onedrive_tray
     mkdir build
     cd build
-    /usr/lib/qt5/bin/qmake ../systray.pro # prepare the configuration, such as Makefile
-    make # build the software
+    /usr/lib/qt5/bin/qmake ../systray.pro ## prepare the configuration, such as Makefile
+    make ## build the software
     
-    # execute it, such that it runs whenever log in
-    sudo make install # deploy the software, such as copying files -> here's the sudo incentive
+    ## execute it, such that it runs whenever log in
+    sudo make install ## deploy the software, such as copying files -> here's the sudo incentive
     systemctl enable --user onedrive_tray.service
     ```
     
@@ -394,13 +362,12 @@ systemctl --user start onedrive`, as it will generate otherwise concurrent proce
 
 ### Troubleshoots for OneDrive
 
-- Call `systemctl --user restart onedrive` after modifying the `.config` file to account for changes within it. For retro-application of configuration changes, use `onedrive --resync --sync --verbose` with parsimony. 
+- **Call `systemctl --user restart onedrive` after modifying the `.config` file to account for changes within it**. For retro-application of configuration changes, use `onedrive --resync --sync --verbose` with parsimony. **The synchornisation halts without warning, when the config file is modified, so you need to restart it**. 
+
 - Warning "onedrive application is already running, please check process list" means that several concurrent onedrive are running in the background:
   - List existing processes using onedrive: `ps aux | grep onedrive`
   - Force kill processes that do no not use `systemtcl`: kill -9 <pid> 
   
-- Configure [webhooks](https://github.com/abraunegg/onedrive/blob/master/docs/webhooks.md), if you want *real-time* synchronisation with the server, `server -> local`. **Not recommended generally, as complex to configure, and usually irrelevant for daily use cases**. Instead, reduce the latency for synchronisation. 
-
 - Git and OneDrive do not interfere well for 3 reasons at least, especially when synchronising files on multiple platforms. Linux (and Mac) machines end lines with `LF (Line Feed): \n`, while Windows uses `CRLF (Carriage Return + Lien Feed): \r\n`, Linux tracks file permissions for executables while Windows doesn't (only problematic for shell scripts), finally, `.git` and `.Rproj` folders are complex binary repositories with challenging access and encoding. Three heuristic approaches to solve most issues:
 
   i. Exclude `.git` folders^[Adding argument `skip_dir = ".git"` to OneDrive config file] (or even completely code folders) from the synchronisation. **Note that in this case, the folder will no longer be tracked as a `Git` processes.**
@@ -410,9 +377,9 @@ systemctl --user start onedrive`, as it will generate otherwise concurrent proce
   iii. **Best practice**: per project, create a `.gitattributes` defining explicitly the encoding of EOL, removing the dependency to the machine OS^[Detailled information is avalaible [here](https://docs.github.com/en/get-started/git-basics/configuring-git-to-handle-line-endings?platform=windows)]. By default, you should opt in ofr the `LF` EOL:
   
   ```gitattributes
-  # 3 columns: file extension, file type (text, or binary), eol definition for text documents
-  * text=auto eol=lf # modify EOL both globally, as the default behaviour, if `core.autocrlf` is not set
-  # AND custom configuration, per file extension
+  ## 3 columns: file extension, file type (text, or binary), eol definition for text documents
+  * text=auto eol=lf ## modify EOL both globally, as the default behaviour, if `core.autocrlf` is not set
+  ## AND custom configuration, per file extension
   *.sh   text eol=lf
   *.py   text eol=lf
   *.js   text eol=lf
@@ -424,15 +391,15 @@ systemctl --user start onedrive`, as it will generate otherwise concurrent proce
   
   ```bash
   git add --renormalize .
-  git status # display files being impacted by the change of EOL encoding
+  git status ## display files being impacted by the change of EOL encoding
   git commit -m "Normalize line endings"
   ```
   
   iv. **Discard local changes**, induced by degenerate EOL diffs, with:
 
   ```bash
-  git status # Review of existing changes
-  git clean -fd # Optional, remove untracked files and directories as well
+  git status ## Review of existing changes
+  git clean -fd ## Optional, remove untracked files and directories as well
   git reset --hard HEAD
   ```
   to discard all local modifications to **tracked, but unstaged files**, practically bringing the working tree back to the last commit. 
@@ -459,12 +426,12 @@ Many modern editors, such as `LibreOffice` and `Rstudio` use [**atomic save stra
 ```bash
 file.qmd
 ↓ edit
-file.qmd.tmp # If OneDrive synchronises in the meantime, it believes that the file had been discarded
+file.qmd.tmp ## If OneDrive synchronises in the meantime, it believes that the file had been discarded
 ↓ rename
 file.qmd
 
 
-# Architecture causing this problem
+## Architecture causing this problem
 RStudio
    │
    │ save
@@ -494,15 +461,17 @@ Three complementary solutions to address these issues, and reduce conflicts betw
 3. Twist the configuration file, helping with editors using atomic saves:
 
 ```bash
-force_session_upload = "true" # avoid overwriting by older cloud versions, when RStudio is on its way of saving
-delay_inotify_processing = "true" # wait for RStudio to finalise the saving of tmp files before synchronising to OneDrive
+force_session_upload = "true" ## avoid overwriting by older cloud versions, when RStudio is on its way of saving
+delay_inotify_processing = "true" ## wait for RStudio to finalise the saving of tmp files before synchronising to OneDrive
 ```
 
 :::
 
 
+> [Webhooks, for immediate synchornisation](https://github.com/abraunegg/onedrive/blob/master/docs/webhooks.md), if you want *real-time* synchronisation with the server, `server -> local`. **Not recommended generally, as complex to configure, and usually irrelevant for daily use cases**. Instead, reduce the latency for synchronisation. 
 
-## Monitor processes in the long-run
+
+### Monitor synchronisation processes in the long run
 
 - `systemctl list-unit-files --type=service --state=running --user` to list all processes running in the background, even after rebooting, restrained to the user-level.
   - Alternatively, processes at the system-level are stored under `/lib/systemd/system/`
@@ -510,13 +479,11 @@ delay_inotify_processing = "true" # wait for RStudio to finalise the saving of t
 - `systemctl status <service>` retrieves current status
 
 
-
-
-# Software to install
+## Software to install
 
 > **General recommendation*: avoid using `ChatGPT`, as the instructions for installing software are often deprecated and/or not following Ubuntu best guidelines.
 
-::: {#nte-sofware-installation .callout-note title="Install software on Ubuntu, some guidelines"}
+::: {#nte-sofware-installation .callout-note title="Install software on Ubuntu, some guidelines" collapse="true"}
 
 Three recommended methods, depending on Ubuntu's support:
 
@@ -585,54 +552,74 @@ Three recommended methods, depending on Ubuntu's support:
 
 :::
 
-## Shell-customisation (including `$PATH`)
+### Git and GitHub configuration {#sec-git-config}
 
-### Zsh (advanced bash configuration)
+1. Github often requires double authentication, that you can set on https://github.com/settings/security. Recommended to use *passkey* if supported by your device (unfortunately, Linux OS usually do not support it), or use authenticator app, such as Microsoft Authentificator. **Deterred against the use of SMS + mobile phones**.
 
-```bash
-sudo apt update
-sudo apt install zsh
-
-# define this shell shebang by default
-chsh -s $(which zsh) # modify /etc/passwd repository
-``` 
-
-### Add executables 
-
-- System-wide: 
-  - `/usr`, and manual installs under `/usr/local` are in the `$PATH` by default
-  - For third-party GUI, *self-contained* apps stored under `/opt`, add a symlink: `sudo ln -s /opt/<appName> /usr/local/bin/<appName>`, requires **`sudo` rights**.
-
-- User-level: 
-  - Customise `.bashrc` (or `.zshrc`) configuration files to modify the `$PATH` -> **Only affects the user, and interactive shell**. Examples:
+2. Configure your access to Github:
+  i. Choose either SSH, or HTTPs. 
+  ii. For HTTPS, configure one token per device, under <https://github.com/settings/tokens>. Give the token the name of your laptop, its configuration and originals owner. Assign it at least the repo and read scopes. Copy it once -> **it won't be available afterwards!!**. 
   
+3. General options to configure: 
+  i. Use either the command line (create also automatically the file `~/.gitconfig`):
   ```bash
-  export PATH="$PATH:$HOME/scripts/tools"
-  alias ll='ls -lah'
+  git config --global user.name "bastienchassagnol"
+  git config --global user.email "bastien.chassagnol@univ-amu.fr"
   ```
-  - AppImages may be integrated using AppImageLauncher, or `.desktop` configuration. 
+  ii. Or directly, using text editor, file `~/.gitconfig` (more error-prone to indentation errors). Find my default git config file here (for comprehensive description of options, report to [Formation Git 2024, a tutorial by Benjamin](../Git/formation_git_2024.pdf)): 
+  
+  ```.gitconfig
+  [user]
+  	name = bastienchassagnol
+  	email = bastien.chassagnol@univ-amu.fr
+  ## modern default git options
+  [init]
+    defaultBranch = main
+  
+  ## simplifying solving git conflicts + troubleshoot solving
+  [merge]
+    conflictstyle = zdiff3
+  [rerere]
+    enabled = true
+  
+  ## tolerate distinct end of lines  
+  [core]
+  	autocrlf = input
+  
+  ## visualisation
+  [tag]
+    sort = version:refname
+  [branch]
+    sort = -committerdate
+  [credential]
+  	helper = store
+  ```
 
-- Deal with multiple versions of the same program (for instance, `Java`): use `update-alternatives --list <AppName>` to list executables. 
+4. Avoid typing your password for every login: 
 
-## AppImageLauncher
+  i. For HTTPS + PAT token protocol, use `git config --global credential.helper store` for **permanent** registration of the password (should we not encrypt the file??), or `git config --global credential.helper 'cache --timeout=3600'` for temporary access^[Time-out units are reported in seconds, accordingly, this amounts to one hour]. 
+  ii. Define SSH key. 
+
+
+### AppImageLauncher
 
 ```bash
 
-# download the .deb archive, with the proper architecture configuration
-# https://github.com/TheAssassin/AppImageLauncher/releases/tag/v3.0.0-beta-3
+## download the .deb archive, with the proper architecture configuration
+## https://github.com/TheAssassin/AppImageLauncher/releases/tag/v3.0.0-beta-3
  
 sudo apt install appimagelauncher_3.0.0-beta-2-gha287.96cb937_amd64.deb  
 
-# update dependencies
+## update dependencies
 sudo apt update
 sudo apt install -f
 ```
 
 - For deleting apps installed with AppImage Launcher, you'll need to delete both *Applications* folder, and `~/.local/share/applications/` that stores executables.
 
-## PDF management
+### PDF management
 
-### Sioyek as PDF Viewer
+#### Sioyek as PDF Viewer
 
 [`Sioyek`](https://sioyek.info/) is an open-source PDF viewer focusing on technical papers with mathematical formulas. Major uses cases are coloured *highlights* of text sections with `h` shortcut, smart jump to figures by clicking on them, and bookmark text sections with shortcut `b`. 
 
@@ -647,19 +634,19 @@ To turn any exec into a **desktop application** on Ubuntu-GNOME, follow this ste
 1. Relocate everything under **`/opt/sioyek`**^[default repo for third-party apps, preventing conflicts with distributed, native packages]. **Note that the structure of a package may not follow exactly this of `sioyek`!!
 
 ```bash
-# create required folders
+## create required folders
 
 sudo mkdir -p /opt/sioyek
 sudo mkdir -p /etc/sioyek
 sudo mkdir -p /usr/share/sioyek
 
-# relocate, if not already done, the sioyek builds
+## relocate, if not already done, the sioyek builds
 
-## core executables
+### core executables
 sudo cp ~/sioyek/build/sioyek /opt/sioyek/
 sudo chmod +x /opt/sioyek/sioyek
 
-## confgiuration files
+### confgiuration files
 sudo cp ~/sioyek/build/prefs.config /etc/sioyek/
 sudo cp ~/sioyek/build/keys.config  /etc/sioyek/
 sudo cp -r ~/sioyek/build/shaders /usr/share/sioyek/
@@ -669,7 +656,7 @@ sudo cp ~/sioyek/build/tutorial.pdf /usr/share/sioyek/
 3. Add a distinctive icon, and customise the native Ubuntu launcher 'Gnome' 
 
 ```bash
-sudo mkdir -p /usr/share/icons/hicolor/256x256/apps # folder to store the siokey.png, downloaded from the web
+sudo mkdir -p /usr/share/icons/hicolor/256x256/apps ## folder to store the siokey.png, downloaded from the web
 
 sudo tee /usr/share/applications/sioyek.desktop > /dev/null <<'EOF'
 [Desktop Entry]
@@ -686,7 +673,7 @@ MimeType=application/pdf;
 StartupNotify=true
 EOF
 
-# Refresh desktop database
+## Refresh desktop database
 sudo update-desktop-database
 ```
 
@@ -701,7 +688,7 @@ sudo update-desktop-database
     ```bash
     xdg-mime default sioyek.desktop application/pdf
     
-    # to check default
+    ## to check default
     xdg-mime query default application/pdf
     ```
     
@@ -712,16 +699,16 @@ sudo update-desktop-database
   ```
 :::
 
-### Sejda for editing PDFs in an interactive way
+#### Sejda for editing PDFs in an interactive way
 
 - [Web version](https://www.sejda.com/pdf-editor)
 - [Sedja *add-on* for Chrome](https://workspace.google.com/marketplace/app/sejda_pdf_editor/8721525582)
 
-### PDFtk
+#### PDFtk
 
 - To edit PDFs, if you prefer the command line. 
 
-## Image Editors (to replace Paint on Windows)
+### Image Editors (to replace Paint on Windows)
 
 Sorted from closest experience to Paint, to most generalist:
 
@@ -734,7 +721,7 @@ Sorted from closest experience to Paint, to most generalist:
 
 ```bash
 sudo apt install gimp
-sudo apt install gimp-plugin-registry # add extensions
+sudo apt install gimp-plugin-registry ## add extensions
 ```
 
 4. `Inkscape` for generating **vectorial**, and fully deformable icons
@@ -746,7 +733,7 @@ sudo apt install inkscape
 
 
 
-## LibreOffice
+### LibreOffice
 
 1. Install main software (such as Libre Office Write, or Calc) with `sudo apt install libreoffice libreoffice-gtk3`
 
@@ -756,9 +743,9 @@ sudo apt install inkscape
   ii. Install dictionaries + extension [Grammalecte and LanguageTool](https://doc.ubuntu-fr.org/correction_grammaticale)^[You may configure the Java version used by default under `Tools -> Options -> Advanced`]. *needs to check if LanguageTool is truly relevant, is AI-based, but also resource-consuming*.
   
   ```bash
-  # French dictionary
+  ## French dictionary
   sudo apt update
-  sudo apt install libreoffice-l10n-fr # add French hyphenation
+  sudo apt install libreoffice-l10n-fr ## add French hyphenation
 
   ```
   iii. Install [Latex extension](https://extensions.libreoffice.org/en/extensions/show/texmaths-1)
@@ -767,14 +754,14 @@ sudo apt install inkscape
   i. Install core Windows fonts: 
   ```bash
   sudo apt update
-  sudo apt install ttf-mscorefonts-installer # Install Microsoft core fonts
-  fc-cache -f -v # rebuild font cache, such that the fonts now appear In Libre Office
+  sudo apt install ttf-mscorefonts-installer ## Install Microsoft core fonts
+  fc-cache -f -v ## rebuild font cache, such that the fonts now appear In Libre Office
   ```
   ii. Extra fonts installation^[Alternatively, you also have the native Fonts manager tool under GNOME launch start]. Most popular fonts can be found under [Every-Font GH repository](https://github.com/serendipious/every-font/):
   ```bash
-  mkdir -p ~/.local/share/fonts # ensure personal fonts folder is created
-  wget -P ~/.local/share/fonts "https://raw.githubusercontent.com/serendipious/every-font/master/CenturyGothic-Italic%20-%20Century%20Gothic%20-%20Italic.ttf" # download the original TFF files
-  fc-cache -f -v # update font cache
+  mkdir -p ~/.local/share/fonts ## ensure personal fonts folder is created
+  wget -P ~/.local/share/fonts "https://raw.githubusercontent.com/serendipious/every-font/master/CenturyGothic-Italic%20-%20Century%20Gothic%20-%20Italic.ttf" ## download the original TFF files
+  fc-cache -f -v ## update font cache
   ```
   
 ::: {.callout-caution collapse="true" title="Core typographic options"}
@@ -796,30 +783,30 @@ The main stylistic variants of fonts you can play with are:
 :::
 
 
-## Docker {#sec-Docker}
+### Docker {#sec-Docker}
 
 1. Download dependencies, configuration files and add repository to apt for automatic updates:
 
 ```bash
 
 sudo apt update
-sudo apt install ca-certificates curl # dependencies for downloading packages, and verifying HTTPS protocols
+sudo apt install ca-certificates curl ## dependencies for downloading packages, and verifying HTTPS protocols
 
-# Part I: create, download and make Docker apt key readable for verifying its integrity
+## Part I: create, download and make Docker apt key readable for verifying its integrity
 sudo install -m 0755 -d /etc/apt/keyrings
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
 sudo chmod a+r /etc/apt/keyrings/docker.asc
 
-# Part II: define where, and which version of Docker, should be donwloaded + how to verify its integrity
+## Part II: define where, and which version of Docker, should be donwloaded + how to verify its integrity
 sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
 Types: deb
 URIs: https://download.docker.com/linux/ubuntu
 Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
 Components: stable
-Signed-By: /etc/apt/keyrings/docker.asc # folder previously defined
+Signed-By: /etc/apt/keyrings/docker.asc ## folder previously defined
 EOF
 
-# Part III: update with newer configuration
+## Part III: update with newer configuration
 sudo apt update
 
 ```
@@ -828,24 +815,24 @@ sudo apt update
 
 3. Check installation with `sudo docker run hello-world`. If not running by default upon login, enable automated start with `sudo systemctl start docker`. More details [here](https://docs.docker.com/engine/install/ubuntu/#upgrade-docker-engine).
 
-## Teams
+### Teams
 
 - **Use the web version, as Microsoft no longer supports .deb versions for Linux.** 
 
 
-## Web browsers
+### Web browsers
 
-### Firefox
+#### Firefox
 
 > **Avoid running directly `sudo apt install firefox` -> it installs by default `snapd`, and will use not stable, beta `Snap` version of Firefox.**
 
 1. Import, and add Mozilla APT signing key:
 
 ```bash
-# Download APT key
+## Download APT key
 wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | sudo tee /etc/apt/keyrings/packages.mozilla.org.asc > /dev/null
 
-# Add it to the Apt registry
+## Add it to the Apt registry
 cat <<EOF | sudo tee /etc/apt/sources.list.d/mozilla.sources
 Types: deb
 URIs: https://packages.mozilla.org/apt
@@ -854,7 +841,7 @@ Components: main
 Signed-By: /etc/apt/keyrings/packages.mozilla.org.asc
 EOF
 
-# Provide higher priority to Mozilla Firefox
+## Provide higher priority to Mozilla Firefox
 
 echo '
 Package: *
@@ -869,12 +856,12 @@ Pin-Priority: 1000
 sudo apt update
 sudo apt install firefox
 
-which firefox # should not report `snapd` folder
+which firefox ## should not report `snapd` folder
 apt policy firefox
 
 ```
 
-### Google Chrome
+#### Google Chrome
 
 1. Install Google Chrome, by downloading [the .deb archive](https://www.google.com/chrome/), then run it:
 
@@ -885,17 +872,17 @@ sudo apt install google-chrome-stable_current_amd64.deb`
 2. Download, and add Google Chrome APT signing key, for automatic updates:
 
 ```bash
-# Download APT key
+## Download APT key
 wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o /usr/share/keyrings/google-linux-signing-key.gpg
 
-# Add it to the Apt registry
+## Add it to the Apt registry
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-linux-signing-key.gpg] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
 
-# Update to the most recent version
+## Update to the most recent version
 sudo apt update
 ```
 
-## Slack
+### Slack
 
 1. Download [Slack application](https://slack.com/downloads/instructions/linux?ddl=1&build=deb)
 2. Run it with `sudo apt install slack-desktop-4.47.69-amd64.deb`
@@ -909,13 +896,13 @@ sudo apt-get upgrade slack-desktop
 ```
 
 
-## Zulip 
+### Zulip 
 
 1. Run following instructions: 
 
   ```bash
   
-  sudo apt install curl # if not already installed
+  sudo apt install curl ## if not already installed
   sudo curl -fL -o /etc/apt/trusted.gpg.d/zulip-desktop.asc \
       https://download.zulip.com/desktop/apt/zulip-desktop.asc
   echo "deb https://download.zulip.com/desktop/apt stable main" | \
@@ -927,7 +914,7 @@ sudo apt-get upgrade slack-desktop
   
 2. Log-in (recommended with your Github profile) on each of the channels you want to connect, to keep notified about newest posts. 
 
-## Cytoscape
+### Cytoscape
 
 > Major default: only supported by Java version 17 (and not by more recent, and stable Java versions!!)
 
@@ -938,7 +925,7 @@ sudo apt-get upgrade slack-desktop
   iii. Execute with `sh`, or simply `./ ` (avoid using `sudo` if irrelevant for other users of the computer)
   iv. Launch with `Cytoscape &`.
 
-## Zotero {#sec-Zotero}
+### Zotero {#sec-Zotero}
 
 1. `sudo apt install libreoffice-java-common -y` adds Java dependencies to seamlessly integrate Zotero with Libre Office *plug-in* (for instance, automated retrieval of bibliographic references).
 
@@ -950,11 +937,11 @@ sudo apt-get upgrade slack-desktop
 
 #!/bin/bash
 
-# part I: extract archive
+## part I: extract archive
 sudo tar -xjf zotero.tar.bz2 -C /opt
 sudo mv /opt/Zotero_linux-x86_64 /opt/zotero
 
-# Part II: add the executable
+## Part II: add the executable
 sudo ln -s /opt/zotero/zotero /usr/local/bin/zotero
 
 ```
@@ -993,7 +980,7 @@ X-GNOME-SingleWindow=true
     
 
  
-## Quarto, R and RStudio
+### Quarto, R and RStudio
 
 1. To get the latest R Versions, add the signing key, along with the repository:
 
@@ -1015,7 +1002,7 @@ echo "deb [signed-by=/etc/apt/keyrings/cran.gpg] https://cloud.r-project.org/bin
   ii. Install recommended Ubuntu system libraries for scientific computing and/or connection:
   
   ```bash
-  # Compilation tool
+  ## Compilation tool
   sudo apt install cmake 
   
   Network, imaging, and plotting libraries
@@ -1030,7 +1017,7 @@ echo "deb [signed-by=/etc/apt/keyrings/cran.gpg] https://cloud.r-project.org/bin
   libxml2-dev \
   zlib1g-dev
 
-  # scientificic libraries
+  ## scientificic libraries
   sudo apt install \
     build-essential \
     gfortran \
@@ -1100,13 +1087,13 @@ sudo apt install ./quarto-1.3.496-linux-amd64.deb
 quarto check
 ```
 
-## Python
+### Python
 
 > From **PEP 668**. guidelines, applied to modern Debian/Ubuntu distributions with native Python installed above the `3.11/3.12` version,  `pip` is prevented from modifying the **system Python** as it could interfere with te core installation program `apt`.
 
 > **This section is certainly the most controversial of this whole Ubuntu tutorial, as guidelines for a modern programmatic use of Python evolve rapidly, without reaching a full agreement**
 
-### Python dependency core tools
+#### Python tools
 
 ::: {.callout-tip collapse="false" title="Modern Python development guidelines"}
 
@@ -1114,7 +1101,7 @@ quarto check
 2. `uv` fully replaces the functionalities and features brought by a variety of slower, standalone Python tools (`pip`, `poetry`, `virtualenv`, `pipx`, ...), providing a faster, versatile and unified framework, see @fig-uv-development. **The features provided by `poetry` for package development may still not be fully covered by `uv`, and `pip`remains the legacy solution in older HPC systems:** 
 
 ```bash
-/usr/bin ## Pre-installed Ubuntu system
+/usr/bin ### Pre-installed Ubuntu system
  └── system Python (used by OS)
 
 uv
@@ -1169,7 +1156,7 @@ Comparison of Python managers.
 :::
 
 
-### Use `uv` to manage core Python tools, and version management {#sec-uv}
+#### One Tool to bring them all and in the jungle of Python tool, bind them all: a `uv` story plot {#sec-uv}
 
 > I now describe the core steps to use the latest stable Python version (currently, 3.14), without breaking core Linux dependencies using pre-installed Python version. 
 
@@ -1184,31 +1171,29 @@ Comparison of Python managers.
     ```
 4. Use `uv` instead of `pipx` to install core Python tools for package dependency, web IDEs, modern Python formatting and styling, .... As `pipx`, all these tools are automatically added to the user's `PATH`:
   ```bash
-  uv tool install ruff # ~ equivalent to pipx install ruff
+  uv tool install ruff ## ~ equivalent to pipx install ruff
   uv tool install black
-  uv tool install jupyterlab # `JupyterLab` outdates previous `JupterNotebook` as a web-based, and user-friendly interface
+  uv tool install jupyterlab ## `JupyterLab` outdates previous `JupterNotebook` as a web-based, and user-friendly interface
   uv tool install ipython
   uv tool install pre-commit
   uv tool install poetry
   uv tool install cookiecutter `Cookiecutter` generates Python templates for modern packaging.  
   ```
 
-
 ::: {.callout-tip collapse="false" title="Python version management: core checks"}
 
 - Check integrity of system Python:
 
 ```bash
-ls /usr/bin/python* # -> # only one version expected, Python 3.12 with modern Linux
+ls /usr/bin/python* ## -> ## only one version expected, Python 3.12 with modern Linux
 /usr/bin/python3.12
 ```
 
 - Check version used by `uv`: 
 
 ```bash
-ls -la ~/.local/share/uv/python* # path returned should be located within the HOME directory
+ls -la ~/.local/share/uv/python* ## path returned should be located within the HOME directory
 ```
-
 
 ---
 
@@ -1224,13 +1209,18 @@ ls -la ~/.local/share/uv/python* # path returned should be located within the HO
   print(sys.executable)
   print(sys.path)
   ```
+
+---
   
-### Relevant sources for Python tools
+> Relevant sources for Python tools
 
 - [From Pip to Lightning: How `uv` Opened My Eyes to Better Python Workflows](https://viveksinghpathania.medium.com/from-pip-to-lightning-how-uv-opened-my-eyes-to-better-python-workflows-dfa50e8a5893)
 - [LinkedIn portfolio on Python dependencies management tools](https://www.linkedin.com/posts/basilemarchand_pythongestionnaire-activity-7432314684441047040-u53A)
 
-<!-- ### Python IDE (PyCharm) -->
+:::
+
+
+<!-- #### Python IDE (PyCharm) -->
 
 <!-- ::: {.callout-note title="PyCharm versus Spyder" collapse="true"} -->
 
@@ -1255,9 +1245,9 @@ ls -la ~/.local/share/uv/python* # path returned should be located within the HO
 
 <!-- ```bash -->
 <!-- tar -xzf pycharm-*.tar.gz -->
-<!-- sudo mv pycharm-* /opt/pycharm # recommended folder in Ubuntu for external applications -->
-<!-- bash /opt/pycharm/bin/pycharm.sh # installation script -->
-<!-- sudo ln -s /opt/pycharm/bin/pycharm.sh /usr/local/bin/pycharm # add PyCharm to the PATH for direct CLI launching -->
+<!-- sudo mv pycharm-* /opt/pycharm ## recommended folder in Ubuntu for external applications -->
+<!-- bash /opt/pycharm/bin/pycharm.sh ## installation script -->
+<!-- sudo ln -s /opt/pycharm/bin/pycharm.sh /usr/local/bin/pycharm ## add PyCharm to the PATH for direct CLI launching -->
 <!-- ``` -->
 
 <!-- 3. (Optional) Use `Tools → Create Desktop Entry` to add PyCharm to the GNOM Application Menu.  -->
@@ -1272,29 +1262,29 @@ ls -la ~/.local/share/uv/python* # path returned should be located within the HO
 
 <!-- ```bash -->
 <!-- project/ -->
-<!--  ├── .venv/ # stores Python dependencies -->
-<!--  ├── pyproject.toml # stores Python module versions -->
-<!--  └── src/ # stores Python scripts for running the application -->
+<!--  ├── .venv/ ## stores Python dependencies -->
+<!--  ├── pyproject.toml ## stores Python module versions -->
+<!--  └── src/ ## stores Python scripts for running the application -->
 <!-- ``` -->
 
 
 <!-- ![`uv + PyCharm` setup, representing the different layers in which Python Interpreter live, and the modern and recommended workflow for creating Python projects fully isolated, and reproducible](uv-pycharm-structure.png){#fig-uv-pycharm} -->
 
-## Latex
+### Latex
 
 ```bash
 sudo apt install texlive-full -y
-# other commonly used packages
+## other commonly used packages
 sudo apt install texlive-latex-extra texlive-fonts-recommended texlive-science biber latexmk -y
 
 ```
 
-## WhatsApp
+### WhatsApp
 
 - No supported local Linux installation
 - Instead, recommended to use the [Web version of WhatsApp](https://web.whatsapp.com/), then pair it with your mobile device.
 
-## Cursor
+### Cursor
 
 1. Download [DEB extension](https://cursor.com/download). 
 2. Run it:
@@ -1304,7 +1294,7 @@ sudo apt install ./cursor_2.0.77_amd64.deb
 ```
 
 
-## Password Manager for Linux -> BitWarden
+### Password Manager for Linux -> BitWarden
 
 > `BitWarden is the recommended password manager for Linux systems for a variety of reasons: it's mostly free, compliant with most web browsers (Firefox, Chrome, Opera, ...), including native Google password manager, and can sync your password database over an endless number of devices. There's even a lightweight application for Iphone, and Android mobile phones. Besides, the storage expends beyond raw passwords, ranging from passkeys, to SSH secrets, or credit card information. Finally, it's compatible with most OS, including Windows and Linux. 
 
@@ -1315,20 +1305,20 @@ sudo apt install ./cursor_2.0.77_amd64.deb
 > Follow the following steps for its installation^[Contrary to best guidelines suggested in @nte-sofware-installation, only the `flatpak` and `snap` installation are supported for Ubuntu devices -> no automatic updates with native `apt` Ubuntu dependency manager]
 
 ```bash
-# Install Flatpak, and Gnome Flatpak plugin
+## Install Flatpak, and Gnome Flatpak plugin
 sudo apt install flatpak
 sudo apt install gnome-software-plugin-flatpak
 
-# Add Flatbu repository for software storage
+## Add Flatbu repository for software storage
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
-# Install and run BitWarden locally
+## Install and run BitWarden locally
 flatpak install flathub com.bitwarden.desktop
 flatpak run com.bitwarden.desktop
 
-# Install Web Add-on, going to https://chromewebstore.google.com/detail/bitwarden-password-manage/nngceckbapebfimnlniiiahkandclblb?hl=en, then pin in your Booktabs
+## Install Web Add-on, going to https://chromewebstore.google.com/detail/bitwarden-password-manage/nngceckbapebfimnlniiiahkandclblb?hl=en, then pin in your Booktabs
 
-# Export, then import your password database from other web browsers
+## Export, then import your password database from other web browsers
 ```
 
 > In the `Auto-fill` tab of the Parameters configuration, leave unticked the option `Do not auto-fill on page load` + choose `Default URI detection` option as `Exact` to avoid ambiguities. 
@@ -1336,7 +1326,41 @@ flatpak run com.bitwarden.desktop
 
 
 
-# Working with the remote server
+
+## Core numerical tools provided by AMU
+
+> List of [numerical tools used in Amu](https://www.univ-amu.fr/fr/public/les-outils-numeriques-damu)
+
+### AMUZoom
+
+1. Retrieve latest version, choosing proper Linux distributions and OS architecture under [Zoom downloads](https://zoom.us/download?os=linux). Also avalaible [online](https://univ-amu-fr.zoom.us/). Strongly recommended to install Zoom locally. 
+2. Run `sudo apt install ./zoom_amd64.deb`
+3. **Log-in using your university email address, using `SSO`.** The account is provided with unlimited meetings available by default, use following domain: `univ-amu-fr`. ^[Alternatively, use the web version available [here](https://univ-amu-fr.zoom.us/meeting#/upcoming)]
+
+> 2 elements, listed below, to keep in in mind, when creating a Zoom meeting to enable any external user, with the password, to ling-in, and share its screen, see @fig-zoom:
+
+::: {#fig-zoom layout-ncol=2}
+
+![Zoom first login](zoom_options_amu_1.png)
+
+![Zoom second step of login](zoom_options_amu_2.png)
+
+Be careful about selecting the second, non-default option, if you want to allow external suers without any Amu mail address to connect on your Zoom session. 
+:::
+
+
+
+To go further, check the following online resources: 
+
+- [Guidelines for Zoom Meeting creation, and management](https://dud.univ-amu.fr/fr/amuzoom-animer-reunion-classe-virtuelle#section-1.1)
+- [Video tutorial](https://amupod.univ-amu.fr/video/6375-expresso-cipe-016-webinaire-que-pouvez-vous-faire-avec-zoom/)
+- [Guidelines for students](https://dud.univ-amu.fr/se-connecter-classe-virtuelle-amu-zoom-etudiants?check_logged_in=1)
+
+### WooClap
+
+Go to [Wooclap](https://drive.google.com/uc?export=download&id=123po0Fa9jxYq5rzOMnwzDuIZCfUJnEuO), and use your **instutional mail adress** for single sign-on across platforms. 
+
+## Working with a remote server
 
 ::: {.callout-note collapse="true" title="Retrive its identity on the server"}
 
@@ -1356,7 +1380,7 @@ uid=1007(bastienc) gid=1007(bastienc) groupes=1007(bastienc),1043(dtoo_project)
 
 :::
 
-## Connexion to the server 
+### Connexion to the server 
 
 - SSH protocol (see details at @tbl-ssh-connexion)
  
@@ -1380,7 +1404,7 @@ uid=1007(bastienc) gid=1007(bastienc) groupes=1007(bastienc),1043(dtoo_project)
 
 : Comparison side-by-side of the main options for customised `ssh`connexion {#tbl-ssh-connexion}
 
-## Run RStudio remotely
+### Run RStudio remotely
 
 > In @tbl-remote-graphical, we compare side-by-side approaches for using `RStudio` with files stored remotely on the server:
 
@@ -1419,7 +1443,7 @@ sudo apt install sshfs
     Remote server                     Your computer
     ------------------                ---------------------
     /home/bastienc/project  <--SSH--> ~/remote_project
-    # 3-layered structure mounting
+    ## 3-layered structure mounting
     Application (RStudio, editor)
             │
             ▼
@@ -1441,7 +1465,7 @@ sudo apt install sshfs
 3. Once done, unmount the project: 
 
   ```bash
-  fusermount -u <"local-url-path"> # OR
+  fusermount -u <"local-url-path"> ## OR
   umount "<"local-url-path">
   ```
   If the folder was not empty, it returns back to the stage previous mounting. 
@@ -1459,13 +1483,13 @@ mount | grep sshfs
 > Optionally, on startup, you can mount remote files, editing the `/etc/fstab` file, but this requires `root` rights, and SSH automated key authentication (no prompting of the password is allowed). It can also be done on-demand (when the folder is actually accessed)
 
 ```bash
-# startup mounting 
+## startup mounting 
 sshfs#bastienc@139.124.156.52:/home/bastienc/project /mnt/cluster_project fuse.sshfs _netdev,port=22218,users,idmap=user,IdentityFile=/home/bastien/.ssh/id_rsa,allow_other,reconnect 0 0
 
-# on-demand mounting 
+## on-demand mounting 
 sshfs#bastienc@139.124.156.52:/home/bastienc/project /mnt/cluster_project fuse.sshfs _netdev,port=22218,x-systemd.automount,_reconnect,users,IdentityFile=/home/bastien/.ssh/id_rsa 0 0
 
-# test the automated mounting
+## test the automated mounting
 sudo mount -a
 ```
 
@@ -1484,97 +1508,15 @@ sudo mount -a
 
 :::
 
-## Run `JupyterLab` remotely
 
-I replaced the **older Conda-centric workflow**  provided by Philippe with this more **modern, minimal workflow**, using safer connection protocols, removing the requirement for Conda, manual kernel installation, and permanent connexion with `autossh`: 
-
-1. Create the environment on the server: 
-  i. With `Pixi`: 
-    ```bash
-    # environement creation, with some custom Python modules
-    pixi init
-    pixi add python jupyterlab ipykernel numpy pandas matplotlib
-    
-    # environment activation
-    pixi shell
-    ```
-  
-  ii. With **uv**:
-
-    ```bash
-    uv venv
-    source .venv/bin/activate
-    
-    uv pip install jupyterlab ipykernel
-    python -m ipykernel install --user --name project_env # optional, specifiying which Python kernel to use
-    ```
-    
-2. Run JupterLab remotely:
-
-```bash
-ssh -p 22218 bastienc@139.124.156.52
-jupyter lab --no-browser --port=8888
-```
-
-3. Create a permanent SSH tunnel connection: 
-
-```bash
-ssh -L 8888:localhost:8888 -p 22218 bastienc@139.124.156.52 # creates connection local computer port 8888 → server port 8888
-
-# go to local web browser, and copy paste the token previously identified
-http://localhost:8888
-
-# stabilise the connection, by running Jupyter in the background (detach terminal)
-tmux | jupyter lab --no-browser --port=8888 ## create another terminal windows
-Ctrl + b d # detach it in the backe-end
-
-# optional: add an alias in `~/.bashrc` to connect directly to remote jupyter lab
-alias jlab-server='ssh -L 8888:localhost:8888 -p 22218 bastienc@139.124.156.52'
-```
-
-> Remaining question: replace this workflow with **JupyterLab Desktop**??
-
-# Core numerical tools provided by Aix Marseille Université
-
-> List of [numerical tools used in Amu](https://www.univ-amu.fr/fr/public/les-outils-numeriques-damu)
-
-## AMUZoom
-
-1. Retrieve latest version, choosing proper Linux distributions and OS architecture under [Zoom downloads](https://zoom.us/download?os=linux). Also avalaible [online](https://univ-amu-fr.zoom.us/). Strongly recommended to install Zoom locally. 
-2. Run `sudo apt install ./zoom_amd64.deb`
-3. **Log-in using your university email address, using `SSO`.** The account is provided with unlimited meetings available by default, use following domain: `univ-amu-fr`. ^[Alternatively, use the web version available [here](https://univ-amu-fr.zoom.us/meeting#/upcoming)]
-
-> 2 elements, listed below, to keep in in mind, when creating a Zoom meeting to enable any external user, with the password, to ling-in, and share its screen, see @fig-zoom:
-
-::: {#fig-zoom layout-ncol=2}
-
-![Zoom first login](zoom_options_amu_1.png)
-
-![Zoom second step of login](zoom_options_amu_2.png)
-
-Be careful about selecting the second, non-default option, if you want to allow external suers without any Amu mail address to connect on your Zoom session. 
-:::
-
-
-
-To go further, check the following online resources: 
-
-- [Guidelines for Zoom Meeting creation, and management](https://dud.univ-amu.fr/fr/amuzoom-animer-reunion-classe-virtuelle#section-1.1)
-- [Video tutorial](https://amupod.univ-amu.fr/video/6375-expresso-cipe-016-webinaire-que-pouvez-vous-faire-avec-zoom/)
-- [Guidelines for students](https://dud.univ-amu.fr/se-connecter-classe-virtuelle-amu-zoom-etudiants?check_logged_in=1)
-
-
-
-# Miscelleaneous
-
-## SSH configuration
+### SSH configuration
 
 > Objective is dual: avoid typing your password each time you're connecting to a remote cluster, and keep a safe storage of all registered remote hosts:
 
 1. 🔐 Set up SSH remote access (with key-based auth)
 
   ```bash
-  # remote server must have openssh-server installed
+  ## remote server must have openssh-server installed
   sudo apt install openssh-server
   ```
 
@@ -1593,25 +1535,25 @@ To go further, check the following online resources:
 4. (Optional) Keep under `~/.ssh/config` file the key features describing each remote cluster. For instance, my configuration for the IFB is the following, and to connect to it, I only need typing now `ssh ifb-core`. A second advantage of using this format for storing hosts is that it can be readily used by `VS Code SSH Remote` connection extensions.  
 
   ```bash
-# 🎯 alias for the host connection, either "ifb-core" or "ifb"
+## 🎯 alias for the host connection, either "ifb-core" or "ifb"
 Host ifb-core ifb
 
-    # 🌍 The real hostname (or IP) of the remote server
+    ## 🌍 The real hostname (or IP) of the remote server
     HostName core.cluster.france-bioinformatique.fr
 
-    # 👤 Username used on the remote machine
+    ## 👤 Username used on the remote machine
     User bchassagnol
 
-    # 🔑 Path to your private SSH key
+    ## 🔑 Path to your private SSH key
     IdentityFile ~/.ssh/id_ed25519
 
-    # 🚫 Force SSH to use ONLY the specified key above, avoiding complex managing of key version
+    ## 🚫 Force SSH to use ONLY the specified key above, avoiding complex managing of key version
     IdentitiesOnly yes
 
-    # 🔄 Order of authentication methods: SSH key, then keyboard-interactive, then fallback to password
+    ## 🔄 Order of authentication methods: SSH key, then keyboard-interactive, then fallback to password
     PreferredAuthentications publickey,keyboard-interactive,password
 
-    # 🤖 Automatically add this key to ssh-agent when used
+    ## 🤖 Automatically add this key to ssh-agent when used
     AddKeysToAgent yes
   ```
 
