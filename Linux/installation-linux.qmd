@@ -66,9 +66,9 @@ toc-depth: 3 ## chapter, section, and sub-sections, will be included in the toc
 - `dpkg --print-architecture`: retrieve architecture, for package installation^[Returns `amd64` in my case].
 -  {{< kbd Ctrl-H >}} in **Gnome**, aka File Management, to list hidden files
 
-## Linux general guidelines
+## Ubuntu general guidelines
 
-### General Folder layout for application, and package installation
+### Ubuntu file, and package structure
 
 #### System-wide location (for core programs)
 
@@ -100,19 +100,29 @@ User does not require root
 
 : Main user-based software locations, to be compared with @tbl-system-wide-locations {#tbl-user-based-locations}
 
-#### General remarks
+---
+
+![Detailed structure of Ubuntu package layout](./ubuntu_package_structure.png)
+
+::: {.callout-note collapse="true" title="Specific folders"}
 
 - `usr` folder stores *read-only* executables, while `/var` is regularly written upon changes:
-  - `/var/lib`: apt and dpkg databases, for instance, respectiely stored under `dpkg`, and `/apt`
+  - `/var/lib`: apt and dpkg databases, for instance, respectively stored under `dpkg`, and `/apt`
   - `/var/cache`: metadata caches for faster execution
+  
 - `/usr/local/`, or `$HOME/.local` stores executables that require custom compilation with `make`, or `qmake`, rendered from manual archives:
   - `bin`, `sbin` for executables
   - `share` for icons (under subfolder `icons`) and desktop configuration, document ion under `/doc`
   - `lib` for extensions of a given executable (such as packages in R, or modules in Python)
   - This folder hierarchy follows [`XGD`Base Directory Npecification](https://specifications.freedesktop.org/basedir/latest/)
+
 - `/tmp` for temporary folders, cleaned after `reboot`
-- `/run` for sockets, namely used for controlling all the portocols running in the background for connecting to a server, such as the `ssh-agent`
-- `~/.config/systemd`: lists all processes that keep on running in the background, such as Cursor updates, or Onedrive synchronisations.
+
+- `/run` for sockets, namely used for controlling all the protocols running in the background for connecting to a server, such as the `ssh-agent`
+
+- `~/.config/systemd`: lists all processes that keep on running in the background, such as Cursor updates, or One drive synchronisations.
+
+:::
 
 
 ### Recommended Updating policy of Ubuntu
@@ -1151,6 +1161,7 @@ Comparison of Python managers.
 ![Main commands to replace old-fahsioned Python tools by `uv`.](uv cheatsheet.png)
 
 ![Caricature illustrating the recent domination of `uv`](python-dust-bin.png)
+
 ![Decision tree for the choice of Python tool, depending on the scope: `uv` for pure Python projects (for instance, running bioinformatic analyses), `poetry` (and `uv` with less support) for Python packages, and `pixi` for cross-language projects. **Note that both `conda` and `mamba` ar eno longer required in the modern Programmer stack.](./poetry_vs_uv_vs_pixi.png)
 
 :::
