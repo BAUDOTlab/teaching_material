@@ -1,26 +1,78 @@
+# 👤 Identity — who you are in commits
 [user]
 	name = bastienchassagnol
 	email = bastien.chassagnol@univ-amu.fr
-	
-# modern default git options
+
+
+# 🌱 Init — default behavior when creating repos
+# ➤ Ensures all new repos use "main" instead of "master"
 [init]
-  defaultBranch = main
+	defaultBranch = main
 
-# simplifying solving git conflicts + troubleshoot solving
-[merge]
-  conflictstyle = zdiff3
-[rerere]
-  enabled = true
 
-# tolerate distinct end of lines  
+# 🕒 Log — display preferences
+# ➤ Shows commit dates in your local timezone (more intuitive)
+[log]
+	date = local
+
+
+# 🚀 Push — default push behavior
+# ➤ Automatically sets upstream (no need for --set-upstream)
+[push]
+	autoSetupRemote = true
+
+
+# 📄 Core — fundamental Git behavior
+# ➤ autocrlf=input → converts CRLF → LF on commit (safe for Unix/macOS)
 [core]
 	autocrlf = input
+	editor = cursor --wait
 
-# visualisation
+
+# 🏷️ Tags — sorting strategy
 [tag]
-  sort = version:refname
+	sort = version:refname
+
+
+# 🌿 Branch — listing order
+# ➤ Most recently committed branches appear first
 [branch]
-  sort = -committerdate
+	sort = -committerdate
+
+
+# 🔐 Credentials — authentication storage
 [credential]
 	helper = store
 
+
+# 🔄 Pull — integration strategy
+# ➤ merge (false) instead of rebase when pulling
+# ➤ safer for beginners, preserves full history
+[pull]
+	rebase = false
+
+
+# 🔍 Diff — comparison tools
+# ➤ use "cursor" for visual diffing instead of CLI
+[diff]
+	tool = cursor
+
+[difftool "cursor"]
+	cmd = "cursor --wait --diff"
+	
+# 🧠 Rerere — reuse recorded resolutions
+# ➤ Git remembers how you solved conflicts and reapplies automatically
+# ➤ Huge time saver on recurring conflicts
+[rerere]
+	enabled = true
+
+# 🧩 Merge tool — visual conflict resolution
+[mergetool "cursor"]
+	cmd = "cursor --wait"
+	trustExitCode = true
+
+# 🔀 Merge — conflict handling & tools
+# ➤ zdiff3 = shows base + both sides → easier conflict resolution
+[merge]
+	conflictstyle = zdiff3
+	tool = cursor

@@ -1,0 +1,26 @@
+# Exclude some configuration folders
+## Python virtual environments
+skip_dir = "venv|\.venv|__pycache__"
+## Node.js / JavaScript build directories
+skip_dir = "node_modules|\.next"
+## R virtual environments
+skip_dir = "renv|.cache"
+skip_file = "\.Rhistory$|\.RData$"
+## Import files not to sync
+skip_file = "~*|.~*|*.tmp|*.swp|*.partial"
+# No sync the folder, if .nosync file is present
+check_nosync = "true"
+# local folders take precedence over remote files
+local_first = "true"
+display_manager_integration = "true"
+# keep temporarily deleted files in the local Bin trash
+use_recycle_bin = "true"
+# latency and monitoring
+## check every 10 seconds local -> server changes
+monitor_fullscan_frequency = "10"
+## check every minute server -> local changes
+monitor_interval = "60"
+
+## prevent fatal removal of files contents when resorting to editors that use atomic saves
+force_session_upload = "true"
+delay_inotify_processing = "true"

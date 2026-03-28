@@ -1,66 +1,5 @@
 ---
-title: "Guidelines for new Linux Machine setup (centred around Ubuntu)"
-author: "Bastien Chassagnol, Benjamin Loire, Morgane, Philippe, Marielle"
-quarto-required: ">= 1.8.0"
-format:
-  html:
-    embed-resources: true
-    ## styling options
-    page-layout: full
-    ## fig rendering
-    lightbox: true
-    smooth-scroll: true
-    ## add comments
-    comments:
-      hypothesis: true
-    ## code styling options
-    code-fold: true
-    code-tools: true
-    code-summary: "Show the code"
-    code-link: true ## all functions can be directly clicked on
-    code-overflow: wrap
-    collapse: true
-    code-copy: hover
-    ## Hovering effect
-    crossrefs-hover: true
-    footnotes-hover: true
-    citations-hover: true
-  pdf:
-    documentclass: article
-    ## Use a Unicode-capable engine so box-drawing characters
-    pdf-engine: lualatex
-    monofont: "DejaVu Sans Mono"
-    latex-auto-install: true
-    latex-max-runs: 5
-
-## Table options
-tbl-cap-location: bottom
-
-## Figure options
-fig-align: center
-out-width: "80%"
-dpi: 320
-fig-dpi: 320
-fig-pos: "h!"
-
-## Quarto extensions
-filters:
-  - highlight-text
-  
-execute:
-  echo: false
-  eval: true
-  message: false
-  warning: false
-  error: false
-  freeze: true ## to avoid using lots of GH actions
-editor:
-  source: true
-  
-toc: true
-number-sections: true ## Required for cross-referencing sections
-number-depth: 3 ## chapter, section, and sub-sections, will be numbered
-toc-depth: 3 ## chapter, section, and sub-sections, will be included in the toc
+title: "Install core software on Ubuntu"
 ---
 
 - `dpkg --print-architecture`: retrieve architecture, for package installation^[Returns `amd64` in my case].
@@ -184,6 +123,14 @@ dmesg -l err,crit,alert,emerg
 ```
 :::
 
+
+### Monitor processes running in the background, and on startup
+
+- `systemctl list-unit-files --type=service --state=running --user` to list all processes running in the background, even after rebooting, restrained to the user-level.
+  - Alternatively, processes at the system-level are stored under `/lib/systemd/system/`
+
+- `systemctl status <service>` retrieves current status
+
 ### Network protocols, and connexion troubleshoots
 
 - Two IP protocols for Wi-FI: `IPv4` versus `IPv6`. 
@@ -298,7 +245,7 @@ sudo apt install --no-install-recommends --no-install-suggests onedrive
   onedrive --sync --verbose ## first initialisation, usually time-consuming, one-shot
   ```
 
-4. Permanent synchronization using `systemtcl` facilities. **Highly recommended to remove folders at the local level, rather than on the server**. 
+4. Permanent synchronization using `systemtcl` facilities. **Choose either this approach, or the visual approach detailed in @tip-onedrive-GUI, as they can't operate simultaneously**.
 
 ```bash
 systemctl --user enable onedrive
@@ -318,110 +265,95 @@ onedrive --version
 
   - `onedrive --create-share-link <path/to/file>` for read-only shareable links, and `onedrive --create-share-link <path/to/file> --with-editing-perms` to add writing rights. 
 
-7. (Optional) Visual interaction of OneDrive synchronization:
-  i. [OneDrive system tray program](https://github.com/DanielBorgesOliveira/onedrive_tray) adds a simple icon returning the status of synchronization for OneDrive, that can be controlled with by clicking with the right button of the mouse. **If you decide to use this process, do not run `systemctl --user enable onedrive
-systemctl --user start onedrive`, as it will generate otherwise concurrent processes**.
-    - You'll need to install, and run `qmake` version 5 (by default, on recent Ubuntu configurations, it's the 6th that is used, which does not compile successfully the program). 
-    
-    ```bash
-    ## install the 5th version of qmake
-    sudo apt install qt5-qmake qtbase5-dev
-    
-    ## explicity use the qmake version 5, by calling the entire absolute path
-    ## usually located under folder /usr/lib/qt5/bin
-    ## avoid switching from qmake version 6 to qmake version 5 as default
-    ## using symbolic links, as most recent projects use version 6 of qmake
-    ```
-    
-  - Run following bash file:
-  
-    ```bash
-    ## create the runnable executive file
-    git clone https://github.com/DanielBorgesOliveira/onedrive_tray.git
-    cd onedrive_tray
-    mkdir build
-    cd build
-    /usr/lib/qt5/bin/qmake ../systray.pro ## prepare the configuration, such as Makefile
-    make ## build the software
-    
-    ## execute it, such that it runs whenever log in
-    sudo make install ## deploy the software, such as copying files -> here's the sudo incentive
-    systemctl enable --user onedrive_tray.service
-    ```
-    
-    ```scss
-    Source code
-       ↓
-    qmake (.pro → Makefile)
-       ↓
-    make (Makefile → binary)
-       ↓
-    make install (binary → system)
-       ↓
-    systemctl enable (autostart)
-    ``` 
-    
-   
-    
-  ii. Customise the logs output reported on the terminal, with the following script that reports in *real-time* a colourised OneDrive activity of the logs:
-    a. Install dependencies: `sudo apt install silversearcher-ag ccze`
-    b. Add [`onedrive_log`](https://github.com/zzzdeb/dotfiles/blob/master/scripts/tools/onedrive_log) bash file into folder `~/scripts/tools`. This script is a coloured wrapper of `journalctl` command. 
-    c. Add to the `$PATH` using local `.bashrc` the folder `~/scripts/tools`
+::: {#tip-onedrive-GUI .callout-tip title="GUIs for OneDrive monitoring"}
 
+
+> [OneDrive system tray program](https://github.com/DanielBorgesOliveira/onedrive_tray) adds a simple icon returning the status of synchronization for OneDrive. 
+
+> Installation bash:
+
+```bash
+
+## install the 5th version of qmake
+sudo apt install qt5-qmake qtbase5-dev
+
+## create the runnable executive file
+git clone https://github.com/DanielBorgesOliveira/onedrive_tray.git
+cd onedrive_tray
+mkdir build
+cd build
+/usr/lib/qt5/bin/qmake ../systray.pro ## prepare the configuration, such as Makefile
+make ## build the software
+
+## execute it, such that it runs whenever log in
+sudo make install ## deploy the software, such as copying files -> here's the sudo incentive
+systemctl enable --user onedrive_tray.service
+
+```
+
+> Colour the logs output reported on the terminal:
+
+1. Install dependencies: `sudo apt install silversearcher-ag ccze`
+2. Add [`onedrive_log`](https://github.com/zzzdeb/dotfiles/blob/master/scripts/tools/onedrive_log) bash file into folder `~/scripts/tools`.
+3. Add permanently to the `$PATH` by modifying the `~/.bashrc` file: `export PATH="$PATH:$HOME/scripts/tools"`/
+
+:::
 
 
 ### Troubleshoots for OneDrive
 
-- **Call `systemctl --user restart onedrive` after modifying the `.config` file to account for changes within it**. For retro-application of configuration changes, use `onedrive --resync --sync --verbose` with parsimony. **The synchornisation halts without warning, when the config file is modified, so you need to restart it**. 
+- **Call `systemctl --user restart onedrive` after modifying the `.config` file to account for changes within it**. For retro-application of configuration changes, use `onedrive --resync --sync --verbose` with parsimony. **The synchronisation halts without warning, when the config file is modified, so you need to restart it**. 
 
 - Warning "onedrive application is already running, please check process list" means that several concurrent onedrive are running in the background:
   - List existing processes using onedrive: `ps aux | grep onedrive`
   - Force kill processes that do no not use `systemtcl`: kill -9 <pid> 
+  - $90\%$ of the time is that you're simultaneously running UI OneDrive, and in the background `systemtcl` for synchronising processes
   
-- Git and OneDrive do not interfere well for 3 reasons at least, especially when synchronising files on multiple platforms. Linux (and Mac) machines end lines with `LF (Line Feed): \n`, while Windows uses `CRLF (Carriage Return + Lien Feed): \r\n`, Linux tracks file permissions for executables while Windows doesn't (only problematic for shell scripts), finally, `.git` and `.Rproj` folders are complex binary repositories with challenging access and encoding. Three heuristic approaches to solve most issues:
+::: {.callout-note title="OneDrive, Git and EOL encoding across OS" collapse="true"}
 
-  i. Exclude `.git` folders^[Adding argument `skip_dir = ".git"` to OneDrive config file] (or even completely code folders) from the synchronisation. **Note that in this case, the folder will no longer be tracked as a `Git` processes.**
-  
-  ii. Configure globally the `.gitconfig` configuration file to allow both end of lines indicators, using `git config --global core.autocrlf input` on Linux and Mac machines collaborating with Windows machines^[Accept as EOL CRLF, but always commit as LF], and `git config --global core.autocrlf true` on Windows machines^[on Windows machines, checked out as `CRLF`, but committed as `LF`]. The argument tolerates `CRLF` as it appears, otherwise use by default Linux-like `LF` endings. **This approach solves most of my synchronisation conflicts**. 
-  
-  iii. **Best practice**: per project, create a `.gitattributes` defining explicitly the encoding of EOL, removing the dependency to the machine OS^[Detailled information is avalaible [here](https://docs.github.com/en/get-started/git-basics/configuring-git-to-handle-line-endings?platform=windows)]. By default, you should opt in ofr the `LF` EOL:
-  
-  ```gitattributes
+> Git and OneDrive do not combine well for:
+
+- **Different encoding of end of line**: Linux (and Mac) machines end lines with `LF (Line Feed): \n`, while Windows uses `CRLF (Carriage Return + Lien Feed): \r\n`
+- Linux tracks file permissions for executables while Windows doesn't (only problematic for shell scripts)
+- `.git` and `.Rproj` folders are complex binary repositories often OS dependent. 
+
+---
+
+To avoid these issues: 
+
+i. Configure globally the `.gitconfig` configuration file to allow both end of lines indicators, using `git config --global core.autocrlf input` on Linux and Mac machines collaborating with Windows machines^[Accept as EOL CRLF, but always commit as LF], and `git config --global core.autocrlf true` on Windows machines^[constrain commits to be encoded and pushed as `LF`]. 
+
+ii. For further robustness, create a `.gitattributes` dotfile per project^[Detailled information is avalaible [here](https://docs.github.com/en/get-started/git-basics/configuring-git-to-handle-line-endings?platform=windows)]:
+
+  ```bash
   ## 3 columns: file extension, file type (text, or binary), eol definition for text documents
-  * text=auto eol=lf ## modify EOL both globally, as the default behaviour, if `core.autocrlf` is not set
-  ## AND custom configuration, per file extension
   *.sh   text eol=lf
   *.py   text eol=lf
   *.js   text eol=lf
   *.ts   text eol=lf
   *.java text eol=lf
   ```
-  
-  Apply changes with the following commands:
-  
+    Then, apply the changes with the following Git commands^[this command first identifies all files tracked by Git, then apply to every file the end of line normalisation rule, with `.gitattributes` prevailing over the global `core.autocrlf` option]
+    
   ```bash
   git add --renormalize .
   git status ## display files being impacted by the change of EOL encoding
   git commit -m "Normalize line endings"
   ```
   
-  iv. **Discard local changes**, induced by degenerate EOL diffs, with:
+iii. Configure the editor default end of line encoding:
 
-  ```bash
-  git status ## Review of existing changes
-  git clean -fd ## Optional, remove untracked files and directories as well
-  git reset --hard HEAD
-  ```
-  to discard all local modifications to **tracked, but unstaged files**, practically bringing the working tree back to the last commit. 
+  - *VS Code*: {{< kbd Shift-Ctrl-P >}}, then type "Open VS Code Settings", then go to "Files:EOL", and set end of line as `\n`
+  - *RStudio:* `Tools → Global Options → Code → Saving -> Line ending Conversion → (Posix) LF`. 
   
-  v. Configure the editor:
-   
-   i. VS Code → `Settings > Text Editor > Files > Eol`, go for the `\n`, or `auto` option. To apply it on pre-existing files, use *Change End Of Line Sequence command*. 
-   ii. RStudio: `Tools → Global Options → Code → Saving -> Line ending Conversion → (Posix) LF`. 
+---
 
+![Best practices for End of Line homogenisation across devices](git_diffs_encodings.png)
 
+:::
+  
 
-::: {.callout-warning title="Graphical Interaces for OneDrive"}
+::: {.callout-warning title="Graphical Interfaces for OneDrive"}
 
 Avoid using graphical interfaces, such as [OneDriveGUI](https://github.com/bpozdena/OneDriveGUI), they poorly concur with local installation of `onedrive` on my personal experiment. 
 
@@ -429,7 +361,7 @@ Instead, rely on the terminal, as it usually provides the user with better custo
 
 :::
 
-::: {.callout-warning title="Compatibility with Applications Using Atomic Save Operations"}
+::: {.callout-warning title="Compatibility with Applications Using Atomic Save Operations" collapse="true"}
 
 Many modern editors, such as `LibreOffice` and `Rstudio` use [**atomic save strategies**](https://github.com/abraunegg/onedrive/blob/eb029bbe2ff5ba54844ae66667dce4dcb5eb78cf/docs/usage.md#compatibility-with-editors-and-applications-using-atomic-save-operations) to preserve data integrity when writing files. 
 
@@ -478,15 +410,12 @@ delay_inotify_processing = "true" ## wait for RStudio to finalise the saving of 
 :::
 
 
-> [Webhooks, for immediate synchornisation](https://github.com/abraunegg/onedrive/blob/master/docs/webhooks.md), if you want *real-time* synchronisation with the server, `server -> local`. **Not recommended generally, as complex to configure, and usually irrelevant for daily use cases**. Instead, reduce the latency for synchronisation. 
+<!-- > [Webhooks, for immediate synchornisation](https://github.com/abraunegg/onedrive/blob/master/docs/webhooks.md), if you want *real-time* synchronisation with the server, `server -> local`. **Not recommended generally, as complex to configure, and usually irrelevant for daily use cases**. Instead, reduce the latency for synchronisation.  -->
 
 
-### Monitor synchronisation processes in the long run
 
-- `systemctl list-unit-files --type=service --state=running --user` to list all processes running in the background, even after rebooting, restrained to the user-level.
-  - Alternatively, processes at the system-level are stored under `/lib/systemd/system/`
 
-- `systemctl status <service>` retrieves current status
+
 
 
 ## Software to install
@@ -787,6 +716,7 @@ The main stylistic variants of fonts you can play with are:
 
 
 > Make sure, if avalaible, to download for each font, the regular, bold, italic-bold, and italic versions at the very least.
+
 ---
 
 ![Main typographic options](typographic_options.png){#fig-typographic-options}
@@ -1490,6 +1420,10 @@ Host mmg-sb-05 new-mmg-cluster
 : Comparison side-by-side of the main options for customised `ssh`connexion {#tbl-ssh-connexion}
 
 :::
+
+### MMG cluster, and recommendations for project management
+
+
 
 
 <!-- ### Run RStudio remotely -->
