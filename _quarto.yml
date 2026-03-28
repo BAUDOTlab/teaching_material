@@ -1,6 +1,9 @@
-# Quarto book project — only these sources are rendered (see project.render).
+# Quarto book project — only these sources are rendered (see `project.render`).
 # https://quarto.org/docs/books/
 
+# =========================
+# Project scope and build
+# =========================
 project:
   type: book
   output-dir: docs
@@ -8,30 +11,123 @@ project:
     - index.qmd
     - Linux/installation-linux.qmd
 
+# =========================
+# Book metadata and order
+# =========================
 book:
   title: "Team teaching material"
   description: "Teaching resources (Linux installation guide and more)."
+  author: "Bastien Chassagnol, Benjamin Loire, Morgane, Philippe, Marielle"
   # Stable PDF basename on the site (e.g. docs/team-teaching-material.pdf)
   output-file: team-teaching-material
   chapters:
     - index.qmd
     - Linux/installation-linux.qmd
+  repo-url: https://github.com/BAUDOTlab/teaching_material
+  site-url: https://baudotlab.github.io/teaching_material/Linux/installation-linux.html
+  repo-branch: master
+  repo-actions: [edit, issue, source]
+  sharing: [linkedin]
+  open-graph: true
+  downloads: [pdf]
+  page-footer:
+    center:  |
+       Written by Bastien CHASSAGNOL and Benjmain LOIRE, with suggestions from Marielle, Kenza, Morgane and Philippe. This book is built with <a href="https://quarto.org/">Quarto</a>.
+    background: "#f8f9fa"
+    border: false
+    right:
+      - icon: github
+        href: https://github.com/BAUDOTlab/teaching_material
 
+# =========================
+# Shared document defaults
+# =========================
+quarto-required: ">= 1.8.0"
+toc: true
+toc-depth: 4
+number-sections: true # Required for cross-referencing sections
+number-depth: 4
+tbl-cap-location: bottom
+fig-align: center
+out-width: "80%"
+fig-dpi: 320
+
+# =========================
+# Output formats
+# =========================
 format:
   html:
-    theme: cosmo
-    toc: true
+    # Presentation choices for the web version
+    page-layout: full
+    lightbox: true
+    smooth-scroll: true
+    comments:
+      hypothesis: true # Optional third-party annotation layer
+    code-fold: true
+    code-tools: true
+    code-summary: "Show the code"
+    code-link: true # Useful, but can feel busy in prose-heavy chapters
+    code-overflow: wrap
+    code-copy: hover
+    crossrefs-hover: true
+    footnotes-hover: true
+    citations-hover: true
   pdf:
     documentclass: scrbook
     pdf-engine: lualatex
-    latex-auto-install: true
     monofont: "DejaVu Sans Mono"
+    latex-auto-install: true
+    latex-max-runs: 5
 
-# If running R scripts, must be run locally to avoid using too many GH actions.
+# =========================
+# Filters and execution
+# =========================
+# filters:
+#   - highlight-text
+
 execute:
-  freeze: true
   echo: false
   eval: true
   message: false
   warning: false
   error: false
+  freeze: true # Avoid repeated execution when inputs are unchanged
+  
+#### Code and knitr formatting ####
+knitr:
+  opts_chunk:
+    collapse: true # keep code and outputs together
+    comment: "#>" # tidyverse style for code outputs
+    R.options: # default table rendering
+      dplyr.print_min: 6
+      dplyr.print_max: 6
+      pillar.max_footer_lines: 2
+      pillar.min_chars: 15
+      pillar.bold: TRUE
+
+# =========================
+# Editor preferences
+# =========================
+editor:
+  source: true
+  
+  # =========================
+# Cross-rpreferences
+# =========================
+  
+crossref:
+  chapters: true
+  
+# =========================
+# Metadata
+license: "MIT" 
+copyright:
+  holder: Bastien C.
+lang: en-GB
+subject: "Linux tutorial"
+citation: true # Returns with the URL of the website
+google-scholar: true
+  
+
+
+
