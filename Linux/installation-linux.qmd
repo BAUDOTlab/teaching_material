@@ -7,6 +7,59 @@ title: "Install core software on Ubuntu"
 
 ## Ubuntu general guidelines
 
+### Recommended system libraries to install
+
+```bash
+# Install system libs
+sudo apt-get update
+sudo apt-get install -y \
+    apt-transport-https \
+    build-essential \
+    ca-certificates \
+    cloud-guest-utils \
+    curl \
+    default-jre \
+    f2c \
+    gdebi-core \
+    gnupg \
+    libbz2-dev \
+    libcurl4-openssl-dev \
+    libffi-dev \
+    libfontconfig1-dev \
+    libfribidi-dev \
+    libgsl0-dev \
+    libgtextutils-dev \
+    libharfbuzz-dev \
+    libicu-dev \
+    liblzma-dev \
+    libncurses5-dev \
+    libncursesw5-dev \
+    libpcre3 \
+    libpcre3-dev \
+    libperl-dev \
+    libreadline-dev \
+    libssl-dev \
+    libtiff-dev \
+    libxml2-dev \
+    locales \
+    ncftp \
+    pandoc \
+    parallel \
+    pkg-config \
+    readline-doc \
+    sudo \
+    tcl \
+    tk \
+    tk-dev \
+    tk-table \
+    tmux \
+    tzdata \
+    unzip \
+    vim \
+    && sleep 1
+```
+
+
 ### Ubuntu file, and package structure
 
 #### System-wide location (for core programs)
@@ -445,10 +498,8 @@ Three recommended methods, depending on Ubuntu's support:
 2. `AppImages` are standalone executable files, bundling the application and most of its dependencies: 
   - Recommended for *desktop applications* to be installed only on the user account -> does not require `sudo` rights in most cases
   - Portable
-  - Works across many distributions
   - `AppImageLauncher` can help in organising all AppImages within the same folder + integrate them into the system menus:
     - Relevant if using multiple AppImages
-    - Using menu integrations and icons
     - Avoid `Snap`
 
 ---
@@ -456,7 +507,7 @@ Three recommended methods, depending on Ubuntu's support:
 3. Pre-built tarball (`.tar(gz|xz)`) archives: 
   - Stronger customisation
   - Works without distribution packages
-  - May fail when built / requires manual handling/no automatic updates
+  - Requires manual handling/no automatic updates
   - **Only recommended for developers, or if nothing else exists**. 
 
 ---  
@@ -467,27 +518,11 @@ Three recommended methods, depending on Ubuntu's support:
   
 ---
 
-*Conclusion*: APT first (if not directly available, add the repository to the trusted keys of `apt`) -> AppImage second -> `.deb` if AppImage is not available -> source build in the worst case. 
+![Guidelines for installing software on Ubuntu](ubuntu_guidelines_installation.png)
 
 ---
 
-| Feature                   | AppImage      | tar/build    | apt install | .deb    |
-| ------------------------- | ------------- | ------------ | ----------- | ------- |
-| Root required             | no            | sometimes |yes          |yes      |
-| Dependency handling       | Bundled       | Manual       | Automatic   | Partial |
-| Auto-updates              | no            | no           |yes          | no      |
-| System integration        | Low           | Medium       | High        | High    |
-| Portability               | Excellent     | Low          | None        | Low     |
-| Stability                 | App-dependent | Variable     | Excellent   | Good    |
-| Recommended for beginners |yes            | no           |  yes        |        |
-
-: Pros and Cons of Package installations for `Ubuntu` users {#tbl-installation-comparison}
-
----
-
-- Other choices of importance:
-  - `portable`, or not. Portable installation is not managed by `apt`, easier to remove (does not leave leftovers/footprints, as only installed locally, in the home directory), but does easily enable desktop integration (with icons, for instance), nor allows for automatic updates
-  - Non-portable applications are usually better for daily/intensive use, but not *sandboxed*, and harder to remove (configuration files installed in root directories)
+> `portable`, or not. Portable installation is easier to remove, as it does not leave leftovers in the core system, but does not allow for automatic updates. On the other hand, non-portable applications are usually better for daily/intensive use, but not *sandboxed*, and harder to remove.
 
 :::
 
@@ -753,7 +788,17 @@ sudo apt update
 
 2. Install Docker toolkit with `sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin`
 
-3. Check installation with `sudo docker run hello-world`. If not running by default upon login, enable automated start with `sudo systemctl start docker`. More details [here](https://docs.docker.com/engine/install/ubuntu/#upgrade-docker-engine).
+3. Run Docker without `sudo`rights for the main laptop user:
+
+```bash
+# create a Unix group allowing Docker to interact with system-level resources without admin rights
+sudo groupadd docker
+# and add curent user of the session to it
+sudo usermod -aG docker $USER
+```
+
+
+4. Check installation with `sudo docker run hello-world`. If not running by default upon login, enable automated start with `sudo systemctl start docker`. More details [here](https://docs.docker.com/engine/install/ubuntu/#upgrade-docker-engine).
 
 ### Teams
 
@@ -854,7 +899,7 @@ sudo apt-get upgrade slack-desktop
   
 2. Log-in (recommended with your Github profile) on each of the channels you want to connect, to keep notified about newest posts. 
 
-### Cytoscape
+### Cytoscape {#sec-cytoscape}
 
 > Major default: only supported by Java version 17 (and not by more recent, and stable Java versions!!)
 
@@ -922,6 +967,8 @@ X-GNOME-SingleWindow=true
  
 ### Quarto, R and RStudio
 
+#### R, and recommended packages
+
 1. To get the latest R Versions, add the signing key, along with the repository:
 
 ```bash
@@ -967,18 +1014,26 @@ echo "deb [signed-by=/etc/apt/keyrings/cran.gpg] https://cloud.r-project.org/bin
     
   
   ```
+
+3. Configure default CRAN mirror. 
+  i. default choice is <https://cloud.r-project.org>, as the official CRAN miror, and the most up-to-date
+  ii. For Ubuntu, the **Posit Package Manager** mirror,  by providing prebuilt Linux binaries, is much faster to compile. To install it, modify the local `~/.Rprofile` file:
+  ```bash
+  echo 'options(repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/<ubuntu-version>/latest"))' >> ~/.Rprofile
+  ```
   
+4. Install your packages, by organising them as a package repository with dependencies. Notably, install those of Stephen Turner, as essential to most bioinformatic pipelines: `remotes::install_github("stephenturner/Tverse", upgrade=TRUE)`.
 
-3. Install RStudio (Desktop IDE)
+#### RStudio (Desktop IDE)
 
-  i. Go to: [https://www.rstudio.com/products/rstudio/download/#download](https://www.rstudio.com/products/rstudio/download/#download)/ Choose the **Ubuntu/Debian `.deb` package** for your architecture (amd64).
-  ii. Step 2 — Install the `.deb` package:
+1. Go to: [https://www.rstudio.com/products/rstudio/download/#download](https://www.rstudio.com/products/rstudio/download/#download)/ Choose the **Ubuntu/Debian `.deb` package** for your architecture (amd64).
+2. Install the `.deb` package:
 
 ```bash
 sudo apt install ./rstudio-2025.09.0-422-amd64.deb
 ```
 
-4. Install Air, as the recommended, fast and modern formatter for R code. Then, customise your RStudio settings, explicitly reporting the path location of Air formatter, see @tip-Rstudio-settings. 
+3. Install Air, as the recommended, fast and modern formatter for R code. Then, customise your RStudio settings, explicitly reporting the path location of Air formatter, see @tip-Rstudio-settings. 
 
 ```bash
 uv tool install air-formatter
@@ -1020,7 +1075,9 @@ Core options to change the default behaviour of RStudio, enabling enhanced compa
 
 :::
 
-4. Install Quarto, Go to [https://quarto.org/docs/get-started/](https://quarto.org/docs/get-started/)
+#### Quarto
+
+> Go to [https://quarto.org/docs/get-started/](https://quarto.org/docs/get-started/)
 
 ```bash
 sudo apt install ./quarto-1.3.496-linux-amd64.deb
@@ -1210,6 +1267,19 @@ ls -la ~/.local/share/uv/python* ## path returned should be located within the H
 
 
 <!-- ![`uv + PyCharm` setup, representing the different layers in which Python Interpreter live, and the modern and recommended workflow for creating Python projects fully isolated, and reproducible](uv-pycharm-structure.png){#fig-uv-pycharm} -->
+
+### Nextflow as workflow management tool
+
+> Installation process as standalone, and automatically up-to-date tool. µµCheck first that Java version at least 17 is installed, see @sec-cytoscape:
+
+```bash
+curl -s https://get.nextflow.io | bash
+chmod +x nextflow # make nextflow executable
+
+# move nextflow into execubtale path
+sudo mv nextflow $HOME/.local/bin/
+```
+
 
 ### Latex
 
@@ -1423,6 +1493,14 @@ Host mmg-sb-05 new-mmg-cluster
 
 ### MMG cluster, and recommendations for project management
 
+About projects timeline, and structure, follow these tips as soon as *collaboration* is involved:
+
+
+- Initiate `git + github` at the real start up of the project
+- Use only the `/mnt/<cluster-name>/projects/` folder (no projects in your home, except for a quick run, and test)
+- When creating the project, set carefully group and user permissions, following guidlines of document https://github.com/BAUDOTlab/teaching_material/blob/main/Server%20Management/Server_Management.pdf, section **Creating a New Project**
+- Complement the `README.md` (to be created) at the root of the folder, with one short line per directory in the `projects` folder quickly summarising the overarching objective of the study
+
 
 
 
@@ -1527,5 +1605,31 @@ Host mmg-sb-05 new-mmg-cluster
 
 <!-- ::: -->
 
+
+
+Upon my recent transition from the Windows world to Linux, and huge frustration resulting from spending a lot of time recovering tutorials and disseminated configuration files when configuring a new laptop, here's my detailed tutorial about best practices when starting from fresh on a Ubuntu session: https://baudotlab.github.io/teaching_material/Linux/installation-linux.html (and GH repo: https://github.com/BAUDOTlab/teaching_material)
+Beyond key commands, I distil some tips to enhance reproducibility across projects, provide default configuration tools for Git, RStudio and VS Code, and suggest software to replace the paying licence of the Office ecosystem. I also tried to concatenate recommendations from the team, including Benjamin, Morgane, Marielle, and philippe notably.
+
+
+
+Besides, here are the 3 development guidelines that after discussions with Benjamin, might be the msot controversial, but strongly suggest nonetheless: 
+
+
+- No further support of RServer, nor JupyterLab on the server -> with VS Code, and its extension "Visual Studio Code Remote - SSH", it's easy to automatically retrieve back its local programming framework
+  - For Python, switch to VS Code (or Cursor for AI-guided development): `Spyder` is slow, and old-looking, `Jupyter Notebooks` is not reproducible (and limited in functionalities), especially witht he advent of Marimo: https://marimo.io/, `PyCharm`, while offering a slightly better developer experience, has a paying licence that limits its functionalities + all its features are covered by VS Code extensions
+  - For R, `RStudio` is definitely the best (to quote Benjamin, "that's the utmost shame that the best IDE had been developed for the worst programming language"). But running it on the server implies strong latency -> suggested workflow: develop, and run your scripts on small examples locally, then scale them on larger datasets using VS Code on the server (or the command line)
+
+- Use `uv` for Python-full projects, `uv` or `poetry` for Python package development, and `pixi` for multi-language projects (see why in following caricature) -> especially, both `conda` and `mamba` are heavy, and way too slow
+
+- About projects timeline, and structure, follow these tips as soon as collaboration is invovled:
+  - Initiate `git + github` at the real start up of the project
+  - Use only the `/mnt/<cluster-name>/projects/` folder (no projects in your home, except for a quick run, and test)
+  - When creating the project, set carefully group and user permissions, following guidlines of document https://github.com/BAUDOTlab/teaching_material/blob/main/Server%20Management/Server_Management.pdf, section **Creating a New Project**
+  - Complement the `README.md` (to be created) at the root of the folder, with one short line per directory in the `projects` folder quickly summarising the overarching objective of the study
+
+
+Finally, if you:
+ - Want to collaborate to the tutorial: favour quarto (or notebooks) editable files over PDFs, index your document under `https://github.com/BAUDOTlab/teaching_material/blob/main/_quarto.yml`. You can also report issues directly on the website, clicking on the option "Edit this page" in the footer
+ - For computational nerds, or people generally interested in best programming guidelines, solving computational and dependency nightmares, or simply curious, add a like to this comment -> I'll add a Slack channel to unify debates, and troubleshoot issue solving :-)
 
 
