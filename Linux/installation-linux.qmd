@@ -861,7 +861,12 @@ sudo usermod -aG docker $USER
 
 4.  Check installation with `sudo docker run hello-world`. If not running by default upon login, enable automated start with `sudo systemctl start docker`. More details [here](https://docs.docker.com/engine/install/ubuntu/#upgrade-docker-engine).
 
-> Tutorials for Docker - [Benjamin presentation](https://docs.google.com/presentation/d/1v6JjkoY2ozFO0RaCBMIVRX5Hy7UW6CuhBgORrlM5pHQ/edit?slide=id.g2b840ea5086_0_12#slide=id.g2b840ea5086_0_12)
+> Tutorials for Docker
+
+-   [Benjamin presentation](https://docs.google.com/presentation/d/1v6JjkoY2ozFO0RaCBMIVRX5Hy7UW6CuhBgORrlM5pHQ/edit?slide=id.g2b840ea5086_0_12#slide=id.g2b840ea5086_0_12)
+-   [VsCode, R and Docker with DevContainers](https://github.com/RamiKrispin/vscode-r)
+  - [VsCode, Python and Docker with DevContainers](https://github.com/RamiKrispin/vscode-python)
+- [DevContainers, from INRIA trainings](https://gitlab.lis-lab.fr/sicomp/and_devcontainers) 
 
 ### Teams
 
@@ -1653,7 +1658,7 @@ ForwardX11Trusted yes
 ------------------------------------------------------------------------
 
 | Option | Purpose | Effect on X11 |
-|--------------|----------------|-------------------------------------------|
+|----------------|----------------|---------------------------------------|
 | `-X` | X11 forwarding (untrusted) | Runs GUI apps remotely |
 | `-Y` | X11 forwarding (trusted) | Runs all GUI apps remotely |
 | `-C` | Compression | Reduces network usage and can speed up GUI over slow connections |
