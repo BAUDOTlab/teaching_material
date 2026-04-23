@@ -18,6 +18,18 @@
   "editor.formatOnSave": true,
   "editor.inlineSuggest.enabled": true,
 
+  // --- 🗺 DOCUMENT NAVIGATION (Quarto / Markdown / Rmd) ---
+  // Sticky scroll: pins the current heading at the top of the editor while scrolling
+  "editor.stickyScroll.enabled": true,
+  "editor.stickyScroll.maxLineCount": 3,
+  // Breadcrumbs: heading hierarchy bar at the top of each file
+  "breadcrumbs.enabled": true,
+  "breadcrumbs.filePath": "last",
+  "breadcrumbs.symbolPath": "on",
+  // Outline panel: always show up to H4 depth, keep symbols sorted by position
+  "outline.showMarkdownHeaderDepth": true,
+  "outline.collapseItems": "alwaysExpand",
+
   // --- 🐍 PYTHON / UV ---
   "python.defaultInterpreterPath": "/usr/bin/python",
   "python.createEnvironment.trigger": "off",
