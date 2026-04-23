@@ -1,4 +1,5 @@
 [
+  // --- Global Search (clean override) ---
   {
     "key": "ctrl+shift+f",
     "command": "-workbench.view.search"
@@ -14,5 +15,98 @@
   {
     "key": "ctrl+shift+f",
     "command": "workbench.action.findInFiles"
+  },
+
+  // --- R / Rmd Editing Helpers ---
+  {
+    "key": "ctrl+shift+w",
+    "command": "type",
+    "when": "editorTextFocus && editorLangId =~ /r|rmd|qmd/",
+    "args": { "text": " <- " }
+  },
+  // --- add the pipe operator, native one 
+  {
+    "key": "ctrl+shift+m",
+    "command": "type",
+    "when": "editorTextFocus && editorLangId =~ /r|rmd/",
+    "args": { "text": " |> " }
+  },
+  {
+    "key": "ctrl+shift+m",
+    "command": "-workbench.actions.view.problems"
+  },
+
+  // --- R Markdown Snippets ---
+  {
+    "key": "ctrl+alt+i",
+    "command": "editor.action.insertSnippet",
+    "when": "editorTextFocus && editorLangId == 'rmd'",
+    "args": {
+      "snippet": "```{r}\n${TM_SELECTED_TEXT}$0\n```"
+    }
+  },
+
+  // --- R Help / Navigation ---
+  {
+    "key": "f1",
+    "command": "r.helpPanel.openForSelection",
+    "when": "editorTextFocus && editorLangId =~ /r|rmd/"
+  },
+  // --- R Markdown Utilities ---
+  {
+    "key": "ctrl+shift+p",
+    "command": "r.runCommandWithEditorPath",
+    "when": "editorTextFocus && editorLangId == 'rmd'",
+    "args": "params <- rmarkdown::yaml_front_matter(\"$$\")$params |> lapply(\\(x) if (is.list(x)) x$value else x)"
+  },
+
+  // --- R Package Development (devtools-style, unified) ---
+  {
+    "key": "ctrl+shift+b",
+    "command": "r.runCommand",
+    "when": "editorTextFocus && editorLangId =~ /r|rmd/",
+    "args": "devtools::build()"
+  },
+  {
+    "key": "ctrl+shift+l",
+    "command": "r.runCommand",
+    "when": "editorTextFocus && editorLangId =~ /r|rmd/",
+    "args": "devtools::load_all()"
+  },
+  {
+    "key": "ctrl+shift+t",
+    "command": "r.runCommand",
+    "when": "editorTextFocus && editorLangId =~ /r|rmd/",
+    "args": "devtools::test()"
+  },
+  {
+    "key": "ctrl+shift+e",
+    "command": "r.runCommand",
+    "when": "editorTextFocus && editorLangId =~ /r|rmd/",
+    "args": "devtools::check()"
+  },
+  {
+    "key": "ctrl+shift+d",
+    "command": "r.runCommand",
+    "when": "editorLangId =~ /r|rmd/",
+    "args": "devtools::document()"
+  },
+
+  // --- R quick plot viewer ---
+  {
+    "key": "ctrl+alt+p",
+    "command": "r.runCommand",
+    "when": "editorTextFocus && editorLangId == 'r'",
+    "args": ".vsc.browser(httpgd::hgd_url(), viewer = \"Beside\")"
+  },
+
+  // --- Roxygen Template ---
+  {
+    "key": "ctrl+alt+shift+r",
+    "command": "type",
+    "when": "editorTextFocus && editorLangId =~ /r|rmd/",
+    "args": {
+      "text": "\n#' Title\n#'\n#' Description\n#'\n#' @param\n#'\n#' @export\n#'\n#' @example\n"
+    }
   }
 ]

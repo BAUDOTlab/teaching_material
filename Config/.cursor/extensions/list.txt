@@ -1,17 +1,50 @@
-# --- Core Python / R / Jupyter ---
+
+# --- 🐍 Python (core + tooling) ---
 ms-python.python
 ms-python.debugpy
 ms-toolsai.jupyter
 ms-toolsai.jupyter-renderers
 ms-toolsai.vscode-jupyter-cell-tags
+anysphere.cursorpyright
+charliermarsh.ruff
 
-# --- Containers / Environment ---
+# --- 📊 R / Quarto ---
+reditorsupport.r
+reditorsupport.r-syntax
+quarto.quarto
+rdebugger.r-debugger
+
+# --- 🗄 SQL ---
+qwtel.sqlite-viewer
+
+# --- 🐳 Containers / Remote ---
 anysphere.remote-containers
+anysphere.remote-wsl
+anysphere.remote-ssh
+ms-azuretools.vscode-docker
 
-# --- GitHub Integration ---
+# --- 🔧 Dev Containers (VS Code standard) ---
+ms-azuretools.vscode-containers
+
+# --- 🔀 Git / GitHub ---
 github.vscode-pull-request-github
+github.vscode-github-actions
+eamodio.gitlens
+mhutchie.git-graph
 
-# --- Editor UX ---
+# --- ✍️ Editor UX ---
 aaron-bond.better-comments
-vscodevim.vim
+christian-kohler.path-intellisense
+yzhang.markdown-all-in-one
+davidanson.vscode-markdownlint
+oderwat.indent-rainbow
 
+# --- 📄 Markdown / Docs ---
+tomoki1207.pdf
+yzane.markdown-pdf
+ritwickdey.liveserver
+
+# --- 🧾 Data formats ---
+bungcip.better-toml
+mechatroner.rainbow-csv
+redhat.vscode-yaml

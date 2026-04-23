@@ -1,4 +1,99 @@
 {
+  // --- 🧭 UI / WORKBENCH ---
+  "window.commandCenter": true,
+  "window.restoreWindows": "none",
   "workbench.list.openMode": "doubleClick",
-  "window.restoreWindows": "none"
+  "workbench.colorTheme": "Visual Studio Light",
+
+  // --- 📁 FILES / EXPLORER ---
+  "files.autoSave": "afterDelay",
+  "files.associations": {
+    "*.Rmd": "rmd",
+    "*.R": "r"
+  },
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+
+  // --- 🧠 EDITOR CORE ---
+  "editor.formatOnSave": true,
+  "editor.inlineSuggest.enabled": true,
+
+  // --- 🐍 PYTHON / UV ---
+  "python.defaultInterpreterPath": "/usr/bin/python",
+  "python.createEnvironment.trigger": "off",
+  "python.terminal.activateEnvironment": false,
+
+  // uv integration (use uvx manually in terminal/tasks)
+  "python.envFile": "${workspaceFolder}/.env",
+
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.ruff": "explicit",
+      "source.organizeImports.ruff": "explicit"
+    },
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+
+  "ruff.lineLength": 72,
+
+  // --- 📊 R / QUARTO ---
+  "r.bracketedPaste": true,
+  "r.plot.useHttpgd": true,
+  "r.plot.defaults.fullWindowMode": true,
+  "r.removeLeadingComments": true,
+  "r.session.levelOfObjectDetail": "Normal",
+
+  // Use air for formatting
+  "r.formatting.provider": "external",
+  "r.formatting.command": "/home/bastien/.local/bin/air",
+
+  "[r]": {
+    "editor.formatOnSave": true
+  },
+
+  "[rmd]": {
+    "editor.formatOnSave": true
+  },
+
+  "quarto.visualEditor.spellingDictionary": "en_GB",
+
+  // --- 🔧 DOCKER / YAML ---
+  "[dockercompose]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    },
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+
+  "docker.extension.enableComposeLanguageServer": false,
+
+  // --- 🔀 GIT / GITLENS ---
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "gitlens.launchpad.indicator.enabled": false,
+  "gitlens.ai.model": "gitkraken",
+  "gitlens.ai.gitkraken.model": "gemini:gemini-2.0-flash",
+
+  // --- 📝 BETTER COMMENTS ---
+  "better-comments.tags": [
+    { "tag": "!", "color": "#FF2D00" },
+    { "tag": "?", "color": "#3498DB" },
+    { "tag": "//", "color": "#474747", "strikethrough": true },
+    { "tag": "todo", "color": "#FF8C00" },
+    { "tag": "*", "color": "#98C379" }
+  ],
+
+  // --- 🔒 TELEMETRY ---
+  "redhat.telemetry.enabled": false
 }
