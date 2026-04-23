@@ -827,6 +827,9 @@ sudo usermod -aG docker $USER
 
 4. Check installation with `sudo docker run hello-world`. If not running by default upon login, enable automated start with `sudo systemctl start docker`. More details [here](https://docs.docker.com/engine/install/ubuntu/#upgrade-docker-engine).
 
+> Tutorials for Docker
+  - [Benjamin presentation](https://docs.google.com/presentation/d/1v6JjkoY2ozFO0RaCBMIVRX5Hy7UW6CuhBgORrlM5pHQ/edit?slide=id.g2b840ea5086_0_12#slide=id.g2b840ea5086_0_12)
+
 ### Teams
 
 - **Use the web version, as Microsoft no longer supports .deb versions for Linux.** 
@@ -1334,6 +1337,32 @@ sudo apt install texlive-latex-extra texlive-fonts-recommended texlive-science b
 ```bash
 sudo apt install ./cursor_2.0.77_amd64.deb
 ```
+
+3. Sync your Cursor configuration across devices, see @tip-cursor-output:
+
+::: {#tip-cursor-output .callout-tip title = "Export Cursor settings"}
+
+1. Export the core settings: 
+
+  i. Open Command Palette (`Ctrl/Cmd + Shift + P`), then search: **“Preferences: Open Settings (JSON)”**
+  ii. Export the file in your new device
+  iii. Default Linux installation: `~/.config/Cursor/User/settings.json`
+  
+2. Export the keybinding shortcuts:  
+
+  i. Open: **“Preferences: Open Keyboard Shortcuts (JSON)”**
+  ii. Export `keybindings.json`
+  
+3. (**the main difference with VSCode**). Contrary to `VSCode`, you need to export the list of extensions manually: 
+
+  i. Retrieve the list of extensions running `cursor --list-extensions > extensions.txt`
+  ii. Install them back with `cursor --install-extension` instruction
+
+> More details are provide in [*Sync Cursor Settings the Dotfiles Way* website](https://dev.to/0916dhkim/sync-cursor-settings-the-dotfiles-way-20c9), including the symlink commands tu fully automate this process
+
+> The harcore way, for syncing configuration files across numerous users, cf Benjamin, and [Cursor Config Sync](https://open-vsx.org/extension/KushalCodes/cursor-config-sync)
+
+:::
 
 
 ### Password Manager for Linux -> BitWarden
