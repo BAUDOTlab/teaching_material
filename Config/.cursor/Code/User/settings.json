@@ -4,17 +4,34 @@
   "window.restoreWindows": "none",
   "workbench.list.openMode": "doubleClick",
   "workbench.colorTheme": "Visual Studio Light",
+  "workbench.startupEditor": "none",
   // --- 📁 FILES / EXPLORER ---
   "files.autoSave": "afterDelay",
   "files.associations": {
     "*.Rmd": "rmd",
     "*.R": "r"
   },
+  "files.eol": "\n",
+  "files.hotExit": "onExitAndWindowClose",
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.watcherExclude": {
+    "**.Rproj": true,
+    "**/.cache/**": true,
+    "**/.Rproj.user/**": true,
+    "**/renv/**": true,
+    "**/env/**": true
+  },
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
+  "search.exclude": {
+    "**/renv": true
+  },
   // --- 🧠 EDITOR CORE ---
   "editor.formatOnSave": true,
   "editor.inlineSuggest.enabled": true,
+  "editor.tabSize": 2,
+  "editor.rulers": [80, { "color": "#b22222", "column": 120 }],
   // --- 🗺 DOCUMENT NAVIGATION (Quarto / Markdown / Rmd) ---
   // Sticky scroll: pins the current heading at the top of the editor while scrolling
   "editor.stickyScroll.enabled": true,
@@ -55,11 +72,13 @@
     "--no-restore",
     "--quiet"
   ],
+  "r.helpPanel.enableHoverLinks": true,
   // Use air for formatting
   "r.formatting.provider": "external",
   "r.formatting.command": "/home/bastien/.local/bin/air",
   "[r]": {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "editor.wordSeparators": "`~!@#%$^&*()-=+[{]}\\|;:'\",<>/?"
   },
   "[rmd]": {
     "editor.formatOnSave": true
@@ -86,12 +105,27 @@
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
   "docker.extension.enableComposeLanguageServer": false,
+  // --- ✏️ SPELL CHECK (cSpell) ---
+  "cSpell.enableFiletypes": ["quarto"],
+  "cSpell.language": "en-GB,fr-FR",
   // --- 🔀 GIT / GITLENS ---
   "git.autofetch": true,
   "git.confirmSync": false,
+  "git.pruneOnFetch": true,
+  "githubIssues.issueBranchTitle": "fix/issue${issueNumber}",
+  "githubIssues.workingIssueFormatScm": "fix: ${issueTitle}\n\nFixes ${issueNumberLabel}",
+  "githubPullRequests.fileListLayout": "tree",
+  "githubPullRequests.pullBranch": "never",
   "gitlens.launchpad.indicator.enabled": false,
   "gitlens.ai.model": "gitkraken",
   "gitlens.ai.gitkraken.model": "gemini:gemini-2.0-flash",
+  // --- 🔍 MARKDOWNLINT ---
+  "markdownlint.lintWorkspaceGlobs": [
+    "**/*.{md,mkd,mdwn,mdown,markdown,markdn,mdtxt,mdtext,qmd,rmd}",
+    "!**/node_modules",
+    "!**/vendor",
+    "!**/.git"
+  ],
   // --- 📝 BETTER COMMENTS ---
   "better-comments.tags": [
     {
