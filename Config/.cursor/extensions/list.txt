@@ -1,0 +1,17 @@
+# --- Core Python / R / Jupyter ---
+ms-python.python
+ms-python.debugpy
+ms-toolsai.jupyter
+ms-toolsai.jupyter-renderers
+ms-toolsai.vscode-jupyter-cell-tags
+
+# --- Containers / Environment ---
+anysphere.remote-containers
+
+# --- GitHub Integration ---
+github.vscode-pull-request-github
+
+# --- Editor UX ---
+aaron-bond.better-comments
+vscodevim.vim
+
