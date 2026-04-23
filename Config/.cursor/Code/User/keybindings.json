@@ -108,5 +108,26 @@
     "args": {
       "text": "\n#' Title\n#'\n#' Description\n#'\n#' @param\n#'\n#' @export\n#'\n#' @example\n"
     }
+  },
+
+  // --- 🌊 Marimo ---
+  // Open current .py file as a marimo notebook in the editor
+  {
+    "key": "ctrl+alt+m",
+    "command": "marimo.openNotebook",
+    "when": "resourceExtname == '.py'"
+  },
+  // Create a new sandboxed marimo notebook via terminal
+  {
+    "key": "ctrl+alt+shift+m",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": { "text": "uvx marimo edit --sandbox \n" }
+  },
+  // Run current marimo notebook as a read-only app
+  {
+    "key": "ctrl+alt+r",
+    "command": "workbench.action.terminal.sendSequence",
+    "when": "resourceExtname == '.py'",
+    "args": { "text": "uvx marimo run '${file}'\n" }
   }
 ]
