@@ -2124,8 +2124,8 @@ iii. Default Linux installation: `~/.config/Cursor/User/settings.json`</code></p
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb64"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">'^\s*#'</span> <span class="st">"~/.config/Cursor/User/extensions.txt"</span> <span class="dt">\</span></span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> <span class="st">'^\s*$'</span> <span class="dt">\</span></span>
 <span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="fu">xargs</span> <span class="at">-I{}</span> cursor <span class="at">--install-extension</span> {}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ol type="1">
-<li>The whole list of extensions, and Cursor settings is available in <a href="../Config/.cursor/">Cursor config folder</a>.</li>
+<ol start="4" type="1">
+<li>The whole list of extensions, and Cursor settings are available under the <a href="../Config/.cursor/">Cursor config folder</a>.</li>
 </ol>
 <blockquote class="blockquote">
 <p>More details are provide in <a href="https://dev.to/0916dhkim/sync-cursor-settings-the-dotfiles-way-20c9"><em>Sync Cursor Settings the Dotfiles Way</em> website</a>, including the symlink commands tu fully automate this process</p>
@@ -4481,7 +4481,7 @@ Table&nbsp;2.5: Comparison side-by-side of the main options for customised <code
 <span id="cb72-1477"><a href="#cb72-1477" aria-hidden="true" tabindex="-1"></a><span class="st">| xargs -I{} cursor --install-extension {}</span></span>
 <span id="cb72-1478"><a href="#cb72-1478" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
 <span id="cb72-1479"><a href="#cb72-1479" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1480"><a href="#cb72-1480" aria-hidden="true" tabindex="-1"></a><span class="st">1. The whole list of extensions, and Cursor settings is available in [Cursor config folder](../Config/.cursor/).</span></span>
+<span id="cb72-1480"><a href="#cb72-1480" aria-hidden="true" tabindex="-1"></a><span class="st">4. The whole list of extensions, and Cursor settings are available under the [Cursor config folder](../Config/.cursor/).</span></span>
 <span id="cb72-1481"><a href="#cb72-1481" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb72-1482"><a href="#cb72-1482" aria-hidden="true" tabindex="-1"></a><span class="st">&gt; More details are provide in [*Sync Cursor Settings the Dotfiles Way* website](https://dev.to/0916dhkim/sync-cursor-settings-the-dotfiles-way-20c9), including the symlink commands tu fully automate this process</span></span>
 <span id="cb72-1483"><a href="#cb72-1483" aria-hidden="true" tabindex="-1"></a></span>

@@ -1477,7 +1477,7 @@ grep -v '^\s*#' "~/.config/Cursor/User/extensions.txt" \
 | xargs -I{} cursor --install-extension {}
 ```
 
-1. The whole list of extensions, and Cursor settings is available in [Cursor config folder](../Config/.cursor/).
+4. The whole list of extensions, and Cursor settings are available under the [Cursor config folder](../Config/.cursor/).
 
 > More details are provide in [*Sync Cursor Settings the Dotfiles Way* website](https://dev.to/0916dhkim/sync-cursor-settings-the-dotfiles-way-20c9), including the symlink commands tu fully automate this process
 
