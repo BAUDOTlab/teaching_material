@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+  
+    {
+      "name": "R: Debug current file",
+      "type": "R-Debugger",
+      "request": "launch",
+      "debugMode": "file",
+      "workingDirectory": "${fileDirname}",
+      "file": "${file}"
+    },
+    {
+      "name": "R: Debug workspace",
+      "type": "R-Debugger",
+      "request": "launch",
+      "debugMode": "workspace",
+      "workingDirectory": "${workspaceFolder}"
+    }
+  ]
+}
