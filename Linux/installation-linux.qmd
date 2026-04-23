@@ -1348,6 +1348,8 @@ cursor --install-extension marimo-team.vscode-marimo
   }
 ```
 
+4. Interactive example is provided in [demo.py](../Linux/marimo/demo.py).
+
 
 
 
