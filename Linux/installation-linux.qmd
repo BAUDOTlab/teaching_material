@@ -230,34 +230,61 @@ dmesg -l err,crit,alert,emerg
 3. Run Python script with `python 3 eduroam-linux-AUA.py`
 4. As `userid`, provide your academic mail address, and as password, your `ENT password`. 
 
-### Shell-customisation (including `$PATH`)
+### Pimp your shell: switch from boring Bash to fancy `Zsh`
 
-#### Zsh (advanced bash configuration)
+1. Installation script: 
+
+  ```bash
+  sudo apt update
+  sudo apt install zsh
+  
+  ## change the default shell shebang
+  chsh -s $(which zsh) ## modify /etc/passwd repository
+  reboot # required log out for effective changes
+  
+  ## check if zsh is used by default (also the theme is modifed)
+  getent passwd "$USER" -> return "/home/bastien:/usr/bin/zsh"
+  
+  ## Install advanced customisation of the shell with Install Oh My Zsh addon
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" # create automatically the ~/.zshrc configuration file
+  ``` 
+  
+  > **You should keep the original ~/.bashrc as a fallback for Bash**.
+  
+2. Install the modern alternative to `ls`, namely `eza`
 
 ```bash
+# install the gpg command
 sudo apt update
-sudo apt install zsh
+sudo apt install -y gpg
 
-## define this shell shebang by default
-chsh -s $(which zsh) ## modify /etc/passwd repository
-``` 
+# install eza
+wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
+sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+sudo apt update
+sudo apt install -y eza
+```
 
-#### Add executables 
 
-- System-wide: 
-  - `/usr`, and manual installs under `/usr/local` are in the `$PATH` by default
-  - For third-party GUI, *self-contained* apps stored under `/opt`, add a symlink: `sudo ln -s /opt/<appName> /usr/local/bin/<appName>`, requires **`sudo` rights**.
+3. Change the behaviour of the shell:
 
-- User-level: 
-  - Customise `.bashrc` (or `.zshrc`) configuration files to modify the `$PATH` -> **Only affects the user, and interactive shell**. Examples:
+  - **System-wide**: all exe installed under `/usr` folder can be called directly from the `$PATH`. For third-party apps stored under `/opt`, you must **add a symlink** redirecting to your local folder: `sudo ln -s /opt/<appName> /usr/local/bin/<appName>`.
   
-  ```bash
-  export PATH="$PATH:$HOME/scripts/tools"
-  alias ll='ls -lah'
-  ```
-  - AppImages may be integrated using AppImageLauncher, or `.desktop` configuration. 
+  - **User-level**: customise `.bashrc` (and `.zshrc` if using the `.zsh`fancy shebang) -> **Only affects the current user**, see my own [`.zshrc` configuration file](../Config/zsh/.zshrc), and below `ls`output @fig-bash-ls. 
 
-- Deal with multiple versions of the same program (for instance, `Java`): use `update-alternatives --list <AppName>` to list executables. 
+::: {#fig-bash-ls layout-nrow=2}
+
+![Modified bahaviour of the `ls` output](./bash/ls_output.png)
+
+![Modified bahaviour of the `ll` output, displaying addition to file names their sizes, permission rights, and original proprietary](./bash/ll_output.png)
+
+![The `la` output displays in addition to the `ll`output the hidden files (traitdionally starting with a `.`)](./bash/la_output.png)
+
+![The `lt` output is combination of both `ls`and `tree`to display the hierarchical structure of a folder](./bash/lt_output.png)
+
+Visual representation of my customised `ls`commands to display the content of a folder from a Bash terminal. 
+:::    
 
 
 ## Synchronise files across devices with OneDrive 
@@ -867,6 +894,8 @@ echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-linux-signing-key.gpg
 sudo apt update
 ```
 
+3. add the [*Grammarly* Chrome plug-in](https://chromewebstore.google.com/detail/grammarly-ai-writing-assi/kbfnbcaeplbcioakkpcpgfkobkghlhen?hl=en) extension for automatic checking of the spelling, and grammar (choose one specific regional English, and stick to it)
+
 ### Slack
 
 1. Download [Slack application](https://slack.com/downloads/instructions/linux?ddl=1&build=deb)
@@ -907,7 +936,7 @@ sudo apt-get upgrade slack-desktop
 2. Follow this [tutorial](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
   i. Retrieve the [latest version](http://www.cytoscape.org/download.html)
   ii. Make it executable with `chmod u+x <filename.sh>`
-  iii. Execute with `sh`, or simply `./ ` (avoid using `sudo` if irrelevant for other users of the computer)
+  iii. Run with `bash <filename.sh>`
   iv. Launch with `Cytoscape &`.
 
 ### Zotero {#sec-Zotero}
@@ -1074,6 +1103,8 @@ Core options to change the default behaviour of RStudio, enabling enhanced compa
 :::
 
 :::
+
+> Controversial claim: use VScode for R development if working inside a Docker container, or on a server that does not provide a RStudio interface, otherwise, it's overkilled. Notably, for R package development, that should be containerised, RStudio is way more flexible
 
 #### Quarto
 
