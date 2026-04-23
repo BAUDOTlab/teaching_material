@@ -1449,9 +1449,9 @@ sudo apt install ./cursor_2.0.77_amd64.deb
 
 <!-- -->
 
-i.  Open Command Palette (`Ctrl/Cmd + Shift + P`), then search: **“Preferences: Open Settings (JSON)”**
-ii. Export the file in your new device
-iii. Default Linux installation: `~/.config/Cursor/User/settings.json`
+    i.  Open Command Palette (`Ctrl/Cmd + Shift + P`), then search: **“Preferences: Open Settings (JSON)”**
+    ii. Export the file in your new device
+    iii. Default Linux installation: `~/.config/Cursor/User/settings.json`
 
 <!-- -->
 
@@ -1468,14 +1468,16 @@ ii. Export `keybindings.json` into your local folder: `~/.config/Cursor/User/key
 
 <!-- -->
 
-i.  Retrieve the list of extensions running `cursor --list-extensions > extensions.txt`
-ii. Install them back with:
+  i.  Retrieve the list of extensions running `cursor --list-extensions > extensions.txt`
+  ii. Install them back with:
 
 ``` bash
 grep -v '^\s*#' "~/.config/Cursor/User/extensions.txt" \
 | grep -v '^\s*$' \
 | xargs -I{} cursor --install-extension {}
 ```
+
+1. The whole list of extensions, and Cursor settings is available in [Cursor config folder](../Config/.cursor/).
 
 > More details are provide in [*Sync Cursor Settings the Dotfiles Way* website](https://dev.to/0916dhkim/sync-cursor-settings-the-dotfiles-way-20c9), including the symlink commands tu fully automate this process
 
