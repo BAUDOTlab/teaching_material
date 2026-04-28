@@ -1567,6 +1567,40 @@ uid=1007(bastienc) gid=1007(bastienc) groupes=1007(bastienc),1043(dtoo_project)
 > More information avalaible under [Server Management tutorial](../Server%20Management/Server_Management.pdf).
 :::
 
+### Starting configuration
+
+``` bash
+# ~/.bashrc (minimal and robust)
+
+# Local user binaries first
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$PATH:$HOME/scripts/tools"
+
+# Auto-switch interactive Bash sessions to user-local Zsh
+if [ -x "$HOME/.local/bin/zsh" ] && [ -n "$PS1" ] && [ -z "$ZSH_VERSION" ]; then
+  exec "$HOME/.local/bin/zsh" -l
+fi
+
+# -------------------------------------------------------------------
+# Dotfiles migration via SCP (run these on your LOCAL machine)
+# -------------------------------------------------------------------
+# 1) Create target directories on server
+# ssh mmg-server 'mkdir -p ~/.ssh'
+
+# 2) Copy core dotfiles
+# scp ~/.bashrc ~/.gitconfig mmg-server:~/
+
+# 3) Copy SSH config
+# scp ~/.ssh/config mmg-server:~/.ssh/config
+
+# 4) Secure SSH permissions on server
+# ssh mmg-server 'chmod 700 ~/.ssh && chmod 600 ~/.ssh/config'
+
+# Optional: copy SSH keys (only if you explicitly want this)
+# scp ~/.ssh/id_ed25519 ~/.ssh/id_ed25519.pub mmg-server:~/.ssh/
+# ssh mmg-server 'chmod 600 ~/.ssh/id_ed25519 && chmod 644 ~/.ssh/id_ed25519.pub'
+``
+
 ### SSH configuration
 
 > Objective is dual: avoid typing your password each time you're connecting to a remote cluster, and keep a safe storage of all registered remote hosts:
