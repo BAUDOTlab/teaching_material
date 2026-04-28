@@ -1932,7 +1932,7 @@ Figure&nbsp;2.5
 <li>Use <code>uv</code> instead of <code>pipx</code> to install core Python tools for package dependency, web IDEs, modern Python formatting and styling, …. As <code>pipx</code>, all these tools are automatically added to the user’s <code>PATH</code>:</li>
 </ol>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> tool install ruff <span class="co">## ~ equivalent to pipx install ruff</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> tool install dvc <span class="co"># recommended data management tool, and versining, if exceedging git-lfs</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> tool install <span class="st">"dvc[ssh]"</span> <span class="co"># recommended data management tool, and versining, if exceedging git-lfs</span></span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> tool install black</span>
 <span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> tool install jupyterlab <span class="co">## `JupyterLab` outdates previous `JupterNotebook` as a web-based, and user-friendly interface</span></span>
 <span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> tool install ipython</span>
@@ -4265,7 +4265,7 @@ Table&nbsp;2.5: Comparison side-by-side of the main options for customised <code
 <span id="cb72-1258"><a href="#cb72-1258" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb72-1259"><a href="#cb72-1259" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span> <span class="fu">bash</span></span>
 <span id="cb72-1260"><a href="#cb72-1260" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> tool install ruff <span class="co">## ~ equivalent to pipx install ruff</span></span>
-<span id="cb72-1261"><a href="#cb72-1261" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> tool install dvc <span class="co"># recommended data management tool, and versining, if exceedging git-lfs</span></span>
+<span id="cb72-1261"><a href="#cb72-1261" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> tool install <span class="st">"dvc[ssh]"</span> <span class="co"># recommended data management tool, and versining, if exceedging git-lfs</span></span>
 <span id="cb72-1262"><a href="#cb72-1262" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> tool install black</span>
 <span id="cb72-1263"><a href="#cb72-1263" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> tool install jupyterlab <span class="co">## </span><span class="kw">`</span>JupyterLab<span class="kw">`</span> <span class="ex">outdates</span> previous <span class="kw">`</span>JupterNotebook<span class="kw">`</span> <span class="fu">as</span> a web-based, and user-friendly interface</span>
 <span id="cb72-1264"><a href="#cb72-1264" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> tool install ipython</span>
