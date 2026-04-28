@@ -293,7 +293,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#working-with-a-remote-server" id="toc-working-with-a-remote-server" class="nav-link" data-scroll-target="#working-with-a-remote-server"><span class="header-section-number">2.5</span> Working with a remote server</a>
   <ul>
-  <li><a href="#ssh-configuration" id="toc-ssh-configuration" class="nav-link" data-scroll-target="#ssh-configuration"><span class="header-section-number">2.5.1</span> SSH configuration</a></li>
+  <li><a href="#starting-configuration" id="toc-starting-configuration" class="nav-link" data-scroll-target="#starting-configuration"><span class="header-section-number">2.5.1</span> Starting configuration</a></li>
   <li><a href="#mmg-cluster-and-recommendations-for-project-management" id="toc-mmg-cluster-and-recommendations-for-project-management" class="nav-link" data-scroll-target="#mmg-cluster-and-recommendations-for-project-management"><span class="header-section-number">2.5.2</span> MMG cluster, and recommendations for project management</a></li>
   </ul></li>
   </ul>
@@ -2253,16 +2253,48 @@ Figure&nbsp;2.6: Be careful about selecting the second, non-default option, if y
 </div>
 </div>
 </div>
-<section id="ssh-configuration" class="level3" data-number="2.5.1">
-<h3 data-number="2.5.1" class="anchored" data-anchor-id="ssh-configuration"><span class="header-section-number">2.5.1</span> SSH configuration</h3>
-<blockquote class="blockquote">
-<p>Objective is dual: avoid typing your password each time you’re connecting to a remote cluster, and keep a safe storage of all registered remote hosts:</p>
-</blockquote>
-<ol type="1">
-<li>🔐 Set up SSH remote access (with key-based auth)</li>
-</ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb68"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co">## remote server must have openssh-server installed</span></span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install openssh-server</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="starting-configuration" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="starting-configuration"><span class="header-section-number">2.5.1</span> Starting configuration</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb68"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ~/.bashrc (minimal and robust)</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Local user binaries first</span></span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">"</span><span class="va">$HOME</span><span class="st">/.local/bin:</span><span class="va">$PATH</span><span class="st">"</span></span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">"</span><span class="va">$PATH</span><span class="st">:</span><span class="va">$HOME</span><span class="st">/scripts/tools"</span></span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Auto-switch interactive Bash sessions to user-local Zsh</span></span>
+<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">-x</span> <span class="st">"</span><span class="va">$HOME</span><span class="st">/.local/bin/zsh"</span> <span class="bu">]</span> <span class="kw">&amp;&amp;</span> <span class="bu">[</span> <span class="ot">-n</span> <span class="st">"</span><span class="va">$PS1</span><span class="st">"</span> <span class="bu">]</span> <span class="kw">&amp;&amp;</span> <span class="bu">[</span> <span class="ot">-z</span> <span class="st">"</span><span class="va">$ZSH_VERSION</span><span class="st">"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a>  <span class="bu">exec</span> <span class="st">"</span><span class="va">$HOME</span><span class="st">/.local/bin/zsh"</span> <span class="at">-l</span></span>
+<span id="cb68-10"><a href="#cb68-10" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb68-11"><a href="#cb68-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-12"><a href="#cb68-12" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------------------------</span></span>
+<span id="cb68-13"><a href="#cb68-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Dotfiles migration via SCP (run these on your LOCAL machine)</span></span>
+<span id="cb68-14"><a href="#cb68-14" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------------------------</span></span>
+<span id="cb68-15"><a href="#cb68-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) Create target directories on server</span></span>
+<span id="cb68-16"><a href="#cb68-16" aria-hidden="true" tabindex="-1"></a><span class="co"># ssh mmg-server 'mkdir -p ~/.ssh'</span></span>
+<span id="cb68-17"><a href="#cb68-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-18"><a href="#cb68-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) Copy core dotfiles</span></span>
+<span id="cb68-19"><a href="#cb68-19" aria-hidden="true" tabindex="-1"></a><span class="co"># scp ~/.bashrc ~/.gitconfig mmg-server:~/</span></span>
+<span id="cb68-20"><a href="#cb68-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-21"><a href="#cb68-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 3) Copy SSH config</span></span>
+<span id="cb68-22"><a href="#cb68-22" aria-hidden="true" tabindex="-1"></a><span class="co"># scp ~/.ssh/config mmg-server:~/.ssh/config</span></span>
+<span id="cb68-23"><a href="#cb68-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-24"><a href="#cb68-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 4) Secure SSH permissions on server</span></span>
+<span id="cb68-25"><a href="#cb68-25" aria-hidden="true" tabindex="-1"></a><span class="co"># ssh mmg-server 'chmod 700 ~/.ssh &amp;&amp; chmod 600 ~/.ssh/config'</span></span>
+<span id="cb68-26"><a href="#cb68-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-27"><a href="#cb68-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Optional: copy SSH keys (only if you explicitly want this)</span></span>
+<span id="cb68-28"><a href="#cb68-28" aria-hidden="true" tabindex="-1"></a><span class="co"># scp ~/.ssh/id_ed25519 ~/.ssh/id_ed25519.pub mmg-server:~/.ssh/</span></span>
+<span id="cb68-29"><a href="#cb68-29" aria-hidden="true" tabindex="-1"></a><span class="co"># ssh mmg-server 'chmod 600 ~/.ssh/id_ed25519 &amp;&amp; chmod 644 ~/.ssh/id_ed25519.pub'</span></span>
+<span id="cb68-30"><a href="#cb68-30" aria-hidden="true" tabindex="-1"></a><span class="kw">``</span></span>
+<span id="cb68-31"><a href="#cb68-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-32"><a href="#cb68-32" aria-hidden="true" tabindex="-1"></a><span class="co">### SSH configuration</span></span>
+<span id="cb68-33"><a href="#cb68-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-34"><a href="#cb68-34" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> Objective <span class="ex">is</span> dual: avoid typing your password each time you<span class="st">'re connecting to a remote cluster, and keep a safe storage of all registered remote hosts:</span></span>
+<span id="cb68-35"><a href="#cb68-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-36"><a href="#cb68-36" aria-hidden="true" tabindex="-1"></a><span class="st">1.  🔐 Set up SSH remote access (with key-based auth)</span></span>
+<span id="cb68-37"><a href="#cb68-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-38"><a href="#cb68-38" aria-hidden="true" tabindex="-1"></a><span class="st">``` bash</span></span>
+<span id="cb68-39"><a href="#cb68-39" aria-hidden="true" tabindex="-1"></a><span class="st">## remote server must have openssh-server installed</span></span>
+<span id="cb68-40"><a href="#cb68-40" aria-hidden="true" tabindex="-1"></a><span class="st">sudo apt install openssh-server</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="2" type="1">
 <li>Generate a pair of public-private SSH key on your local machine<a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a></li>
 </ol>
@@ -4574,248 +4606,282 @@ Table&nbsp;2.5: Comparison side-by-side of the main options for customised <code
 <span id="cb72-1567"><a href="#cb72-1567" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> More <span class="ex">information</span> avalaible under [Server Management tutorial]<span class="er">(</span><span class="ex">../Server%20Management/Server_Management.pdf</span><span class="kw">)</span><span class="bu">.</span></span>
 <span id="cb72-1568"><a href="#cb72-1568" aria-hidden="true" tabindex="-1"></a><span class="ex">:::</span></span>
 <span id="cb72-1569"><a href="#cb72-1569" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1570"><a href="#cb72-1570" aria-hidden="true" tabindex="-1"></a><span class="co">### SSH configuration</span></span>
+<span id="cb72-1570"><a href="#cb72-1570" aria-hidden="true" tabindex="-1"></a><span class="co">### Starting configuration</span></span>
 <span id="cb72-1571"><a href="#cb72-1571" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1572"><a href="#cb72-1572" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> Objective <span class="ex">is</span> dual: avoid typing your password each time you<span class="st">'re connecting to a remote cluster, and keep a safe storage of all registered remote hosts:</span></span>
-<span id="cb72-1573"><a href="#cb72-1573" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1574"><a href="#cb72-1574" aria-hidden="true" tabindex="-1"></a><span class="st">1.  🔐 Set up SSH remote access (with key-based auth)</span></span>
-<span id="cb72-1575"><a href="#cb72-1575" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1576"><a href="#cb72-1576" aria-hidden="true" tabindex="-1"></a><span class="st">``` bash</span></span>
-<span id="cb72-1577"><a href="#cb72-1577" aria-hidden="true" tabindex="-1"></a><span class="st">## remote server must have openssh-server installed</span></span>
-<span id="cb72-1578"><a href="#cb72-1578" aria-hidden="true" tabindex="-1"></a><span class="st">sudo apt install openssh-server</span></span>
-<span id="cb72-1579"><a href="#cb72-1579" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb72-1580"><a href="#cb72-1580" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1581"><a href="#cb72-1581" aria-hidden="true" tabindex="-1"></a><span class="st">2.  Generate a pair of public-private SSH key on your local machine[^installation-linux-20]</span></span>
-<span id="cb72-1582"><a href="#cb72-1582" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1583"><a href="#cb72-1583" aria-hidden="true" tabindex="-1"></a><span class="st">[^installation-linux-20]: Using a passphrase is not compuslory, but safer</span></span>
-<span id="cb72-1584"><a href="#cb72-1584" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1585"><a href="#cb72-1585" aria-hidden="true" tabindex="-1"></a><span class="st">``` bash</span></span>
-<span id="cb72-1586"><a href="#cb72-1586" aria-hidden="true" tabindex="-1"></a><span class="st">ssh-keygen -t ed25519 -C "your_email@example.com"</span></span>
-<span id="cb72-1587"><a href="#cb72-1587" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb72-1588"><a href="#cb72-1588" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1589"><a href="#cb72-1589" aria-hidden="true" tabindex="-1"></a><span class="st">This creates:</span></span>
-<span id="cb72-1590"><a href="#cb72-1590" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1591"><a href="#cb72-1591" aria-hidden="true" tabindex="-1"></a><span class="st">```         </span></span>
-<span id="cb72-1592"><a href="#cb72-1592" aria-hidden="true" tabindex="-1"></a><span class="st">- `~/.ssh/id_ed25519` (private key)</span></span>
-<span id="cb72-1593"><a href="#cb72-1593" aria-hidden="true" tabindex="-1"></a><span class="st">- `~/.ssh/id_ed25519.pub` (public key)</span></span>
-<span id="cb72-1594"><a href="#cb72-1594" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb72-1572"><a href="#cb72-1572" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span> <span class="fu">bash</span></span>
+<span id="cb72-1573"><a href="#cb72-1573" aria-hidden="true" tabindex="-1"></a><span class="co"># ~/.bashrc (minimal and robust)</span></span>
+<span id="cb72-1574"><a href="#cb72-1574" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1575"><a href="#cb72-1575" aria-hidden="true" tabindex="-1"></a><span class="co"># Local user binaries first</span></span>
+<span id="cb72-1576"><a href="#cb72-1576" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">"</span><span class="va">$HOME</span><span class="st">/.local/bin:</span><span class="va">$PATH</span><span class="st">"</span></span>
+<span id="cb72-1577"><a href="#cb72-1577" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">"</span><span class="va">$PATH</span><span class="st">:</span><span class="va">$HOME</span><span class="st">/scripts/tools"</span></span>
+<span id="cb72-1578"><a href="#cb72-1578" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1579"><a href="#cb72-1579" aria-hidden="true" tabindex="-1"></a><span class="co"># Auto-switch interactive Bash sessions to user-local Zsh</span></span>
+<span id="cb72-1580"><a href="#cb72-1580" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">-x</span> <span class="st">"</span><span class="va">$HOME</span><span class="st">/.local/bin/zsh"</span> <span class="bu">]</span> <span class="kw">&amp;&amp;</span> <span class="bu">[</span> <span class="ot">-n</span> <span class="st">"</span><span class="va">$PS1</span><span class="st">"</span> <span class="bu">]</span> <span class="kw">&amp;&amp;</span> <span class="bu">[</span> <span class="ot">-z</span> <span class="st">"</span><span class="va">$ZSH_VERSION</span><span class="st">"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb72-1581"><a href="#cb72-1581" aria-hidden="true" tabindex="-1"></a>  <span class="bu">exec</span> <span class="st">"</span><span class="va">$HOME</span><span class="st">/.local/bin/zsh"</span> <span class="at">-l</span></span>
+<span id="cb72-1582"><a href="#cb72-1582" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb72-1583"><a href="#cb72-1583" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1584"><a href="#cb72-1584" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------------------------</span></span>
+<span id="cb72-1585"><a href="#cb72-1585" aria-hidden="true" tabindex="-1"></a><span class="co"># Dotfiles migration via SCP (run these on your LOCAL machine)</span></span>
+<span id="cb72-1586"><a href="#cb72-1586" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------------------------</span></span>
+<span id="cb72-1587"><a href="#cb72-1587" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) Create target directories on server</span></span>
+<span id="cb72-1588"><a href="#cb72-1588" aria-hidden="true" tabindex="-1"></a><span class="co"># ssh mmg-server 'mkdir -p ~/.ssh'</span></span>
+<span id="cb72-1589"><a href="#cb72-1589" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1590"><a href="#cb72-1590" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) Copy core dotfiles</span></span>
+<span id="cb72-1591"><a href="#cb72-1591" aria-hidden="true" tabindex="-1"></a><span class="co"># scp ~/.bashrc ~/.gitconfig mmg-server:~/</span></span>
+<span id="cb72-1592"><a href="#cb72-1592" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1593"><a href="#cb72-1593" aria-hidden="true" tabindex="-1"></a><span class="co"># 3) Copy SSH config</span></span>
+<span id="cb72-1594"><a href="#cb72-1594" aria-hidden="true" tabindex="-1"></a><span class="co"># scp ~/.ssh/config mmg-server:~/.ssh/config</span></span>
 <span id="cb72-1595"><a href="#cb72-1595" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1596"><a href="#cb72-1596" aria-hidden="true" tabindex="-1"></a><span class="st">3.  Copy your key to the server with `ssh-copy-id username@server_ip`. You'</span>ll no longer need typing your password once typed once.</span>
-<span id="cb72-1597"><a href="#cb72-1597" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1598"><a href="#cb72-1598" aria-hidden="true" tabindex="-1"></a><span class="ex">4.</span>  <span class="er">(</span><span class="ex">Optional</span><span class="kw">)</span> <span class="ex">Keep</span> under <span class="kw">`</span><span class="ex">~/.ssh/config</span><span class="kw">`</span> file the key features describing each remote cluster. For instance, my configuration for the IFB is the following, and to connect to it, I only need typing now <span class="kw">`</span><span class="fu">ssh</span> ifb-core<span class="kw">`</span>. A second advantage of using this format for storing hosts is that it can be readily used by <span class="kw">`</span><span class="ex">VS</span> Code SSH Remote<span class="kw">`</span> connection extensions.</span>
-<span id="cb72-1599"><a href="#cb72-1599" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1600"><a href="#cb72-1600" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span> <span class="fu">bash</span></span>
-<span id="cb72-1601"><a href="#cb72-1601" aria-hidden="true" tabindex="-1"></a><span class="co">## 🎯 alias for the host connection, either "ifb-core" or "ifb"</span></span>
-<span id="cb72-1602"><a href="#cb72-1602" aria-hidden="true" tabindex="-1"></a><span class="ex">Host</span> ifb-core ifb</span>
+<span id="cb72-1596"><a href="#cb72-1596" aria-hidden="true" tabindex="-1"></a><span class="co"># 4) Secure SSH permissions on server</span></span>
+<span id="cb72-1597"><a href="#cb72-1597" aria-hidden="true" tabindex="-1"></a><span class="co"># ssh mmg-server 'chmod 700 ~/.ssh &amp;&amp; chmod 600 ~/.ssh/config'</span></span>
+<span id="cb72-1598"><a href="#cb72-1598" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1599"><a href="#cb72-1599" aria-hidden="true" tabindex="-1"></a><span class="co"># Optional: copy SSH keys (only if you explicitly want this)</span></span>
+<span id="cb72-1600"><a href="#cb72-1600" aria-hidden="true" tabindex="-1"></a><span class="co"># scp ~/.ssh/id_ed25519 ~/.ssh/id_ed25519.pub mmg-server:~/.ssh/</span></span>
+<span id="cb72-1601"><a href="#cb72-1601" aria-hidden="true" tabindex="-1"></a><span class="co"># ssh mmg-server 'chmod 600 ~/.ssh/id_ed25519 &amp;&amp; chmod 644 ~/.ssh/id_ed25519.pub'</span></span>
+<span id="cb72-1602"><a href="#cb72-1602" aria-hidden="true" tabindex="-1"></a><span class="kw">``</span></span>
 <span id="cb72-1603"><a href="#cb72-1603" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1604"><a href="#cb72-1604" aria-hidden="true" tabindex="-1"></a>  <span class="co">## 🌍 The real hostname (or IP) of the remote server</span></span>
-<span id="cb72-1605"><a href="#cb72-1605" aria-hidden="true" tabindex="-1"></a>  <span class="ex">HostName</span> core.cluster.france-bioinformatique.fr</span>
-<span id="cb72-1606"><a href="#cb72-1606" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1607"><a href="#cb72-1607" aria-hidden="true" tabindex="-1"></a>  <span class="co">## 👤 Username used on the remote machine</span></span>
-<span id="cb72-1608"><a href="#cb72-1608" aria-hidden="true" tabindex="-1"></a>  <span class="ex">User</span> bchassagnol</span>
+<span id="cb72-1604"><a href="#cb72-1604" aria-hidden="true" tabindex="-1"></a><span class="co">### SSH configuration</span></span>
+<span id="cb72-1605"><a href="#cb72-1605" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1606"><a href="#cb72-1606" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> Objective <span class="ex">is</span> dual: avoid typing your password each time you<span class="st">'re connecting to a remote cluster, and keep a safe storage of all registered remote hosts:</span></span>
+<span id="cb72-1607"><a href="#cb72-1607" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1608"><a href="#cb72-1608" aria-hidden="true" tabindex="-1"></a><span class="st">1.  🔐 Set up SSH remote access (with key-based auth)</span></span>
 <span id="cb72-1609"><a href="#cb72-1609" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1610"><a href="#cb72-1610" aria-hidden="true" tabindex="-1"></a>  <span class="co">## 🔑 Path to your private SSH key</span></span>
-<span id="cb72-1611"><a href="#cb72-1611" aria-hidden="true" tabindex="-1"></a>  <span class="ex">IdentityFile</span> ~/.ssh/id_ed25519</span>
-<span id="cb72-1612"><a href="#cb72-1612" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1613"><a href="#cb72-1613" aria-hidden="true" tabindex="-1"></a>  <span class="co">## 🚫 Force SSH to use ONLY the specified key above, avoiding complex managing of key version</span></span>
-<span id="cb72-1614"><a href="#cb72-1614" aria-hidden="true" tabindex="-1"></a>  <span class="ex">IdentitiesOnly</span> yes</span>
-<span id="cb72-1615"><a href="#cb72-1615" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1616"><a href="#cb72-1616" aria-hidden="true" tabindex="-1"></a>  <span class="co">## 🔄 Order of authentication methods: SSH key, then keyboard-interactive, then fallback to password</span></span>
-<span id="cb72-1617"><a href="#cb72-1617" aria-hidden="true" tabindex="-1"></a>  <span class="ex">PreferredAuthentications</span> publickey,keyboard-interactive,password</span>
+<span id="cb72-1610"><a href="#cb72-1610" aria-hidden="true" tabindex="-1"></a><span class="st">``` bash</span></span>
+<span id="cb72-1611"><a href="#cb72-1611" aria-hidden="true" tabindex="-1"></a><span class="st">## remote server must have openssh-server installed</span></span>
+<span id="cb72-1612"><a href="#cb72-1612" aria-hidden="true" tabindex="-1"></a><span class="st">sudo apt install openssh-server</span></span>
+<span id="cb72-1613"><a href="#cb72-1613" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb72-1614"><a href="#cb72-1614" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1615"><a href="#cb72-1615" aria-hidden="true" tabindex="-1"></a><span class="st">2.  Generate a pair of public-private SSH key on your local machine[^installation-linux-20]</span></span>
+<span id="cb72-1616"><a href="#cb72-1616" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1617"><a href="#cb72-1617" aria-hidden="true" tabindex="-1"></a><span class="st">[^installation-linux-20]: Using a passphrase is not compuslory, but safer</span></span>
 <span id="cb72-1618"><a href="#cb72-1618" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1619"><a href="#cb72-1619" aria-hidden="true" tabindex="-1"></a>  <span class="co">## 🤖 Automatically add this key to ssh-agent when used</span></span>
-<span id="cb72-1620"><a href="#cb72-1620" aria-hidden="true" tabindex="-1"></a>  <span class="ex">AddKeysToAgent</span> yes</span>
-<span id="cb72-1621"><a href="#cb72-1621" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb72-1622"><a href="#cb72-1622" aria-hidden="true" tabindex="-1"></a><span class="co"># Host configuration for the new server</span></span>
-<span id="cb72-1623"><a href="#cb72-1623" aria-hidden="true" tabindex="-1"></a><span class="ex">Host</span> mmg-sb-05 new-mmg-cluster</span>
-<span id="cb72-1624"><a href="#cb72-1624" aria-hidden="true" tabindex="-1"></a><span class="ex">HostName</span> 139.124.156.52</span>
-<span id="cb72-1625"><a href="#cb72-1625" aria-hidden="true" tabindex="-1"></a><span class="ex">Port</span> 22218 <span class="co"># is the port, avoiding, unlike the popular 22, to be hacked.</span></span>
-<span id="cb72-1626"><a href="#cb72-1626" aria-hidden="true" tabindex="-1"></a><span class="ex">User</span> bastienc</span>
-<span id="cb72-1627"><a href="#cb72-1627" aria-hidden="true" tabindex="-1"></a><span class="ex">IdentityFile</span> ~/.ssh/id_ed25519</span>
-<span id="cb72-1628"><a href="#cb72-1628" aria-hidden="true" tabindex="-1"></a><span class="ex">IdentitiesOnly</span> yes</span>
-<span id="cb72-1629"><a href="#cb72-1629" aria-hidden="true" tabindex="-1"></a><span class="ex">PubkeyAuthentication</span> yes</span>
-<span id="cb72-1630"><a href="#cb72-1630" aria-hidden="true" tabindex="-1"></a><span class="ex">PreferredAuthentications</span> publickey,keyboard-interactive,password</span>
-<span id="cb72-1631"><a href="#cb72-1631" aria-hidden="true" tabindex="-1"></a><span class="ex">AddKeysToAgent</span> yes</span>
-<span id="cb72-1632"><a href="#cb72-1632" aria-hidden="true" tabindex="-1"></a><span class="ex">ForwardX11</span> yes</span>
-<span id="cb72-1633"><a href="#cb72-1633" aria-hidden="true" tabindex="-1"></a><span class="ex">ForwardX11Trusted</span> yes</span>
-<span id="cb72-1634"><a href="#cb72-1634" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span></span>
-<span id="cb72-1635"><a href="#cb72-1635" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1636"><a href="#cb72-1636" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> My <span class="ex">host</span> configuration, enabling by default graphical interfaces to run on the remote server, is avalaible under <span class="pp">[</span><span class="ss">config</span><span class="pp">-</span><span class="ss">ssh</span><span class="pp">]</span><span class="er">(</span><span class="ex">../Config/ssh-hosts/.ssh/config</span><span class="kw">)</span></span>
+<span id="cb72-1619"><a href="#cb72-1619" aria-hidden="true" tabindex="-1"></a><span class="st">``` bash</span></span>
+<span id="cb72-1620"><a href="#cb72-1620" aria-hidden="true" tabindex="-1"></a><span class="st">ssh-keygen -t ed25519 -C "your_email@example.com"</span></span>
+<span id="cb72-1621"><a href="#cb72-1621" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb72-1622"><a href="#cb72-1622" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1623"><a href="#cb72-1623" aria-hidden="true" tabindex="-1"></a><span class="st">This creates:</span></span>
+<span id="cb72-1624"><a href="#cb72-1624" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1625"><a href="#cb72-1625" aria-hidden="true" tabindex="-1"></a><span class="st">```         </span></span>
+<span id="cb72-1626"><a href="#cb72-1626" aria-hidden="true" tabindex="-1"></a><span class="st">- `~/.ssh/id_ed25519` (private key)</span></span>
+<span id="cb72-1627"><a href="#cb72-1627" aria-hidden="true" tabindex="-1"></a><span class="st">- `~/.ssh/id_ed25519.pub` (public key)</span></span>
+<span id="cb72-1628"><a href="#cb72-1628" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb72-1629"><a href="#cb72-1629" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1630"><a href="#cb72-1630" aria-hidden="true" tabindex="-1"></a><span class="st">3.  Copy your key to the server with `ssh-copy-id username@server_ip`. You'</span>ll no longer need typing your password once typed once.</span>
+<span id="cb72-1631"><a href="#cb72-1631" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1632"><a href="#cb72-1632" aria-hidden="true" tabindex="-1"></a><span class="ex">4.</span>  <span class="er">(</span><span class="ex">Optional</span><span class="kw">)</span> <span class="ex">Keep</span> under <span class="kw">`</span>~/.ssh/config<span class="kw">`</span> <span class="fu">file</span> the key features describing each remote cluster. For instance, my configuration for the IFB is the following, and to connect to it, I only need typing now <span class="kw">`</span>ssh ifb-core<span class="kw">`</span><span class="bu">.</span> A second advantage of using this format for storing hosts is that it can be readily used by <span class="kw">`</span>VS Code SSH Remote<span class="kw">`</span> <span class="ex">connection</span> extensions.</span>
+<span id="cb72-1633"><a href="#cb72-1633" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1634"><a href="#cb72-1634" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span> bash</span>
+<span id="cb72-1635"><a href="#cb72-1635" aria-hidden="true" tabindex="-1"></a><span class="co">## 🎯 alias for the host connection, either "ifb-core" or "ifb"</span></span>
+<span id="cb72-1636"><a href="#cb72-1636" aria-hidden="true" tabindex="-1"></a><span class="ex">Host</span> ifb-core ifb</span>
 <span id="cb72-1637"><a href="#cb72-1637" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1638"><a href="#cb72-1638" aria-hidden="true" tabindex="-1"></a><span class="ex">------------------------------------------------------------------------</span></span>
-<span id="cb72-1639"><a href="#cb72-1639" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1640"><a href="#cb72-1640" aria-hidden="true" tabindex="-1"></a><span class="ex">:::</span> {.callout-tip collapse=<span class="st">"true"</span> title=<span class="st">"Ssh configuration recommendations"</span>}</span>
-<span id="cb72-1641"><a href="#cb72-1641" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> On <span class="ex">older</span> Ubuntu configurations, the <span class="kw">`</span><span class="ex">shh-agent</span><span class="kw">`</span>, and <span class="kw">`</span><span class="ex">shh-add</span><span class="kw">`</span> processes are not activated by default on startup. Check this by running <span class="kw">`</span><span class="ex">systemctl</span> <span class="at">--user</span> enable ssh-agent<span class="kw">`</span>.</span>
-<span id="cb72-1642"><a href="#cb72-1642" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1643"><a href="#cb72-1643" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> Report <span class="ex">to</span> @tbl-ssh-guidelines, and @fig-ssh-connection for further details</span>
-<span id="cb72-1644"><a href="#cb72-1644" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1645"><a href="#cb72-1645" aria-hidden="true" tabindex="-1"></a><span class="ex">------------------------------------------------------------------------</span></span>
+<span id="cb72-1638"><a href="#cb72-1638" aria-hidden="true" tabindex="-1"></a>  <span class="co">## 🌍 The real hostname (or IP) of the remote server</span></span>
+<span id="cb72-1639"><a href="#cb72-1639" aria-hidden="true" tabindex="-1"></a>  <span class="ex">HostName</span> core.cluster.france-bioinformatique.fr</span>
+<span id="cb72-1640"><a href="#cb72-1640" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1641"><a href="#cb72-1641" aria-hidden="true" tabindex="-1"></a>  <span class="co">## 👤 Username used on the remote machine</span></span>
+<span id="cb72-1642"><a href="#cb72-1642" aria-hidden="true" tabindex="-1"></a>  <span class="ex">User</span> bchassagnol</span>
+<span id="cb72-1643"><a href="#cb72-1643" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1644"><a href="#cb72-1644" aria-hidden="true" tabindex="-1"></a>  <span class="co">## 🔑 Path to your private SSH key</span></span>
+<span id="cb72-1645"><a href="#cb72-1645" aria-hidden="true" tabindex="-1"></a>  <span class="ex">IdentityFile</span> ~/.ssh/id_ed25519</span>
 <span id="cb72-1646"><a href="#cb72-1646" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1647"><a href="#cb72-1647" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">Practice</span> <span class="kw">|</span> <span class="ex">Why</span> <span class="kw">|</span></span>
-<span id="cb72-1648"><a href="#cb72-1648" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span><span class="ex">----------------------------</span><span class="kw">|</span><span class="ex">--------------------------------------------</span><span class="kw">|</span></span>
-<span id="cb72-1649"><a href="#cb72-1649" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">**Prefer</span> Ed25519 keys<span class="pp">**</span> <span class="kw">|</span> <span class="ex">Small,</span> fast, modern default. <span class="kw">|</span></span>
-<span id="cb72-1650"><a href="#cb72-1650" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">**Use</span> a pass phrase on the key<span class="pp">**</span> <span class="kw">|</span> <span class="ex">Protects</span> the key if the disk is copied or stolen. <span class="kw">|</span></span>
-<span id="cb72-1651"><a href="#cb72-1651" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">**</span><span class="kw">`</span><span class="ex">~/.ssh/config</span><span class="kw">`</span> per host<span class="pp">**</span> <span class="kw">|</span> <span class="ex">Aliases,</span> and login recommendations <span class="kw">|</span></span>
-<span id="cb72-1652"><a href="#cb72-1652" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">**Never</span> commit private keys<span class="pp">**</span> <span class="kw">|</span> <span class="ex">Keep</span> <span class="kw">`</span><span class="ex">id_*</span><span class="kw">`</span> out of git and cloud-synced folders. <span class="kw">|</span></span>
-<span id="cb72-1653"><a href="#cb72-1653" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">**</span><span class="kw">`</span><span class="ex">ssh-copy-id</span><span class="kw">`</span> once per host<span class="pp">**</span> <span class="kw">|</span> <span class="ex">Standard</span> way to populate <span class="kw">`</span><span class="ex">authorized_keys</span><span class="kw">`</span>. <span class="kw">|</span></span>
-<span id="cb72-1654"><a href="#cb72-1654" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1655"><a href="#cb72-1655" aria-hidden="true" tabindex="-1"></a><span class="bu">:</span> SSH recommended practices {#tbl-ssh-guidelines}</span>
-<span id="cb72-1656"><a href="#cb72-1656" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1657"><a href="#cb72-1657" aria-hidden="true" tabindex="-1"></a><span class="ex">------------------------------------------------------------------------</span></span>
-<span id="cb72-1658"><a href="#cb72-1658" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1659"><a href="#cb72-1659" aria-hidden="true" tabindex="-1"></a><span class="ex">![Overview</span> of an initial SSH connection]<span class="er">(</span><span class="ex">./ssh-initiate-connection.png</span><span class="kw">)</span><span class="ex">{#fig-ssh-connection}</span></span>
-<span id="cb72-1660"><a href="#cb72-1660" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1661"><a href="#cb72-1661" aria-hidden="true" tabindex="-1"></a><span class="ex">------------------------------------------------------------------------</span></span>
-<span id="cb72-1662"><a href="#cb72-1662" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1663"><a href="#cb72-1663" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">Option</span> <span class="kw">|</span> <span class="ex">Purpose</span> <span class="kw">|</span> <span class="ex">Effect</span> on X11 <span class="kw">|</span></span>
-<span id="cb72-1664"><a href="#cb72-1664" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span><span class="ex">----------------</span><span class="kw">|</span><span class="ex">----------------</span><span class="kw">|</span><span class="ex">---------------------------------------</span><span class="kw">|</span></span>
-<span id="cb72-1665"><a href="#cb72-1665" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="kw">`</span><span class="ex">-X</span><span class="kw">`</span> <span class="kw">|</span> <span class="ex">X11</span> forwarding <span class="er">(</span><span class="ex">untrusted</span><span class="kw">)</span> <span class="kw">|</span> <span class="ex">Runs</span> GUI apps remotely <span class="kw">|</span></span>
-<span id="cb72-1666"><a href="#cb72-1666" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="kw">`</span><span class="ex">-Y</span><span class="kw">`</span> <span class="kw">|</span> <span class="ex">X11</span> forwarding <span class="er">(</span><span class="ex">trusted</span><span class="kw">)</span> <span class="kw">|</span> <span class="ex">Runs</span> all GUI apps remotely <span class="kw">|</span></span>
-<span id="cb72-1667"><a href="#cb72-1667" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="kw">`</span><span class="ex">-C</span><span class="kw">`</span> <span class="kw">|</span> <span class="ex">Compression</span> <span class="kw">|</span> <span class="ex">Reduces</span> network usage and can speed up GUI over slow connections <span class="kw">|</span></span>
-<span id="cb72-1668"><a href="#cb72-1668" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1669"><a href="#cb72-1669" aria-hidden="true" tabindex="-1"></a><span class="bu">:</span> Comparison side-by-side of the main options for customised <span class="kw">`</span><span class="fu">ssh</span><span class="kw">`</span>connexion {#tbl-ssh-connexion}</span>
-<span id="cb72-1670"><a href="#cb72-1670" aria-hidden="true" tabindex="-1"></a><span class="ex">:::</span></span>
+<span id="cb72-1647"><a href="#cb72-1647" aria-hidden="true" tabindex="-1"></a>  <span class="co">## 🚫 Force SSH to use ONLY the specified key above, avoiding complex managing of key version</span></span>
+<span id="cb72-1648"><a href="#cb72-1648" aria-hidden="true" tabindex="-1"></a>  <span class="ex">IdentitiesOnly</span> yes</span>
+<span id="cb72-1649"><a href="#cb72-1649" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1650"><a href="#cb72-1650" aria-hidden="true" tabindex="-1"></a>  <span class="co">## 🔄 Order of authentication methods: SSH key, then keyboard-interactive, then fallback to password</span></span>
+<span id="cb72-1651"><a href="#cb72-1651" aria-hidden="true" tabindex="-1"></a>  <span class="ex">PreferredAuthentications</span> publickey,keyboard-interactive,password</span>
+<span id="cb72-1652"><a href="#cb72-1652" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1653"><a href="#cb72-1653" aria-hidden="true" tabindex="-1"></a>  <span class="co">## 🤖 Automatically add this key to ssh-agent when used</span></span>
+<span id="cb72-1654"><a href="#cb72-1654" aria-hidden="true" tabindex="-1"></a>  <span class="ex">AddKeysToAgent</span> yes</span>
+<span id="cb72-1655"><a href="#cb72-1655" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb72-1656"><a href="#cb72-1656" aria-hidden="true" tabindex="-1"></a><span class="co"># Host configuration for the new server</span></span>
+<span id="cb72-1657"><a href="#cb72-1657" aria-hidden="true" tabindex="-1"></a><span class="ex">Host</span> mmg-sb-05 new-mmg-cluster</span>
+<span id="cb72-1658"><a href="#cb72-1658" aria-hidden="true" tabindex="-1"></a><span class="ex">HostName</span> 139.124.156.52</span>
+<span id="cb72-1659"><a href="#cb72-1659" aria-hidden="true" tabindex="-1"></a><span class="ex">Port</span> 22218 <span class="co"># is the port, avoiding, unlike the popular 22, to be hacked.</span></span>
+<span id="cb72-1660"><a href="#cb72-1660" aria-hidden="true" tabindex="-1"></a><span class="ex">User</span> bastienc</span>
+<span id="cb72-1661"><a href="#cb72-1661" aria-hidden="true" tabindex="-1"></a><span class="ex">IdentityFile</span> ~/.ssh/id_ed25519</span>
+<span id="cb72-1662"><a href="#cb72-1662" aria-hidden="true" tabindex="-1"></a><span class="ex">IdentitiesOnly</span> yes</span>
+<span id="cb72-1663"><a href="#cb72-1663" aria-hidden="true" tabindex="-1"></a><span class="ex">PubkeyAuthentication</span> yes</span>
+<span id="cb72-1664"><a href="#cb72-1664" aria-hidden="true" tabindex="-1"></a><span class="ex">PreferredAuthentications</span> publickey,keyboard-interactive,password</span>
+<span id="cb72-1665"><a href="#cb72-1665" aria-hidden="true" tabindex="-1"></a><span class="ex">AddKeysToAgent</span> yes</span>
+<span id="cb72-1666"><a href="#cb72-1666" aria-hidden="true" tabindex="-1"></a><span class="ex">ForwardX11</span> yes</span>
+<span id="cb72-1667"><a href="#cb72-1667" aria-hidden="true" tabindex="-1"></a><span class="ex">ForwardX11Trusted</span> yes</span>
+<span id="cb72-1668"><a href="#cb72-1668" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-1669"><a href="#cb72-1669" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1670"><a href="#cb72-1670" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; My host configuration, enabling by default graphical interfaces to run on the remote server, is avalaible under </span><span class="co">[</span><span class="ot">config-ssh</span><span class="co">](../Config/ssh-hosts/.ssh/config)</span></span>
 <span id="cb72-1671"><a href="#cb72-1671" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1672"><a href="#cb72-1672" aria-hidden="true" tabindex="-1"></a><span class="co">### MMG cluster, and recommendations for project management</span></span>
+<span id="cb72-1672"><a href="#cb72-1672" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
 <span id="cb72-1673"><a href="#cb72-1673" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1674"><a href="#cb72-1674" aria-hidden="true" tabindex="-1"></a><span class="ex">About</span> projects timeline, and structure, follow these tips as soon as <span class="pp">*</span>collaboration<span class="pp">*</span> is involved:</span>
-<span id="cb72-1675"><a href="#cb72-1675" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1676"><a href="#cb72-1676" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   Initiate <span class="kw">`</span><span class="fu">git</span> + github<span class="kw">`</span> at the real start up of the project</span>
-<span id="cb72-1677"><a href="#cb72-1677" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   Use only the <span class="kw">`</span><span class="ex">/mnt/</span><span class="op">&lt;</span>cluster-name<span class="op">&gt;</span>/projects/<span class="kw">`</span> folder <span class="er">(</span><span class="ex">no</span> projects in your home, except for a quick run, and test<span class="kw">)</span></span>
-<span id="cb72-1678"><a href="#cb72-1678" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   When creating the project, set carefully group and user permissions, following guidlines of document https://github.com/BAUDOTlab/teaching_material/blob/main/Server%20Management/Server_Management.pdf, section <span class="pp">**</span>Creating a New Project<span class="pp">**</span></span>
-<span id="cb72-1679"><a href="#cb72-1679" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   Complement the <span class="kw">`</span><span class="ex">README.md</span><span class="kw">`</span> <span class="er">(</span><span class="ex">to</span> be created<span class="kw">)</span> <span class="ex">at</span> the root of the folder, with one short line per directory in the <span class="kw">`</span><span class="ex">projects</span><span class="kw">`</span> folder quickly summarising the overarching objective of the study</span>
+<span id="cb72-1674"><a href="#cb72-1674" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true" title="Ssh configuration recommendations"}</span>
+<span id="cb72-1675"><a href="#cb72-1675" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; On older Ubuntu configurations, the </span><span class="in">`shh-agent`</span><span class="at">, and </span><span class="in">`shh-add`</span><span class="at"> processes are not activated by default on startup. Check this by running </span><span class="in">`systemctl --user enable ssh-agent`</span><span class="at">.</span></span>
+<span id="cb72-1676"><a href="#cb72-1676" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1677"><a href="#cb72-1677" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Report to @tbl-ssh-guidelines, and @fig-ssh-connection for further details</span></span>
+<span id="cb72-1678"><a href="#cb72-1678" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1679"><a href="#cb72-1679" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
 <span id="cb72-1680"><a href="#cb72-1680" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1681"><a href="#cb72-1681" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="co">### Run RStudio remotely --&gt;</span></span>
-<span id="cb72-1682"><a href="#cb72-1682" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1683"><a href="#cb72-1683" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="op">&gt;</span> In <span class="ex">@tbl-remote-graphical,</span> we compare side-by-side approaches for using <span class="kw">`</span><span class="ex">RStudio</span><span class="kw">`</span> with files stored remotely on the server: <span class="at">--</span><span class="op">&gt;</span></span>
-<span id="cb72-1684"><a href="#cb72-1684" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1685"><a href="#cb72-1685" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="kw">|</span> <span class="ex">Method</span>                        <span class="kw">|</span> <span class="ex">Where</span> RStudio runs <span class="kw">|</span> <span class="ex">Speed</span>       <span class="kw">|</span> <span class="ex">Setup</span> difficulty <span class="kw">|</span> <span class="ex">Pros</span>                     <span class="kw">|</span> <span class="ex">Cons</span>                               <span class="kw">|</span> <span class="ex">--</span><span class="op">&gt;</span></span>
-<span id="cb72-1686"><a href="#cb72-1686" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1687"><a href="#cb72-1687" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="kw">|</span> <span class="ex">-----------------------------</span> <span class="kw">|</span> <span class="ex">------------------</span> <span class="kw">|</span> <span class="ex">-----------</span> <span class="kw">|</span> <span class="ex">----------------</span> <span class="kw">|</span> <span class="ex">------------------------</span> <span class="kw">|</span> <span class="ex">----------------------------------</span> <span class="kw">|</span> <span class="ex">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1681"><a href="#cb72-1681" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Practice <span class="pp">|</span> Why <span class="pp">|</span></span>
+<span id="cb72-1682"><a href="#cb72-1682" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------------------------|--------------------------------------------|</span></span>
+<span id="cb72-1683"><a href="#cb72-1683" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Prefer Ed25519 keys** <span class="pp">|</span> Small, fast, modern default. <span class="pp">|</span></span>
+<span id="cb72-1684"><a href="#cb72-1684" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Use a pass phrase on the key** <span class="pp">|</span> Protects the key if the disk is copied or stolen. <span class="pp">|</span></span>
+<span id="cb72-1685"><a href="#cb72-1685" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **`~/.ssh/config` per host** <span class="pp">|</span> Aliases, and login recommendations <span class="pp">|</span></span>
+<span id="cb72-1686"><a href="#cb72-1686" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Never commit private keys** <span class="pp">|</span> Keep <span class="in">`id_*`</span> out of git and cloud-synced folders. <span class="pp">|</span></span>
+<span id="cb72-1687"><a href="#cb72-1687" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **`ssh-copy-id` once per host** <span class="pp">|</span> Standard way to populate <span class="in">`authorized_keys`</span>. <span class="pp">|</span></span>
 <span id="cb72-1688"><a href="#cb72-1688" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1689"><a href="#cb72-1689" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="kw">|</span> <span class="ex">**SSH</span> + X11 <span class="er">(</span><span class="kw">`</span><span class="fu">ssh</span> <span class="at">-YC</span><span class="kw">`)</span><span class="ex">**</span>     <span class="kw">|</span> <span class="ex">Server</span>             <span class="kw">|</span> <span class="ex">Slow</span>        <span class="kw">|</span> <span class="ex">Very</span> easy        <span class="kw">|</span> <span class="ex">No</span> setup required        <span class="kw">|</span> <span class="ex">Laggy</span> UI, slow plots               <span class="kw">|</span> <span class="ex">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1689"><a href="#cb72-1689" aria-hidden="true" tabindex="-1"></a>: SSH recommended practices {#tbl-ssh-guidelines}</span>
 <span id="cb72-1690"><a href="#cb72-1690" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1691"><a href="#cb72-1691" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="kw">|</span> <span class="ex">**SSHFS</span> + local RStudio<span class="pp">**</span>     <span class="kw">|</span> <span class="ex">Local</span> machine      <span class="kw">|</span> <span class="ex">Fast</span> UI     <span class="kw">|</span> <span class="ex">Easy</span>             <span class="kw">|</span> <span class="ex">Edit</span> remote files easily <span class="kw">|</span> <span class="ex">Local</span> computation                  <span class="kw">|</span> <span class="ex">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1691"><a href="#cb72-1691" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
 <span id="cb72-1692"><a href="#cb72-1692" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1693"><a href="#cb72-1693" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="kw">|</span> <span class="ex">**RStudio</span> Server <span class="er">(</span><span class="ex">web</span><span class="kw">)</span><span class="ex">**</span>      <span class="kw">|</span> <span class="ex">Server</span>             <span class="kw">|</span> <span class="ex">Fast</span>        <span class="kw">|</span> <span class="ex">Medium</span>           <span class="kw">|</span> <span class="ex">Best</span> remote workflow     <span class="kw">|</span> <span class="ex">Requires</span> installation              <span class="kw">|</span> <span class="ex">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1693"><a href="#cb72-1693" aria-hidden="true" tabindex="-1"></a><span class="al">![Overview of an initial SSH connection](./ssh-initiate-connection.png)</span>{#fig-ssh-connection}</span>
 <span id="cb72-1694"><a href="#cb72-1694" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1695"><a href="#cb72-1695" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="kw">|</span> <span class="ex">**Terminal</span> + Rscript<span class="pp">**</span>        <span class="kw">|</span> <span class="ex">Server</span>             <span class="kw">|</span> <span class="ex">Fast</span>        <span class="kw">|</span> <span class="ex">Very</span> easy        <span class="kw">|</span> <span class="ex">Simple,</span> reliable         <span class="kw">|</span> <span class="ex">No</span> IDE                             <span class="kw">|</span> <span class="ex">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1695"><a href="#cb72-1695" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
 <span id="cb72-1696"><a href="#cb72-1696" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1697"><a href="#cb72-1697" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="kw">|</span> <span class="ex">**Git</span> + Github<span class="pp">**</span>              <span class="kw">|</span> <span class="ex">Custom</span> choice      <span class="kw">|</span> <span class="ex">Fast</span>        <span class="kw">|</span> <span class="ex">Medium</span>           <span class="kw">|</span> <span class="ex">File</span> versioning          <span class="kw">|</span> <span class="ex">Code</span> sharing mostly                <span class="kw">|</span> <span class="ex">--</span><span class="op">&gt;</span></span>
-<span id="cb72-1698"><a href="#cb72-1698" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1699"><a href="#cb72-1699" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="bu">:</span> Remote connexion to distant server, a comprehensive review {#tbl-remote-graphical} <span class="at">--</span><span class="op">&gt;</span></span>
-<span id="cb72-1700"><a href="#cb72-1700" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1701"><a href="#cb72-1701" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="ex">:::</span> {#tip-sshfs .callout-tip title=<span class="st">"Configure, and use </span><span class="kw">`</span><span class="ex">SSHFS</span><span class="kw">`</span><span class="st"> in practice"</span> collapse=<span class="st">"true"</span>} <span class="at">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1697"><a href="#cb72-1697" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Option <span class="pp">|</span> Purpose <span class="pp">|</span> Effect on X11 <span class="pp">|</span></span>
+<span id="cb72-1698"><a href="#cb72-1698" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------------|----------------|---------------------------------------|</span></span>
+<span id="cb72-1699"><a href="#cb72-1699" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`-X`</span> <span class="pp">|</span> X11 forwarding (untrusted) <span class="pp">|</span> Runs GUI apps remotely <span class="pp">|</span></span>
+<span id="cb72-1700"><a href="#cb72-1700" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`-Y`</span> <span class="pp">|</span> X11 forwarding (trusted) <span class="pp">|</span> Runs all GUI apps remotely <span class="pp">|</span></span>
+<span id="cb72-1701"><a href="#cb72-1701" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`-C`</span> <span class="pp">|</span> Compression <span class="pp">|</span> Reduces network usage and can speed up GUI over slow connections <span class="pp">|</span></span>
 <span id="cb72-1702"><a href="#cb72-1702" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1703"><a href="#cb72-1703" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="op">&gt;</span> <span class="kw">`</span><span class="ex">SSHFS</span><span class="kw">`</span> protocol uses a combination of the following operators: SSH, SFTP <span class="er">(</span><span class="cf">for</span> file <span class="ex">opeartations</span><span class="kw">)</span> <span class="ex">and</span> FUSE <span class="er">(</span><span class="ex">Filesystem</span> in Userspace<span class="kw">)</span><span class="bu">.</span>  <span class="at">--</span><span class="op">&gt;</span></span>
-<span id="cb72-1704"><a href="#cb72-1704" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1705"><a href="#cb72-1705" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="ex">1.</span> Install <span class="kw">`</span><span class="ex">sshfs</span><span class="kw">`</span> with  <span class="at">--</span><span class="op">&gt;</span></span>
-<span id="cb72-1706"><a href="#cb72-1706" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1707"><a href="#cb72-1707" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="kw">```</span><span class="fu">bash</span> <span class="at">--</span><span class="op">&gt;</span></span>
-<span id="cb72-1708"><a href="#cb72-1708" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1709"><a href="#cb72-1709" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="fu">sudo</span> apt install sshfs <span class="at">--</span><span class="op">&gt;</span></span>
-<span id="cb72-1710"><a href="#cb72-1710" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1711"><a href="#cb72-1711" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="kw">```</span> <span class="at">--</span><span class="op">&gt;</span></span>
-<span id="cb72-1712"><a href="#cb72-1712" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1713"><a href="#cb72-1713" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="ex">2.</span> Create the <span class="pp">*</span>mounting point<span class="pp">*</span>:  <span class="at">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1703"><a href="#cb72-1703" aria-hidden="true" tabindex="-1"></a>: Comparison side-by-side of the main options for customised <span class="in">`ssh`</span>connexion {#tbl-ssh-connexion}</span>
+<span id="cb72-1704"><a href="#cb72-1704" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb72-1705"><a href="#cb72-1705" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1706"><a href="#cb72-1706" aria-hidden="true" tabindex="-1"></a><span class="fu">### MMG cluster, and recommendations for project management</span></span>
+<span id="cb72-1707"><a href="#cb72-1707" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1708"><a href="#cb72-1708" aria-hidden="true" tabindex="-1"></a>About projects timeline, and structure, follow these tips as soon as *collaboration* is involved:</span>
+<span id="cb72-1709"><a href="#cb72-1709" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1710"><a href="#cb72-1710" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Initiate <span class="in">`git + github`</span> at the real start up of the project</span>
+<span id="cb72-1711"><a href="#cb72-1711" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Use only the <span class="in">`/mnt/&lt;cluster-name&gt;/projects/`</span> folder (no projects in your home, except for a quick run, and test)</span>
+<span id="cb72-1712"><a href="#cb72-1712" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>When creating the project, set carefully group and user permissions, following guidlines of document https://github.com/BAUDOTlab/teaching_material/blob/main/Server%20Management/Server_Management.pdf, section **Creating a New Project**</span>
+<span id="cb72-1713"><a href="#cb72-1713" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Complement the <span class="in">`README.md`</span> (to be created) at the root of the folder, with one short line per directory in the <span class="in">`projects`</span> folder quickly summarising the overarching objective of the study</span>
 <span id="cb72-1714"><a href="#cb72-1714" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1715"><a href="#cb72-1715" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!--    <span class="kw">```</span><span class="fu">bash</span> <span class="at">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1715"><a href="#cb72-1715" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- </span><span class="al">###</span><span class="co"> Run RStudio remotely --&gt;</span></span>
 <span id="cb72-1716"><a href="#cb72-1716" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1717"><a href="#cb72-1717" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!--    <span class="ex">sshfs</span> <span class="at">-p</span> 22218 bastienc@139.124.156.52:<span class="op">&lt;</span><span class="st">"remote-URL-absolute-path"</span><span class="op">&gt;</span> <span class="op">&lt;</span><span class="st">"local-url-path"</span><span class="op">&gt;</span> -o reconect <span class="at">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1717"><a href="#cb72-1717" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- &gt; In @tbl-remote-graphical, we compare side-by-side approaches for using `RStudio` with files stored remotely on the server: --&gt;</span></span>
 <span id="cb72-1718"><a href="#cb72-1718" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1719"><a href="#cb72-1719" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!--    <span class="kw">```</span> <span class="at">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1719"><a href="#cb72-1719" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- | Method                        | Where RStudio runs | Speed       | Setup difficulty | Pros                     | Cons                               | --&gt;</span></span>
 <span id="cb72-1720"><a href="#cb72-1720" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1721"><a href="#cb72-1721" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!--    <span class="ex">will</span> create the following virtual filesystem connection^[the <span class="kw">`</span><span class="ex">-o</span><span class="kw">`</span>option guarantees that the connection is re-established if interrupted]:  <span class="at">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1721"><a href="#cb72-1721" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- | ----------------------------- | ------------------ | ----------- | ---------------- | ------------------------ | ---------------------------------- | --&gt;</span></span>
 <span id="cb72-1722"><a href="#cb72-1722" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1723"><a href="#cb72-1723" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!--    <span class="kw">```</span><span class="fu">bash</span> <span class="at">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1723"><a href="#cb72-1723" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- | **SSH + X11 (`ssh -YC`)**     | Server             | Slow        | Very easy        | No setup required        | Laggy UI, slow plots               | --&gt;</span></span>
 <span id="cb72-1724"><a href="#cb72-1724" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1725"><a href="#cb72-1725" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!--     <span class="ex">Remote</span> server                     Your computer <span class="at">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1725"><a href="#cb72-1725" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- | **SSHFS + local RStudio**     | Local machine      | Fast UI     | Easy             | Edit remote files easily | Local computation                  | --&gt;</span></span>
 <span id="cb72-1726"><a href="#cb72-1726" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1727"><a href="#cb72-1727" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!--     <span class="ex">------------------</span>                <span class="at">---------------------</span> <span class="at">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1727"><a href="#cb72-1727" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- | **RStudio Server (web)**      | Server             | Fast        | Medium           | Best remote workflow     | Requires installation              | --&gt;</span></span>
 <span id="cb72-1728"><a href="#cb72-1728" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1729"><a href="#cb72-1729" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!--     <span class="ex">/home/bastienc/project</span>  <span class="op">&lt;</span>--SSH--<span class="op">&gt;</span></span>
+<span id="cb72-1729"><a href="#cb72-1729" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- | **Terminal + Rscript**        | Server             | Fast        | Very easy        | Simple, reliable         | No IDE                             | --&gt;</span></span>
 <span id="cb72-1730"><a href="#cb72-1730" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1731"><a href="#cb72-1731" aria-hidden="true" tabindex="-1"></a><span class="ex">\~/remote_project</span> <span class="at">--</span><span class="dt">\&gt;</span> <span class="op">&lt;</span>!--     <span class="co">## 3-layered structure mounting --&gt; &lt;!--     Application (RStudio, editor) --&gt; &lt;!--             │ --&gt; &lt;!--             ▼ --&gt; &lt;!--     FUSE filesystem --&gt; &lt;!--             │ --&gt; &lt;!--             ▼ --&gt; &lt;!--     SSHFS driver --&gt; &lt;!--             │ --&gt; &lt;!--             ▼ --&gt; &lt;!--     SSH connection --&gt; &lt;!--             │ --&gt; &lt;!--             ▼ --&gt; &lt;!--     Remote filesystem (server) --&gt; &lt;!--    </span><span class="kw">```</span> <span class="at">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1731"><a href="#cb72-1731" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- | **Git + Github**              | Custom choice      | Fast        | Medium           | File versioning          | Code sharing mostly                | --&gt;</span></span>
 <span id="cb72-1732"><a href="#cb72-1732" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1733"><a href="#cb72-1733" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="ex">3.</span> Open the project you want to edit with <span class="kw">`</span><span class="ex">RStudio</span><span class="kw">`</span> <span class="er">(</span><span class="cf">if</span> <span class="kw">`</span><span class="ex">RStudio</span><span class="kw">`</span> is already opened, reload your session to have the latest version fo the files<span class="kw">)</span><span class="bu">.</span> Every change is reported back with the <span class="pp">*</span>remote server<span class="pp">*</span>, without syncing delay. Same if the file is modified remotely. <span class="pp">**</span>Refresh regularly to witness any remote change<span class="pp">**</span>.  <span class="at">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1733"><a href="#cb72-1733" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- : Remote connexion to distant server, a comprehensive review {#tbl-remote-graphical} --&gt;</span></span>
 <span id="cb72-1734"><a href="#cb72-1734" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1735"><a href="#cb72-1735" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="ex">4.</span> Once done, unmount the project:  <span class="at">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1735"><a href="#cb72-1735" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: {#tip-sshfs .callout-tip title="Configure, and use `SSHFS` in practice" collapse="true"} --&gt;</span></span>
 <span id="cb72-1736"><a href="#cb72-1736" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1737"><a href="#cb72-1737" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!--   <span class="kw">```</span><span class="fu">bash</span> <span class="at">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1737"><a href="#cb72-1737" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- &gt; `SSHFS` protocol uses a combination of the following operators: SSH, SFTP (for file opeartations) and FUSE (Filesystem in Userspace).  --&gt;</span></span>
 <span id="cb72-1738"><a href="#cb72-1738" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1739"><a href="#cb72-1739" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!--   <span class="ex">fusermount</span> <span class="at">-u</span> <span class="op">&lt;</span><span class="st">"local-url-path"</span><span class="op">&gt;</span> <span class="co">## OR --&gt;</span></span>
+<span id="cb72-1739"><a href="#cb72-1739" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- 1. Install `sshfs` with  --&gt;</span></span>
 <span id="cb72-1740"><a href="#cb72-1740" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1741"><a href="#cb72-1741" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!--   <span class="fu">umount</span> <span class="st">"&lt;"</span>local-url-path<span class="st">"&gt; --&gt;</span></span>
+<span id="cb72-1741"><a href="#cb72-1741" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ```bash --&gt;</span></span>
 <span id="cb72-1742"><a href="#cb72-1742" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1743"><a href="#cb72-1743" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;!--   </span><span class="kw">```</span> <span class="ex">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1743"><a href="#cb72-1743" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- sudo apt install sshfs --&gt;</span></span>
 <span id="cb72-1744"><a href="#cb72-1744" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1745"><a href="#cb72-1745" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!--   <span class="ex">If</span> the folder was not empty, it returns back to the stage previous mounting.  <span class="at">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1745"><a href="#cb72-1745" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ``` --&gt;</span></span>
 <span id="cb72-1746"><a href="#cb72-1746" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1747"><a href="#cb72-1747" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="ex">4.</span> List all currently mounted file systems with:  <span class="at">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1747"><a href="#cb72-1747" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- 2. Create the *mounting point*:  --&gt;</span></span>
 <span id="cb72-1748"><a href="#cb72-1748" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1749"><a href="#cb72-1749" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="kw">```</span><span class="st">bash --&gt;</span></span>
+<span id="cb72-1749"><a href="#cb72-1749" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--    ```bash --&gt;</span></span>
 <span id="cb72-1750"><a href="#cb72-1750" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1751"><a href="#cb72-1751" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;!-- findmnt -t  #OR  --&gt;</span></span>
+<span id="cb72-1751"><a href="#cb72-1751" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--    sshfs -p 22218 bastienc@139.124.156.52:&lt;"remote-URL-absolute-path"&gt; &lt;"local-url-path"&gt; -o reconect --&gt;</span></span>
 <span id="cb72-1752"><a href="#cb72-1752" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1753"><a href="#cb72-1753" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;!-- mount | grep sshfs --&gt;</span></span>
+<span id="cb72-1753"><a href="#cb72-1753" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--    ``` --&gt;</span></span>
 <span id="cb72-1754"><a href="#cb72-1754" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1755"><a href="#cb72-1755" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;!-- </span><span class="kw">```</span> <span class="ex">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1755"><a href="#cb72-1755" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--    will create the following virtual filesystem connection^[the `-o`option guarantees that the connection is re-established if interrupted]:  --&gt;</span></span>
 <span id="cb72-1756"><a href="#cb72-1756" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1757"><a href="#cb72-1757" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="op">&gt;</span> Optionally, <span class="ex">on</span> startup, you can mount remote files, editing the <span class="kw">`</span><span class="st">/etc/fstab</span><span class="kw">`</span> <span class="fu">file</span>, but this requires <span class="kw">`</span><span class="st">root</span><span class="kw">`</span> <span class="ex">rights,</span> and SSH automated key authentication <span class="er">(</span><span class="ex">no</span> prompting of the password is allowed<span class="kw">)</span><span class="bu">.</span> It can also be done on-demand <span class="er">(</span><span class="ex">when</span> the folder is actually accessed<span class="kw">)</span> <span class="ex">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1757"><a href="#cb72-1757" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--    ```bash --&gt;</span></span>
 <span id="cb72-1758"><a href="#cb72-1758" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1759"><a href="#cb72-1759" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="kw">```</span><span class="st">bash --&gt;</span></span>
+<span id="cb72-1759"><a href="#cb72-1759" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--     Remote server                     Your computer --&gt;</span></span>
 <span id="cb72-1760"><a href="#cb72-1760" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1761"><a href="#cb72-1761" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;!-- ## startup mounting  --&gt;</span></span>
+<span id="cb72-1761"><a href="#cb72-1761" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--     ------------------                --------------------- --&gt;</span></span>
 <span id="cb72-1762"><a href="#cb72-1762" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1763"><a href="#cb72-1763" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;!-- sshfs#bastienc@139.124.156.52:/home/bastienc/project /mnt/cluster_project fuse.sshfs _netdev,port=22218,users,idmap=user,IdentityFile=/home/bastien/.ssh/id_rsa,allow_other,reconnect 0 0 --&gt;</span></span>
+<span id="cb72-1763"><a href="#cb72-1763" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--     /home/bastienc/project  &lt;--SSH--&gt;</span></span>
 <span id="cb72-1764"><a href="#cb72-1764" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1765"><a href="#cb72-1765" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;!-- ## on-demand mounting  --&gt;</span></span>
+<span id="cb72-1765"><a href="#cb72-1765" aria-hidden="true" tabindex="-1"></a>\~/remote_project --<span class="sc">\&gt;</span> <span class="co">&lt;!--     ## 3-layered structure mounting --&gt;</span> <span class="co">&lt;!--     Application (RStudio, editor) --&gt;</span> <span class="co">&lt;!--             │ --&gt;</span> <span class="co">&lt;!--             ▼ --&gt;</span> <span class="co">&lt;!--     FUSE filesystem --&gt;</span> <span class="co">&lt;!--             │ --&gt;</span> <span class="co">&lt;!--             ▼ --&gt;</span> <span class="co">&lt;!--     SSHFS driver --&gt;</span> <span class="co">&lt;!--             │ --&gt;</span> <span class="co">&lt;!--             ▼ --&gt;</span> <span class="co">&lt;!--     SSH connection --&gt;</span> <span class="co">&lt;!--             │ --&gt;</span> <span class="co">&lt;!--             ▼ --&gt;</span> <span class="co">&lt;!--     Remote filesystem (server) --&gt;</span> <span class="co">&lt;!--    ``` --&gt;</span></span>
 <span id="cb72-1766"><a href="#cb72-1766" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1767"><a href="#cb72-1767" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;!-- sshfs#bastienc@139.124.156.52:/home/bastienc/project /mnt/cluster_project fuse.sshfs _netdev,port=22218,x-systemd.automount,_reconnect,users,IdentityFile=/home/bastien/.ssh/id_rsa 0 0 --&gt;</span></span>
+<span id="cb72-1767"><a href="#cb72-1767" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- 3. Open the project you want to edit with `RStudio` (if `RStudio` is already opened, reload your session to have the latest version fo the files). Every change is reported back with the *remote server*, without syncing delay. Same if the file is modified remotely. **Refresh regularly to witness any remote change**.  --&gt;</span></span>
 <span id="cb72-1768"><a href="#cb72-1768" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1769"><a href="#cb72-1769" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;!-- ## test the automated mounting --&gt;</span></span>
+<span id="cb72-1769"><a href="#cb72-1769" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- 4. Once done, unmount the project:  --&gt;</span></span>
 <span id="cb72-1770"><a href="#cb72-1770" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1771"><a href="#cb72-1771" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;!-- sudo mount -a --&gt;</span></span>
+<span id="cb72-1771"><a href="#cb72-1771" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--   ```bash --&gt;</span></span>
 <span id="cb72-1772"><a href="#cb72-1772" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1773"><a href="#cb72-1773" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;!-- </span><span class="kw">```</span> <span class="ex">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1773"><a href="#cb72-1773" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--   fusermount -u &lt;"local-url-path"&gt; ## OR --&gt;</span></span>
 <span id="cb72-1774"><a href="#cb72-1774" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1775"><a href="#cb72-1775" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="ex">:::</span> <span class="at">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1775"><a href="#cb72-1775" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--   umount "&lt;"local-url-path"&gt; --&gt;</span></span>
 <span id="cb72-1776"><a href="#cb72-1776" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1777"><a href="#cb72-1777" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="op">&gt;</span> We <span class="ex">report</span> under @wrn-sshfs-dos the key guidelines to enable a smooth edition workflow: <span class="at">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1777"><a href="#cb72-1777" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--   ``` --&gt;</span></span>
 <span id="cb72-1778"><a href="#cb72-1778" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1779"><a href="#cb72-1779" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="ex">:::</span> {#wrn-sshfs-dos .callout-caution collapse=<span class="st">"true"</span> title=<span class="st">"DO and DON'ts of using </span><span class="kw">`</span><span class="ex">sshfs</span><span class="kw">`</span><span class="st">"</span>} <span class="at">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1779"><a href="#cb72-1779" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--   If the folder was not empty, it returns back to the stage previous mounting.  --&gt;</span></span>
 <span id="cb72-1780"><a href="#cb72-1780" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1781"><a href="#cb72-1781" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="ex">-</span> It<span class="st">'s not a synchronisation, nor a duplication of the files. Once unmounted, the local system returns to its initial state.  --&gt;</span></span>
+<span id="cb72-1781"><a href="#cb72-1781" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- 4. List all currently mounted file systems with:  --&gt;</span></span>
 <span id="cb72-1782"><a href="#cb72-1782" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1783"><a href="#cb72-1783" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;!-- - There is no automatic conflict management (last wins), hence, it'</span>s recommended to combine it with <span class="kw">`</span><span class="st">Git</span><span class="kw">`</span><span class="er">in</span> <span class="ex">collaborative</span> projects.  <span class="at">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1783"><a href="#cb72-1783" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ```bash --&gt;</span></span>
 <span id="cb72-1784"><a href="#cb72-1784" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1785"><a href="#cb72-1785" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="ex">-</span> Do not forget to unmount the files to close the SSH remote connexion <span class="at">--</span><span class="op">&gt;</span></span>
+<span id="cb72-1785"><a href="#cb72-1785" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- findmnt -t  #OR  --&gt;</span></span>
 <span id="cb72-1786"><a href="#cb72-1786" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1787"><a href="#cb72-1787" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>!-- <span class="ex">-</span> It<span class="st">'s fast for editing small text files, such as code snippets. But consumes a lost of resources for large datasets.  --&gt;</span></span>
+<span id="cb72-1787"><a href="#cb72-1787" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- mount | grep sshfs --&gt;</span></span>
 <span id="cb72-1788"><a href="#cb72-1788" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1789"><a href="#cb72-1789" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;!-- - Favour absolute paths, as `sshfs` does not expand well HOME path alais `~` on a remote machine. --&gt;</span></span>
+<span id="cb72-1789"><a href="#cb72-1789" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ``` --&gt;</span></span>
 <span id="cb72-1790"><a href="#cb72-1790" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1791"><a href="#cb72-1791" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;!-- ::: --&gt;</span></span>
+<span id="cb72-1791"><a href="#cb72-1791" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- &gt; Optionally, on startup, you can mount remote files, editing the `/etc/fstab` file, but this requires `root` rights, and SSH automated key authentication (no prompting of the password is allowed). It can also be done on-demand (when the folder is actually accessed) --&gt;</span></span>
 <span id="cb72-1792"><a href="#cb72-1792" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1793"><a href="#cb72-1793" aria-hidden="true" tabindex="-1"></a><span class="st">Upon my recent transition from the Windows world to Linux, and huge frustration resulting from spending a lot of time recovering tutorials and disseminated configuration files when configuring a new laptop, here'</span>s my detailed tutorial about best practices when starting from fresh on a Ubuntu session: https://baudotlab.github.io/teaching_material/Linux/installation-linux.html <span class="er">(</span><span class="ex">and</span> GH repo: https://github.com/BAUDOTlab/teaching_material<span class="kw">)</span> <span class="ex">Beyond</span> key commands, I distil some tips to enhance reproducibility across projects, provide default configuration tools for Git, RStudio and VS Code, and suggest software to replace the paying licence of the Office ecosystem. I also tried to concatenate recommendations from the team, including Benjamin, Morgane, Marielle, and philippe notably.</span>
+<span id="cb72-1793"><a href="#cb72-1793" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ```bash --&gt;</span></span>
 <span id="cb72-1794"><a href="#cb72-1794" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1795"><a href="#cb72-1795" aria-hidden="true" tabindex="-1"></a><span class="ex">Besides,</span> here are the 3 development guidelines that after discussions with Benjamin, might be the msot controversial, but strongly suggest nonetheless:</span>
+<span id="cb72-1795"><a href="#cb72-1795" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## startup mounting  --&gt;</span></span>
 <span id="cb72-1796"><a href="#cb72-1796" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1797"><a href="#cb72-1797" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   No further support of RServer, nor JupyterLab on the server <span class="at">-</span><span class="dt">\&gt;</span> with VS Code, and its extension <span class="st">"Visual Studio Code Remote - SSH"</span>, it<span class="st">'s easy to automatically retrieve back its local programming framework</span></span>
+<span id="cb72-1797"><a href="#cb72-1797" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- sshfs#bastienc@139.124.156.52:/home/bastienc/project /mnt/cluster_project fuse.sshfs _netdev,port=22218,users,idmap=user,IdentityFile=/home/bastien/.ssh/id_rsa,allow_other,reconnect 0 0 --&gt;</span></span>
 <span id="cb72-1798"><a href="#cb72-1798" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1799"><a href="#cb72-1799" aria-hidden="true" tabindex="-1"></a><span class="st">    -   For Python, switch to VS Code (or Cursor for AI-guided development): `Spyder` is slow, and old-looking, `Jupyter Notebooks` is not reproducible (and limited in functionalities), especially witht he advent of Marimo: https://marimo.io/, `PyCharm`, while offering a slightly better developer experience, has a paying licence that limits its functionalities + all its features are covered by VS Code extensions</span></span>
-<span id="cb72-1800"><a href="#cb72-1800" aria-hidden="true" tabindex="-1"></a><span class="st">    -   For R, `RStudio` is definitely the best (to quote Benjamin, "that'</span>s the utmost shame that the best IDE had been developed for the worst programming language<span class="st">"). But running it on the server implies strong latency -\&gt; suggested workflow: develop, and run your scripts on small examples locally, then scale them on larger datasets using VS Code on the server (or the command line)</span></span>
-<span id="cb72-1801"><a href="#cb72-1801" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1802"><a href="#cb72-1802" aria-hidden="true" tabindex="-1"></a><span class="st">-   Use </span><span class="kw">`</span><span class="ex">uv</span><span class="kw">`</span><span class="st"> for Python-full projects, </span><span class="kw">`</span><span class="ex">uv</span><span class="kw">`</span><span class="st"> or </span><span class="kw">`</span><span class="ex">poetry</span><span class="kw">`</span><span class="st"> for Python package development, and </span><span class="kw">`</span><span class="ex">pixi</span><span class="kw">`</span><span class="st"> for multi-language projects (see why in following caricature) -\&gt; especially, both </span><span class="kw">`</span><span class="ex">conda</span><span class="kw">`</span><span class="st"> and </span><span class="kw">`</span><span class="ex">mamba</span><span class="kw">`</span><span class="st"> are heavy, and way too slow</span></span>
-<span id="cb72-1803"><a href="#cb72-1803" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1804"><a href="#cb72-1804" aria-hidden="true" tabindex="-1"></a><span class="st">-   About projects timeline, and structure, follow these tips as soon as collaboration is invovled:</span></span>
-<span id="cb72-1805"><a href="#cb72-1805" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1806"><a href="#cb72-1806" aria-hidden="true" tabindex="-1"></a><span class="st">    -   Initiate </span><span class="kw">`</span><span class="fu">git</span> + github<span class="kw">`</span><span class="st"> at the real start up of the project</span></span>
-<span id="cb72-1807"><a href="#cb72-1807" aria-hidden="true" tabindex="-1"></a><span class="st">    -   Use only the </span><span class="kw">`</span><span class="ex">/mnt/</span><span class="op">&lt;</span>cluster-name<span class="op">&gt;</span>/projects/<span class="kw">`</span><span class="st"> folder (no projects in your home, except for a quick run, and test)</span></span>
-<span id="cb72-1808"><a href="#cb72-1808" aria-hidden="true" tabindex="-1"></a><span class="st">    -   When creating the project, set carefully group and user permissions, following guidlines of document https://github.com/BAUDOTlab/teaching_material/blob/main/Server%20Management/Server_Management.pdf, section **Creating a New Project**</span></span>
-<span id="cb72-1809"><a href="#cb72-1809" aria-hidden="true" tabindex="-1"></a><span class="st">    -   Complement the </span><span class="kw">`</span><span class="ex">README.md</span><span class="kw">`</span><span class="st"> (to be created) at the root of the folder, with one short line per directory in the </span><span class="kw">`</span><span class="ex">projects</span><span class="kw">`</span><span class="st"> folder quickly summarising the overarching objective of the study</span></span>
+<span id="cb72-1799"><a href="#cb72-1799" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## on-demand mounting  --&gt;</span></span>
+<span id="cb72-1800"><a href="#cb72-1800" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1801"><a href="#cb72-1801" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- sshfs#bastienc@139.124.156.52:/home/bastienc/project /mnt/cluster_project fuse.sshfs _netdev,port=22218,x-systemd.automount,_reconnect,users,IdentityFile=/home/bastien/.ssh/id_rsa 0 0 --&gt;</span></span>
+<span id="cb72-1802"><a href="#cb72-1802" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1803"><a href="#cb72-1803" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## test the automated mounting --&gt;</span></span>
+<span id="cb72-1804"><a href="#cb72-1804" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1805"><a href="#cb72-1805" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- sudo mount -a --&gt;</span></span>
+<span id="cb72-1806"><a href="#cb72-1806" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1807"><a href="#cb72-1807" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ``` --&gt;</span></span>
+<span id="cb72-1808"><a href="#cb72-1808" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1809"><a href="#cb72-1809" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: --&gt;</span></span>
 <span id="cb72-1810"><a href="#cb72-1810" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-1811"><a href="#cb72-1811" aria-hidden="true" tabindex="-1"></a><span class="st">Finally, if you: - Want to collaborate to the tutorial: favour quarto (or notebooks) editable files over PDFs, index your document under </span><span class="kw">`</span><span class="ex">https://github.com/BAUDOTlab/teaching_material/blob/main/_quarto.yml</span><span class="kw">`</span><span class="st">. You can also report issues directly on the website, clicking on the option "</span>Edit this page<span class="st">" in the footer - For computational nerds, or people generally interested in best programming guidelines, solving computational and dependency nightmares, or simply curious, add a like to this comment -\&gt; I'll add a Slack channel to unify debates, and troubleshoot issue solving :-)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb72-1811"><a href="#cb72-1811" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- &gt; We report under @wrn-sshfs-dos the key guidelines to enable a smooth edition workflow: --&gt;</span></span>
+<span id="cb72-1812"><a href="#cb72-1812" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1813"><a href="#cb72-1813" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: {#wrn-sshfs-dos .callout-caution collapse="true" title="DO and DON'ts of using `sshfs`"} --&gt;</span></span>
+<span id="cb72-1814"><a href="#cb72-1814" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1815"><a href="#cb72-1815" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- - It's not a synchronisation, nor a duplication of the files. Once unmounted, the local system returns to its initial state.  --&gt;</span></span>
+<span id="cb72-1816"><a href="#cb72-1816" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1817"><a href="#cb72-1817" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- - There is no automatic conflict management (last wins), hence, it's recommended to combine it with `Git`in collaborative projects.  --&gt;</span></span>
+<span id="cb72-1818"><a href="#cb72-1818" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1819"><a href="#cb72-1819" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- - Do not forget to unmount the files to close the SSH remote connexion --&gt;</span></span>
+<span id="cb72-1820"><a href="#cb72-1820" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1821"><a href="#cb72-1821" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- - It's fast for editing small text files, such as code snippets. But consumes a lost of resources for large datasets.  --&gt;</span></span>
+<span id="cb72-1822"><a href="#cb72-1822" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1823"><a href="#cb72-1823" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- - Favour absolute paths, as `sshfs` does not expand well HOME path alais `~` on a remote machine. --&gt;</span></span>
+<span id="cb72-1824"><a href="#cb72-1824" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1825"><a href="#cb72-1825" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: --&gt;</span></span>
+<span id="cb72-1826"><a href="#cb72-1826" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1827"><a href="#cb72-1827" aria-hidden="true" tabindex="-1"></a>Upon my recent transition from the Windows world to Linux, and huge frustration resulting from spending a lot of time recovering tutorials and disseminated configuration files when configuring a new laptop, here's my detailed tutorial about best practices when starting from fresh on a Ubuntu session: https://baudotlab.github.io/teaching_material/Linux/installation-linux.html (and GH repo: https://github.com/BAUDOTlab/teaching_material) Beyond key commands, I distil some tips to enhance reproducibility across projects, provide default configuration tools for Git, RStudio and VS Code, and suggest software to replace the paying licence of the Office ecosystem. I also tried to concatenate recommendations from the team, including Benjamin, Morgane, Marielle, and philippe notably.</span>
+<span id="cb72-1828"><a href="#cb72-1828" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1829"><a href="#cb72-1829" aria-hidden="true" tabindex="-1"></a>Besides, here are the 3 development guidelines that after discussions with Benjamin, might be the msot controversial, but strongly suggest nonetheless:</span>
+<span id="cb72-1830"><a href="#cb72-1830" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1831"><a href="#cb72-1831" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>No further support of RServer, nor JupyterLab on the server -<span class="sc">\&gt;</span> with VS Code, and its extension "Visual Studio Code Remote - SSH", it's easy to automatically retrieve back its local programming framework</span>
+<span id="cb72-1832"><a href="#cb72-1832" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1833"><a href="#cb72-1833" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>For Python, switch to VS Code (or Cursor for AI-guided development): <span class="in">`Spyder`</span> is slow, and old-looking, <span class="in">`Jupyter Notebooks`</span> is not reproducible (and limited in functionalities), especially witht he advent of Marimo: https://marimo.io/, <span class="in">`PyCharm`</span>, while offering a slightly better developer experience, has a paying licence that limits its functionalities + all its features are covered by VS Code extensions</span>
+<span id="cb72-1834"><a href="#cb72-1834" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>For R, <span class="in">`RStudio`</span> is definitely the best (to quote Benjamin, "that's the utmost shame that the best IDE had been developed for the worst programming language"). But running it on the server implies strong latency -<span class="sc">\&gt;</span> suggested workflow: develop, and run your scripts on small examples locally, then scale them on larger datasets using VS Code on the server (or the command line)</span>
+<span id="cb72-1835"><a href="#cb72-1835" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1836"><a href="#cb72-1836" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Use <span class="in">`uv`</span> for Python-full projects, <span class="in">`uv`</span> or <span class="in">`poetry`</span> for Python package development, and <span class="in">`pixi`</span> for multi-language projects (see why in following caricature) -<span class="sc">\&gt;</span> especially, both <span class="in">`conda`</span> and <span class="in">`mamba`</span> are heavy, and way too slow</span>
+<span id="cb72-1837"><a href="#cb72-1837" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1838"><a href="#cb72-1838" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>About projects timeline, and structure, follow these tips as soon as collaboration is invovled:</span>
+<span id="cb72-1839"><a href="#cb72-1839" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1840"><a href="#cb72-1840" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>Initiate <span class="in">`git + github`</span> at the real start up of the project</span>
+<span id="cb72-1841"><a href="#cb72-1841" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>Use only the <span class="in">`/mnt/&lt;cluster-name&gt;/projects/`</span> folder (no projects in your home, except for a quick run, and test)</span>
+<span id="cb72-1842"><a href="#cb72-1842" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>When creating the project, set carefully group and user permissions, following guidlines of document https://github.com/BAUDOTlab/teaching_material/blob/main/Server%20Management/Server_Management.pdf, section **Creating a New Project**</span>
+<span id="cb72-1843"><a href="#cb72-1843" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>Complement the <span class="in">`README.md`</span> (to be created) at the root of the folder, with one short line per directory in the <span class="in">`projects`</span> folder quickly summarising the overarching objective of the study</span>
+<span id="cb72-1844"><a href="#cb72-1844" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-1845"><a href="#cb72-1845" aria-hidden="true" tabindex="-1"></a>Finally, if you: - Want to collaborate to the tutorial: favour quarto (or notebooks) editable files over PDFs, index your document under <span class="in">`https://github.com/BAUDOTlab/teaching_material/blob/main/_quarto.yml`</span>. You can also report issues directly on the website, clicking on the option "Edit this page" in the footer - For computational nerds, or people generally interested in best programming guidelines, solving computational and dependency nightmares, or simply curious, add a like to this comment -<span class="sc">\&gt;</span> I'll add a Slack channel to unify debates, and troubleshoot issue solving :-)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
