@@ -1258,6 +1258,7 @@ ii. At the user level: `bash     cd ~     echo "3.14" > ~/.python-version`
 
 ``` bash
 uv tool install ruff ## ~ equivalent to pipx install ruff
+uv tool install dvc # recommended data management tool, and versining, if exceedging git-lfs
 uv tool install black
 uv tool install jupyterlab ## `JupyterLab` outdates previous `JupterNotebook` as a web-based, and user-friendly interface
 uv tool install ipython
