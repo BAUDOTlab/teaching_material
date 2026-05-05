@@ -14,3 +14,18 @@ if (Sys.getenv("VSCODE_DEBUG_SESSION") == "1") {
     "init.R"
   ))
 }
+
+
+# vscDebugger defaults for a smoother interactive experience
+options(
+  vsc.defaultDebugMode = "workspace",
+  vsc.defaultAllowGlobalDebugging = TRUE,
+  vsc.defaultIncludePackageScopes = TRUE,
+  vsc.defaultOverwriteSource = TRUE,
+  vsc.defaultOverwritePrint = TRUE,
+  vsc.defaultOverwriteMessage = TRUE,
+  vsc.setBreakpointsInStack = TRUE,
+  vsc.showInternalFrames = FALSE,
+  vsc.trySilent = TRUE
+)
+
