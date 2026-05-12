@@ -24,6 +24,7 @@ book:
   chapters:
     - index.qmd
     - Linux/installation-linux.qmd
+    - R/R_package.qmd
   repo-url: https://github.com/BAUDOTlab/teaching_material
   site-url: https://baudotlab.github.io/teaching_material/Linux/installation-linux.html
   repo-branch: main
@@ -113,7 +114,7 @@ editor:
   source: true
   
   # =========================
-# Cross-rpreferences
+# Cross-preferences
 # =========================
   
 crossref:
