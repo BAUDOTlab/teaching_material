@@ -10,6 +10,7 @@ project:
   render:
     - index.qmd
     - Linux/installation-linux.qmd
+    - R/R_package.qmd
 
 # =========================
 # Book metadata and order
@@ -128,6 +129,3 @@ subject: "Linux tutorial"
 citation: true # Returns with the URL of the website
 google-scholar: true
   
-
-
-
