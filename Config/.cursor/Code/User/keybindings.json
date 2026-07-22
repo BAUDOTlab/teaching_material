@@ -16,26 +16,28 @@
     "key": "ctrl+shift+f",
     "command": "workbench.action.findInFiles"
   },
-
   // --- R / Rmd Editing Helpers ---
   {
     "key": "ctrl+shift+w",
     "command": "type",
     "when": "editorTextFocus && editorLangId =~ /r|rmd|qmd/",
-    "args": { "text": " <- " }
+    "args": {
+      "text": " <- "
+    }
   },
-  // --- add the pipe operator, native one 
+  // --- native pipe ---
   {
     "key": "ctrl+shift+m",
     "command": "type",
     "when": "editorTextFocus && editorLangId =~ /r|rmd/",
-    "args": { "text": " |> " }
+    "args": {
+      "text": " |> "
+    }
   },
   {
     "key": "ctrl+shift+m",
     "command": "-workbench.actions.view.problems"
   },
-
   // --- R Markdown Snippets ---
   {
     "key": "ctrl+alt+i",
@@ -45,22 +47,31 @@
       "snippet": "```{r}\n${TM_SELECTED_TEXT}$0\n```"
     }
   },
-
   // --- R Help / Navigation ---
   {
     "key": "f1",
     "command": "r.helpPanel.openForSelection",
     "when": "editorTextFocus && editorLangId =~ /r|rmd/"
   },
-  // --- R Markdown Utilities ---
   {
-    "key": "ctrl+shift+p",
-    "command": "r.runCommandWithEditorPath",
-    "when": "editorTextFocus && editorLangId == 'rmd'",
-    "args": "params <- rmarkdown::yaml_front_matter(\"$$\")$params |> lapply(\\(x) if (is.list(x)) x$value else x)"
+    "key": "ctrl+shift+r",
+    "command": "editor.action.insertSnippet",
+    "args": {
+      "snippet": "# ${1:Section Name} ----\n"
+    },
+    "when": "editorTextFocus && (resourceExtname == .R || resourceExtname == .Rmd || resourceExtname == .qmd)"
   },
-
-  // --- R Package Development (devtools-style, unified) ---
+  {
+    "key": "ctrl+.",
+    "command": "workbench.action.showAllSymbols",
+    "when": "editorLangId == 'r'"
+  },
+  {
+    "key": "ctrl+.",
+    "command": "-editor.action.quickFix",
+    "when": "editorLangId == 'r' && editorHasCodeActionsProvider && textInputFocus && !editorReadonly"
+  },
+  // --- R Package Development (devtools; non-overlapping with tasks below) ---
   {
     "key": "ctrl+shift+b",
     "command": "r.runCommand",
@@ -73,25 +84,22 @@
     "when": "editorTextFocus && editorLangId =~ /r|rmd/",
     "args": "devtools::load_all()"
   },
+  // --- R package tasks (server chords; document / test / check) ---
   {
-    "key": "ctrl+shift+t",
-    "command": "r.runCommand",
-    "when": "editorTextFocus && editorLangId =~ /r|rmd/",
-    "args": "devtools::test()"
+    "key": "ctrl+shift+alt+d",
+    "command": "workbench.action.tasks.runTask",
+    "args": "R: document"
   },
   {
-    "key": "ctrl+shift+e",
-    "command": "r.runCommand",
-    "when": "editorTextFocus && editorLangId =~ /r|rmd/",
-    "args": "devtools::check()"
+    "key": "ctrl+shift+alt+t",
+    "command": "workbench.action.tasks.runTask",
+    "args": "R: test"
   },
   {
-    "key": "ctrl+shift+d",
-    "command": "r.runCommand",
-    "when": "editorLangId =~ /r|rmd/",
-    "args": "devtools::document()"
+    "key": "ctrl+shift+alt+c",
+    "command": "workbench.action.tasks.runTask",
+    "args": "R: check"
   },
-
   // --- R quick plot viewer ---
   {
     "key": "ctrl+alt+p",
@@ -99,7 +107,6 @@
     "when": "editorTextFocus && editorLangId == 'r'",
     "args": ".vsc.browser(httpgd::hgd_url(), viewer = \"Beside\")"
   },
-
   // --- Roxygen Template ---
   {
     "key": "ctrl+alt+shift+r",
@@ -109,25 +116,35 @@
       "text": "\n#' Title\n#'\n#' Description\n#'\n#' @param\n#'\n#' @export\n#'\n#' @example\n"
     }
   },
-
-  // --- 🌊 Marimo ---
-  // Open current .py file as a marimo notebook in the editor
+  // --- Marimo ---
   {
     "key": "ctrl+alt+m",
     "command": "marimo.openNotebook",
     "when": "resourceExtname == '.py'"
   },
-  // Create a new sandboxed marimo notebook via terminal
   {
     "key": "ctrl+alt+shift+m",
     "command": "workbench.action.terminal.sendSequence",
-    "args": { "text": "uvx marimo edit --sandbox \n" }
+    "args": {
+      "text": "uvx marimo edit --sandbox \n"
+    }
   },
-  // Run current marimo notebook as a read-only app
   {
     "key": "ctrl+alt+r",
     "command": "workbench.action.terminal.sendSequence",
     "when": "resourceExtname == '.py'",
-    "args": { "text": "uvx marimo run '${file}'\n" }
+    "args": {
+      "text": "uvx marimo run '${file}'\n"
+    }
+  },
+  // --- LaTeX Workshop SyncTeX (source → PDF) ---
+  {
+    "key": "ctrl+j",
+    "command": "latex-workshop.synctex",
+    "when": "editorTextFocus && (editorLangId == 'latex' || editorLangId == 'tex' || resourceExtname == '.tex')"
+  },
+  {
+    "key": "ctrl+alt+j",
+    "command": "-latex-workshop.synctex"
   }
 ]

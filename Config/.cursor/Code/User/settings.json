@@ -27,11 +27,20 @@
   "search.exclude": {
     "**/renv": true
   },
+  // --- 📂 PATH INTELLISENSE ---
+  "path-intellisense.autoTriggerAfterSlash": true,
+  "path-intellisense.showHiddenFiles": true,
   // --- 🧠 EDITOR CORE ---
   "editor.formatOnSave": true,
   "editor.inlineSuggest.enabled": true,
   "editor.tabSize": 2,
-  "editor.rulers": [80, { "color": "#b22222", "column": 120 }],
+  "editor.rulers": [
+    80,
+    {
+      "color": "#b22222",
+      "column": 120
+    }
+  ],
   // --- 🗺 DOCUMENT NAVIGATION (Quarto / Markdown / Rmd) ---
   // Sticky scroll: pins the current heading at the top of the editor while scrolling
   "editor.stickyScroll.enabled": true,
@@ -47,6 +56,7 @@
   "python.defaultInterpreterPath": "/usr/bin/python",
   "python.createEnvironment.trigger": "off",
   "python.terminal.activateEnvironment": false,
+  "python.analysis.supportRestructuredText": true,
   // uv integration (use uvx manually in terminal/tasks)
   "python.envFile": "${workspaceFolder}/.env",
   "[python]": {
@@ -73,15 +83,21 @@
     "--quiet"
   ],
   "r.helpPanel.enableHoverLinks": true,
-  // Use air for formatting
-  "r.formatting.provider": "external",
-  "r.formatting.command": "/home/bastien/.local/bin/air",
+  // Air (Posit) — official R formatter; format on save for .R / .Rmd
+  // https://posit-dev.github.io/air/editor-vscode.html
+  "r.formatting.provider": "none",
   "[r]": {
     "editor.formatOnSave": true,
+    "editor.defaultFormatter": "Posit.air-vscode",
     "editor.wordSeparators": "`~!@#%$^&*()-=+[{]}\\|;:'\",<>/?"
   },
   "[rmd]": {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "Posit.air-vscode"
+  },
+  "[quarto]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "quarto.quarto"
   },
   "quarto.visualEditor.spellingDictionary": "en_GB",
   // Assist Panel: real-time equation + figure thumbnail in the sidebar
@@ -105,9 +121,31 @@
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
   "docker.extension.enableComposeLanguageServer": false,
-  // --- ✏️ SPELL CHECK (cSpell) ---
-  "cSpell.enableFiletypes": ["quarto"],
-  "cSpell.language": "en-GB,fr-FR",
+  // --- ✏️ SPELL CHECK / GRAMMAR (LTeX+ & cSpell) ---
+  "ltex.language": "en-GB",
+  "ltex.additionalLanguages": {
+    "fr": "fr-FR"
+  },
+  "ltex.enabled": [
+    "markdown",
+    "quarto",
+    "latex",
+    "plaintext",
+    "python",
+    "rmd",
+    "restructuredtext"
+  ],
+  "cSpell.language": "en-GB,fr",
+  "cSpell.enabledFileTypes": {
+    "markdown": true,
+    "quarto": true,
+    "latex": true,
+    "plaintext": true,
+    "python": true,
+    "jupyter": true,
+    "rmd": true,
+    "restructuredtext": true
+  },
   // --- 🔀 GIT / GITLENS ---
   "git.autofetch": true,
   "git.confirmSync": false,
@@ -151,5 +189,47 @@
     }
   ],
   // --- 🔒 TELEMETRY ---
-  "redhat.telemetry.enabled": false
+  "redhat.telemetry.enabled": false,
+  "git.ignoreRebaseWarning": true,
+  "remote.SSH.remotePlatform": {
+    "new-mmg-cluster": "linux",
+    "old-mmg-cluster": "linux"
+  },
+  "remote.autoForwardPortsSource": "hybrid",
+  "yaml.schemas": {
+    "file:///home/bastien/.cursor/extensions/continue.continue-1.2.22-linux-x64/config-yaml-schema.json": [
+      ".continue/**/*.yaml"
+    ],
+    "file:///home/bastien/.cursor/extensions/continue.continue-2.0.0-linux-x64/config-yaml-schema.json": [
+      ".continue/**/*.yaml"
+    ]
+  },
+  "window.autoDetectColorScheme": false,
+  "window.confirmSaveUntitledWorkspace": false,
+  "git.enableSmartCommit": true,
+  "liveServer.settings.donotShowInfoMsg": true,
+  "cSpell.enabledSchemes": {
+    "comment": true,
+    "file": true,
+    "gist": true,
+    "repo": true,
+    "sftp": true,
+    "untitled": true,
+    "vscode-notebook-cell": true,
+    "vscode-scm": true,
+    "vscode-userdata": true,
+    "vscode-vfs": true,
+    "vsls": true,
+    "overleaf-workshop": true
+  },
+  "yaml.disableSchemaDetection": [
+    "**/.github/workflows/*.yml",
+    "**/.github/workflows/*.yaml",
+    "**/.gitea/workflows/*.yml",
+    "**/.gitea/workflows/*.yaml",
+    "**/.forgejo/workflows/*.yml",
+    "**/.forgejo/workflows/*.yaml"
+  ],
+  "workbench.iconTheme": "vscode-icons",
+  "terminal.integrated.enableMultiLinePasteWarning": "never"
 }

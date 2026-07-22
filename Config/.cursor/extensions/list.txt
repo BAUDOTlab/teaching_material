@@ -1,53 +1,127 @@
-
 # --- 🐍 Python (core + tooling) ---
-ms-python.python
-ms-python.debugpy
-ms-toolsai.jupyter
-ms-toolsai.jupyter-renderers
-ms-toolsai.vscode-jupyter-cell-tags
-anysphere.cursorpyright
-charliermarsh.ruff
+# Core Python language support, interpreters, and environments
+ms-python.python@2025.6.1
+# Python debugger (debugpy) for breakpoints and interactive debugging
+ms-python.debugpy@2026.6.0
+# Jupyter notebooks in the editor (kernels, cells, outputs)
+ms-toolsai.jupyter@2025.9.1
+# Rich renderers for Jupyter outputs (plots, HTML, widgets)
+ms-toolsai.jupyter-renderers@1.3.0
+# Tag and organise Jupyter notebook cells
+ms-toolsai.vscode-jupyter-cell-tags@0.1.9
+# Turn notebooks into simple slide presentations
+ms-toolsai.vscode-jupyter-slideshow@0.1.6
+# Fast Python type checking and IntelliSense (Cursor’s Pyright build)
+anysphere.cursorpyright@1.0.12
+# Ruff linter/formatter for Python (style, bugs, import sorting)
+charliermarsh.ruff@2026.62.0
+# Smarter automatic indentation while editing Python
+kevinrose.vsc-python-indent@1.21.0
 
 # --- 🌊 Marimo ---
-marimo-team.vscode-marimo
+# Reactive Python notebooks as an alternative to classic Jupyter
+marimo-team.vscode-marimo@0.13.5
 
 # --- 📊 R / Quarto ---
-reditorsupport.r
-reditorsupport.r-syntax
-quarto.quarto
-rdebugger.r-debugger
+# R language support (LSP, terminal, package helpers)
+reditorsupport.r@2.8.8
+# R syntax highlighting grammars
+reditorsupport.r-syntax@0.1.4
+# Quarto authoring, preview, and project helpers
+quarto.quarto@1.135.0
+# Interactive debugger for R (breakpoints, stack, variables)
+rdebugger.r-debugger@0.5.6
+# Air formatter for R (Posit’s opinionated code style)
+posit.air-vscode@0.28.0
 
-# --- 🗄 SQL ---
-qwtel.sqlite-viewer
+# --- 🗄 Data / SQL ---
+# Browse and query SQLite databases in the editor
+qwtel.sqlite-viewer@26.2.5
+# Colourise CSV/TSV columns for easier table reading
+mechatroner.rainbow-csv@3.24.1
 
 # --- 🐳 Containers / Remote ---
-anysphere.remote-containers
-anysphere.remote-wsl
-anysphere.remote-ssh
-ms-azuretools.vscode-docker
-
-# --- 🔧 Dev Containers (VS Code standard) ---
-ms-azuretools.vscode-containers
+# Develop inside Dev Containers / Docker environments
+anysphere.remote-containers@1.0.37
+# Open folders on remote hosts over SSH
+anysphere.remote-ssh@1.1.12
+# Open folders inside WSL from Windows Cursor/VS Code
+anysphere.remote-wsl@1.0.13
+# Docker images, containers, Compose, and registries UI
+ms-azuretools.vscode-docker@2.0.0
+# Broader containers tooling (Dev Containers / container tools)
+ms-azuretools.vscode-containers@2.4.5
 
 # --- 🔀 Git / GitHub ---
-github.vscode-pull-request-github
-github.vscode-github-actions
-eamodio.gitlens
-mhutchie.git-graph
+# Rich Git blame, history, and repository insights
+eamodio.gitlens@18.3.0
+# Visual commit graph of branches and merges
+mhutchie.git-graph@1.30.0
+# Browse file and line history across Git commits
+donjayamanne.githistory@0.6.20
+# Review and manage GitHub pull requests in the editor
+github.vscode-pull-request-github@0.156.0
+# Edit and monitor GitHub Actions workflows
+github.vscode-github-actions@0.32.3
 
-# --- ✍️ Editor UX ---
-aaron-bond.better-comments
-christian-kohler.path-intellisense
-yzhang.markdown-all-in-one
-davidanson.vscode-markdownlint
-oderwat.indent-rainbow
+# --- ✍️ Markdown / Docs ---
+# Keyboard shortcuts, TOC, and editing helpers for Markdown
+yzhang.markdown-all-in-one@3.6.2
+# Lint Markdown for style and structural issues
+davidanson.vscode-markdownlint@0.61.2
+# Preview Mermaid diagrams inside Markdown
+bierner.markdown-mermaid@1.32.1
+# Mermaid Chart integration for diagram editing/sync
+mermaidchart.vscode-mermaid-chart@2.7.2
+# Export Markdown documents to PDF
+yzane.markdown-pdf@2.1.0
+# Local static server with live reload for HTML/web previews
+ritwickdey.liveserver@5.7.10
 
-# --- 📄 Markdown / Docs ---
-tomoki1207.pdf
-yzane.markdown-pdf
-ritwickdey.liveserver
+# --- 🧾 LaTeX / Overleaf ---
+# LaTeX build, preview, IntelliSense, and SyncTeX
+james-yu.latex-workshop@10.16.1
+# Extra LaTeX helpers (snippets/utilities around Workshop)
+tecosaur.latex-utilities@0.4.14
+# Open and sync Overleaf projects from the editor
+iamhyc.overleaf-workshop@0.15.10
+# LanguageTool-based grammar/style checking (incl. LaTeX/Markdown)
+ltex-plus.vscode-ltex-plus@15.7.1
 
-# --- 🧾 Data formats ---
-bungcip.better-toml
-mechatroner.rainbow-csv
-redhat.vscode-yaml
+# --- 🎨 Diagrams / Visual ---
+# Edit draw.io / diagrams.net files in the editor
+hediet.vscode-drawio@1.6.6
+# Edit Excalidraw whiteboards as project files
+pomdtr.excalidraw-editor@3.9.0
+# SVG preview and lightweight editing helpers
+jock.svg@1.5.3
+
+# --- 📦 Data formats / config ---
+# TOML syntax highlighting and basic editing support
+bungcip.better-toml@0.3.2
+# YAML language support, validation, and schemas
+redhat.vscode-yaml@1.24.0
+# Sort YAML keys/documents consistently
+pascalreitermann93.vscode-yaml-sort@6.6.4
+
+# --- 🧰 Editor UX ---
+# Colourise TODO/FIXME/NOTE-style comments for scannability
+aaron-bond.better-comments@3.0.2
+# Autocomplete file paths while typing imports/paths
+christian-kohler.path-intellisense@2.8.0
+# Colour-code indentation levels for nested blocks
+oderwat.indent-rainbow@8.3.1
+# Highlight colour literals (hex/rgb) with their actual colour
+naumovs.color-highlight@2.8.0
+# Inline diagnostics next to the offending code
+usernamehw.errorlens@3.28.0
+# File-type icons in the explorer and tabs
+vscode-icons-team.vscode-icons@12.19.0
+
+# --- 🔤 Spell checking ---
+# Base spell checker engine for code and prose
+streetsidesoftware.code-spell-checker@4.5.6
+# British English dictionary for the spell checker
+streetsidesoftware.code-spell-checker-british-english@1.4.36
+# French dictionary for the spell checker
+streetsidesoftware.code-spell-checker-french@0.4.4

@@ -865,8 +865,8 @@ sudo usermod -aG docker $USER
 
 -   [Benjamin presentation](https://docs.google.com/presentation/d/1v6JjkoY2ozFO0RaCBMIVRX5Hy7UW6CuhBgORrlM5pHQ/edit?slide=id.g2b840ea5086_0_12#slide=id.g2b840ea5086_0_12)
 -   [VsCode, R and Docker with DevContainers](https://github.com/RamiKrispin/vscode-r)
-  - [VsCode, Python and Docker with DevContainers](https://github.com/RamiKrispin/vscode-python)
-- [DevContainers, from INRIA trainings](https://gitlab.lis-lab.fr/sicomp/and_devcontainers) 
+-   [VsCode, Python and Docker with DevContainers](https://github.com/RamiKrispin/vscode-python)
+-   [DevContainers, from INRIA trainings](https://gitlab.lis-lab.fr/sicomp/and_devcontainers)
 
 ### Teams
 
@@ -1444,46 +1444,27 @@ sudo apt install ./cursor_2.0.77_amd64.deb
 
 3.  Sync your Cursor configuration across devices, see @tip-cursor-output:
 
-::: {#tip-cursor-output .callout-tip title = "Export Cursor settings"}
-
+::: {#tip-cursor-output .callout-tip title="Export Cursor settings"}
 1.  Export the core settings:
-
-<!-- -->
-
-    i.  Open Command Palette (`Ctrl/Cmd + Shift + P`), then search: **“Preferences: Open Settings (JSON)”**
-    ii. Export the file in your new device
-    iii. Default Linux installation: `~/.config/Cursor/User/settings.json`
-
-<!-- -->
-
+    1.  Open Command Palette (`Ctrl/Cmd + Shift + P`), then search: **“Preferences: Open Settings (JSON)”**
+    2.  Export the file in your new device
+    3.  Default Linux installation: `~/.config/Cursor/User/settings.json`
 2.  Export the keybinding shortcuts:
-
-<!-- -->
-
-i.  Open: **“Preferences: Open Keyboard Shortcuts (JSON)”**
-ii. Export `keybindings.json` into your local folder: `~/.config/Cursor/User/keybindings.json`
-
-<!-- -->
-
+    1.  Open: **“Preferences: Open Keyboard Shortcuts (JSON)”**
+    2.  Export `keybindings.json` into your local folder: `~/.config/Cursor/User/keybindings.json`
 3.  (**the main difference with VSCode**). Contrary to `VSCode`, you need to export the list of extensions manually:
-
-<!-- -->
-
-  i.  Retrieve the list of extensions running `cursor --list-extensions > extensions.txt`
-  ii. Install them back with:
+    i.  Retrieve the list of extensions with `cursor --list-extensions > extensions.txt`. To also record each extension’s version, use `cursor --list-extensions --show-versions > extensions.txt`
+    ii. Install them back with:
 
 ``` bash
-grep -v '^\s*#' "~/.config/Cursor/User/extensions.txt" \
-| grep -v '^\s*$' \
-| xargs -I{} cursor --install-extension {}
+    grep -v '^\s*#' ~/.config/Cursor/User/extensions.txt \
+    | grep -v '^\s*$' \
+    | xargs -I{} cursor --install-extension {}
 ```
 
-4. The whole list of extensions, and Cursor settings are available under the [Cursor config folder](../Config/.cursor/).
+> More details are provided in [*Sync Cursor Settings the Dotfiles Way* website](https://dev.to/0916dhkim/sync-cursor-settings-the-dotfiles-way-20c9), including the symlink commands to fully automate this process
 
-> More details are provide in [*Sync Cursor Settings the Dotfiles Way* website](https://dev.to/0916dhkim/sync-cursor-settings-the-dotfiles-way-20c9), including the symlink commands tu fully automate this process
-
-> The harcore way, for syncing configuration files across numerous users, cf Benjamin, and [Cursor Config Sync](https://open-vsx.org/extension/KushalCodes/cursor-config-sync)
-
+> The hardcore way, for syncing configuration files across numerous users, cf Benjamin, and [Cursor Config Sync](https://open-vsx.org/extension/KushalCodes/cursor-config-sync)
 :::
 
 ### Password Manager for Linux -\> BitWarden
@@ -1695,7 +1676,7 @@ ForwardX11Trusted yes
 ------------------------------------------------------------------------
 
 | Option | Purpose | Effect on X11 |
-|----------------|----------------|---------------------------------------|
+|------------------|------------------|------------------------------------|
 | `-X` | X11 forwarding (untrusted) | Runs GUI apps remotely |
 | `-Y` | X11 forwarding (trusted) | Runs all GUI apps remotely |
 | `-C` | Compression | Reduces network usage and can speed up GUI over slow connections |

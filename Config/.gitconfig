@@ -10,6 +10,21 @@
 	defaultBranch = main
 
 
+# 🔀 Merge — conflict handling & tools
+# ➤ zdiff3 = shows base + both sides → easier conflict resolution
+# ➤ custom tool (cursor) for resolving merges visually
+[merge]
+	conflictstyle = zdiff3
+	tool = cursor
+
+
+# 🧠 Rerere — reuse recorded resolutions
+# ➤ Git remembers how you solved conflicts and reapplies automatically
+# ➤ Huge time saver on recurring conflicts
+[rerere]
+	enabled = true
+
+
 # 🕒 Log — display preferences
 # ➤ Shows commit dates in your local timezone (more intuitive)
 [log]
@@ -24,12 +39,16 @@
 
 # 📄 Core — fundamental Git behavior
 # ➤ autocrlf=input → converts CRLF → LF on commit (safe for Unix/macOS)
+# ➤ editor = cursor (wait ensures Git pauses until edit is done)
+# ➤ pager = cat → avoid nested pagers in Cursor/SSH terminals
 [core]
 	autocrlf = input
 	editor = cursor --wait
+	pager = cat
 
 
 # 🏷️ Tags — sorting strategy
+# ➤ Sort tags by semantic version (v1.2.10 > v1.2.2)
 [tag]
 	sort = version:refname
 
@@ -41,13 +60,15 @@
 
 
 # 🔐 Credentials — authentication storage
+# ➤ "store" saves credentials in plain text (⚠️ convenient but less secure)
+# ➤ on a laptop prefer the OS keychain (e.g. osxkeychain / libsecret) if available
 [credential]
 	helper = store
 
 
 # 🔄 Pull — integration strategy
 # ➤ merge (false) instead of rebase when pulling
-# ➤ safer for beginners, preserves full history
+# ➤ safer default, preserves full history
 [pull]
 	rebase = false
 
@@ -59,20 +80,11 @@
 
 [difftool "cursor"]
 	cmd = "cursor --wait --diff"
-	
-# 🧠 Rerere — reuse recorded resolutions
-# ➤ Git remembers how you solved conflicts and reapplies automatically
-# ➤ Huge time saver on recurring conflicts
-[rerere]
-	enabled = true
+
 
 # 🧩 Merge tool — visual conflict resolution
+# ➤ integrates cursor as merge tool
+# ➤ trustExitCode=true → Git trusts tool result (no extra prompts)
 [mergetool "cursor"]
 	cmd = "cursor --wait"
 	trustExitCode = true
-
-# 🔀 Merge — conflict handling & tools
-# ➤ zdiff3 = shows base + both sides → easier conflict resolution
-[merge]
-	conflictstyle = zdiff3
-	tool = cursor

@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Personal PATH additions
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$PATH:$HOME/scripts/tools"
@@ -5,9 +12,9 @@ export PATH="$PATH:$HOME/scripts/tools"
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-# Theme and plugins
-ZSH_THEME="robbyrussell"
-plugins=(git github tmux vscode)
+# Theme and plugins (cluster stack: p10k + fzf + suggestions + highlighting)
+ZSH_THEME="powerlevel10k/powerlevel10k"
+plugins=(git fzf zsh-autosuggestions zsh-syntax-highlighting)
 
 # Oh My Zsh settings should be defined before sourcing it.
 zstyle ':omz:update' mode auto
@@ -15,11 +22,18 @@ HIST_STAMPS="yyyy-mm-dd"
 
 source "$ZSH/oh-my-zsh.sh"
 
-# User configuration
+# User configuration — editor routing (from local laptop)
 
 ## Use RStudio as Git editor when launched from RStudio
 if [ -n "$RSTUDIO" ]; then
   export GIT_EDITOR="rstudio"
+fi
+
+## In Cursor terminals, use Cursor as the editor for Git prompts.
+if [ "$TERM_PROGRAM" = "cursor" ] && command -v cursor >/dev/null 2>&1; then
+  export EDITOR="cursor --wait"
+  export VISUAL="$EDITOR"
+  export GIT_EDITOR="$EDITOR"
 fi
 
 # Colours for shell
@@ -105,3 +119,9 @@ fi
 # Reuse listing colours in completion menus.
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu select
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Optional: raise gitstatus log level when debugging prompt issues
+# GITSTATUS_LOG_LEVEL=DEBUG

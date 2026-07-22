@@ -1,11 +1,11 @@
-# fastest way to install R packages for Linux, as pre-compiled tarballs
+# Prefer Posit Package Manager binary builds for Ubuntu noble.
 options(
   repos = c(
     CRAN = "https://packagemanager.posit.co/cran/__linux__/noble/latest"
   )
 )
 
-# ensure in VS Code debugger that wecan properly view, and debug, R plots and datasets
+# Bridge vscode-R / Cursor R debugger sessions to the vscode-R init hook.
 if (Sys.getenv("VSCODE_DEBUG_SESSION") == "1") {
   Sys.setenv(TERM_PROGRAM = "vscode")
   source(file.path(
@@ -14,18 +14,3 @@ if (Sys.getenv("VSCODE_DEBUG_SESSION") == "1") {
     "init.R"
   ))
 }
-
-
-# vscDebugger defaults for a smoother interactive experience
-options(
-  vsc.defaultDebugMode = "workspace",
-  vsc.defaultAllowGlobalDebugging = TRUE,
-  vsc.defaultIncludePackageScopes = TRUE,
-  vsc.defaultOverwriteSource = TRUE,
-  vsc.defaultOverwritePrint = TRUE,
-  vsc.defaultOverwriteMessage = TRUE,
-  vsc.setBreakpointsInStack = TRUE,
-  vsc.showInternalFrames = FALSE,
-  vsc.trySilent = TRUE
-)
-
