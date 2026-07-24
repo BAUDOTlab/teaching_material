@@ -8,7 +8,7 @@
 
 <meta name="description" content="Teaching resources (Linux installation guide and more).">
 
-<title>3&nbsp; Modern R Package Development Guide – Team teaching material</title>
+<title>5&nbsp; R programming guidelines – Team teaching material</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,7 +66,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../Linux/installation-linux.html" rel="prev">
+<link href="../fresh-installation/onedrive.html" rel="next">
+<link href="../fresh-installation/amu-and-server.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -117,11 +118,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
-<meta property="og:title" content="3&nbsp; Modern R Package Development Guide – Team teaching material">
+<meta property="og:title" content="5&nbsp; R programming guidelines – Team teaching material">
 <meta property="og:description" content="Teaching resources (Linux installation guide and more).">
 <meta property="og:site_name" content="Team teaching material">
-<meta name="citation_title" content="[3]{.chapter-number}&nbsp; [Modern R Package Development Guide]{.chapter-title}">
-<meta name="citation_fulltext_html_url" content="https://baudotlab.github.io/teaching_material/Linux/installation-linux.html/R/R_package.html">
+<meta name="citation_title" content="[5]{.chapter-number}&nbsp; [R programming guidelines]{.chapter-title}">
+<meta name="citation_fulltext_html_url" content="https://baudotlab.github.io/teaching_material/R/R_package.html">
 <meta name="citation_language" content="en-GB">
 </head>
 
@@ -134,7 +135,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../R/R_package.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Modern R Package Development Guide</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../R/R_package.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">R programming guidelines</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -170,18 +171,58 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Welcome</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Fresh Ubuntu installation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../Linux/installation-linux.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Install core software on Ubuntu</span></span></a>
+  <a href="../fresh-installation/ubuntu-general.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Ubuntu general guidelines</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../fresh-installation/software.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Software to install</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../fresh-installation/amu-and-server.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">AMU tools and remote servers</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../R/R_package.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Modern R Package Development Guide</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">R programming guidelines</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../fresh-installation/onedrive.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">OneDrive on Linux</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -192,21 +233,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#package-structure" id="toc-package-structure" class="nav-link active" data-scroll-target="#package-structure"><span class="header-section-number">3.1</span> Package Structure</a></li>
-  <li><a href="#project-setup-end-to-end" id="toc-project-setup-end-to-end" class="nav-link" data-scroll-target="#project-setup-end-to-end"><span class="header-section-number">3.2</span> Project Setup (End-to-End)</a></li>
-  <li><a href="#writing-functions" id="toc-writing-functions" class="nav-link" data-scroll-target="#writing-functions"><span class="header-section-number">3.3</span> Writing Functions</a></li>
-  <li><a href="#dependencies-and-namespaces" id="toc-dependencies-and-namespaces" class="nav-link" data-scroll-target="#dependencies-and-namespaces"><span class="header-section-number">3.4</span> Dependencies and Namespaces</a></li>
-  <li><a href="#documentation-with-roxygen2" id="toc-documentation-with-roxygen2" class="nav-link" data-scroll-target="#documentation-with-roxygen2"><span class="header-section-number">3.5</span> Documentation with roxygen2</a></li>
-  <li><a href="#testing-with-testthat" id="toc-testing-with-testthat" class="nav-link" data-scroll-target="#testing-with-testthat"><span class="header-section-number">3.6</span> Testing with testthat</a></li>
-  <li><a href="#data-in-packages" id="toc-data-in-packages" class="nav-link" data-scroll-target="#data-in-packages"><span class="header-section-number">3.7</span> Data in Packages</a></li>
-  <li><a href="#build-check-and-release" id="toc-build-check-and-release" class="nav-link" data-scroll-target="#build-check-and-release"><span class="header-section-number">3.8</span> Build, Check, and Release</a></li>
-  <li><a href="#documenting-multiple-functions-on-one-help-page" id="toc-documenting-multiple-functions-on-one-help-page" class="nav-link" data-scroll-target="#documenting-multiple-functions-on-one-help-page"><span class="header-section-number">3.9</span> Documenting Multiple Functions on One Help Page</a></li>
-  <li><a href="#parallel-computing-in-r-practical-notes" id="toc-parallel-computing-in-r-practical-notes" class="nav-link" data-scroll-target="#parallel-computing-in-r-practical-notes"><span class="header-section-number">3.10</span> Parallel Computing in R (Practical Notes)</a></li>
-  <li><a href="#lifecycle-r-development" id="toc-lifecycle-r-development" class="nav-link" data-scroll-target="#lifecycle-r-development"><span class="header-section-number">3.11</span> Lifecycle R development</a>
+  <li><a href="#package-structure" id="toc-package-structure" class="nav-link active" data-scroll-target="#package-structure"><span class="header-section-number">5.1</span> Package Structure</a></li>
+  <li><a href="#project-setup-end-to-end" id="toc-project-setup-end-to-end" class="nav-link" data-scroll-target="#project-setup-end-to-end"><span class="header-section-number">5.2</span> Project Setup (End-to-End)</a></li>
+  <li><a href="#writing-functions" id="toc-writing-functions" class="nav-link" data-scroll-target="#writing-functions"><span class="header-section-number">5.3</span> Writing Functions</a></li>
+  <li><a href="#dependencies-and-namespaces" id="toc-dependencies-and-namespaces" class="nav-link" data-scroll-target="#dependencies-and-namespaces"><span class="header-section-number">5.4</span> Dependencies and Namespaces</a></li>
+  <li><a href="#documentation-with-roxygen2" id="toc-documentation-with-roxygen2" class="nav-link" data-scroll-target="#documentation-with-roxygen2"><span class="header-section-number">5.5</span> Documentation with roxygen2</a></li>
+  <li><a href="#testing-with-testthat" id="toc-testing-with-testthat" class="nav-link" data-scroll-target="#testing-with-testthat"><span class="header-section-number">5.6</span> Testing with testthat</a></li>
+  <li><a href="#data-in-packages" id="toc-data-in-packages" class="nav-link" data-scroll-target="#data-in-packages"><span class="header-section-number">5.7</span> Data in Packages</a></li>
+  <li><a href="#build-check-and-release" id="toc-build-check-and-release" class="nav-link" data-scroll-target="#build-check-and-release"><span class="header-section-number">5.8</span> Build, Check, and Release</a></li>
+  <li><a href="#documenting-multiple-functions-on-one-help-page" id="toc-documenting-multiple-functions-on-one-help-page" class="nav-link" data-scroll-target="#documenting-multiple-functions-on-one-help-page"><span class="header-section-number">5.9</span> Documenting Multiple Functions on One Help Page</a></li>
+  <li><a href="#parallel-computing-in-r-practical-notes" id="toc-parallel-computing-in-r-practical-notes" class="nav-link" data-scroll-target="#parallel-computing-in-r-practical-notes"><span class="header-section-number">5.10</span> Parallel Computing in R (Practical Notes)</a></li>
+  <li><a href="#lifecycle-r-development" id="toc-lifecycle-r-development" class="nav-link" data-scroll-target="#lifecycle-r-development"><span class="header-section-number">5.11</span> Lifecycle R development</a>
   <ul>
-  <li><a href="#high-level-package-lifecycle" id="toc-high-level-package-lifecycle" class="nav-link" data-scroll-target="#high-level-package-lifecycle"><span class="header-section-number">3.11.1</span> 1) High-level package lifecycle</a></li>
-  <li><a href="#what-changes-between-source-bundle-and-binary" id="toc-what-changes-between-source-bundle-and-binary" class="nav-link" data-scroll-target="#what-changes-between-source-bundle-and-binary"><span class="header-section-number">3.11.2</span> 2) What changes between source, bundle, and binary</a></li>
-  <li><a href="#command-driven-workflow-construction-to-load" id="toc-command-driven-workflow-construction-to-load" class="nav-link" data-scroll-target="#command-driven-workflow-construction-to-load"><span class="header-section-number">3.11.3</span> 3) Command-driven workflow (construction to load)</a></li>
+  <li><a href="#high-level-package-lifecycle" id="toc-high-level-package-lifecycle" class="nav-link" data-scroll-target="#high-level-package-lifecycle"><span class="header-section-number">5.11.1</span> 1) High-level package lifecycle</a></li>
+  <li><a href="#what-changes-between-source-bundle-and-binary" id="toc-what-changes-between-source-bundle-and-binary" class="nav-link" data-scroll-target="#what-changes-between-source-bundle-and-binary"><span class="header-section-number">5.11.2</span> 2) What changes between source, bundle, and binary</a></li>
+  <li><a href="#command-driven-workflow-construction-to-load" id="toc-command-driven-workflow-construction-to-load" class="nav-link" data-scroll-target="#command-driven-workflow-construction-to-load"><span class="header-section-number">5.11.3</span> 3) Command-driven workflow (construction to load)</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BAUDOTlab/teaching_material/edit/main/R/R_package.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/BAUDOTlab/teaching_material/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/BAUDOTlab/teaching_material/blob/main/R/R_package.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
@@ -216,7 +257,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Modern R Package Development Guide</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">R programming guidelines</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -234,8 +275,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>This guide consolidates package development practice using modern recommendations from the tidyverse ecosystem, especially <em>R Packages</em> (2nd edition) by Hadley Wickham and Jenny Bryan.</p>
-<section id="package-structure" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="package-structure"><span class="header-section-number">3.1</span> Package Structure</h2>
+<section id="package-structure" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="package-structure"><span class="header-section-number">5.1</span> Package Structure</h2>
 <p>A standard R package typically contains:</p>
 <ul>
 <li><code>R/</code>: function source files (one primary function family per file).</li>
@@ -254,8 +295,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>README.Rmd</code> and built <code>README.md</code>: project overview and installation instructions.</li>
 </ul>
 </section>
-<section id="project-setup-end-to-end" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="project-setup-end-to-end"><span class="header-section-number">3.2</span> Project Setup (End-to-End)</h2>
+<section id="project-setup-end-to-end" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="project-setup-end-to-end"><span class="header-section-number">5.2</span> Project Setup (End-to-End)</h2>
 <ol type="1">
 <li><p>Create the package project:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">create_package</span>(<span class="st">"~/path/to/pkgname"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
@@ -276,8 +317,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">check</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 </ol>
 </section>
-<section id="writing-functions" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="writing-functions"><span class="header-section-number">3.3</span> Writing Functions</h2>
+<section id="writing-functions" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="writing-functions"><span class="header-section-number">5.3</span> Writing Functions</h2>
 <ul>
 <li>Put package code in <code>R/</code>; avoid <code>source()</code> inside a package.</li>
 <li>Do not call <code>library()</code> or <code>require()</code> in package code.</li>
@@ -286,8 +327,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Use snake_case naming and tidyverse style conventions.</li>
 </ul>
 </section>
-<section id="dependencies-and-namespaces" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="dependencies-and-namespaces"><span class="header-section-number">3.4</span> Dependencies and Namespaces</h2>
+<section id="dependencies-and-namespaces" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="dependencies-and-namespaces"><span class="header-section-number">5.4</span> Dependencies and Namespaces</h2>
 <p>Use <code>DESCRIPTION</code> fields correctly:</p>
 <ul>
 <li><code>Imports</code>: packages required at runtime.</li>
@@ -305,8 +346,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Prefer selective imports over broad <code>@import</code> directives.</p>
 </section>
-<section id="documentation-with-roxygen2" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="documentation-with-roxygen2"><span class="header-section-number">3.5</span> Documentation with roxygen2</h2>
+<section id="documentation-with-roxygen2" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="documentation-with-roxygen2"><span class="header-section-number">5.5</span> Documentation with roxygen2</h2>
 <p>Document functions directly above their definitions and regenerate docs with:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">document</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Core tags:</p>
@@ -325,8 +366,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>a trailing <code>NULL</code></li>
 </ul>
 </section>
-<section id="testing-with-testthat" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="testing-with-testthat"><span class="header-section-number">3.6</span> Testing with testthat</h2>
+<section id="testing-with-testthat" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="testing-with-testthat"><span class="header-section-number">5.6</span> Testing with testthat</h2>
 <p>Initialise and run tests:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_testthat</span>(<span class="dv">3</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">test</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -340,8 +381,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Skip selectively (<code>skip_if_not_installed()</code>, <code>skip_on_cran()</code>) rather than disabling broad test suites.</li>
 </ul>
 </section>
-<section id="data-in-packages" class="level2" data-number="3.7">
-<h2 data-number="3.7" class="anchored" data-anchor-id="data-in-packages"><span class="header-section-number">3.7</span> Data in Packages</h2>
+<section id="data-in-packages" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="data-in-packages"><span class="header-section-number">5.7</span> Data in Packages</h2>
 <p>Use the right location for each data type:</p>
 <ul>
 <li><code>data/</code>: user-facing, documented datasets.</li>
@@ -356,8 +397,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>tools<span class="sc">::</span><span class="fu">checkRdaFiles</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Document datasets with roxygen <code>@format</code> and <code>@source</code>.</p>
 </section>
-<section id="build-check-and-release" class="level2" data-number="3.8">
-<h2 data-number="3.8" class="anchored" data-anchor-id="build-check-and-release"><span class="header-section-number">3.8</span> Build, Check, and Release</h2>
+<section id="build-check-and-release" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="build-check-and-release"><span class="header-section-number">5.8</span> Build, Check, and Release</h2>
 <p>Before release:</p>
 <ul>
 <li><p>Run <code>devtools::check()</code> locally and in CI.</p></li>
@@ -370,8 +411,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>For CRAN submission, follow current CRAN policies and perform final checks with <code>devtools::check()</code> and <code>devtools::check(cran = TRUE)</code>.</p>
 </section>
-<section id="documenting-multiple-functions-on-one-help-page" class="level2" data-number="3.9">
-<h2 data-number="3.9" class="anchored" data-anchor-id="documenting-multiple-functions-on-one-help-page"><span class="header-section-number">3.9</span> Documenting Multiple Functions on One Help Page</h2>
+<section id="documenting-multiple-functions-on-one-help-page" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="documenting-multiple-functions-on-one-help-page"><span class="header-section-number">5.9</span> Documenting Multiple Functions on One Help Page</h2>
 <p>Default recommendation: one function family per file and one principal help topic per user concept.</p>
 <p>Use:</p>
 <ul>
@@ -392,8 +433,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#' @rdname arith</span></span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) x <span class="sc">*</span> y</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="parallel-computing-in-r-practical-notes" class="level2" data-number="3.10">
-<h2 data-number="3.10" class="anchored" data-anchor-id="parallel-computing-in-r-practical-notes"><span class="header-section-number">3.10</span> Parallel Computing in R (Practical Notes)</h2>
+<section id="parallel-computing-in-r-practical-notes" class="level2" data-number="5.10">
+<h2 data-number="5.10" class="anchored" data-anchor-id="parallel-computing-in-r-practical-notes"><span class="header-section-number">5.10</span> Parallel Computing in R (Practical Notes)</h2>
 <p>Check available cores:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>parallel<span class="sc">::</span><span class="fu">detectCores</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Local multicore workflows:</p>
@@ -411,11 +452,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>Always close clusters and backend registrations to avoid orphan workers.</p>
 </section>
-<section id="lifecycle-r-development" class="level2" data-number="3.11">
-<h2 data-number="3.11" class="anchored" data-anchor-id="lifecycle-r-development"><span class="header-section-number">3.11</span> Lifecycle R development</h2>
+<section id="lifecycle-r-development" class="level2" data-number="5.11">
+<h2 data-number="5.11" class="anchored" data-anchor-id="lifecycle-r-development"><span class="header-section-number">5.11</span> Lifecycle R development</h2>
 <p>The following diagrams summarise package construction, build, installation, and loading in an Excalidraw-like flow.</p>
-<section id="high-level-package-lifecycle" class="level3" data-number="3.11.1">
-<h3 data-number="3.11.1" class="anchored" data-anchor-id="high-level-package-lifecycle"><span class="header-section-number">3.11.1</span> 1) High-level package lifecycle</h3>
+<section id="high-level-package-lifecycle" class="level3" data-number="5.11.1">
+<h3 data-number="5.11.1" class="anchored" data-anchor-id="high-level-package-lifecycle"><span class="header-section-number">5.11.1</span> 1) High-level package lifecycle</h3>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div>
@@ -433,8 +474,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="what-changes-between-source-bundle-and-binary" class="level3" data-number="3.11.2">
-<h3 data-number="3.11.2" class="anchored" data-anchor-id="what-changes-between-source-bundle-and-binary"><span class="header-section-number">3.11.2</span> 2) What changes between source, bundle, and binary</h3>
+<section id="what-changes-between-source-bundle-and-binary" class="level3" data-number="5.11.2">
+<h3 data-number="5.11.2" class="anchored" data-anchor-id="what-changes-between-source-bundle-and-binary"><span class="header-section-number">5.11.2</span> 2) What changes between source, bundle, and binary</h3>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div>
@@ -492,8 +533,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="command-driven-workflow-construction-to-load" class="level3" data-number="3.11.3">
-<h3 data-number="3.11.3" class="anchored" data-anchor-id="command-driven-workflow-construction-to-load"><span class="header-section-number">3.11.3</span> 3) Command-driven workflow (construction to load)</h3>
+<section id="command-driven-workflow-construction-to-load" class="level3" data-number="5.11.3">
+<h3 data-number="5.11.3" class="anchored" data-anchor-id="command-driven-workflow-construction-to-load"><span class="header-section-number">5.11.3</span> 3) Command-driven workflow (construction to load)</h3>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div>
@@ -645,7 +686,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/baudotlab\.github\.io\/teaching_material\/Linux\/installation-linux\.html");
+        var filterRegex = new RegExp("https:\/\/baudotlab\.github\.io\/teaching_material\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -974,14 +1015,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
-      <a href="../Linux/installation-linux.html" class="pagination-link" aria-label="Install core software on Ubuntu">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Install core software on Ubuntu</span></span>
+      <a href="../fresh-installation/amu-and-server.html" class="pagination-link" aria-label="AMU tools and remote servers">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">AMU tools and remote servers</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../fresh-installation/onedrive.html" class="pagination-link" aria-label="OneDrive on Linux">
+        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">OneDrive on Linux</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Modern R Package Development Guide</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># R programming guidelines</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>This guide consolidates package development practice using modern recommendations from the tidyverse ecosystem, especially *R Packages* (2nd edition) by Hadley Wickham and Jenny Bryan.</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1283,7 +1327,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>Written by Bastien CHASSAGNOL and Benjmain LOIRE, with suggestions from Marielle, Kenza, Morgane and Philippe. This book is built with <a href="https://quarto.org/">Quarto</a>.</p>
+<p>Written by Bastien CHASSAGNOL and Benjamin LOIRE, with suggestions from Marielle, Kenza, Morgane and Philippe. This book is built with <a href="https://quarto.org/">Quarto</a>.</p>
 <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/BAUDOTlab/teaching_material/edit/main/R/R_package.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/BAUDOTlab/teaching_material/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/BAUDOTlab/teaching_material/blob/main/R/R_package.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">

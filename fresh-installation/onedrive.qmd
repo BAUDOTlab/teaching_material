@@ -1,0 +1,309 @@
+---
+title: "OneDrive on Linux"
+---
+
+## Open-source installation for Ubuntu
+
+1.  Install dependencies:
+
+    ```{#lst-onedrive-deps .bash lst-cap="onedrive deps"}
+    sudo apt install build-essential libcurl4-openssl-dev pkg-config git -y
+    ```
+
+2.  Add the openSUSE Build Service repository release key:
+
+    ```{#lst-onedrive-repo .bash lst-cap="onedrive repo"}
+    wget -qO - https://download.opensuse.org/repositories/home:/npreining:/debian-ubuntu-onedrive/xUbuntu_24.04/Release.key | gpg --dearmor | sudo tee /usr/share/keyrings/obs-onedrive.gpg > /dev/null
+
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/obs-onedrive.gpg] https://download.opensuse.org/repositories/home:/npreining:/debian-ubuntu-onedrive/xUbuntu_24.04/ ./" | sudo tee /etc/apt/sources.list.d/onedrive.list
+
+    ## update cache
+    sudo apt-get update
+    ```
+
+3.  Install OneDrive:
+
+    ```{#lst-onedrive-install .bash lst-cap="onedrive install"}
+    sudo apt install --no-install-recommends --no-install-suggests onedrive
+    ```
+
+4.  Sync OneDrive:
+
+    i.  Exclude large folders and directories that are complex or not
+        recommended for syncing:
+        `nano ~/.config/onedrive/config`. See the contents of a working
+        config under
+        [onedrive-custom-config](../Config/onedrive-config).[^od-1]
+
+    ii. Authenticate, then run OneDrive once:
+
+        ```{#lst-onedrive-sync .bash lst-cap="onedrive sync"}
+        onedrive --sync --dry-run ## optional: list folders that will be synchronised
+        onedrive --sync --verbose ## first initialisation; usually time-consuming; one-shot
+        ```
+
+[^od-1]: Copy the sample into `~/.config/onedrive/config`, then adjust
+    `sync_dir` if your folder name differs.
+
+## Permanent monitoring: pick exactly one path {#sec-onedrive-monitor-choice}
+
+::: {#wrn-onedrive-exclusive .callout-warning}
+**Do not run systemd monitoring and a OneDrive GUI / tray client at the
+same time.** Concurrent clients fight over the same local tree and
+produce “already running” errors, stalled uploads, or silent conflicts.
+Choose **either** @lst-onedrive-systemd **or** @tip-onedrive-GUI — never
+both (@fig-onedrive-monitor-choice).
+:::
+
+```{mermaid}
+%%| label: fig-onedrive-monitor-choice
+%%| fig-cap: "Decision tree: systemd journal monitoring versus a tray GUI for OneDrive"
+flowchart TD
+  A[Need continuous OneDrive sync?] --> B{Prefer terminal<br/>diagnostics?}
+  B -->|Yes| C[Enable user systemd service]
+  C --> D["systemctl --user enable --now onedrive"]
+  D --> E["Monitor with journalctl --user-unit onedrive -f"]
+  B -->|No| F[Install lightweight tray GUI]
+  F --> G[onedrive_tray user service]
+  G --> H[Status icon in the panel]
+  C -.->|Do not combine| F
+  E --> I[Single client owns the sync]
+  H --> I
+```
+
+### Option A — systemd + `journalctl` {#sec-onedrive-systemd}
+
+```{#lst-onedrive-systemd .bash lst-cap="onedrive systemd"}
+systemctl --user enable onedrive
+systemctl --user start onedrive ## backend equivalent: onedrive --monitor
+```
+
+Monitor uploads:
+
+```{#lst-onedrive-monitor .bash lst-cap="onedrive monitor"}
+journalctl --user-unit onedrive -f ## continuous; or systemctl --user status onedrive (one-shot)
+
+onedrive --display-config
+onedrive --version
+```
+
+### Option B — tray GUI {#sec-onedrive-tray}
+
+::: {#tip-onedrive-GUI .callout-tip title="GUIs for OneDrive monitoring"}
+[OneDrive system tray
+program](https://github.com/DanielBorgesOliveira/onedrive_tray) adds a
+simple icon that reports OneDrive synchronisation status.
+
+If you use this path, **disable** the systemd user service first
+(`systemctl --user disable --now onedrive`) so only one client runs (see
+@wrn-onedrive-exclusive).
+
+```{#lst-onedrive-tray .bash lst-cap="onedrive tray"}
+## install Qt 5 qmake
+sudo apt install qt5-qmake qtbase5-dev
+
+## build the executable
+git clone https://github.com/DanielBorgesOliveira/onedrive_tray.git
+cd onedrive_tray
+mkdir build
+cd build
+/usr/lib/qt5/bin/qmake ../systray.pro ## prepare the Makefile
+make ## build
+
+## install so it runs at login
+sudo make install ## deploy; sudo is required here
+systemctl enable --user onedrive_tray.service
+```
+:::
+
+::: {.callout-warning title="Graphical interfaces for OneDrive"}
+Avoid full graphical clients such as
+[OneDriveGUI](https://github.com/bpozdena/OneDriveGUI): in practice they
+often clash with a local `onedrive` install.
+
+Prefer the terminal (Option A) or the lightweight tray icon (Option B in
+@tip-onedrive-GUI) for clearer control over configuration.
+:::
+
+## Troubleshoot OneDrive {#sec-onedrive-troubleshoot}
+
+-   **Call `systemctl --user restart onedrive` after modifying the
+    config file** so changes take effect (Option A). To re-apply
+    configuration retrospectively, use
+    `onedrive --resync --sync --verbose` sparingly. **Synchronisation
+    stops without warning when the config file changes; you must restart
+    the service.**
+
+-   The warning *"onedrive application is already running, please check
+    process list"* means several concurrent `onedrive` processes are
+    running — almost always because systemd and a GUI were started
+    together (@wrn-onedrive-exclusive):
+
+    -   List them: `ps aux | grep onedrive`
+    -   Stop the service and stray processes:
+
+        ```{#lst-onedrive-kill .bash lst-cap="Stop concurrent OneDrive clients"}
+        systemctl --user stop onedrive.service
+        pkill -f "onedrive --sync" || true
+        pkill -f "onedrive --monitor" || true
+        pgrep -af onedrive ## should return nothing before continuing
+        ```
+
+### Safe recovery after a messy sync {#sec-onedrive-recovery}
+
+When local and cloud trees have diverged badly, treat a restored local
+folder as the temporary source of truth, push it one-way, then return to
+two-way sync. **Do not edit files on the web or locally while a sync or
+resync is running.**
+
+1.  Stop every client (@lst-onedrive-kill).
+
+2.  For a migration / upload-only phase, set in
+    `~/.config/onedrive/config` (adjust `sync_dir` to your restored
+    tree):
+
+    ```{#lst-onedrive-upload-only .ini lst-cap="Temporary upload-only OneDrive config"}
+    skip_dir = "venv|\\.venv|__pycache__|node_modules|\\.next|renv|.cache"
+    skip_file = "\\.Rhistory$|\\.RData$|~*|.~*|*.tmp|*.swp|*.partial"
+    check_nosync = "true"
+    local_first = "true"
+    display_manager_integration = "true"
+    use_recycle_bin = "true"
+    force_session_upload = "true"
+    delay_inotify_processing = "true"
+    sync_dir = "~/OneDrive-restored"
+    upload_only = "true"
+    download_only = "false"
+    ```
+
+3.  Resynchronise once (example background run):
+
+    ```{#lst-onedrive-resync-upload .bash lst-cap="One-way upload resync"}
+    nohup onedrive --sync --resync --resync-auth --verbose \
+      > "$HOME/onedrive-migration-resync.log" 2>&1 &
+    ```
+
+4.  Switch back to normal two-way sync: move the restored tree to your
+    usual path if needed (`mv ~/OneDrive-restored ~/OneDrive`), restore
+    the sample settings from
+    [onedrive-custom-config](../Config/onedrive-config)
+    (`upload_only = "false"`), then:
+
+    ```{#lst-onedrive-resync-normal .bash lst-cap="Final two-way resync"}
+    onedrive --sync --resync --verbose
+    ```
+
+5.  Re-enable **exactly one** monitoring path again (@wrn-onedrive-exclusive):
+    either @lst-onedrive-systemd or @tip-onedrive-GUI.
+
+::: {.callout-note title="OneDrive, Git and EOL encoding across OS" collapse="true"}
+Git and OneDrive do not combine well when:
+
+-   **End-of-line encodings differ**: Linux and macOS use
+    `LF` (line feed: `\n`); Windows uses
+    `CRLF` (carriage return + line feed: `\r\n`).
+-   Linux tracks executable permissions; Windows does not (mainly an
+    issue for shell scripts).
+-   `.git` directories are complex repositories and are often a poor fit
+    for cloud sync.
+
+------------------------------------------------------------------------
+
+To avoid these issues:
+
+i.  Configure `.gitconfig` globally so both EOL styles are handled.
+    Use `git config --global core.autocrlf input` on Linux and macOS
+    when collaborating with Windows machines[^od-2], and
+    `git config --global core.autocrlf true` on Windows[^od-3].
+
+ii. For extra robustness, add a per-project `.gitattributes` file[^od-4]:
+
+    ```{#lst-onedrive-gitattributes .bash lst-cap="onedrive gitattributes"}
+    ## three columns: extension, type (text or binary), EOL for text files
+    *.sh   text eol=lf
+    *.py   text eol=lf
+    *.js   text eol=lf
+    *.ts   text eol=lf
+    *.java text eol=lf
+    ```
+
+    Then apply the change with Git (this renormalises tracked files; rules
+    in `.gitattributes` override the global `core.autocrlf` option):
+
+    ```{#lst-onedrive-renormalize .bash lst-cap="onedrive renormalize"}
+    git add --renormalize .
+    git status ## files affected by the EOL change
+    git commit -m "Normalize line endings"
+    ```
+
+iii. Set the editor default end-of-line encoding:
+
+    -   *VS Code / Cursor*: {{< kbd Shift-Ctrl-P >}}, then “Open User
+        Settings”, search for `Files: Eol`, and set end of line to `\n`.
+
+------------------------------------------------------------------------
+
+![Best practices for end-of-line homogenisation across devices](onedrive/git_diffs_encodings.png){#fig-eol-homogenisation}
+:::
+
+[^od-2]: Accept CRLF as input on checkout, but always commit as LF.
+
+[^od-3]: Constrain commits to be encoded and pushed as `LF`.
+
+[^od-4]: Detailed guidance is available
+    [here](https://docs.github.com/en/get-started/git-basics/configuring-git-to-handle-line-endings?platform=windows).
+
+::: {.callout-warning title="Compatibility with editors using atomic saves" collapse="true"}
+Many editors — including LibreOffice, and often VS Code / Cursor when
+saving project files — use
+[**atomic save
+strategies**](https://github.com/abraunegg/onedrive/blob/eb029bbe2ff5ba54844ae66667dce4dcb5eb78cf/docs/usage.md#compatibility-with-editors-and-applications-using-atomic-save-operations)
+to preserve data integrity: the editor writes a temporary file, then
+renames it over the original.
+
+```{#lst-onedrive-atomic-flow .bash lst-cap="onedrive atomic flow"}
+file.qmd
+↓ edit
+file.qmd.tmp ## if OneDrive syncs mid-save, it may treat the file as discarded
+↓ rename
+file.qmd
+
+
+## Architecture that causes the clash
+Editor (LibreOffice, Cursor, …)
+   │
+   │ save (atomic)
+   ▼
+Local file
+   │
+   │ filesystem event (inotify)
+   ▼
+onedrive client
+   │
+   │ sync
+   ▼
+OneDrive cloud
+   │
+   │ sync back
+   ▼
+local overwrite
+```
+
+That pattern can interfere with the `onedrive` client’s **inotify**-based
+detection, producing editor warnings or briefly emptying file contents.
+
+Three complementary approaches:
+
+1.  **Keep active Git projects outside OneDrive.** Use OneDrive for
+    large document stores; keep source trees under Git elsewhere (or in
+    a path excluded from sync).
+2.  Pause sync while editing intensively — and remember to restart
+    synchronisation afterwards.
+3.  Adjust the config to tolerate atomic saves (already in
+    [onedrive-custom-config](../Config/onedrive-config)):
+
+    ```{#lst-onedrive-atomic-config .bash lst-cap="onedrive atomic config"}
+    force_session_upload = "true" ## reduce overwrites by older cloud versions mid-save
+    delay_inotify_processing = "true" ## wait for tmp → rename to finish before syncing
+    ```
+:::

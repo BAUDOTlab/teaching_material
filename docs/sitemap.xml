@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://baudotlab.github.io/teaching_material/Linux/installation-linux.html/index.html</loc>
-    <lastmod>2026-03-27T17:32:22.074Z</lastmod>
+    <loc>https://baudotlab.github.io/teaching_material/index.html</loc>
+    <lastmod>2026-07-24T14:54:03.666Z</lastmod>
   </url>
   <url>
-    <loc>https://baudotlab.github.io/teaching_material/Linux/installation-linux.html/Linux/installation-linux.html</loc>
-    <lastmod>2026-05-12T13:48:09.173Z</lastmod>
+    <loc>https://baudotlab.github.io/teaching_material/fresh-installation/ubuntu-general.html</loc>
+    <lastmod>2026-07-24T15:23:27.433Z</lastmod>
   </url>
   <url>
-    <loc>https://baudotlab.github.io/teaching_material/Linux/installation-linux.html/R/R_package.html</loc>
-    <lastmod>2026-05-12T13:43:07.415Z</lastmod>
+    <loc>https://baudotlab.github.io/teaching_material/fresh-installation/software.html</loc>
+    <lastmod>2026-07-24T15:23:54.134Z</lastmod>
   </url>
   <url>
-    <loc>https://baudotlab.github.io/teaching_material/Linux/installation-linux.html/team-teaching-material.pdf</loc>
-    <lastmod>2026-05-12T13:51:28.400Z</lastmod>
+    <loc>https://baudotlab.github.io/teaching_material/fresh-installation/amu-and-server.html</loc>
+    <lastmod>2026-07-24T15:23:40.871Z</lastmod>
+  </url>
+  <url>
+    <loc>https://baudotlab.github.io/teaching_material/R/R_package.html</loc>
+    <lastmod>2026-07-24T15:13:24.239Z</lastmod>
+  </url>
+  <url>
+    <loc>https://baudotlab.github.io/teaching_material/fresh-installation/onedrive.html</loc>
+    <lastmod>2026-07-24T15:23:36.255Z</lastmod>
   </url>
 </urlset>

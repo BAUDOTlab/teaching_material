@@ -1,4 +1,4 @@
-# Modern R Package Development Guide
+# R programming guidelines
 
 This guide consolidates package development practice using modern recommendations from the tidyverse ecosystem, especially *R Packages* (2nd edition) by Hadley Wickham and Jenny Bryan.
 

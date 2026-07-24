@@ -9,7 +9,10 @@ project:
   output-dir: docs
   render:
     - index.qmd
-    - Linux/installation-linux.qmd
+    - fresh-installation/ubuntu-general.qmd
+    - fresh-installation/software.qmd
+    - fresh-installation/amu-and-server.qmd
+    - fresh-installation/onedrive.qmd
     - R/R_package.qmd
 
 # =========================
@@ -23,10 +26,16 @@ book:
   output-file: team-teaching-material
   chapters:
     - index.qmd
-    - Linux/installation-linux.qmd
+    - part: "Fresh Ubuntu installation"
+      chapters:
+        - fresh-installation/ubuntu-general.qmd
+        - fresh-installation/software.qmd
+        - fresh-installation/amu-and-server.qmd
     - R/R_package.qmd
+  appendices:
+    - fresh-installation/onedrive.qmd
   repo-url: https://github.com/BAUDOTlab/teaching_material
-  site-url: https://baudotlab.github.io/teaching_material/Linux/installation-linux.html
+  site-url: https://baudotlab.github.io/teaching_material/
   repo-branch: main
   repo-actions: [edit, issue, source]
   sharing: [linkedin]
@@ -34,7 +43,7 @@ book:
   downloads: [pdf]
   page-footer:
     center:  |
-       Written by Bastien CHASSAGNOL and Benjmain LOIRE, with suggestions from Marielle, Kenza, Morgane and Philippe. This book is built with <a href="https://quarto.org/">Quarto</a>.
+       Written by Bastien CHASSAGNOL and Benjamin LOIRE, with suggestions from Marielle, Kenza, Morgane and Philippe. This book is built with <a href="https://quarto.org/">Quarto</a>.
     background: "#f8f9fa"
     border: false
     right:
@@ -94,7 +103,7 @@ execute:
   warning: false
   error: false
   freeze: true # Avoid repeated execution when inputs are unchanged
-  
+
 #### Code and knitr formatting ####
 knitr:
   opts_chunk:
@@ -112,21 +121,20 @@ knitr:
 # =========================
 editor:
   source: true
-  
-  # =========================
-# Cross-preferences
+
 # =========================
-  
+# Cross-references
+# =========================
 crossref:
   chapters: true
-  
+
 # =========================
 # Metadata
-license: "MIT" 
+# =========================
+license: "MIT"
 copyright:
   holder: Bastien C.
 lang: en-GB
 subject: "Linux tutorial"
 citation: true # Returns with the URL of the website
 google-scholar: true
-  

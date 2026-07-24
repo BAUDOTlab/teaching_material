@@ -2,7 +2,13 @@
 title: "Welcome"
 ---
 
-This site is built with [Quarto](https://quarto.org) as a **book** project. Use the table of contents to open the Linux installation guide.
+This site is built with [Quarto](https://quarto.org) as a **book** project. Use the table of contents to browse:
+
+-   [Ubuntu general guidelines](fresh-installation/ubuntu-general.qmd)
+-   [Software to install](fresh-installation/software.qmd)
+-   [AMU tools and remote servers](fresh-installation/amu-and-server.qmd)
+-   [OneDrive on Linux](fresh-installation/onedrive.qmd) (appendix)
+-   R package development notes
 
 Download the compiled book as a single PDF: [team-teaching-material.pdf](team-teaching-material.pdf).
 

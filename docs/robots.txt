@@ -1,1 +1,1 @@
-Sitemap: https://baudotlab.github.io/teaching_material/Linux/installation-linux.html/sitemap.xml
+Sitemap: https://baudotlab.github.io/teaching_material/sitemap.xml
