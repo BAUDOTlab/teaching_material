@@ -125,3 +125,6 @@ zstyle ':completion:*' menu select
 
 # Optional: raise gitstatus log level when debugging prompt issues
 # GITSTATUS_LOG_LEVEL=DEBUG
+
+# Skip R CMD check NIST system-clock probe (R check uses --vanilla).
+export _R_CHECK_SYSTEM_CLOCK_=FALSE

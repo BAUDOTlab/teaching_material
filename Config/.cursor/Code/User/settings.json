@@ -122,30 +122,109 @@
   },
   "docker.extension.enableComposeLanguageServer": false,
   // --- ✏️ SPELL CHECK / GRAMMAR (LTeX+ & cSpell) ---
+  // Default LanguageTool / LTeX language = British English
   "ltex.language": "en-GB",
   "ltex.additionalLanguages": {
     "fr": "fr-FR"
   },
+  // Quick-fix "Add to dictionary" → user (global), not .vscode/ in the project
+  "ltex.configurationTarget": {
+    "dictionary": "userExternalFile",
+    "disabledRules": "user",
+    "enabledRules": "user",
+    "hiddenFalsePositives": "user"
+  },
+  // Global en-GB word list (append target for userExternalFile)
+  "ltex.dictionary": {
+    "en-GB": [
+      ":/home/bastien/ltex/ltex.dictionary.en-GB.txt"
+    ],
+    "fr-FR": [
+      ":/home/bastien/ltex/ltex.dictionary.fr-FR.txt"
+    ]
+  },
+  // Markup: full-document check. Programming languages: comments only
+  // (LTeX parses code modes and ignores raw identifiers/statements).
+  // Do not spell-check config languages (yaml/toml/json) or shell scripts.
   "ltex.enabled": [
     "markdown",
     "quarto",
     "latex",
+    "bibtex",
+    "rmd",
+    "restructuredtext",
     "plaintext",
     "python",
-    "rmd",
-    "restructuredtext"
+    "r",
+    "julia",
+    "javascript",
+    "typescript",
+    "cpp",
+    "c",
+    "java",
+    "rust",
+    "go"
   ],
   "cSpell.language": "en-GB,fr",
   "cSpell.enabledFileTypes": {
+    "*": true,
     "markdown": true,
     "quarto": true,
     "latex": true,
+    "bibtex": true,
     "plaintext": true,
     "python": true,
+    "r": true,
+    "julia": true,
+    "javascript": true,
+    "typescript": true,
+    "cpp": true,
+    "c": true,
+    "java": true,
+    "rust": true,
+    "go": true,
     "jupyter": true,
     "rmd": true,
-    "restructuredtext": true
+    "restructuredtext": true,
+    "yaml": false,
+    "yml": false,
+    "toml": false,
+    "json": false,
+    "jsonc": false,
+    "ini": false,
+    "properties": false,
+    "shellscript": false,
+    "dockerfile": false
   },
+  // Skip dotfiles/dotfolders and machine-/tool-config paths entirely.
+  "cSpell.ignorePaths": [
+    "**/.*/**",
+    "**/.*",
+    "**/*.yaml",
+    "**/*.yml",
+    "**/*.toml",
+    "**/*.json",
+    "**/*.jsonc",
+    "**/*.lock",
+    "**/*.Rproj",
+    "**/renv/**",
+    "**/output/**",
+    "**/docs/**",
+    "**/article/**",
+    "**/data/**",
+    "**/pkgdown/**",
+    "**/NAMESPACE",
+    "**/DESCRIPTION"
+  ],
+  // In source code, only spell-check comments — never raw identifiers/code.
+  "cSpell.languageSettings": [
+    {
+      "languageId": "python,r,julia,javascript,typescript,javascriptreact,typescriptreact,cpp,c,java,rust,go",
+      "includeRegExpList": [
+        "Comments"
+      ]
+    }
+  ],
   // --- 🔀 GIT / GITLENS ---
   "git.autofetch": true,
   "git.confirmSync": false,
@@ -231,5 +310,6 @@
     "**/.forgejo/workflows/*.yaml"
   ],
   "workbench.iconTheme": "vscode-icons",
-  "terminal.integrated.enableMultiLinePasteWarning": "never"
+  "terminal.integrated.enableMultiLinePasteWarning": "never",
+  "diffEditor.ignoreTrimWhitespace": false
 }

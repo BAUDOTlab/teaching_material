@@ -38,6 +38,12 @@
     "key": "ctrl+shift+m",
     "command": "-workbench.actions.view.problems"
   },
+  // --- Comment / uncomment R sections ---
+  {
+    "key": "ctrl+shift+c",
+    "command": "editor.action.commentLine",
+    "when": "editorTextFocus && !editorReadonly && editorLangId =~ /r|rmd|qmd/"
+  },
   // --- R Markdown Snippets ---
   {
     "key": "ctrl+alt+i",

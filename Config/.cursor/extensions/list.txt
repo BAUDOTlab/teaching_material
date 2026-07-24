@@ -3,6 +3,8 @@
 ms-python.python@2025.6.1
 # Python debugger (debugpy) for breakpoints and interactive debugging
 ms-python.debugpy@2026.6.0
+# Manage and discover Python environments / virtualenvs in the editor
+ms-python.vscode-python-envs@1.36.0
 # Jupyter notebooks in the editor (kernels, cells, outputs)
 ms-toolsai.jupyter@2025.9.1
 # Rich renderers for Jupyter outputs (plots, HTML, widgets)
@@ -14,7 +16,7 @@ ms-toolsai.vscode-jupyter-slideshow@0.1.6
 # Fast Python type checking and IntelliSense (Cursor’s Pyright build)
 anysphere.cursorpyright@1.0.12
 # Ruff linter/formatter for Python (style, bugs, import sorting)
-charliermarsh.ruff@2026.62.0
+charliermarsh.ruff@2026.64.0
 # Smarter automatic indentation while editing Python
 kevinrose.vsc-python-indent@1.21.0
 
@@ -44,7 +46,7 @@ mechatroner.rainbow-csv@3.24.1
 # Develop inside Dev Containers / Docker environments
 anysphere.remote-containers@1.0.37
 # Open folders on remote hosts over SSH
-anysphere.remote-ssh@1.1.12
+anysphere.remote-ssh@1.1.13
 # Open folders inside WSL from Windows Cursor/VS Code
 anysphere.remote-wsl@1.0.13
 # Docker images, containers, Compose, and registries UI
@@ -53,8 +55,6 @@ ms-azuretools.vscode-docker@2.0.0
 ms-azuretools.vscode-containers@2.4.5
 
 # --- 🔀 Git / GitHub ---
-# Rich Git blame, history, and repository insights
-eamodio.gitlens@18.3.0
 # Visual commit graph of branches and merges
 mhutchie.git-graph@1.30.0
 # Browse file and line history across Git commits
@@ -72,7 +72,7 @@ davidanson.vscode-markdownlint@0.61.2
 # Preview Mermaid diagrams inside Markdown
 bierner.markdown-mermaid@1.32.1
 # Mermaid Chart integration for diagram editing/sync
-mermaidchart.vscode-mermaid-chart@2.7.2
+mermaidchart.vscode-mermaid-chart@2.7.4
 # Export Markdown documents to PDF
 yzane.markdown-pdf@2.1.0
 # Local static server with live reload for HTML/web previews
