@@ -1,0 +1,169 @@
+---
+title: "Modern LaTeX guidelines"
+---
+
+Modern LaTeX (and Quarto ↔ LaTeX) practice emphasises **semantic markup**,
+modular projects, and packages that stay maintainable
+(`amsmath`, `biblatex`, `cleveref`, `siunitx`, …).
+
+Useful references:
+
+-   [LaTeX advice by Diomidis Spinellis](https://github.com/dspinellis/latex-advice)
+-   [TeXtidote / style checking](http://kohm.de.tf/markus/texidate.html)
+-   [Quarto documentation](https://quarto.org/)
+-   [Pandoc Markdown](https://pandoc.org/MANUAL.html)
+
+For **Nature Methods**-style manuscripts in this lab, prefer TikZ / vector
+figures for model DAGs and equation panels; keep Mermaid for README /
+vignettes unless you export a journal-ready figure. See also the
+scientific-writing rules in `.cursorrules`.
+
+## Document structure {#sec-latex-structure}
+
+For theses and large papers use `\frontmatter`, `\mainmatter`, and
+`\backmatter`, with a master file and modular folders:
+
+``` text
+project/
+├── main.tex
+├── preamble/
+├── chapters/
+├── figures/
+├── bibliography/
+└── appendices/
+```
+
+-   `\include{...}` for chapters; `\input{...}` for preamble snippets.
+-   `\includeonly{...}` while debugging to compile a subset of chapters.
+
+## Spacing and paragraphs {#sec-latex-spacing}
+
+Prefer semantic spacing (`\medskip`, `\bigskip`) or a global
+`\setlength{\parskip}{1ex}` over scattered `\\`. Set
+`\setlength{\parindent}{1em}` (or local `\noindent`) rather than absolute
+hacks when relative lengths suffice.
+
+## Mathematical typesetting {#sec-latex-math}
+
+Avoid `$$ ... $$` in pure LaTeX documents. Prefer `amsmath` environments:
+`equation`, `align`, `split`, `multline`, `gather`, `cases`. Do **not**
+use obsolete `eqnarray`, or `array` merely to fake multiline displays.
+
+Operators: never fake them with `\text{var}(X)`. Use
+`\operatorname{var}(X)` or declare them globally:
+
+``` latex
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\cor}{cor}
+\DeclareMathOperator{\varop}{var}
+```
+
+Multi-character identifiers: `\mathit{Delta}` / `\mathrm{Delta}`.
+Descriptive subscripts upright: `x_{\mathrm{max}}`. Split long lines with
+`align` and indentation; stack indices with `\substack`. Upright Greek
+where appropriate via `upgreek`.
+
+## Text formatting {#sec-latex-text}
+
+| Deprecated | Preferred |
+|------------|-----------|
+| `\bf` | `\textbf{}` |
+| `\it` | `\textit{}` |
+| `\em` | `\emph{}` |
+
+Small caps: `\textsc{sql}`. Typography: `---` (em dash), `--` (en dash);
+place footnotes after punctuation; emphasise with `\emph{}`.
+
+## Figures and tables {#sec-latex-floats}
+
+Prefer float placement `[tbp]` over aggressive `[h!]` / `[H]`. Inside
+floats use `\centering`, not a nested `center` environment. Captions:
+`caption` with `singlelinecheck=off` when lists appear in captions.
+
+Tables: `booktabs`, `longtable`, `tabularx`. See also
+[Generating better LaTeX tables](http://www.tug.org/pracjourn/2007-1/mori/mori.pdf)
+and [LaTeX Tables generator](https://www.latex-tables.com/). In Quarto /
+HTML workflows, `kableExtra` / paged tables are often enough.
+
+## Bibliography and citations {#sec-latex-bib}
+
+Prefer **biblatex** + biber over legacy BibTeX-only workflows:
+
+``` latex
+\usepackage[
+  backend=biber,
+  style=authoryear
+]{biblatex}
+```
+
+Use `csquotes` and `\enquote{...}`. Page-aware cites:
+`\autocite[p.~8]{LR89}`. Validate / clean `.bib` files (remove noisy
+fields such as `abstract`, `file`, `urldate` when unused) with tools like
+[biblatex-linter](https://biblatex-linter.herokuapp.com/validate),
+[BibTeX Tidy](https://flamingtempura.github.io/), and sources such as
+[DBLP](https://dblp.uni-trier.de/).
+
+## Cross-references {#sec-latex-xref}
+
+``` latex
+\usepackage{cleveref}
+```
+
+Prefer `\cref{eq:model}` / `\Cref{...}` / `\crefrange{...}` over manual
+`Eq.~(\ref{...})`.
+
+## Lists {#sec-latex-lists}
+
+``` latex
+\usepackage{enumitem}
+\begin{enumerate}[label=(\alph*)]
+```
+
+## Recommended packages {#sec-latex-packages}
+
+| Domain | Packages |
+|----------------|----------------------------------|
+| Mathematics | `amsmath`, `amssymb`, `mathtools` (+ `systeme` / domain packs if needed) |
+| Theorems | `amsthm` or `ntheorem`; boxes via `tcolorbox` / `mdframed` |
+| Units | **`siunitx`** (`\num{1e6}`, `\unit{\micro\meter}`, …) |
+| Graphics | `tikz`, `pgfplots` (and TikZ for Nature Methods DAGs) |
+| Code | `listings` or `minted` (needs Pygments) |
+
+## Quarto ↔ LaTeX mapping {#sec-latex-quarto}
+
+| LaTeX | Quarto / Markdown |
+|---------------------------|---------------------------|
+| `\citep{Smith2020}` | `[@Smith2020]` |
+| `\citet{Smith2020}` | `@Smith2020` |
+| `\( x + y \)` | `$x + y$` |
+| numbered display math | `$$ ... $$ {#eq-square}` then `@eq-square` |
+| `\section{Introduction}` | `# Introduction` |
+| `\href{URL}{Text}` | `[Text](URL)` |
+| `\url{URL}` | `<URL>` |
+| `\textit` / `\textbf` | `*…*` / `**…**` |
+| `\footnote{…}` | `^[…]` or `[^id]` |
+| figure / table refs | `@fig-…` / `@tbl-…` |
+
+Example Quarto table chunk (illustrative only):
+
+```` markdown
+```{r}
+#| label: tbl-summary
+#| tbl-cap: "Summary statistics"
+```
+````
+
+Then: `See @tbl-summary.`
+
+## Compilation and quality {#sec-latex-qa}
+
+-   Automate with `latexmk -pdf main.tex`.
+-   Build figures as `standalone` documents when useful.
+-   Lint / review: TeXtidote, ChkTeX, `refcheck`, `showkeys`.
+
+## Anti-patterns {#sec-latex-antipatterns}
+
+Avoid `$$…$$` in classic LaTeX sources, `eqnarray`, decorative `\\`,
+deprecated font switches, hardcoded visual markup, and habitual `[H]`
+floats. Prefer semantic structure, modular files, modern packages, and
+Quarto-compatible syntax when the deliverable is a website or vignette.

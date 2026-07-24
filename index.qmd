@@ -8,8 +8,9 @@ This site is built with [Quarto](https://quarto.org) as a **book** project. Use 
 -   [Ubuntu general guidelines](fresh-installation/ubuntu-general.qmd)
 -   [Software to install](fresh-installation/software.qmd)
 -   [AMU tools and remote servers](fresh-installation/amu-and-server.qmd)
--   [OneDrive on Linux](fresh-installation/onedrive.qmd) (appendix)
--   R package development notes
+-   Appendices: [OneDrive](fresh-installation/onedrive.qmd),
+    [R package guidelines](R/R_package.qmd),
+    [Modern LaTeX](latex/latex-guidelines.qmd)
 
 Download the compiled book as a single PDF: [team-teaching-material.pdf](team-teaching-material.pdf).
 

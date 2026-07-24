@@ -15,6 +15,7 @@ project:
     - fresh-installation/amu-and-server.qmd
     - fresh-installation/onedrive.qmd
     - R/R_package.qmd
+    - latex/latex-guidelines.qmd
 
 # =========================
 # Book metadata and order
@@ -33,9 +34,10 @@ book:
         - fresh-installation/ubuntu-general.qmd
         - fresh-installation/software.qmd
         - fresh-installation/amu-and-server.qmd
-    - R/R_package.qmd
   appendices:
     - fresh-installation/onedrive.qmd
+    - R/R_package.qmd
+    - latex/latex-guidelines.qmd
   repo-url: https://github.com/BAUDOTlab/teaching_material
   site-url: https://baudotlab.github.io/teaching_material/
   repo-branch: main

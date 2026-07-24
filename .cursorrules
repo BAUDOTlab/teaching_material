@@ -196,6 +196,19 @@ follow
 - `dplyr` / `tidyr` / `tibble` for tabular work in this package
   (match existing style; use `data.table` only when speed clearly needs it).
 
+
+### Input checking
+
+- Restricted choices: prefer `rlang::arg_match()` (or `match.arg()`).
+- Simple invariants: `stopifnot()` is fine for short checks.
+- Richer type / length / range checks: prefer `{checkmate}`.
+- Fail early with clear messages; do not silently coerce invalid inputs.
+- Document internal helpers with roxygen and `@noRd`; regenerate with
+  `devtools::document()` — do not hand-edit `man/` in normal workflow.
+- Separate visualisation helpers from data-processing functions (different
+  files / families). Teaching overview: appendix `R/R_package.qmd` in
+  `teaching_material`.
+
 ## Performance and optimisation
 
 - Profile with `profvis` before optimising.
@@ -285,6 +298,55 @@ Match `DESCRIPTION` Imports when adding package code; do not introduce
 unused Suggests/Imports without need.
 
 ---
+
+---
+
+# LaTeX development (articles, theses, Quarto)
+
+Follow the teaching appendix `latex/latex-guidelines.qmd` and, for
+manuscripts aimed at **Nature Methods**, the scientific-writing rules
+below (word limits, TikZ for model DAGs, no invented citations).
+
+## Philosophy
+
+- Prefer **semantic** markup over visual hacks.
+- Modular projects: master file + `\include` chapters + `\input` preamble.
+- Modern stack: `amsmath` / `mathtools`, `biblatex`+biber, `cleveref`,
+  `siunitx`, `booktabs`, `tikz` / `pgfplots`.
+- Keep Quarto ↔ LaTeX mappings consistent (`[@cite]`, `$…$`, `@eq-` /
+  `@fig-` / `@tbl-`).
+
+## Mathematics
+
+- In pure `.tex` sources prefer `equation` / `align` / `split` / `cases`;
+  avoid obsolete `eqnarray` and decorative `$$…$$` displays.
+- Operators via `\operatorname` or `\DeclareMathOperator`, never
+  `\text{var}(X)`.
+- Upright descriptive subscripts: `x_{\mathrm{max}}`.
+- In Quarto / Markdown deliverables, numbered displays use
+  `$$ … $$ {#eq-…}` and `@eq-…` crossrefs.
+
+## Figures for Nature Methods
+
+- Prefer **TikZ** (or other vector) figures for generative-model DAGs and
+  mathematical panels in `article/`.
+- Mermaid is fine in README / vignettes; do not treat it as a substitute
+  for journal display items unless exported to a print-ready figure.
+- Float placement: prefer `[tbp]`; avoid habitual `[H]` / `[h!]`.
+- Use `\centering` inside floats, not nested `center` environments.
+
+## Bibliography and crossrefs
+
+- Prefer `biblatex` + biber over legacy BibTeX-only workflows.
+- Use `csquotes` / `\enquote`; cite with `\autocite` / Quarto `[@key]`.
+- Prefer `cleveref` (`\cref`) over manual `Eq.~(\ref{…})`.
+- Stay within the Article ~50-reference budget; never invent DOIs or papers.
+
+## Anti-patterns
+
+Avoid deprecated font switches (`\bf`, `\it`), excessive manual `\\`,
+hardcoded visual formatting, and mixing semantic with purely visual markup.
+Automate builds with `latexmk`; lint with ChkTeX / TeXtidote when useful.
 
 # Scientific writing (`article/` and `vignettes/`)
 

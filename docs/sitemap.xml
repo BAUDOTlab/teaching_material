@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://baudotlab.github.io/teaching_material/index.html</loc>
-    <lastmod>2026-07-24T15:44:04.495Z</lastmod>
+    <lastmod>2026-07-24T15:52:45.583Z</lastmod>
   </url>
   <url>
     <loc>https://baudotlab.github.io/teaching_material/onboarding/onboarding.html</loc>
@@ -21,11 +21,15 @@
     <lastmod>2026-07-24T15:43:18.081Z</lastmod>
   </url>
   <url>
+    <loc>https://baudotlab.github.io/teaching_material/fresh-installation/onedrive.html</loc>
+    <lastmod>2026-07-24T15:23:36.255Z</lastmod>
+  </url>
+  <url>
     <loc>https://baudotlab.github.io/teaching_material/R/R_package.html</loc>
     <lastmod>2026-07-24T15:43:09.352Z</lastmod>
   </url>
   <url>
-    <loc>https://baudotlab.github.io/teaching_material/fresh-installation/onedrive.html</loc>
-    <lastmod>2026-07-24T15:23:36.255Z</lastmod>
+    <loc>https://baudotlab.github.io/teaching_material/latex/latex-guidelines.html</loc>
+    <lastmod>2026-07-24T15:53:37.223Z</lastmod>
   </url>
 </urlset>
