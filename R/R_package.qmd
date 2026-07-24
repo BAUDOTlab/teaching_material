@@ -59,10 +59,35 @@ A standard R package typically contains:
 ## Writing Functions
 
 - Put package code in `R/`; avoid `source()` inside a package.
-- Do not call `library()` or `require()` in package code.
-- Prefer explicit namespace calls (`pkg::fun`) unless a function is imported repeatedly.
-- Keep side effects local; for temporary global option/state changes, use `withr`.
-- Use snake_case naming and tidyverse style conventions.
+- Do not call `library()` or `require()` in package code. Prefer
+  `pkg::fun()` at call sites, or selective `@importFrom` when a symbol is
+  used repeatedly. Avoid broad `@import pkg` directives.
+- Prefer `<-` for assignment; reserve `=` for named arguments in calls
+  and list construction.
+- Keep side effects local; for temporary global option/state changes, use
+  `withr`.
+- Use `snake_case` for functions, variables, and objects (lowercase letters
+  and underscores). Prefer **verbs** for function names.
+- File names: lowercase letters, digits, `-` and `_` only; typically one
+  primary function family per file (for example `fct_*.R`,
+  `fct_visu_*.R`).
+- Separate **visualisation** helpers from **data-processing** functions
+  (different files / families) so APIs stay clear.
+- Format with **[Air](https://posit-dev.github.io/air/)** (and respect
+  `{lintr}` / pre-commit when configured); do not fight the formatter.
+- Indent consistently (editor “reindent selection” is fine).
+
+### Input checking
+
+Validate arguments early and fail with clear messages:
+
+- Restricted string choices: prefer `rlang::arg_match()` (or base
+  `match.arg()`) over silent defaults.
+- Simple invariants: `stopifnot()` is acceptable for short checks.
+- Richer type / length / range checks in packages: prefer
+  [`checkmate`](https://mllg.github.io/checkmate/) (or similar helpers
+  summarised in
+  [Checking the inputs of your R functions](https://www.r-bloggers.com/2022/03/checking-the-inputs-of-your-r-functions/)).
 
 ## Dependencies and Namespaces
 
@@ -103,6 +128,12 @@ Core tags:
 - `@seealso`: links to related functions.
 - `@family`: groups related functions.
 - `@rdname` or `@describeIn`: combine multiple functions on one help page when appropriate.
+- `@noRd`: still document **internal** helpers for maintainers, but keep
+  them out of the user-facing help index.
+
+Regenerate Rd files and `NAMESPACE` with `devtools::document()` after every
+meaningful documentation change — do not hand-edit `man/` in normal
+workflow.
 
 For package-level documentation, create `R/<pkg>-package.R` with:
 

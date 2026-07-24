@@ -9,6 +9,7 @@ project:
   output-dir: docs
   render:
     - index.qmd
+    - onboarding/onboarding.qmd
     - fresh-installation/ubuntu-general.qmd
     - fresh-installation/software.qmd
     - fresh-installation/amu-and-server.qmd
@@ -26,6 +27,7 @@ book:
   output-file: team-teaching-material
   chapters:
     - index.qmd
+    - onboarding/onboarding.qmd
     - part: "Fresh Ubuntu installation"
       chapters:
         - fresh-installation/ubuntu-general.qmd

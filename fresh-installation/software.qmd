@@ -270,32 +270,44 @@ sudo ln -s /opt/sioyek/sioyek /usr/local/bin/sioyek
 
 ## Image editors (to replace Paint on Windows) {#sec-image-editors}
 
-Sorted from closest experience to Paint, to most generalist:
+Sorted from closest experience to Paint, to most generalist / specialised:
 
 1.  [`Drawing`](https://en.ubunlog.com/drawing-alternative-microsoft-paint-ubuntu/)
-
-    <!-- -->
+    — lightweight local Paint-like editor:
 
     i.  Add Drawing to the `apt` repository:
         `sudo add-apt-repository ppa:cartes/drawing`
     ii. Install with `sudo apt install drawing`
 
-    <!-- -->
+2.  LibreOffice Draw — diagrams and simple page layouts.
 
-2.  LibreOffice Draw
-3.  GIMP (closer equivalent to Photoshop):
+3.  [**Photopea**](https://www.photopea.com/) — preferred **free**,
+    browser-based Photoshop alternative when you need layers, masks,
+    PSD/PSB import, and a large toolset without installing desktop
+    software. (Pixlr / “PhotoEditor”-style tools are fine for quick
+    crops, but Photopea is more versatile in free mode and closer to a
+    full raster editor.)
+
+4.  GIMP (desktop equivalent to a large part of Photoshop’s scope):
 
     ```{#lst-gimp-install .bash lst-cap="Install GIMP"}
     sudo apt install gimp
     sudo apt install gimp-plugin-registry ## add extensions
     ```
 
-4.  Inkscape for **vector** graphics and fully editable icons:
+5.  Inkscape for **vector** graphics and fully editable icons:
 
     ```{#lst-inkscape-install .bash lst-cap="Install Inkscape"}
     sudo apt update
     sudo apt install inkscape
     ```
+
+6.  Background removal for figures / slides: use an online tool such as
+    [remove-bg.io](https://remove-bg.io/upload/) when you need a clean
+    cut-out of a subject (for example an organism or device photo) before
+    composing the panel in Photopea, GIMP, or Inkscape. Prefer this for
+    outreach slides; keep raw scientific image panels under version
+    control without destructive edits when possible.
 
 ## LibreOffice {#sec-libreoffice}
 

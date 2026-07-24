@@ -6,6 +6,58 @@ title: "AMU tools and remote servers"
 
 List of [numerical tools used at AMU](https://www.univ-amu.fr/fr/public/les-outils-numeriques-damu).
 
+### AMU VPN (GlobalProtect) {#sec-amu-vpn}
+
+Staff and students often need the AMU VPN to reach internal services
+(clusters, library resources, some web apps) from outside the campus
+network. Official documentation:
+
+-   [AMU VPN overview (DUD)](https://dud.univ-amu.fr/fr/connexion-reseau-prive-virtuel-vpn-damu)
+-   [Strong authentication (2FA)](https://dud.univ-amu.fr/fr/authentification-forte?check_logged_in=1)
+    — enrol / confirm your second factor **before** relying on VPN from
+    home
+
+AMU currently ships **Palo Alto GlobalProtect**. On Linux, prefer the
+**graphical UI** package rather than the CLI-only build suggested in some
+internal notes: the tray icon makes connect / disconnect and portal URL
+errors much easier to diagnose.
+
+1.  Download the latest Linux archive from the shared AMU folder
+    ([GlobalProtect Linux builds on
+    AMUbox](https://amubox.univ-amu.fr/s/eppLBPxfdqoLarj?dir=/)).
+    Filenames look like `PanGPLinux-6.3.3-c22.tgz` — always take the
+    **newest** release available there.
+
+2.  Extract it locally:
+
+    ```{#lst-amu-vpn-extract .bash lst-cap="Extract GlobalProtect Linux archive"}
+    tar -xfv PanGPLinux-*.tgz
+    cd PanGPLinux-*   ## adjust to the extracted directory name
+    ls *.deb          ## you should see both CLI and UI packages
+    ```
+
+3.  Install the **UI** `.deb` with `apt` so dependencies resolve cleanly
+    (replace the version string with the file you downloaded):
+
+    ```{#lst-amu-vpn-install .bash lst-cap="Install GlobalProtect UI .deb"}
+    sudo apt install ./GlobalProtect_UI_deb-*.deb
+    ```
+
+    ::: {.callout-tip collapse="true" title="If apt cannot find local dependencies"}
+    Fall back to `sudo dpkg -i ./GlobalProtect_UI_deb-*.deb` then
+    `sudo apt -f install` to finish broken dependencies.
+    :::
+
+4.  Log out and back in (or reboot) if the panel icons do not appear.
+    You should then see the GlobalProtect indicator(s) in the top bar.
+    Open the UI, set the AMU portal / gateway as documented by DUD, and
+    authenticate with your university account **plus** strong
+    authentication when prompted.
+
+5.  Smoke-test by opening an internal URL that is blocked off-campus
+    without VPN. If connection fails, check 2FA enrolment first, then
+    reinstall / update from the AMUbox archive (versions move quickly).
+
 ### AMUZoom {#sec-amuzoom}
 
 1.  Retrieve the latest version, choosing the proper Linux distribution

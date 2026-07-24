@@ -4,6 +4,7 @@ title: "Welcome"
 
 This site is built with [Quarto](https://quarto.org) as a **book** project. Use the table of contents to browse:
 
+-   [Team onboarding](onboarding/onboarding.qmd)
 -   [Ubuntu general guidelines](fresh-installation/ubuntu-general.qmd)
 -   [Software to install](fresh-installation/software.qmd)
 -   [AMU tools and remote servers](fresh-installation/amu-and-server.qmd)
