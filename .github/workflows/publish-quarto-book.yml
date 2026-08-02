@@ -73,7 +73,6 @@ jobs:
           pkgs <- c("rmarkdown", "downlit", "xml2")
 
           # Resolve and install all missing OS libraries in one go
-          # (same idea as using pak::pkg_sysreqs() inside a container/Dockerfile)
           sr <- pak::pkg_sysreqs(pkgs)
           print(sr)
           cmds <- c(sr$pre_install, sr$install_scripts, sr$post_install)
