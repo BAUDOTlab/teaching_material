@@ -56,10 +56,48 @@ jobs:
 
       - name: Install R packages for Quarto code-link
         shell: Rscript {0}
+        env:
+          DEBIAN_FRONTEND: noninteractive
         run: |
+          # Bootstrap pak (binary builds; avoids compiling pak itself)
+          install.packages(
+            "pak",
+            repos = sprintf(
+              "https://r-lib.github.io/p/pak/stable/%s/%s/%s",
+              .Platform$pkgType,
+              R.Version()$os,
+              R.Version()$arch
+            )
+          )
+
           pkgs <- c("rmarkdown", "downlit", "xml2")
-          install.packages(pkgs, repos = "https://cloud.r-project.org")
-          stopifnot(all(vapply(pkgs, requireNamespace, quietly = TRUE, FUN.VALUE = logical(1))))
+
+          # Resolve and install all missing OS libraries in one go
+          # (same idea as using pak::pkg_sysreqs() inside a container/Dockerfile)
+          sr <- pak::pkg_sysreqs(pkgs)
+          print(sr)
+          cmds <- c(sr$pre_install, sr$install_scripts, sr$post_install)
+          cmds <- cmds[nzchar(cmds)]
+          if (length(cmds)) {
+            status <- system2(
+              "sudo",
+              c(
+                "env", "DEBIAN_FRONTEND=noninteractive",
+                "bash", "-lc", paste(cmds, collapse = " && ")
+              )
+            )
+            if (!identical(as.integer(status), 0L)) {
+              stop("System dependency installation via pak::pkg_sysreqs() failed")
+            }
+          }
+
+          pak::pkg_install(pkgs)
+          stopifnot(all(vapply(
+            pkgs,
+            requireNamespace,
+            quietly = TRUE,
+            FUN.VALUE = logical(1)
+          )))
 
       - name: Render book (HTML + PDF)
         run: quarto render
