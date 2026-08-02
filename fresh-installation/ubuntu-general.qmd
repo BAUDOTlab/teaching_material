@@ -197,23 +197,34 @@ IPv6 is newer, but not universally supported:
 -   Some networks provide **IPv6-only**, with no IPv4 fallback. Especially the case with Microsoft services, governmental or academic websites.
 :::
 
--   You can test if this is the issue to connect to some websites with `curl <webdomain>`, such as `curl https://onedrive.live.com`, returning *Cannot connect*
+### Symptom: Wi-Fi connects, but some websites fail
 
--   Recent modern routers return only IPv6 — while Windows is able to auto-fall back to IPv4, this is not the case of IPv6.
+On Ubuntu **24.04 (Noble)**, NetworkManager may show the link as connected while `ip` lists **only IPv6** addresses. Sites that need IPv4 (or that resolve poorly without it) then fail — e.g. `curl https://github.com` or `curl https://onedrive.live.com` hang or return *Cannot connect*. Eduroam or a phone hotspot often work; some home routers (e.g. Orange Livebox) expose the bug clearly.
 
-    -   *Temporary fix*: by running the following instructions, you solve this issue by automatically configuring an IPv4 upon failure. *Recommended only for short-term debugging*.
+**Root cause (not “IPv6-only router”):** under Noble, NetworkManager’s DHCP helper lives at `/usr/libexec/nm-dhcp-helper`, but the stock AppArmor profile for `dhclient` still allows only the old path `/usr/lib/NetworkManager/nm-dhcp-helper`. `dhclient` obtains a lease (`DHCPOFFER` / `DHCPACK`), then AppArmor **denies** the helper → NetworkManager never applies IPv4^[See @fig-nm-dhcp-apparmor and Launchpad bugs [#2083017](https://bugs.launchpad.net/ubuntu/+source/apparmor/+bug/2083017), [#2116733](https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/2116733).]
 
-    ``` bash
-    # install dhclient
-    sudo dhclient -4 wlp2s0f0 <Wifi-name> ## in my case, wlp2s0f0
-    ```
-## Eduroam connection
 
-0.  **Ensure to delete beforehand any pre-existing installation: `rm -rf $HOME/.config/cat_installer`**.
-1.  Go to <https://cat.eduroam.org/>, the website usually provides with the version fitting your OS distribution.
-2.  On Linux, download the Python script, choosing AMU university.
-3.  Run Python script with `python3 eduroam-linux-AUA.py`
-4.  As `userid`, provide your academic mail address, and as password, your `ENT password`.
+![Wi-Fi DHCP under Ubuntu Noble: AppArmor blocks the moved nm-dhcp-helper until the profile is patched](ubuntu/nm-dhcp-apparmor-noble.png){#fig-nm-dhcp-apparmor}
+
+### Permanent fix
+
+1.  Run @lst-run-fix-nm-dhcp. The script in @lst-fix-nm-dhcp-apparmor (file: [`ubuntu/fix-nm-dhcp-apparmor.sh`](ubuntu/fix-nm-dhcp-apparmor.sh)) patches `/etc/apparmor.d/sbin.dhclient` for `/usr/libexec/nm-dhcp-helper`, sets NetworkManager to `dhcp=dhclient`, softens Wi-Fi powersave, reloads AppArmor, and restarts NetworkManager.
+
+```{#lst-run-fix-nm-dhcp .bash lst-cap="Make the AppArmor DHCP fix executable and run it"}
+chmod +x ubuntu/fix-nm-dhcp-apparmor.sh
+sudo ./ubuntu/fix-nm-dhcp-apparmor.sh
+```
+
+```{#lst-fix-nm-dhcp-apparmor .bash include="ubuntu/fix-nm-dhcp-apparmor.sh" lst-cap="fix-nm-dhcp-apparmor.sh — allow /usr/libexec/nm-dhcp-helper under AppArmor"}
+```
+
+1.  Reconnect to the Wi-Fi network using the GUI, then check the success of the patch:
+
+```bash
+ip -br addr show <wifi-network-name> # e.g. wlp2s0f0
+ping -4 -c 2 1.1.1.1 # should return "64 bytes from 1.1.1.1: icmp_seq=1 ttl=55 time=1.24 ms"
+curl -4 -sI --max-time 8 https://github.com | head -3 # should return "HTTP/2 200"
+```
 
 ## Pimp your shell: switch from boring Bash to fancy `Zsh`
 
