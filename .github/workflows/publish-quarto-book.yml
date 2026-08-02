@@ -54,49 +54,14 @@ jobs:
         with:
           use-public-rspm: true
 
+      # Posit/r-lib action: resolves sysreqs + R packages via pak in one go
+      # https://github.com/r-lib/actions/tree/v2-branch/setup-r-dependencies
       - name: Install R packages for Quarto code-link
-        shell: Rscript {0}
-        env:
-          DEBIAN_FRONTEND: noninteractive
-        run: |
-          # Bootstrap pak (binary builds; avoids compiling pak itself)
-          install.packages(
-            "pak",
-            repos = sprintf(
-              "https://r-lib.github.io/p/pak/stable/%s/%s/%s",
-              .Platform$pkgType,
-              R.Version()$os,
-              R.Version()$arch
-            )
-          )
-
-          pkgs <- c("rmarkdown", "downlit", "xml2")
-
-          # Resolve and install all missing OS libraries in one go
-          sr <- pak::pkg_sysreqs(pkgs)
-          print(sr)
-          cmds <- c(sr$pre_install, sr$install_scripts, sr$post_install)
-          cmds <- cmds[nzchar(cmds)]
-          if (length(cmds)) {
-            status <- system2(
-              "sudo",
-              c(
-                "env", "DEBIAN_FRONTEND=noninteractive",
-                "bash", "-lc", paste(cmds, collapse = " && ")
-              )
-            )
-            if (!identical(as.integer(status), 0L)) {
-              stop("System dependency installation via pak::pkg_sysreqs() failed")
-            }
-          }
-
-          pak::pkg_install(pkgs)
-          stopifnot(all(vapply(
-            pkgs,
-            requireNamespace,
-            quietly = TRUE,
-            FUN.VALUE = logical(1)
-          )))
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          # No package DESCRIPTION in this repo — install only what code-link needs
+          packages: any::rmarkdown, any::downlit, any::xml2
+          cache-version: 1
 
       - name: Render book (HTML + PDF)
         run: quarto render
