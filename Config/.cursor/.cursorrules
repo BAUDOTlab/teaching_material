@@ -99,6 +99,32 @@ stacks (e.g. PyTorch) for this R package.
 
 # R — package and tooling (DeCovarT)
 
+> Always run the local pre-commit hooks after bringing changes to the
+> GitHub repository. **Before every commit or `pre-commit run`**, clear
+> the hook cache so environments are not stale:
+>
+> ```bash
+> pre-commit clean
+> git add -u   # and add new paths as needed — stage EVERYTHING you mean to commit
+> pre-commit run   # or: pre-commit run --all-files
+> git add -u       # re-stage if autofix hooks (EOF / whitespace) modified files
+> git commit
+> ```
+>
+> Autofix hooks (`end-of-file-fixer`, `trailing-whitespace`) **fail once**
+> while rewriting files; that is expected — re-stage and commit again.
+> Do **not** leave unstaged edits during `git commit`: pre-commit stashes
+> them, and if they conflict with autofixes the hook **rolls back** the
+> fixes (`Stashed changes conflicted with hook auto-fixes`).
+>
+> Prefer `pre-commit clean` over skipping hooks. Do not use `--no-verify`
+> unless the user explicitly requests it.
+> Vendor Quarto extensions under `slides/_extensions/` are excluded from
+> EOF/whitespace hooks. This project does **not** use `renv`; lintr hooks
+> set `RENV_CONFIG_AUTOLOADER_ENABLED=FALSE` to avoid false “out-of-sync”
+> messages.
+
+
 ## Project roles
 
 - Reusable package code lives in `R/`.
@@ -119,7 +145,15 @@ This repo uses **[Air](https://posit-dev.github.io/air/)** (`air.toml`) and
 - Prefer Air over styler for formatting.
 - Run / respect pre-commit hooks: `air-format`, `lintr` (warn-only),
   `parsable-R`, `no-browser-statement`, `use-tidy-description`,
-  `deps-in-desc`, large-file check, README.qmd ↔ README.md sync.
+  `deps-in-desc`, large-file check, `check-bibliography`. README sync
+  is enforced in CI via `.github/workflows/render-readme.yaml`
+  (`quarto render README.qmd`).
+- Before any `pre-commit run` or commit, always:
+  1. `pre-commit clean`
+  2. Stage **all** intended files (`git add …`) — no leftover unstaged
+     edits (avoids stash/autofix rollback failures)
+  3. `pre-commit run` (or `--all-files`), then `git add -u` if hooks
+     rewrote files, then commit
 - Keep line length ≤ 80 characters.
 
 ## Package structure
@@ -132,6 +166,22 @@ This repo uses **[Air](https://posit-dev.github.io/air/)** (`air.toml`) and
 - Validate with `devtools::check()` (notes OK; avoid warnings/errors).
 - Prefer **usethis** and **devtools** workflows for package tasks
   (tests, docs, DESCRIPTION, GitHub Actions helpers, etc.).
+
+### Roxygen: `@keywords internal` vs `@noRd`
+
+- Unexported helpers may use **`@keywords internal`** so they stay off
+  the pkgdown reference index / user-facing “see also” surfaces while
+  still generating help pages when documented.
+- Use **`@noRd` if and only if** the object has **no** substantive
+  roxygen documentation (no title / description / `@param` /
+  `@return` worth installing). Bare `@keywords internal` + `@noRd`
+  is appropriate for tiny undocumented helpers (e.g. `.maha_distance`).
+- If you write real roxygen (title, maths, arguments, return value),
+  **do not** add `@noRd`: install the `.Rd` so `?fn` and
+  `?pkg:::fn` work after `devtools::document()` / install. Keep
+  `@keywords internal` when the function remains unexported.
+- Never use `@noRd` merely because a function is internal—that hides
+  documentation you already wrote.
 
 ## Naming conventions
 
@@ -196,19 +246,6 @@ follow
 - `dplyr` / `tidyr` / `tibble` for tabular work in this package
   (match existing style; use `data.table` only when speed clearly needs it).
 
-
-### Input checking
-
-- Restricted choices: prefer `rlang::arg_match()` (or `match.arg()`).
-- Simple invariants: `stopifnot()` is fine for short checks.
-- Richer type / length / range checks: prefer `{checkmate}`.
-- Fail early with clear messages; do not silently coerce invalid inputs.
-- Document internal helpers with roxygen and `@noRd`; regenerate with
-  `devtools::document()` — do not hand-edit `man/` in normal workflow.
-- Separate visualisation helpers from data-processing functions (different
-  files / families). Teaching overview: appendix `R/R_package.qmd` in
-  `teaching_material`.
-
 ## Performance and optimisation
 
 - Profile with `profvis` before optimising.
@@ -247,7 +284,8 @@ Follow
 - Pin packages with `renv` when used; otherwise lock via DESCRIPTION /
   CI.
 - Document analysis steps in README (from `README.qmd`) and vignettes.
-  Edit `README.qmd`, then render to `README.md`.
+  Edit `README.qmd`, then `quarto render README.qmd` (CI verifies /
+  re-renders via `.github/workflows/render-readme.yaml`).
 
 ## Collaboration and documentation
 
@@ -281,6 +319,7 @@ Follow
 | Tabular data | `dplyr`, `tidyr`, `tibble` (`data.table` if needed) |
 | Out-of-memory data | `duckdb` |
 | Plotting | `ggplot2`; heatmaps: `ComplexHeatmap`; interactive: `ggiraph` |
+| Slide / HTML tables | `reactable` (prefer over static Markdown tables in reveal.js) |
 | Discrete ggplot scales | named vectors via `stats::setNames()` |
 | Input checks | `checkmate` |
 | Messages | `cli` |
@@ -299,54 +338,76 @@ unused Suggests/Imports without need.
 
 ---
 
+# Bibliography
+
+DeCovarT keeps **two separate citation streams**. Do not mix them.
+
+## A. Literature (Zotero → Better BibTeX → Git)
+
+**Source of truth** for papers / books / theses is the author's
+[Zotero library](https://www.zotero.org/bastienchassagnol/library) with
+**Better BibTeX (BBT)** citation keys. Do **not** invent BibTeX entries or
+citekeys; add the item in Zotero first, then export.
+
+| Path | Consumer |
+|------|----------|
+| `article/decovart_library.bib` | LaTeX manuscript |
+| `inst/REFERENCES.bib` | Quarto vignettes (literature half) |
+
+- Exactly these two literature copies (independent, kept in sync).
+- After every Zotero export: `python3 scripts/check_bibliography.py --clean`
+  (allowed fields only; DOI-dedupe; sync both copies).
+- Allowed fields: `title`, `author`, `year`, `journal` **or**
+  `howpublished`, `doi`, `volume`, `isbn`. Strip everything else.
+- Pre-commit hook `check-bibliography` validates literature hygiene and
+  `article/main.tex` citekeys (against literature **and** `packages.bib`).
+
+GitHub issues — DOI bridge:
+
+```markdown
+- [ ] [Paper title](https://doi.org/10.xxxx/xxxxx) — `@citekey`
+```
+
+## B. Software / tools (`packages.bib` — not Zotero)
+
+R, Bioconductor, and similar **software** citations are generated
+automatically into a standalone bibliography — **not** stored in Zotero.
+
+| Path | Consumer |
+|------|----------|
+| `inst/packages.bib` | Quarto vignettes (software half) |
+| `article/packages.bib` | LaTeX (synced copy) |
+
+Regenerate (from repository root):
+
+```bash
+Rscript scripts/generate_packages_bib.R
+```
+
+That script discovers packages used in **`vignettes/`** and **`article/`**
+only (CRANpkg macros, `library()` / `pkg::`, plus an explicit software
+allowlist for prose-only mentions such as `huge`). It does **not** dump
+DESCRIPTION Imports/Suggests or the whole package dependency tree.
+
+## C. Quarto vignette YAML (always two bibliographies)
+
+Every `vignettes/*.qmd` must declare **both** files:
+
+```yaml
+bibliography:
+  - ../inst/packages.bib
+  - ../inst/REFERENCES.bib
+link-citations: true
+```
+
+Example citations: literature `@wuEstimatingHeterogeneousGene2022`;
+software `@R-huge`, `@R-BDgraph`, `@R-base`.
+
+```bash
+python3 scripts/check_bibliography.py --check-qmd
+```
+
 ---
-
-# LaTeX development (articles, theses, Quarto)
-
-Follow the teaching appendix `latex/latex-guidelines.qmd` and, for
-manuscripts aimed at **Nature Methods**, the scientific-writing rules
-below (word limits, TikZ for model DAGs, no invented citations).
-
-## Philosophy
-
-- Prefer **semantic** markup over visual hacks.
-- Modular projects: master file + `\include` chapters + `\input` preamble.
-- Modern stack: `amsmath` / `mathtools`, `biblatex`+biber, `cleveref`,
-  `siunitx`, `booktabs`, `tikz` / `pgfplots`.
-- Keep Quarto ↔ LaTeX mappings consistent (`[@cite]`, `$…$`, `@eq-` /
-  `@fig-` / `@tbl-`).
-
-## Mathematics
-
-- In pure `.tex` sources prefer `equation` / `align` / `split` / `cases`;
-  avoid obsolete `eqnarray` and decorative `$$…$$` displays.
-- Operators via `\operatorname` or `\DeclareMathOperator`, never
-  `\text{var}(X)`.
-- Upright descriptive subscripts: `x_{\mathrm{max}}`.
-- In Quarto / Markdown deliverables, numbered displays use
-  `$$ … $$ {#eq-…}` and `@eq-…` crossrefs.
-
-## Figures for Nature Methods
-
-- Prefer **TikZ** (or other vector) figures for generative-model DAGs and
-  mathematical panels in `article/`.
-- Mermaid is fine in README / vignettes; do not treat it as a substitute
-  for journal display items unless exported to a print-ready figure.
-- Float placement: prefer `[tbp]`; avoid habitual `[H]` / `[h!]`.
-- Use `\centering` inside floats, not nested `center` environments.
-
-## Bibliography and crossrefs
-
-- Prefer `biblatex` + biber over legacy BibTeX-only workflows.
-- Use `csquotes` / `\enquote`; cite with `\autocite` / Quarto `[@key]`.
-- Prefer `cleveref` (`\cref`) over manual `Eq.~(\ref{…})`.
-- Stay within the Article ~50-reference budget; never invent DOIs or papers.
-
-## Anti-patterns
-
-Avoid deprecated font switches (`\bf`, `\it`), excessive manual `\\`,
-hardcoded visual formatting, and mixing semantic with purely visual markup.
-Automate builds with `latexmk`; lint with ChkTeX / TeXtidote when useful.
 
 # Scientific writing (`article/` and `vignettes/`)
 
@@ -422,8 +483,12 @@ reviewer would want to read—and self-check before claiming novelty.
 
 ### Integrity (literature and claims)
 
-- **Never invent papers, DOIs, quotes, or “Consensus” hits.** If a
-  citation is uncertain, flag it for the user rather than guessing.
+- **Never invent papers, DOIs, quotes, BibTeX entries, or “Consensus”
+  hits.** Literature citekeys for `.qmd` must come from the Zotero/BBT
+  export (`REFERENCES.bib` / `decovart_library.bib`). Software citekeys
+  (`@R-huge`, etc.) come from `packages.bib` via
+  `scripts/generate_packages_bib.R`. If a literature citation is uncertain
+  or missing from Zotero, flag it for the user rather than guessing.
 - Label claims clearly: established fact (with citation), result of
   *this* work, limitation, or speculation/outlook.
 - Flag load-bearing intro assertions that lack a citation.
@@ -465,23 +530,200 @@ results they confirm.
 
 ---
 
-# Quarto authoring (teaching material)
+# Quarto reveal.js slides (Slidecrafting)
 
-When editing `.qmd` files in this repository, follow
-[Quarto Markdown Basics — Lists](https://quarto.org/docs/authoring/markdown-basics.html#lists)
-and related authoring docs:
+Whenever the user asks to create, restyle, animate, or present
+**Quarto reveal.js** slides (`format: revealjs` in a `.qmd`, or work
+under `slides/` / similar deck folders), follow this workflow.
 
-- Leave a **blank line above every list**; otherwise Quarto may render
-  the items as a single paragraph.
-- Nest list items with **four spaces** (or a consistent tab width).
-- When a list item contains a **fenced code block** or an **image**,
-  indent the fence / image by the same four spaces as the continued
-  list text so Pandoc keeps it inside the item.
-- Prefer ordered sub-lists (`i.` / `ii.`) or nested bullets over HTML
-  comment hacks (`<!-- -->`) when indentation alone is enough.
-- Use callouts as
-  `::: {.callout-warning title="..."}` / `::: {#id .callout-tip title="..."}`
-  with **no spaces around `=`** in attributes; close every `:::`.
-- Cross-reference figures, tables, and listings with `#fig-` / `#tbl-` /
-  `#lst-` (listings need `lst-cap="..."`) as in
-  [Cross References](https://quarto.org/docs/authoring/cross-references.html).
+## 1. Ensure the global slidecrafting skills are installed
+
+Expected personal Cursor skills (from
+[EmilHvitfeldt/slidecrafting-book.com](https://github.com/EmilHvitfeldt/slidecrafting-book.com)):
+
+- `~/.cursor/skills/quarto-revealjs/SKILL.md` (main router)
+- `~/.cursor/skills/quarto-revealjs-fragment/SKILL.md` (optional; custom fragments)
+- `~/.cursor/skills/auto-animate-elements/SKILL.md` (optional; auto-animate casts)
+
+**If `quarto-revealjs` is missing**, stop designing slides from scratch
+and **suggest installing** the global skill first, e.g.:
+
+```bash
+npx skills add emilhvitfeldt/slidecrafting.com --skill quarto-revealjs
+# or all three:
+npx skills add emilhvitfeldt/slidecrafting.com
+```
+
+(Requires Node ≥ 22.20.) Then continue after the skill is present.
+
+## 2. Always use the skill for reveal.js decks
+
+1. **Read** `~/.cursor/skills/quarto-revealjs/SKILL.md` (or the
+   `~/.agents/skills/` copy) **before** writing or heavily editing a
+   reveal.js deck.
+2. Open the matching `references/*.md` file(s) the skill points to
+   (theme, layout, code/plots, fragments, auto-animate, presenting).
+3. Prefer Slidecrafting conventions over generic Quarto/reveal.js
+   improvisation: theme SCSS, columns/absolute layout, fragment and
+   auto-animate patterns, speaker notes / PDF export as documented
+   there and at <https://slidecrafting-book.com>.
+4. Cross-check features against official Quarto reveal.js docs
+   (<https://quarto.org/docs/presentations/revealjs/>) **and** the
+   Slidecrafting book (<https://slidecrafting-book.com/>) when choosing
+   YAML options, extensions, layout, or animation patterns. Prefer
+   documented Quarto / Slidecrafting features over ad-hoc HTML/CSS.
+5. For custom fragment CSS/JS or multi-slide auto-animate element
+   casts, also read `quarto-revealjs-fragment` and/or
+   `auto-animate-elements` when those skills are installed.
+
+Do **not** invent ad-hoc slide CSS/layout systems when the skill
+already covers the pattern.
+
+### Live editing (editable extension)
+
+For decks under `slides/`, keep the
+[quarto-revealjs-editable](https://emilhvitfeldt.github.io/quarto-revealjs-editable/)
+extension installed (`quarto add emilhvitfeldt/quarto-revealjs-editable`
+from the deck directory). Wire both the filter and the plugin:
+
+```yaml
+filters:
+  - editable
+revealjs-plugins:
+  - editable
+```
+
+Use `quarto preview` so the Modify / Save UI can write layout tweaks
+back to the `.qmd`. Optionally mark elements with `{.editable}` for
+immediate editability without entering Modify mode first.
+
+### Converting legacy decks (PDF / PPTX / Markdown)
+
+Source materials often exist as PDF, PowerPoint, and Markdown of the
+same talk. Prefer this order:
+
+1. **Markdown** — structure and wording for Quarto authoring.
+2. **PDF** — recover missing figures and layout (page screenshots via
+   `pdftoppm`, or Stephen Turner’s **pdfdown**:
+   <https://stephenturner.github.io/pdfdown/>).
+3. **PPTX** — extract embedded graphics when PDF rasterisation is poor.
+
+Rebuild as Quarto reveal.js with Slidecrafting patterns; do not ship
+raw PDF/PPTX as the live deck.
+
+## 3. Slide design lessons
+
+### Content principles
+
+- One headline claim per slide. Prefer bullet points over full sentences.
+- Prefer **Mermaid** or **Excalidraw** for conceptual diagrams; fall
+  back to curated PDF/PPTX page images when the original graphic is
+  essential and hard to redraw.
+- For tables in slides, use **reactable** (interactive HTML), not static
+  Markdown / knitr tables, unless the user asks otherwise. Keep tables
+  small enough for the viewport (`pagination`, compact columns).
+- For equations, always define indexes and other notation on the slide
+  (or on the previous slide).
+
+### Citations and cross-references
+
+- Cite from `inst/REFERENCES.bib` (or a deck-local `.bib` that mirrors
+  those keys). Wire the deck YAML with e.g.
+  `bibliography: ../inst/REFERENCES.bib` and use Quarto cite syntax
+  (`@key`, `[@key]`).
+- Label figures, tables, and equations for Quarto cross-references
+  (`#fig-…`, `#tbl-…`, `#eq-…`) and refer to them with `@fig-…` /
+  `@tbl-…` / `@eq-…`. See
+  <https://quarto.org/docs/authoring/cross-references.html>.
+- Do not silently drop citations when converting legacy slides.
+
+### Tables with reactable
+
+- Add `reactable` under **Suggests** (with a minimum version) when the
+  package uses it in slides / vignettes.
+- Prefer compact options suitable for reveal.js, e.g.
+  `reactable::reactable(..., pagination = FALSE, defaultPageSize = 8,
+  bordered = TRUE, highlight = TRUE, wrap = FALSE)` and a modest
+  `style` / `theme` so text stays readable.
+- Set `echo: false` for table chunks unless the user wants code shown.
+
+### Overflow is the primary failure mode
+
+Reveal.js slides have a fixed viewport. Content that exceeds it
+overflows with little or no render-time warning.
+
+- **Always render after edits** (`quarto render …`) and visually check
+  the changed slide. Do not assume content will fit.
+- When combining a diagram with content below it, budget vertical space
+  explicitly. Tighten margins, padding, and font sizes on the upper
+  element to leave room.
+- If a slide overflows, cut content or tighten spacing — do not shrink
+  fonts below readability.
+- Use the deck’s existing CSS classes first.
+- Add a new CSS class only when a style is reused across three or more
+  slides. Do not churn global SCSS/CSS for one slide.
+
+### Font-size hierarchy
+
+For information-dense slides, keep a consistent hierarchy:
+
+| Element | Size |
+|---|---|
+| Diagram node labels | 18–20px |
+| Card / section headers | 14–16px |
+| Supporting detail, bullet text | 12–13px |
+| Affiliations, metadata, attributions | 10–11px |
+
+Going below 10px is unreadable from the back of a seminar room. If you
+need smaller text to fit, the slide has too much content.
+
+### Backbone diagrams as navigation
+
+When a talk has a unifying programme diagram, show it at the opening,
+re-show a compact version at major section transitions, and close with
+it.
+
+- On first appearance, build in stages if order matters (fragments /
+  auto-animate via Slidecrafting). On re-appearances, show it static.
+- Colour-code methods in the diagram and reuse those colours when
+  referencing the same methods later.
+
+### Figures and attribution
+
+- Check whether requested assets already exist locally before creating
+  new ones. Prefer `slides/images/` (or `slides/images/figures/`) with
+  relative paths from the slide source.
+- Enable the **attribution** reveal.js plugin
+  (`quarto-ext/attribution`) in YAML:
+
+```yaml
+revealjs-plugins:
+  - attribution
+```
+
+- Place a short credit on the slide with the vertical right-edge
+  attribution block (compact by design — do **not** invent HTML
+  footers that duplicate it):
+
+```markdown
+::: {.attribution}
+@schnellImmune2020 — [doi](https://doi.org/10.1038/s41422-020-0277-x)
+:::
+```
+
+- Pair attributions with labelled figures when the image is the main
+  content:
+
+```markdown
+![Immune balance seesaw](images/figures/fig-immune-balance.png){#fig-immune-balance}
+```
+
+### Editing guardrails
+
+- Do not change slide count, section structure, or title/abstract
+  without explicit instruction.
+- Do not silently remove citations or attributions.
+- Use British English spelling.
+- Preserve the citation style and colour palette.
+- Hide executed code on slides unless the user wants it shown
+  (`echo: false` / Quarto chunk options).
