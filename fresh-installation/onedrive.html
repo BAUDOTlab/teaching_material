@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Teaching resources (Linux installation guide and more).">
+
+<title>Appendix A — OneDrive on Linux – Team teaching material</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../R/R_package.html" rel="next">
+<link href="../fresh-installation/amu-and-server.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-c8cb8d227d768f499ca9a0e35741eaf7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/kbd/kbd.js"></script>
+<link href="../site_libs/quarto-contrib/kbd/kbd.css" rel="stylesheet">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+
+<meta property="og:title" content="Appendix A — OneDrive on Linux – Team teaching material">
+<meta property="og:description" content="Teaching resources (Linux installation guide and more).">
+<meta property="og:image" content="https://baudotlab.github.io/teaching_material/fresh-installation/onedrive/git_diffs_encodings.png">
+<meta property="og:site_name" content="Team teaching material">
+<meta property="og:image:height" content="768">
+<meta property="og:image:width" content="1376">
+<meta name="citation_title" content="Appendix A — OneDrive on Linux">
+<meta name="citation_fulltext_html_url" content="https://baudotlab.github.io/teaching_material/fresh-installation/onedrive.html">
+<meta name="citation_language" content="en-GB">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../fresh-installation/onedrive.html">Appendices</a></li><li class="breadcrumb-item"><a href="../fresh-installation/onedrive.html"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">OneDrive on Linux</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Team teaching material</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/BAUDOTlab/teaching_material" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="../team-teaching-material.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url=|url|" title="LinkedIn" class="quarto-navigation-tool px-1" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Welcome</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../onboarding/onboarding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Team onboarding</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Fresh Ubuntu installation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../fresh-installation/ubuntu-general.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Ubuntu general guidelines</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../fresh-installation/software.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Software to install</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../fresh-installation/amu-and-server.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">AMU tools and remote servers</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../fresh-installation/onedrive.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">OneDrive on Linux</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../R/R_package.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">R programming guidelines</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../latex/latex-guidelines.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Modern LaTeX guidelines</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#open-source-installation-for-ubuntu" id="toc-open-source-installation-for-ubuntu" class="nav-link active" data-scroll-target="#open-source-installation-for-ubuntu"><span class="header-section-number">A.1</span> Open-source installation for Ubuntu</a></li>
+  <li><a href="#sec-onedrive-monitor-choice" id="toc-sec-onedrive-monitor-choice" class="nav-link" data-scroll-target="#sec-onedrive-monitor-choice"><span class="header-section-number">A.2</span> Permanent monitoring: pick exactly one path</a>
+  <ul>
+  <li><a href="#sec-onedrive-systemd" id="toc-sec-onedrive-systemd" class="nav-link" data-scroll-target="#sec-onedrive-systemd"><span class="header-section-number">A.2.1</span> Option A — systemd + <code>journalctl</code></a></li>
+  <li><a href="#sec-onedrive-tray" id="toc-sec-onedrive-tray" class="nav-link" data-scroll-target="#sec-onedrive-tray"><span class="header-section-number">A.2.2</span> Option B — tray GUI</a></li>
+  </ul></li>
+  <li><a href="#sec-onedrive-troubleshoot" id="toc-sec-onedrive-troubleshoot" class="nav-link" data-scroll-target="#sec-onedrive-troubleshoot"><span class="header-section-number">A.3</span> Troubleshoot OneDrive</a>
+  <ul>
+  <li><a href="#sec-onedrive-recovery" id="toc-sec-onedrive-recovery" class="nav-link" data-scroll-target="#sec-onedrive-recovery"><span class="header-section-number">A.3.1</span> Safe recovery after a messy sync</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/BAUDOTlab/teaching_material/edit/main/fresh-installation/onedrive.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/BAUDOTlab/teaching_material/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/BAUDOTlab/teaching_material/blob/main/fresh-installation/onedrive.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../fresh-installation/onedrive.html">Appendices</a></li><li class="breadcrumb-item"><a href="../fresh-installation/onedrive.html"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">OneDrive on Linux</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">Appendix A — OneDrive on Linux</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta column-body">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="open-source-installation-for-ubuntu" class="level2" data-number="A.1">
+<h2 data-number="A.1" class="anchored" data-anchor-id="open-source-installation-for-ubuntu"><span class="header-section-number">A.1</span> Open-source installation for Ubuntu</h2>
+<ol type="1">
+<li><p>Install dependencies:</p>
+<div id="lst-onedrive-deps" class="bash listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-onedrive-deps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;A.1: onedrive deps
+</figcaption>
+<div aria-describedby="lst-onedrive-deps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install build-essential libcurl4-openssl-dev pkg-config git <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div></li>
+<li><p>Add the openSUSE Build Service repository release key:</p>
+<div id="lst-onedrive-repo" class="bash listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-onedrive-repo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;A.2: onedrive repo
+</figcaption>
+<div aria-describedby="lst-onedrive-repo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="at">-qO</span> <span class="at">-</span> https://download.opensuse.org/repositories/home:/npreining:/debian-ubuntu-onedrive/xUbuntu_24.04/Release.key <span class="kw">|</span> <span class="ex">gpg</span> <span class="at">--dearmor</span> <span class="kw">|</span> <span class="fu">sudo</span> tee /usr/share/keyrings/obs-onedrive.gpg <span class="op">&gt;</span> /dev/null</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"deb [arch=</span><span class="va">$(</span><span class="ex">dpkg</span> <span class="at">--print-architecture</span><span class="va">)</span><span class="st"> signed-by=/usr/share/keyrings/obs-onedrive.gpg] https://download.opensuse.org/repositories/home:/npreining:/debian-ubuntu-onedrive/xUbuntu_24.04/ ./"</span> <span class="kw">|</span> <span class="fu">sudo</span> tee /etc/apt/sources.list.d/onedrive.list</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">## update cache</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get update</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div></li>
+<li><p>Install OneDrive:</p>
+<div id="lst-onedrive-install" class="bash listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-onedrive-install-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;A.3: onedrive install
+</figcaption>
+<div aria-describedby="lst-onedrive-install-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="at">--no-install-recommends</span> <span class="at">--no-install-suggests</span> onedrive</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div></li>
+<li><p>Sync OneDrive:</p>
+<ol type="i">
+<li><p>Exclude large folders and directories that are complex or not recommended for syncing: <code>nano ~/.config/onedrive/config</code>. See the contents of a working config under <a href="../Config/onedrive-config">onedrive-custom-config</a>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p></li>
+<li><p>Authenticate, then run OneDrive once:</p>
+<div id="lst-onedrive-sync" class="bash listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-onedrive-sync-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;A.4: onedrive sync
+</figcaption>
+<div aria-describedby="lst-onedrive-sync-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">onedrive</span> <span class="at">--sync</span> <span class="at">--dry-run</span> <span class="co">## optional: list folders that will be synchronised</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">onedrive</span> <span class="at">--sync</span> <span class="at">--verbose</span> <span class="co">## first initialisation; usually time-consuming; one-shot</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div></li>
+</ol></li>
+</ol>
+</section>
+<section id="sec-onedrive-monitor-choice" class="level2" data-number="A.2">
+<h2 data-number="A.2" class="anchored" data-anchor-id="sec-onedrive-monitor-choice"><span class="header-section-number">A.2</span> Permanent monitoring: pick exactly one path</h2>
+<div id="wrn-onedrive-exclusive" class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning&nbsp;A.1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Do not run systemd monitoring and a OneDrive GUI / tray client at the same time.</strong> Concurrent clients fight over the same local tree and produce “already running” errors, stalled uploads, or silent conflicts. Choose <strong>either</strong> <a href="#lst-onedrive-systemd" class="quarto-xref">Listing&nbsp;<span>A.5</span></a> <strong>or</strong> <a href="#tip-onedrive-GUI" class="quarto-xref">Tip&nbsp;<span>A.1</span></a> — never both (<a href="#fig-onedrive-monitor-choice" class="quarto-xref">Figure&nbsp;<span>A.1</span></a>).</p>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-onedrive-monitor-choice" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-onedrive-monitor-choice-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<pre class="mermaid mermaid-js" data-label="fig-onedrive-monitor-choice">flowchart TD
+  A[Need continuous OneDrive sync?] --&gt; B{Prefer terminal&lt;br/&gt;diagnostics?}
+  B --&gt;|Yes| C[Enable user systemd service]
+  C --&gt; D["systemctl --user enable --now onedrive"]
+  D --&gt; E["Monitor with journalctl --user-unit onedrive -f"]
+  B --&gt;|No| F[Install lightweight tray GUI]
+  F --&gt; G[onedrive_tray user service]
+  G --&gt; H[Status icon in the panel]
+  C -.-&gt;|Do not combine| F
+  E --&gt; I[Single client owns the sync]
+  H --&gt; I
+</pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-onedrive-monitor-choice-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;A.1: Decision tree: systemd journal monitoring versus a tray GUI for OneDrive
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="sec-onedrive-systemd" class="level3" data-number="A.2.1">
+<h3 data-number="A.2.1" class="anchored" data-anchor-id="sec-onedrive-systemd"><span class="header-section-number">A.2.1</span> Option A — systemd + <code>journalctl</code></h3>
+<div id="lst-onedrive-systemd" class="bash listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-onedrive-systemd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;A.5: onedrive systemd
+</figcaption>
+<div aria-describedby="lst-onedrive-systemd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> <span class="at">--user</span> enable onedrive</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> <span class="at">--user</span> start onedrive <span class="co">## backend equivalent: onedrive --monitor</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div>
+<p>Monitor uploads:</p>
+<div id="lst-onedrive-monitor" class="bash listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-onedrive-monitor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;A.6: onedrive monitor
+</figcaption>
+<div aria-describedby="lst-onedrive-monitor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">journalctl</span> <span class="at">--user-unit</span> onedrive <span class="at">-f</span> <span class="co">## continuous; or systemctl --user status onedrive (one-shot)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">onedrive</span> <span class="at">--display-config</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">onedrive</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div>
+</section>
+<section id="sec-onedrive-tray" class="level3" data-number="A.2.2">
+<h3 data-number="A.2.2" class="anchored" data-anchor-id="sec-onedrive-tray"><span class="header-section-number">A.2.2</span> Option B — tray GUI</h3>
+<div id="tip-onedrive-GUI" class="callout callout-style-default callout-tip callout-titled" title="GUIs for OneDrive monitoring">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;A.1: GUIs for OneDrive monitoring
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="https://github.com/DanielBorgesOliveira/onedrive_tray">OneDrive system tray program</a> adds a simple icon that reports OneDrive synchronisation status.</p>
+<p>If you use this path, <strong>disable</strong> the systemd user service first (<code>systemctl --user disable --now onedrive</code>) so only one client runs (see <a href="#wrn-onedrive-exclusive" class="quarto-xref">Warning&nbsp;<span>A.1</span></a>).</p>
+<div id="lst-onedrive-tray" class="bash listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-onedrive-tray-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;A.7: onedrive tray
+</figcaption>
+<div aria-describedby="lst-onedrive-tray-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">## install Qt 5 qmake</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install qt5-qmake qtbase5-dev</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">## build the executable</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/DanielBorgesOliveira/onedrive_tray.git</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> onedrive_tray</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> build</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> build</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/lib/qt5/bin/qmake</span> ../systray.pro <span class="co">## prepare the Makefile</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> <span class="co">## build</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">## install so it runs at login</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> make install <span class="co">## deploy; sudo is required here</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> enable <span class="at">--user</span> onedrive_tray.service</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Graphical interfaces for OneDrive">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Graphical interfaces for OneDrive
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Avoid full graphical clients such as <a href="https://github.com/bpozdena/OneDriveGUI">OneDriveGUI</a>: in practice they often clash with a local <code>onedrive</code> install.</p>
+<p>Prefer the terminal (Option A) or the lightweight tray icon (Option B in <a href="#tip-onedrive-GUI" class="quarto-xref">Tip&nbsp;<span>A.1</span></a>) for clearer control over configuration.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-onedrive-troubleshoot" class="level2" data-number="A.3">
+<h2 data-number="A.3" class="anchored" data-anchor-id="sec-onedrive-troubleshoot"><span class="header-section-number">A.3</span> Troubleshoot OneDrive</h2>
+<ul>
+<li><p><strong>Call <code>systemctl --user restart onedrive</code> after modifying the config file</strong> so changes take effect (Option A). To re-apply configuration retrospectively, use <code>onedrive --resync --sync --verbose</code> sparingly. <strong>Synchronisation stops without warning when the config file changes; you must restart the service.</strong></p></li>
+<li><p>The warning <em>“onedrive application is already running, please check process list”</em> means several concurrent <code>onedrive</code> processes are running — almost always because systemd and a GUI were started together (<a href="#wrn-onedrive-exclusive" class="quarto-xref">Warning&nbsp;<span>A.1</span></a>):</p>
+<ul>
+<li><p>List them: <code>ps aux | grep onedrive</code></p></li>
+<li><p>Stop the service and stray processes:</p>
+<div id="lst-onedrive-kill" class="bash listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-onedrive-kill-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;A.8: Stop concurrent OneDrive clients
+</figcaption>
+<div aria-describedby="lst-onedrive-kill-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> <span class="at">--user</span> stop onedrive.service</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pkill</span> <span class="at">-f</span> <span class="st">"onedrive --sync"</span> <span class="kw">||</span> <span class="fu">true</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">pkill</span> <span class="at">-f</span> <span class="st">"onedrive --monitor"</span> <span class="kw">||</span> <span class="fu">true</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">pgrep</span> <span class="at">-af</span> onedrive <span class="co">## should return nothing before continuing</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div></li>
+</ul></li>
+</ul>
+<section id="sec-onedrive-recovery" class="level3" data-number="A.3.1">
+<h3 data-number="A.3.1" class="anchored" data-anchor-id="sec-onedrive-recovery"><span class="header-section-number">A.3.1</span> Safe recovery after a messy sync</h3>
+<p>When local and cloud trees have diverged badly, treat a restored local folder as the temporary source of truth, push it one-way, then return to two-way sync. <strong>Do not edit files on the web or locally while a sync or resync is running.</strong></p>
+<ol type="1">
+<li><p>Stop every client (<a href="#lst-onedrive-kill" class="quarto-xref">Listing&nbsp;<span>A.8</span></a>).</p></li>
+<li><p>For a migration / upload-only phase, set in <code>~/.config/onedrive/config</code> (adjust <code>sync_dir</code> to your restored tree):</p>
+<div id="lst-onedrive-upload-only" class="ini listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-onedrive-upload-only-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;A.9: Temporary upload-only OneDrive config
+</figcaption>
+<div aria-describedby="lst-onedrive-upload-only-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode ini code-with-copy"><code class="sourceCode ini"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dt">skip_dir </span><span class="ot">=</span><span class="st"> "venv|\\.venv|__pycache__|node_modules|\\.next|renv|.cache"</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="dt">skip_file </span><span class="ot">=</span><span class="st"> "\\.Rhistory$|\\.RData$|~*|.~*|*.tmp|*.swp|*.partial"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="dt">check_nosync </span><span class="ot">=</span><span class="st"> "true"</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="dt">local_first </span><span class="ot">=</span><span class="st"> "true"</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="dt">display_manager_integration </span><span class="ot">=</span><span class="st"> "true"</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="dt">use_recycle_bin </span><span class="ot">=</span><span class="st"> "true"</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="dt">force_session_upload </span><span class="ot">=</span><span class="st"> "true"</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="dt">delay_inotify_processing </span><span class="ot">=</span><span class="st"> "true"</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="dt">sync_dir </span><span class="ot">=</span><span class="st"> "~/OneDrive-restored"</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="dt">upload_only </span><span class="ot">=</span><span class="st"> "true"</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="dt">download_only </span><span class="ot">=</span><span class="st"> "false"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div></li>
+<li><p>Resynchronise once (example background run):</p>
+<div id="lst-onedrive-resync-upload" class="bash listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-onedrive-resync-upload-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;A.10: One-way upload resync
+</figcaption>
+<div aria-describedby="lst-onedrive-resync-upload-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nohup</span> onedrive <span class="at">--sync</span> <span class="at">--resync</span> <span class="at">--resync-auth</span> <span class="at">--verbose</span> <span class="dt">\</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">&gt;</span> <span class="st">"</span><span class="va">$HOME</span><span class="st">/onedrive-migration-resync.log"</span> <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span> <span class="kw">&amp;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div></li>
+<li><p>Switch back to normal two-way sync: move the restored tree to your usual path if needed (<code>mv ~/OneDrive-restored ~/OneDrive</code>), restore the sample settings from <a href="../Config/onedrive-config">onedrive-custom-config</a> (<code>upload_only = "false"</code>), then:</p>
+<div id="lst-onedrive-resync-normal" class="bash listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-onedrive-resync-normal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;A.11: Final two-way resync
+</figcaption>
+<div aria-describedby="lst-onedrive-resync-normal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">onedrive</span> <span class="at">--sync</span> <span class="at">--resync</span> <span class="at">--verbose</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div></li>
+<li><p>Re-enable <strong>exactly one</strong> monitoring path again (<a href="#wrn-onedrive-exclusive" class="quarto-xref">Warning&nbsp;<span>A.1</span></a>): either <a href="#lst-onedrive-systemd" class="quarto-xref">Listing&nbsp;<span>A.5</span></a> or <a href="#tip-onedrive-GUI" class="quarto-xref">Tip&nbsp;<span>A.1</span></a>.</p></li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled" title="OneDrive, Git and EOL encoding across OS">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>OneDrive, Git and EOL encoding across OS
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Git and OneDrive do not combine well when:</p>
+<ul>
+<li><strong>End-of-line encodings differ</strong>: Linux and macOS use <code>LF</code> (line feed: <code>\n</code>); Windows uses <code>CRLF</code> (carriage return + line feed: <code>\r\n</code>).</li>
+<li>Linux tracks executable permissions; Windows does not (mainly an issue for shell scripts).</li>
+<li><code>.git</code> directories are complex repositories and are often a poor fit for cloud sync.</li>
+</ul>
+<hr>
+<p>To avoid these issues:</p>
+<ol type="i">
+<li><p>Configure <code>.gitconfig</code> globally so both EOL styles are handled. Use <code>git config --global core.autocrlf input</code> on Linux and macOS when collaborating with Windows machines<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, and <code>git config --global core.autocrlf true</code> on Windows<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p></li>
+<li><p>For extra robustness, add a per-project <code>.gitattributes</code> file<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>:</p>
+<div id="lst-onedrive-gitattributes" class="bash listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-onedrive-gitattributes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;A.12: onedrive gitattributes
+</figcaption>
+<div aria-describedby="lst-onedrive-gitattributes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">## three columns: extension, type (text or binary), EOL for text files</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">*.sh</span>   text eol=lf</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">*.py</span>   text eol=lf</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">*.js</span>   text eol=lf</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="ex">*.ts</span>   text eol=lf</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="ex">*.java</span> text eol=lf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div>
+<p>Then apply the change with Git (this renormalises tracked files; rules in <code>.gitattributes</code> override the global <code>core.autocrlf</code> option):</p>
+<div id="lst-onedrive-renormalize" class="bash listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-onedrive-renormalize-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;A.13: onedrive renormalize
+</figcaption>
+<div aria-describedby="lst-onedrive-renormalize-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="at">--renormalize</span> .</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status <span class="co">## files affected by the EOL change</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Normalize line endings"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div></li>
+<li><p>Set the editor default end-of-line encoding:</p></li>
+</ol>
+<pre><code>-   *VS Code / Cursor*: , then “Open User
+    Settings”, search for `Files: Eol`, and set end of line to `\n`.</code></pre>
+<hr>
+<div id="fig-eol-homogenisation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-eol-homogenisation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="onedrive/git_diffs_encodings.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;A.2: Best practices for end-of-line homogenisation across devices"><img src="onedrive/git_diffs_encodings.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-eol-homogenisation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;A.2: Best practices for end-of-line homogenisation across devices
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Compatibility with editors using atomic saves">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Compatibility with editors using atomic saves
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Many editors — including LibreOffice, and often VS Code / Cursor when saving project files — use <a href="https://github.com/abraunegg/onedrive/blob/eb029bbe2ff5ba54844ae66667dce4dcb5eb78cf/docs/usage.md#compatibility-with-editors-and-applications-using-atomic-save-operations"><strong>atomic save strategies</strong></a> to preserve data integrity: the editor writes a temporary file, then renames it over the original.</p>
+<div id="lst-onedrive-atomic-flow" class="bash listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-onedrive-atomic-flow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;A.14: onedrive atomic flow
+</figcaption>
+<div aria-describedby="lst-onedrive-atomic-flow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">file.qmd</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">↓</span> edit</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="ex">file.qmd.tmp</span> <span class="co">## if OneDrive syncs mid-save, it may treat the file as discarded</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="ex">↓</span> rename</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="ex">file.qmd</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">## Architecture that causes the clash</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Editor</span> <span class="er">(</span><span class="ex">LibreOffice,</span> Cursor, …<span class="kw">)</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>   <span class="ex">│</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>   <span class="ex">│</span> save <span class="er">(</span><span class="ex">atomic</span><span class="kw">)</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>   <span class="ex">▼</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="ex">Local</span> file</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>   <span class="ex">│</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>   <span class="ex">│</span> filesystem event <span class="er">(</span><span class="ex">inotify</span><span class="kw">)</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>   <span class="ex">▼</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="ex">onedrive</span> client</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>   <span class="ex">│</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>   <span class="ex">│</span> sync</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>   <span class="ex">▼</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="ex">OneDrive</span> cloud</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>   <span class="ex">│</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>   <span class="ex">│</span> sync back</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>   <span class="ex">▼</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="bu">local</span> <span class="va">overwrite</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div>
+<p>That pattern can interfere with the <code>onedrive</code> client’s <strong>inotify</strong>-based detection, producing editor warnings or briefly emptying file contents.</p>
+<p>Three complementary approaches:</p>
+<ol type="1">
+<li><p><strong>Keep active Git projects outside OneDrive.</strong> Use OneDrive for large document stores; keep source trees under Git elsewhere (or in a path excluded from sync).</p></li>
+<li><p>Pause sync while editing intensively — and remember to restart synchronisation afterwards.</p></li>
+<li><p>Adjust the config to tolerate atomic saves (already in <a href="../Config/onedrive-config">onedrive-custom-config</a>):</p>
+<div id="lst-onedrive-atomic-config" class="bash listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-onedrive-atomic-config-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;A.15: onedrive atomic config
+</figcaption>
+<div aria-describedby="lst-onedrive-atomic-config-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">force_session_upload</span> = <span class="st">"true"</span> <span class="co">## reduce overwrites by older cloud versions mid-save</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">delay_inotify_processing</span> = <span class="st">"true"</span> <span class="co">## wait for tmp → rename to finish before syncing</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div></li>
+</ol>
+</div>
+</div>
+</div>
+
+
+<!-- -->
+
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Copy the sample into <code>~/.config/onedrive/config</code>, then adjust <code>sync_dir</code> if your folder name differs.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Accept CRLF as input on checkout, but always commit as LF.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Constrain commits to be encoded and pushed as <code>LF</code>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Detailed guidance is available <a href="https://docs.github.com/en/get-started/git-basics/configuring-git-to-handle-line-endings?platform=windows">here</a>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/baudotlab\.github\.io\/teaching_material\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation column-body">
+  <div class="nav-page nav-page-previous">
+      <a href="../fresh-installation/amu-and-server.html" class="pagination-link" aria-label="AMU tools and remote servers">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">AMU tools and remote servers</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../R/R_package.html" class="pagination-link" aria-label="R programming guidelines">
+        <span class="nav-page-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">R programming guidelines</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "OneDrive on Linux"</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Open-source installation for Ubuntu</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Install dependencies:</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="in">```{#lst-onedrive-deps .bash lst-cap="onedrive deps"}</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="in">    sudo apt install build-essential libcurl4-openssl-dev pkg-config git -y</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Add the openSUSE Build Service repository release key:</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    <span class="in">```{#lst-onedrive-repo .bash lst-cap="onedrive repo"}</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="in">    wget -qO - https://download.opensuse.org/repositories/home:/npreining:/debian-ubuntu-onedrive/xUbuntu_24.04/Release.key | gpg --dearmor | sudo tee /usr/share/keyrings/obs-onedrive.gpg &gt; /dev/null</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="in">    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/obs-onedrive.gpg] https://download.opensuse.org/repositories/home:/npreining:/debian-ubuntu-onedrive/xUbuntu_24.04/ ./" | sudo tee /etc/apt/sources.list.d/onedrive.list</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="in">    ## update cache</span></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="in">    sudo apt-get update</span></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Install OneDrive:</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>    <span class="in">```{#lst-onedrive-install .bash lst-cap="onedrive install"}</span></span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a><span class="in">    sudo apt install --no-install-recommends --no-install-suggests onedrive</span></span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>Sync OneDrive:</span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>    i.  Exclude large folders and directories that are complex or not</span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>        recommended for syncing:</span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>        <span class="in">`nano ~/.config/onedrive/config`</span>. See the contents of a working</span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>        config under</span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>        <span class="co">[</span><span class="ot">onedrive-custom-config</span><span class="co">](../Config/onedrive-config)</span>.<span class="ot">[^od-1]</span></span>
+<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a>    ii. Authenticate, then run OneDrive once:</span>
+<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a><span class="in">        ```{#lst-onedrive-sync .bash lst-cap="onedrive sync"}</span></span>
+<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a><span class="in">        onedrive --sync --dry-run ## optional: list folders that will be synchronised</span></span>
+<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a><span class="in">        onedrive --sync --verbose ## first initialisation; usually time-consuming; one-shot</span></span>
+<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a><span class="in">        ```</span></span>
+<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a><span class="ot">[^od-1]: </span>Copy the sample into <span class="in">`~/.config/onedrive/config`</span>, then adjust</span>
+<span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a>    <span class="in">`sync_dir`</span> if your folder name differs.</span>
+<span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-48"><a href="#cb17-48" aria-hidden="true" tabindex="-1"></a><span class="fu">## Permanent monitoring: pick exactly one path {#sec-onedrive-monitor-choice}</span></span>
+<span id="cb17-49"><a href="#cb17-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-50"><a href="#cb17-50" aria-hidden="true" tabindex="-1"></a>::: {#wrn-onedrive-exclusive .callout-warning}</span>
+<span id="cb17-51"><a href="#cb17-51" aria-hidden="true" tabindex="-1"></a>**Do not run systemd monitoring and a OneDrive GUI / tray client at the</span>
+<span id="cb17-52"><a href="#cb17-52" aria-hidden="true" tabindex="-1"></a>same time.** Concurrent clients fight over the same local tree and</span>
+<span id="cb17-53"><a href="#cb17-53" aria-hidden="true" tabindex="-1"></a>produce “already running” errors, stalled uploads, or silent conflicts.</span>
+<span id="cb17-54"><a href="#cb17-54" aria-hidden="true" tabindex="-1"></a>Choose **either** @lst-onedrive-systemd **or** @tip-onedrive-GUI — never</span>
+<span id="cb17-55"><a href="#cb17-55" aria-hidden="true" tabindex="-1"></a>both (@fig-onedrive-monitor-choice).</span>
+<span id="cb17-56"><a href="#cb17-56" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb17-57"><a href="#cb17-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-60"><a href="#cb17-60" aria-hidden="true" tabindex="-1"></a><span class="in">```{mermaid}</span></span>
+<span id="cb17-61"><a href="#cb17-61" aria-hidden="true" tabindex="-1"></a>%%| label: fig-onedrive-monitor-choice</span>
+<span id="cb17-62"><a href="#cb17-62" aria-hidden="true" tabindex="-1"></a>%%| fig-cap: <span class="ot">"</span><span class="st">Decision tree: systemd journal monitoring versus a tray GUI for OneDrive</span><span class="ot">"</span></span>
+<span id="cb17-63"><a href="#cb17-63" aria-hidden="true" tabindex="-1"></a>flowchart TD</span>
+<span id="cb17-64"><a href="#cb17-64" aria-hidden="true" tabindex="-1"></a>  A[Need continuous OneDrive sync?] --&gt; B{Prefer terminal&lt;br/&gt;<span class="kw">diagnostics</span>?}</span>
+<span id="cb17-65"><a href="#cb17-65" aria-hidden="true" tabindex="-1"></a>  B --&gt;|Yes| C[Enable user systemd service]</span>
+<span id="cb17-66"><a href="#cb17-66" aria-hidden="true" tabindex="-1"></a>  C --&gt; D[<span class="ot">"</span><span class="st">systemctl --user enable --now onedrive</span><span class="ot">"</span>]</span>
+<span id="cb17-67"><a href="#cb17-67" aria-hidden="true" tabindex="-1"></a>  D --&gt; E[<span class="ot">"</span><span class="st">Monitor with journalctl --user-unit onedrive -f</span><span class="ot">"</span>]</span>
+<span id="cb17-68"><a href="#cb17-68" aria-hidden="true" tabindex="-1"></a>  B --&gt;|No| F[Install lightweight tray GUI]</span>
+<span id="cb17-69"><a href="#cb17-69" aria-hidden="true" tabindex="-1"></a>  F --&gt; G[onedrive_tray user service]</span>
+<span id="cb17-70"><a href="#cb17-70" aria-hidden="true" tabindex="-1"></a>  G --&gt; H[Status icon in the panel]</span>
+<span id="cb17-71"><a href="#cb17-71" aria-hidden="true" tabindex="-1"></a>  C -.-&gt;|Do <span class="ot">not</span> combine| F</span>
+<span id="cb17-72"><a href="#cb17-72" aria-hidden="true" tabindex="-1"></a>  E --&gt; I[Single client owns the sync]</span>
+<span id="cb17-73"><a href="#cb17-73" aria-hidden="true" tabindex="-1"></a>  H --&gt; I</span>
+<span id="cb17-74"><a href="#cb17-74" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-75"><a href="#cb17-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-76"><a href="#cb17-76" aria-hidden="true" tabindex="-1"></a><span class="fu">### Option A — systemd + `journalctl` {#sec-onedrive-systemd}</span></span>
+<span id="cb17-77"><a href="#cb17-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-78"><a href="#cb17-78" aria-hidden="true" tabindex="-1"></a><span class="in">```{#lst-onedrive-systemd .bash lst-cap="onedrive systemd"}</span></span>
+<span id="cb17-79"><a href="#cb17-79" aria-hidden="true" tabindex="-1"></a><span class="in">systemctl --user enable onedrive</span></span>
+<span id="cb17-80"><a href="#cb17-80" aria-hidden="true" tabindex="-1"></a><span class="in">systemctl --user start onedrive ## backend equivalent: onedrive --monitor</span></span>
+<span id="cb17-81"><a href="#cb17-81" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-82"><a href="#cb17-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-83"><a href="#cb17-83" aria-hidden="true" tabindex="-1"></a>Monitor uploads:</span>
+<span id="cb17-84"><a href="#cb17-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-85"><a href="#cb17-85" aria-hidden="true" tabindex="-1"></a><span class="in">```{#lst-onedrive-monitor .bash lst-cap="onedrive monitor"}</span></span>
+<span id="cb17-86"><a href="#cb17-86" aria-hidden="true" tabindex="-1"></a><span class="in">journalctl --user-unit onedrive -f ## continuous; or systemctl --user status onedrive (one-shot)</span></span>
+<span id="cb17-87"><a href="#cb17-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-88"><a href="#cb17-88" aria-hidden="true" tabindex="-1"></a><span class="in">onedrive --display-config</span></span>
+<span id="cb17-89"><a href="#cb17-89" aria-hidden="true" tabindex="-1"></a><span class="in">onedrive --version</span></span>
+<span id="cb17-90"><a href="#cb17-90" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-91"><a href="#cb17-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-92"><a href="#cb17-92" aria-hidden="true" tabindex="-1"></a><span class="fu">### Option B — tray GUI {#sec-onedrive-tray}</span></span>
+<span id="cb17-93"><a href="#cb17-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-94"><a href="#cb17-94" aria-hidden="true" tabindex="-1"></a>::: {#tip-onedrive-GUI .callout-tip title="GUIs for OneDrive monitoring"}</span>
+<span id="cb17-95"><a href="#cb17-95" aria-hidden="true" tabindex="-1"></a>[OneDrive system tray</span>
+<span id="cb17-96"><a href="#cb17-96" aria-hidden="true" tabindex="-1"></a>program](https://github.com/DanielBorgesOliveira/onedrive_tray) adds a</span>
+<span id="cb17-97"><a href="#cb17-97" aria-hidden="true" tabindex="-1"></a>simple icon that reports OneDrive synchronisation status.</span>
+<span id="cb17-98"><a href="#cb17-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-99"><a href="#cb17-99" aria-hidden="true" tabindex="-1"></a>If you use this path, **disable** the systemd user service first</span>
+<span id="cb17-100"><a href="#cb17-100" aria-hidden="true" tabindex="-1"></a>(<span class="in">`systemctl --user disable --now onedrive`</span>) so only one client runs (see</span>
+<span id="cb17-101"><a href="#cb17-101" aria-hidden="true" tabindex="-1"></a>@wrn-onedrive-exclusive).</span>
+<span id="cb17-102"><a href="#cb17-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-103"><a href="#cb17-103" aria-hidden="true" tabindex="-1"></a><span class="in">```{#lst-onedrive-tray .bash lst-cap="onedrive tray"}</span></span>
+<span id="cb17-104"><a href="#cb17-104" aria-hidden="true" tabindex="-1"></a><span class="in">## install Qt 5 qmake</span></span>
+<span id="cb17-105"><a href="#cb17-105" aria-hidden="true" tabindex="-1"></a><span class="in">sudo apt install qt5-qmake qtbase5-dev</span></span>
+<span id="cb17-106"><a href="#cb17-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-107"><a href="#cb17-107" aria-hidden="true" tabindex="-1"></a><span class="in">## build the executable</span></span>
+<span id="cb17-108"><a href="#cb17-108" aria-hidden="true" tabindex="-1"></a><span class="in">git clone https://github.com/DanielBorgesOliveira/onedrive_tray.git</span></span>
+<span id="cb17-109"><a href="#cb17-109" aria-hidden="true" tabindex="-1"></a><span class="in">cd onedrive_tray</span></span>
+<span id="cb17-110"><a href="#cb17-110" aria-hidden="true" tabindex="-1"></a><span class="in">mkdir build</span></span>
+<span id="cb17-111"><a href="#cb17-111" aria-hidden="true" tabindex="-1"></a><span class="in">cd build</span></span>
+<span id="cb17-112"><a href="#cb17-112" aria-hidden="true" tabindex="-1"></a><span class="in">/usr/lib/qt5/bin/qmake ../systray.pro ## prepare the Makefile</span></span>
+<span id="cb17-113"><a href="#cb17-113" aria-hidden="true" tabindex="-1"></a><span class="in">make ## build</span></span>
+<span id="cb17-114"><a href="#cb17-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-115"><a href="#cb17-115" aria-hidden="true" tabindex="-1"></a><span class="in">## install so it runs at login</span></span>
+<span id="cb17-116"><a href="#cb17-116" aria-hidden="true" tabindex="-1"></a><span class="in">sudo make install ## deploy; sudo is required here</span></span>
+<span id="cb17-117"><a href="#cb17-117" aria-hidden="true" tabindex="-1"></a><span class="in">systemctl enable --user onedrive_tray.service</span></span>
+<span id="cb17-118"><a href="#cb17-118" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-119"><a href="#cb17-119" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb17-120"><a href="#cb17-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-121"><a href="#cb17-121" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning title="Graphical interfaces for OneDrive"}</span>
+<span id="cb17-122"><a href="#cb17-122" aria-hidden="true" tabindex="-1"></a>Avoid full graphical clients such as</span>
+<span id="cb17-123"><a href="#cb17-123" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">OneDriveGUI</span><span class="co">](https://github.com/bpozdena/OneDriveGUI)</span>: in practice they</span>
+<span id="cb17-124"><a href="#cb17-124" aria-hidden="true" tabindex="-1"></a>often clash with a local <span class="in">`onedrive`</span> install.</span>
+<span id="cb17-125"><a href="#cb17-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-126"><a href="#cb17-126" aria-hidden="true" tabindex="-1"></a>Prefer the terminal (Option A) or the lightweight tray icon (Option B in</span>
+<span id="cb17-127"><a href="#cb17-127" aria-hidden="true" tabindex="-1"></a>@tip-onedrive-GUI) for clearer control over configuration.</span>
+<span id="cb17-128"><a href="#cb17-128" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb17-129"><a href="#cb17-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-130"><a href="#cb17-130" aria-hidden="true" tabindex="-1"></a><span class="fu">## Troubleshoot OneDrive {#sec-onedrive-troubleshoot}</span></span>
+<span id="cb17-131"><a href="#cb17-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-132"><a href="#cb17-132" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Call <span class="in">`systemctl --user restart onedrive`</span> after modifying the</span>
+<span id="cb17-133"><a href="#cb17-133" aria-hidden="true" tabindex="-1"></a>    config file** so changes take effect (Option A). To re-apply</span>
+<span id="cb17-134"><a href="#cb17-134" aria-hidden="true" tabindex="-1"></a>    configuration retrospectively, use</span>
+<span id="cb17-135"><a href="#cb17-135" aria-hidden="true" tabindex="-1"></a>    <span class="in">`onedrive --resync --sync --verbose`</span> sparingly. **Synchronisation</span>
+<span id="cb17-136"><a href="#cb17-136" aria-hidden="true" tabindex="-1"></a>    stops without warning when the config file changes; you must restart</span>
+<span id="cb17-137"><a href="#cb17-137" aria-hidden="true" tabindex="-1"></a>    the service.**</span>
+<span id="cb17-138"><a href="#cb17-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-139"><a href="#cb17-139" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The warning *"onedrive application is already running, please check</span>
+<span id="cb17-140"><a href="#cb17-140" aria-hidden="true" tabindex="-1"></a>    process list"* means several concurrent <span class="in">`onedrive`</span> processes are</span>
+<span id="cb17-141"><a href="#cb17-141" aria-hidden="true" tabindex="-1"></a>    running — almost always because systemd and a GUI were started</span>
+<span id="cb17-142"><a href="#cb17-142" aria-hidden="true" tabindex="-1"></a>    together (@wrn-onedrive-exclusive):</span>
+<span id="cb17-143"><a href="#cb17-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-144"><a href="#cb17-144" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>List them: <span class="in">`ps aux | grep onedrive`</span></span>
+<span id="cb17-145"><a href="#cb17-145" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>Stop the service and stray processes:</span>
+<span id="cb17-146"><a href="#cb17-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-147"><a href="#cb17-147" aria-hidden="true" tabindex="-1"></a>        <span class="in">```{#lst-onedrive-kill .bash lst-cap="Stop concurrent OneDrive clients"}</span></span>
+<span id="cb17-148"><a href="#cb17-148" aria-hidden="true" tabindex="-1"></a><span class="in">        systemctl --user stop onedrive.service</span></span>
+<span id="cb17-149"><a href="#cb17-149" aria-hidden="true" tabindex="-1"></a><span class="in">        pkill -f "onedrive --sync" || true</span></span>
+<span id="cb17-150"><a href="#cb17-150" aria-hidden="true" tabindex="-1"></a><span class="in">        pkill -f "onedrive --monitor" || true</span></span>
+<span id="cb17-151"><a href="#cb17-151" aria-hidden="true" tabindex="-1"></a><span class="in">        pgrep -af onedrive ## should return nothing before continuing</span></span>
+<span id="cb17-152"><a href="#cb17-152" aria-hidden="true" tabindex="-1"></a><span class="in">        ```</span></span>
+<span id="cb17-153"><a href="#cb17-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-154"><a href="#cb17-154" aria-hidden="true" tabindex="-1"></a><span class="fu">### Safe recovery after a messy sync {#sec-onedrive-recovery}</span></span>
+<span id="cb17-155"><a href="#cb17-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-156"><a href="#cb17-156" aria-hidden="true" tabindex="-1"></a>When local and cloud trees have diverged badly, treat a restored local</span>
+<span id="cb17-157"><a href="#cb17-157" aria-hidden="true" tabindex="-1"></a>folder as the temporary source of truth, push it one-way, then return to</span>
+<span id="cb17-158"><a href="#cb17-158" aria-hidden="true" tabindex="-1"></a>two-way sync. **Do not edit files on the web or locally while a sync or</span>
+<span id="cb17-159"><a href="#cb17-159" aria-hidden="true" tabindex="-1"></a>resync is running.**</span>
+<span id="cb17-160"><a href="#cb17-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-161"><a href="#cb17-161" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Stop every client (@lst-onedrive-kill).</span>
+<span id="cb17-162"><a href="#cb17-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-163"><a href="#cb17-163" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>For a migration / upload-only phase, set in</span>
+<span id="cb17-164"><a href="#cb17-164" aria-hidden="true" tabindex="-1"></a>    <span class="in">`~/.config/onedrive/config`</span> (adjust <span class="in">`sync_dir`</span> to your restored</span>
+<span id="cb17-165"><a href="#cb17-165" aria-hidden="true" tabindex="-1"></a>    tree):</span>
+<span id="cb17-166"><a href="#cb17-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-167"><a href="#cb17-167" aria-hidden="true" tabindex="-1"></a>    <span class="in">```{#lst-onedrive-upload-only .ini lst-cap="Temporary upload-only OneDrive config"}</span></span>
+<span id="cb17-168"><a href="#cb17-168" aria-hidden="true" tabindex="-1"></a><span class="in">    skip_dir = "venv|\\.venv|__pycache__|node_modules|\\.next|renv|.cache"</span></span>
+<span id="cb17-169"><a href="#cb17-169" aria-hidden="true" tabindex="-1"></a><span class="in">    skip_file = "\\.Rhistory$|\\.RData$|~*|.~*|*.tmp|*.swp|*.partial"</span></span>
+<span id="cb17-170"><a href="#cb17-170" aria-hidden="true" tabindex="-1"></a><span class="in">    check_nosync = "true"</span></span>
+<span id="cb17-171"><a href="#cb17-171" aria-hidden="true" tabindex="-1"></a><span class="in">    local_first = "true"</span></span>
+<span id="cb17-172"><a href="#cb17-172" aria-hidden="true" tabindex="-1"></a><span class="in">    display_manager_integration = "true"</span></span>
+<span id="cb17-173"><a href="#cb17-173" aria-hidden="true" tabindex="-1"></a><span class="in">    use_recycle_bin = "true"</span></span>
+<span id="cb17-174"><a href="#cb17-174" aria-hidden="true" tabindex="-1"></a><span class="in">    force_session_upload = "true"</span></span>
+<span id="cb17-175"><a href="#cb17-175" aria-hidden="true" tabindex="-1"></a><span class="in">    delay_inotify_processing = "true"</span></span>
+<span id="cb17-176"><a href="#cb17-176" aria-hidden="true" tabindex="-1"></a><span class="in">    sync_dir = "~/OneDrive-restored"</span></span>
+<span id="cb17-177"><a href="#cb17-177" aria-hidden="true" tabindex="-1"></a><span class="in">    upload_only = "true"</span></span>
+<span id="cb17-178"><a href="#cb17-178" aria-hidden="true" tabindex="-1"></a><span class="in">    download_only = "false"</span></span>
+<span id="cb17-179"><a href="#cb17-179" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
+<span id="cb17-180"><a href="#cb17-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-181"><a href="#cb17-181" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Resynchronise once (example background run):</span>
+<span id="cb17-182"><a href="#cb17-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-183"><a href="#cb17-183" aria-hidden="true" tabindex="-1"></a>    <span class="in">```{#lst-onedrive-resync-upload .bash lst-cap="One-way upload resync"}</span></span>
+<span id="cb17-184"><a href="#cb17-184" aria-hidden="true" tabindex="-1"></a><span class="in">    nohup onedrive --sync --resync --resync-auth --verbose \</span></span>
+<span id="cb17-185"><a href="#cb17-185" aria-hidden="true" tabindex="-1"></a><span class="in">      &gt; "$HOME/onedrive-migration-resync.log" 2&gt;&amp;1 &amp;</span></span>
+<span id="cb17-186"><a href="#cb17-186" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
+<span id="cb17-187"><a href="#cb17-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-188"><a href="#cb17-188" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>Switch back to normal two-way sync: move the restored tree to your</span>
+<span id="cb17-189"><a href="#cb17-189" aria-hidden="true" tabindex="-1"></a>    usual path if needed (<span class="in">`mv ~/OneDrive-restored ~/OneDrive`</span>), restore</span>
+<span id="cb17-190"><a href="#cb17-190" aria-hidden="true" tabindex="-1"></a>    the sample settings from</span>
+<span id="cb17-191"><a href="#cb17-191" aria-hidden="true" tabindex="-1"></a>    <span class="co">[</span><span class="ot">onedrive-custom-config</span><span class="co">](../Config/onedrive-config)</span></span>
+<span id="cb17-192"><a href="#cb17-192" aria-hidden="true" tabindex="-1"></a>    (<span class="in">`upload_only = "false"`</span>), then:</span>
+<span id="cb17-193"><a href="#cb17-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-194"><a href="#cb17-194" aria-hidden="true" tabindex="-1"></a>    <span class="in">```{#lst-onedrive-resync-normal .bash lst-cap="Final two-way resync"}</span></span>
+<span id="cb17-195"><a href="#cb17-195" aria-hidden="true" tabindex="-1"></a><span class="in">    onedrive --sync --resync --verbose</span></span>
+<span id="cb17-196"><a href="#cb17-196" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
+<span id="cb17-197"><a href="#cb17-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-198"><a href="#cb17-198" aria-hidden="true" tabindex="-1"></a><span class="ss">5.  </span>Re-enable **exactly one** monitoring path again (@wrn-onedrive-exclusive):</span>
+<span id="cb17-199"><a href="#cb17-199" aria-hidden="true" tabindex="-1"></a>    either @lst-onedrive-systemd or @tip-onedrive-GUI.</span>
+<span id="cb17-200"><a href="#cb17-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-201"><a href="#cb17-201" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="OneDrive, Git and EOL encoding across OS" collapse="true"}</span>
+<span id="cb17-202"><a href="#cb17-202" aria-hidden="true" tabindex="-1"></a>Git and OneDrive do not combine well when:</span>
+<span id="cb17-203"><a href="#cb17-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-204"><a href="#cb17-204" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**End-of-line encodings differ**: Linux and macOS use</span>
+<span id="cb17-205"><a href="#cb17-205" aria-hidden="true" tabindex="-1"></a>    <span class="in">`LF`</span> (line feed: <span class="in">`\n`</span>); Windows uses</span>
+<span id="cb17-206"><a href="#cb17-206" aria-hidden="true" tabindex="-1"></a>    <span class="in">`CRLF`</span> (carriage return + line feed: <span class="in">`\r\n`</span>).</span>
+<span id="cb17-207"><a href="#cb17-207" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Linux tracks executable permissions; Windows does not (mainly an</span>
+<span id="cb17-208"><a href="#cb17-208" aria-hidden="true" tabindex="-1"></a>    issue for shell scripts).</span>
+<span id="cb17-209"><a href="#cb17-209" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`.git`</span> directories are complex repositories and are often a poor fit</span>
+<span id="cb17-210"><a href="#cb17-210" aria-hidden="true" tabindex="-1"></a>    for cloud sync.</span>
+<span id="cb17-211"><a href="#cb17-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-212"><a href="#cb17-212" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb17-213"><a href="#cb17-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-214"><a href="#cb17-214" aria-hidden="true" tabindex="-1"></a>To avoid these issues:</span>
+<span id="cb17-215"><a href="#cb17-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-216"><a href="#cb17-216" aria-hidden="true" tabindex="-1"></a>i.  Configure <span class="in">`.gitconfig`</span> globally so both EOL styles are handled.</span>
+<span id="cb17-217"><a href="#cb17-217" aria-hidden="true" tabindex="-1"></a>    Use <span class="in">`git config --global core.autocrlf input`</span> on Linux and macOS</span>
+<span id="cb17-218"><a href="#cb17-218" aria-hidden="true" tabindex="-1"></a>    when collaborating with Windows machines<span class="ot">[^od-2]</span>, and</span>
+<span id="cb17-219"><a href="#cb17-219" aria-hidden="true" tabindex="-1"></a>    <span class="in">`git config --global core.autocrlf true`</span> on Windows<span class="ot">[^od-3]</span>.</span>
+<span id="cb17-220"><a href="#cb17-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-221"><a href="#cb17-221" aria-hidden="true" tabindex="-1"></a>ii. For extra robustness, add a per-project <span class="in">`.gitattributes`</span> file<span class="ot">[^od-4]</span>:</span>
+<span id="cb17-222"><a href="#cb17-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-223"><a href="#cb17-223" aria-hidden="true" tabindex="-1"></a><span class="in">    ```{#lst-onedrive-gitattributes .bash lst-cap="onedrive gitattributes"}</span></span>
+<span id="cb17-224"><a href="#cb17-224" aria-hidden="true" tabindex="-1"></a><span class="in">    ## three columns: extension, type (text or binary), EOL for text files</span></span>
+<span id="cb17-225"><a href="#cb17-225" aria-hidden="true" tabindex="-1"></a><span class="in">    *.sh   text eol=lf</span></span>
+<span id="cb17-226"><a href="#cb17-226" aria-hidden="true" tabindex="-1"></a><span class="in">    *.py   text eol=lf</span></span>
+<span id="cb17-227"><a href="#cb17-227" aria-hidden="true" tabindex="-1"></a><span class="in">    *.js   text eol=lf</span></span>
+<span id="cb17-228"><a href="#cb17-228" aria-hidden="true" tabindex="-1"></a><span class="in">    *.ts   text eol=lf</span></span>
+<span id="cb17-229"><a href="#cb17-229" aria-hidden="true" tabindex="-1"></a><span class="in">    *.java text eol=lf</span></span>
+<span id="cb17-230"><a href="#cb17-230" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
+<span id="cb17-231"><a href="#cb17-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-232"><a href="#cb17-232" aria-hidden="true" tabindex="-1"></a><span class="in">    Then apply the change with Git (this renormalises tracked files; rules</span></span>
+<span id="cb17-233"><a href="#cb17-233" aria-hidden="true" tabindex="-1"></a><span class="in">    in `.gitattributes` override the global `core.autocrlf` option):</span></span>
+<span id="cb17-234"><a href="#cb17-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-235"><a href="#cb17-235" aria-hidden="true" tabindex="-1"></a><span class="in">    ```{#lst-onedrive-renormalize .bash lst-cap="onedrive renormalize"}</span></span>
+<span id="cb17-236"><a href="#cb17-236" aria-hidden="true" tabindex="-1"></a><span class="in">    git add --renormalize .</span></span>
+<span id="cb17-237"><a href="#cb17-237" aria-hidden="true" tabindex="-1"></a><span class="in">    git status ## files affected by the EOL change</span></span>
+<span id="cb17-238"><a href="#cb17-238" aria-hidden="true" tabindex="-1"></a><span class="in">    git commit -m "Normalize line endings"</span></span>
+<span id="cb17-239"><a href="#cb17-239" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
+<span id="cb17-240"><a href="#cb17-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-241"><a href="#cb17-241" aria-hidden="true" tabindex="-1"></a>iii. Set the editor default end-of-line encoding:</span>
+<span id="cb17-242"><a href="#cb17-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-243"><a href="#cb17-243" aria-hidden="true" tabindex="-1"></a><span class="in">    -   *VS Code / Cursor*: {{&lt; kbd Shift-Ctrl-P &gt;}}, then “Open User</span></span>
+<span id="cb17-244"><a href="#cb17-244" aria-hidden="true" tabindex="-1"></a><span class="in">        Settings”, search for `Files: Eol`, and set end of line to `\n`.</span></span>
+<span id="cb17-245"><a href="#cb17-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-246"><a href="#cb17-246" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb17-247"><a href="#cb17-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-248"><a href="#cb17-248" aria-hidden="true" tabindex="-1"></a><span class="al">![Best practices for end-of-line homogenisation across devices](onedrive/git_diffs_encodings.png)</span>{#fig-eol-homogenisation}</span>
+<span id="cb17-249"><a href="#cb17-249" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb17-250"><a href="#cb17-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-251"><a href="#cb17-251" aria-hidden="true" tabindex="-1"></a><span class="ot">[^od-2]: </span>Accept CRLF as input on checkout, but always commit as LF.</span>
+<span id="cb17-252"><a href="#cb17-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-253"><a href="#cb17-253" aria-hidden="true" tabindex="-1"></a><span class="ot">[^od-3]: </span>Constrain commits to be encoded and pushed as <span class="in">`LF`</span>.</span>
+<span id="cb17-254"><a href="#cb17-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-255"><a href="#cb17-255" aria-hidden="true" tabindex="-1"></a><span class="ot">[^od-4]: </span>Detailed guidance is available</span>
+<span id="cb17-256"><a href="#cb17-256" aria-hidden="true" tabindex="-1"></a>    <span class="co">[</span><span class="ot">here</span><span class="co">](https://docs.github.com/en/get-started/git-basics/configuring-git-to-handle-line-endings?platform=windows)</span>.</span>
+<span id="cb17-257"><a href="#cb17-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-258"><a href="#cb17-258" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning title="Compatibility with editors using atomic saves" collapse="true"}</span>
+<span id="cb17-259"><a href="#cb17-259" aria-hidden="true" tabindex="-1"></a>Many editors — including LibreOffice, and often VS Code / Cursor when</span>
+<span id="cb17-260"><a href="#cb17-260" aria-hidden="true" tabindex="-1"></a>saving project files — use</span>
+<span id="cb17-261"><a href="#cb17-261" aria-hidden="true" tabindex="-1"></a>[**atomic save</span>
+<span id="cb17-262"><a href="#cb17-262" aria-hidden="true" tabindex="-1"></a>strategies**](https://github.com/abraunegg/onedrive/blob/eb029bbe2ff5ba54844ae66667dce4dcb5eb78cf/docs/usage.md#compatibility-with-editors-and-applications-using-atomic-save-operations)</span>
+<span id="cb17-263"><a href="#cb17-263" aria-hidden="true" tabindex="-1"></a>to preserve data integrity: the editor writes a temporary file, then</span>
+<span id="cb17-264"><a href="#cb17-264" aria-hidden="true" tabindex="-1"></a>renames it over the original.</span>
+<span id="cb17-265"><a href="#cb17-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-266"><a href="#cb17-266" aria-hidden="true" tabindex="-1"></a><span class="in">```{#lst-onedrive-atomic-flow .bash lst-cap="onedrive atomic flow"}</span></span>
+<span id="cb17-267"><a href="#cb17-267" aria-hidden="true" tabindex="-1"></a><span class="in">file.qmd</span></span>
+<span id="cb17-268"><a href="#cb17-268" aria-hidden="true" tabindex="-1"></a><span class="in">↓ edit</span></span>
+<span id="cb17-269"><a href="#cb17-269" aria-hidden="true" tabindex="-1"></a><span class="in">file.qmd.tmp ## if OneDrive syncs mid-save, it may treat the file as discarded</span></span>
+<span id="cb17-270"><a href="#cb17-270" aria-hidden="true" tabindex="-1"></a><span class="in">↓ rename</span></span>
+<span id="cb17-271"><a href="#cb17-271" aria-hidden="true" tabindex="-1"></a><span class="in">file.qmd</span></span>
+<span id="cb17-272"><a href="#cb17-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-273"><a href="#cb17-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-274"><a href="#cb17-274" aria-hidden="true" tabindex="-1"></a><span class="in">## Architecture that causes the clash</span></span>
+<span id="cb17-275"><a href="#cb17-275" aria-hidden="true" tabindex="-1"></a><span class="in">Editor (LibreOffice, Cursor, …)</span></span>
+<span id="cb17-276"><a href="#cb17-276" aria-hidden="true" tabindex="-1"></a><span class="in">   │</span></span>
+<span id="cb17-277"><a href="#cb17-277" aria-hidden="true" tabindex="-1"></a><span class="in">   │ save (atomic)</span></span>
+<span id="cb17-278"><a href="#cb17-278" aria-hidden="true" tabindex="-1"></a><span class="in">   ▼</span></span>
+<span id="cb17-279"><a href="#cb17-279" aria-hidden="true" tabindex="-1"></a><span class="in">Local file</span></span>
+<span id="cb17-280"><a href="#cb17-280" aria-hidden="true" tabindex="-1"></a><span class="in">   │</span></span>
+<span id="cb17-281"><a href="#cb17-281" aria-hidden="true" tabindex="-1"></a><span class="in">   │ filesystem event (inotify)</span></span>
+<span id="cb17-282"><a href="#cb17-282" aria-hidden="true" tabindex="-1"></a><span class="in">   ▼</span></span>
+<span id="cb17-283"><a href="#cb17-283" aria-hidden="true" tabindex="-1"></a><span class="in">onedrive client</span></span>
+<span id="cb17-284"><a href="#cb17-284" aria-hidden="true" tabindex="-1"></a><span class="in">   │</span></span>
+<span id="cb17-285"><a href="#cb17-285" aria-hidden="true" tabindex="-1"></a><span class="in">   │ sync</span></span>
+<span id="cb17-286"><a href="#cb17-286" aria-hidden="true" tabindex="-1"></a><span class="in">   ▼</span></span>
+<span id="cb17-287"><a href="#cb17-287" aria-hidden="true" tabindex="-1"></a><span class="in">OneDrive cloud</span></span>
+<span id="cb17-288"><a href="#cb17-288" aria-hidden="true" tabindex="-1"></a><span class="in">   │</span></span>
+<span id="cb17-289"><a href="#cb17-289" aria-hidden="true" tabindex="-1"></a><span class="in">   │ sync back</span></span>
+<span id="cb17-290"><a href="#cb17-290" aria-hidden="true" tabindex="-1"></a><span class="in">   ▼</span></span>
+<span id="cb17-291"><a href="#cb17-291" aria-hidden="true" tabindex="-1"></a><span class="in">local overwrite</span></span>
+<span id="cb17-292"><a href="#cb17-292" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-293"><a href="#cb17-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-294"><a href="#cb17-294" aria-hidden="true" tabindex="-1"></a>That pattern can interfere with the <span class="in">`onedrive`</span> client’s **inotify**-based</span>
+<span id="cb17-295"><a href="#cb17-295" aria-hidden="true" tabindex="-1"></a>detection, producing editor warnings or briefly emptying file contents.</span>
+<span id="cb17-296"><a href="#cb17-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-297"><a href="#cb17-297" aria-hidden="true" tabindex="-1"></a>Three complementary approaches:</span>
+<span id="cb17-298"><a href="#cb17-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-299"><a href="#cb17-299" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>**Keep active Git projects outside OneDrive.** Use OneDrive for</span>
+<span id="cb17-300"><a href="#cb17-300" aria-hidden="true" tabindex="-1"></a>    large document stores; keep source trees under Git elsewhere (or in</span>
+<span id="cb17-301"><a href="#cb17-301" aria-hidden="true" tabindex="-1"></a>    a path excluded from sync).</span>
+<span id="cb17-302"><a href="#cb17-302" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Pause sync while editing intensively — and remember to restart</span>
+<span id="cb17-303"><a href="#cb17-303" aria-hidden="true" tabindex="-1"></a>    synchronisation afterwards.</span>
+<span id="cb17-304"><a href="#cb17-304" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Adjust the config to tolerate atomic saves (already in</span>
+<span id="cb17-305"><a href="#cb17-305" aria-hidden="true" tabindex="-1"></a>    <span class="co">[</span><span class="ot">onedrive-custom-config</span><span class="co">](../Config/onedrive-config)</span>):</span>
+<span id="cb17-306"><a href="#cb17-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-307"><a href="#cb17-307" aria-hidden="true" tabindex="-1"></a>    <span class="in">```{#lst-onedrive-atomic-config .bash lst-cap="onedrive atomic config"}</span></span>
+<span id="cb17-308"><a href="#cb17-308" aria-hidden="true" tabindex="-1"></a><span class="in">    force_session_upload = "true" ## reduce overwrites by older cloud versions mid-save</span></span>
+<span id="cb17-309"><a href="#cb17-309" aria-hidden="true" tabindex="-1"></a><span class="in">    delay_inotify_processing = "true" ## wait for tmp → rename to finish before syncing</span></span>
+<span id="cb17-310"><a href="#cb17-310" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
+<span id="cb17-311"><a href="#cb17-311" aria-hidden="true" tabindex="-1"></a>:::</span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Written by Bastien CHASSAGNOL and Benjamin LOIRE, with suggestions from Marielle, Kenza, Morgane and Philippe. This book is built with <a href="https://quarto.org/">Quarto</a>.</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/BAUDOTlab/teaching_material/edit/main/fresh-installation/onedrive.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/BAUDOTlab/teaching_material/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/BAUDOTlab/teaching_material/blob/main/fresh-installation/onedrive.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link active" href="https://github.com/BAUDOTlab/teaching_material" aria-current="page">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
