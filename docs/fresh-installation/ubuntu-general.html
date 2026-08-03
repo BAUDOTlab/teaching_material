@@ -122,10 +122,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <meta property="og:title" content="3&nbsp; Ubuntu general guidelines – Team teaching material">
 <meta property="og:description" content="Teaching resources (Linux installation guide and more).">
-<meta property="og:image" content="https://baudotlab.github.io/teaching_material/fresh-installation/ubuntu/ubuntu_package_structure.png">
+<meta property="og:image" content="https://baudotlab.github.io/teaching_material/fresh-installation/ubuntu/linux-architecture-process.png">
 <meta property="og:site_name" content="Team teaching material">
-<meta property="og:image:height" content="768">
-<meta property="og:image:width" content="1376">
+<meta property="og:image:height" content="603">
+<meta property="og:image:width" content="489">
 <meta name="citation_title" content="[3]{.chapter-number}&nbsp; [Ubuntu general guidelines]{.chapter-title}">
 <meta name="citation_fulltext_html_url" content="https://baudotlab.github.io/teaching_material/fresh-installation/ubuntu-general.html">
 <meta name="citation_language" content="en-GB">
@@ -250,7 +250,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#recommended-system-libraries-to-install" id="toc-recommended-system-libraries-to-install" class="nav-link active" data-scroll-target="#recommended-system-libraries-to-install"><span class="header-section-number">3.1</span> Recommended system libraries to install</a></li>
+  <li><a href="#preamble-recommended-system-libraries-to-install" id="toc-preamble-recommended-system-libraries-to-install" class="nav-link active" data-scroll-target="#preamble-recommended-system-libraries-to-install"><span class="header-section-number">3.1</span> Preamble: recommended system libraries to install</a></li>
   <li><a href="#ubuntu-file-and-package-structure" id="toc-ubuntu-file-and-package-structure" class="nav-link" data-scroll-target="#ubuntu-file-and-package-structure"><span class="header-section-number">3.2</span> Ubuntu file and package structure</a>
   <ul>
   <li><a href="#system-wide-location-for-core-programs" id="toc-system-wide-location-for-core-programs" class="nav-link" data-scroll-target="#system-wide-location-for-core-programs"><span class="header-section-number">3.2.1</span> System-wide location (for core programs)</a></li>
@@ -293,8 +293,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>dpkg --print-architecture</code>: retrieve architecture, for package installation<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</li>
 <li><kbd title="Ctrl-H" aria-hidden="true">Ctrl-H</kbd><span class="visually-hidden">Ctrl-H</span> in <strong>Gnome</strong>, aka File Management, to list hidden files</li>
 </ul>
-<section id="recommended-system-libraries-to-install" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="recommended-system-libraries-to-install"><span class="header-section-number">3.1</span> Recommended system libraries to install</h2>
+<section id="preamble-recommended-system-libraries-to-install" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="preamble-recommended-system-libraries-to-install"><span class="header-section-number">3.1</span> Preamble: recommended system libraries to install</h2>
 <div id="lst-system-libs" class="bash listing quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-lst figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-system-libs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -451,45 +451,165 @@ Table&nbsp;3.2: Main user-based software locations, to be compared with <a href=
 </figure>
 </div>
 <hr>
-<div id="fig-ubuntu-package-structure" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-linux-os-map" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-ubuntu-package-structure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="ubuntu/ubuntu_package_structure.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;3.1: Detailed structure of Ubuntu package layout"><img src="ubuntu/ubuntu_package_structure.png" class="img-fluid figure-img"></a>
+<div aria-describedby="fig-linux-os-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="ubuntu/linux-architecture-process.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="How Linux processes shell commands: User → Shell → Kernel → File system → Hardware"><img src="ubuntu/linux-architecture-process.png" class="img-fluid figure-img"></a></p>
+<figcaption>How Linux processes shell commands: User → Shell → Kernel → File system → Hardware</figcaption>
+</figure>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ubuntu-package-structure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.1: Detailed structure of Ubuntu package layout
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="ubuntu/ubuntu_package_structure.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Ubuntu / FHS package and path layout (system vs user locations)"><img src="ubuntu/ubuntu_package_structure.png" class="img-fluid figure-img"></a></p>
+<figcaption>Ubuntu / FHS package and path layout (system vs user locations)</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="ubuntu/linux-filesystem-tree.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Filesystem hierarchy from the root /"><img src="ubuntu/linux-filesystem-tree.png" class="img-fluid figure-img"></a></p>
+<figcaption>Filesystem hierarchy from the root <code>/</code></figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="ubuntu/linux-filesystem-city.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Directory roles as a “city” map (every path has a job)"><img src="ubuntu/linux-filesystem-city.png" class="img-fluid figure-img"></a></p>
+<figcaption>Directory roles as a “city” map (every path has a job)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-linux-os-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.1: Linux at a glance. <strong>Left:</strong> how a shell command travels through OS layers (user space → shell → kernel → file system → hardware). <strong>Right:</strong> filesystem layout — Ubuntu package paths, the hierarchical tree from <code>/</code>, and directory roles as a city map. Illustrations inspired by <a href="https://www.instagram.com/p/DaepEm0j_hb/?utm_source=ig_web_copy_link&amp;igsh=NTc4MTIwNjQ2YQ%3D%3D&amp;img_index=4"><span class="citation" data-cites="qa_insights">@qa_insights</span> (Quality Insights) on Instagram</a>; directory “city” framing in the same teaching-poster style. For fundamentals, see also the <a href="https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html">Filesystem Hierarchy Standard (FHS)</a>, the <a href="https://specifications.freedesktop.org/basedir/latest/">XDG Base Directory Specification</a>, and the <a href="https://tldp.org/">Linux Documentation Project</a>.
 </figcaption>
 </figure>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Specific folders">
+<div class="callout callout-style-default callout-note callout-titled" title="Main folders and path roles">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Specific folders
+<span class="screen-reader-only">Note</span>Main folders and path roles
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<p>Everything under Linux hangs from the <strong>root</strong> <code>/</code> (a forward slash — paths are case-sensitive). Think of the tree as a city map: each top-level directory has a fixed job (<a href="#fig-linux-os-map" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>).</p>
+<p><strong>Core hierarchy</strong></p>
+<table class="table">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 65%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Path</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>/</code></td>
+<td>Root of the tree; all absolute paths start here.</td>
+</tr>
+<tr class="even">
+<td><code>/home</code></td>
+<td>Per-user homes (e.g.&nbsp;<code>/home/&lt;user&gt;</code>); your documents and configs live here.</td>
+</tr>
+<tr class="odd">
+<td><code>/root</code></td>
+<td>Home directory of the <code>root</code> administrator (not the same as <code>/</code>).</td>
+</tr>
+<tr class="even">
+<td><code>/etc</code></td>
+<td>System-wide configuration (<code>apt</code> sources, network, services).</td>
+</tr>
+<tr class="odd">
+<td><code>/bin</code>, <code>/sbin</code></td>
+<td>Essential command binaries (user vs admin-oriented). On modern Ubuntu many of these are merged into <code>/usr</code>.</td>
+</tr>
+<tr class="even">
+<td><code>/usr</code></td>
+<td>Read-only applications, libraries, and shared data installed by the distribution.</td>
+</tr>
+<tr class="odd">
+<td><code>/opt</code></td>
+<td>Optional / third-party self-contained application bundles (often <strong>not</strong> on <code>$PATH</code> until you add a symlink).</td>
+</tr>
+<tr class="even">
+<td><code>/var</code></td>
+<td>Variable data that grows over time: logs, caches, databases, spools.</td>
+</tr>
+<tr class="odd">
+<td><code>/tmp</code></td>
+<td>Temporary files; often cleared on reboot.</td>
+</tr>
+<tr class="even">
+<td><code>/mnt</code>, <code>/media</code></td>
+<td>Mount points for disks, USB drives, and other external storage.</td>
+</tr>
+<tr class="odd">
+<td><code>/dev</code></td>
+<td>Device nodes (hardware exposed as files).</td>
+</tr>
+<tr class="even">
+<td><code>/proc</code>, <code>/sys</code></td>
+<td>Live kernel / process / hardware interfaces (virtual filesystems).</td>
+</tr>
+<tr class="odd">
+<td><code>/lib</code>, <code>/lib64</code></td>
+<td>Shared libraries needed by core programs.</td>
+</tr>
+<tr class="even">
+<td><code>/boot</code></td>
+<td>Kernel and bootloader files.</td>
+</tr>
+<tr class="odd">
+<td><code>/run</code></td>
+<td>Runtime state (PID files, sockets such as <code>ssh-agent</code>).</td>
+</tr>
+<tr class="even">
+<td><code>/lost+found</code></td>
+<td>Recovered fragments after filesystem checks.</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>/usr</code> versus <code>/var</code></strong></p>
 <ul>
-<li><p><code>usr</code> folder stores <em>read-only</em> executables, while <code>/var</code> is regularly written upon changes:</p>
+<li><p><code>/usr</code> is meant for <em>mostly read-only</em> executables and shared assets shipped by packages.</p></li>
+<li><p><code>/var</code> is written continuously:</p>
 <ul>
-<li><code>/var/lib</code>: apt and dpkg databases, for instance, respectively stored under <code>dpkg</code>, and <code>/apt</code></li>
-<li><code>/var/cache</code>: metadata caches for faster execution</li>
+<li><code>/var/lib</code>: state databases (e.g.&nbsp;<code>dpkg</code>, <code>apt</code>)</li>
+<li><code>/var/cache</code>: downloadable / rebuildable caches</li>
+<li><code>/var/log</code>: service and system logs (first stop when an app misbehaves)</li>
 </ul></li>
-<li><p><code>/usr/local/</code>, or <code>$HOME/.local</code> stores executables that require custom compilation with <code>make</code>, or <code>qmake</code>, rendered from manual archives:</p>
-<ul>
-<li><code>bin</code>, <code>sbin</code> for executables</li>
-<li><code>share</code> for icons (under subfolder <code>icons</code>) and desktop configuration, documentation under <code>/doc</code></li>
-<li><code>lib</code> for extensions of a given executable (such as packages in R, or modules in Python)</li>
-<li>This folder hierarchy follows the <a href="https://specifications.freedesktop.org/basedir/latest/">XDG Base Directory Specification</a></li>
-</ul></li>
-<li><p><code>/tmp</code> for temporary folders, cleaned after <code>reboot</code></p></li>
-<li><p><code>/run</code> for sockets, namely used for controlling all the protocols running in the background for connecting to a server, such as the <code>ssh-agent</code></p></li>
-<li><p><code>~/.config/systemd</code>: lists all processes that keep on running in the background, such as Cursor updates, or OneDrive synchronisations.</p></li>
 </ul>
+<p><strong>Custom builds and per-user tools</strong></p>
+<ul>
+<li><p><code>/usr/local/</code> (system-wide, needs <code>sudo</code>) and <code>$HOME/.local</code> (user-only) hold software built with <code>make</code> / <code>qmake</code> or installed outside APT:</p>
+<ul>
+<li><code>bin</code>, <code>sbin</code> — executables</li>
+<li><code>share</code> — icons (<code>icons/</code>), desktop entries, docs (<code>doc/</code>)</li>
+<li><code>lib</code> — extensions (R packages, Python modules, shared objects)</li>
+<li>User layout follows the <a href="https://specifications.freedesktop.org/basedir/latest/">XDG Base Directory Specification</a> (<code>~/.config</code>, <code>~/.local/share</code>, <code>~/.cache</code>, …)</li>
+</ul></li>
+</ul>
+<p><strong>Runtime and background services</strong></p>
+<ul>
+<li><code>/tmp</code> — scratch space; do not store lasting work there.</li>
+<li><code>/run</code> — sockets and ephemeral service state (e.g.&nbsp;<code>ssh-agent</code>).</li>
+<li><code>~/.config/systemd</code> — user units that keep running after login (Cursor updates, OneDrive sync, …).</li>
+</ul>
+<p><strong>Memory aid</strong></p>
+<p>Start at <code>/</code> → configure in <code>/etc</code> → run tools from <code>/bin</code> or <code>/usr</code> → optional apps in <code>/opt</code> → inspect logs in <code>/var</code> → monitor live state via <code>/proc</code> and <code>/sys</code>.</p>
 </div>
 </div>
 </div>
@@ -604,7 +724,7 @@ Listing&nbsp;3.2: Run the Ubuntu update helper
 <div id="fig-nm-dhcp-apparmor" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-nm-dhcp-apparmor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="ubuntu/nm-dhcp-apparmor-noble.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;3.2: Wi-Fi DHCP under Ubuntu Noble: AppArmor blocks the moved nm-dhcp-helper until the profile is patched"><img src="ubuntu/nm-dhcp-apparmor-noble.png" class="img-fluid figure-img"></a>
+<a href="ubuntu/nm-dhcp-apparmor-noble.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;3.2: Wi-Fi DHCP under Ubuntu Noble: AppArmor blocks the moved nm-dhcp-helper until the profile is patched"><img src="ubuntu/nm-dhcp-apparmor-noble.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nm-dhcp-apparmor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3.2: Wi-Fi DHCP under Ubuntu Noble: AppArmor blocks the moved nm-dhcp-helper until the profile is patched
@@ -711,7 +831,7 @@ Listing&nbsp;3.6: Install eza from the community APT repository
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="bash/ls_output.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Modified behaviour of the ls output"><img src="bash/ls_output.png" class="img-fluid figure-img"></a></p>
+<p><a href="bash/ls_output.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Modified behaviour of the ls output"><img src="bash/ls_output.png" class="img-fluid figure-img"></a></p>
 <figcaption>Modified behaviour of the <code>ls</code> output</figcaption>
 </figure>
 </div>
@@ -719,7 +839,7 @@ Listing&nbsp;3.6: Install eza from the community APT repository
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="bash/ll_output.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Modified behaviour of the ll output, displaying in addition to file names their sizes, permission rights, and original owner"><img src="bash/ll_output.png" class="img-fluid figure-img"></a></p>
+<p><a href="bash/ll_output.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Modified behaviour of the ll output, displaying in addition to file names their sizes, permission rights, and original owner"><img src="bash/ll_output.png" class="img-fluid figure-img"></a></p>
 <figcaption>Modified behaviour of the <code>ll</code> output, displaying in addition to file names their sizes, permission rights, and original owner</figcaption>
 </figure>
 </div>
@@ -729,7 +849,7 @@ Listing&nbsp;3.6: Install eza from the community APT repository
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="bash/la_output.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="The la output displays in addition to the ll output the hidden files (traditionally starting with a .)"><img src="bash/la_output.png" class="img-fluid figure-img"></a></p>
+<p><a href="bash/la_output.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="The la output displays in addition to the ll output the hidden files (traditionally starting with a .)"><img src="bash/la_output.png" class="img-fluid figure-img"></a></p>
 <figcaption>The <code>la</code> output displays in addition to the <code>ll</code> output the hidden files (traditionally starting with a <code>.</code>)</figcaption>
 </figure>
 </div>
@@ -737,7 +857,7 @@ Listing&nbsp;3.6: Install eza from the community APT repository
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="bash/lt_output.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="The lt output is a combination of both ls and tree to display the hierarchical structure of a folder"><img src="bash/lt_output.png" class="img-fluid figure-img"></a></p>
+<p><a href="bash/lt_output.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="The lt output is a combination of both ls and tree to display the hierarchical structure of a folder"><img src="bash/lt_output.png" class="img-fluid figure-img"></a></p>
 <figcaption>The <code>lt</code> output is a combination of both <code>ls</code> and <code>tree</code> to display the hierarchical structure of a folder</figcaption>
 </figure>
 </div>
@@ -1241,7 +1361,7 @@ Figure&nbsp;3.3: Visual representation of my customised <code>ls</code> commands
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="ot">[^ubu-1]: </span>Returns <span class="in">`amd64`</span> in my case</span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## Recommended system libraries to install</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## Preamble: recommended system libraries to install</span></span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="in">```{#lst-system-libs .bash lst-cap="Install recommended system libraries"}</span></span>
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="in"># Install system libs</span></span>
@@ -1327,196 +1447,243 @@ Figure&nbsp;3.3: Visual representation of my customised <code>ls</code> commands
 <span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
 <span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a><span class="al">![Detailed structure of Ubuntu package layout](ubuntu/ubuntu_package_structure.png)</span>{#fig-ubuntu-package-structure}</span>
-<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true" title="Specific folders"}</span>
-<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`usr`</span> folder stores *read-only* executables, while <span class="in">`/var`</span> is regularly written upon changes:</span>
+<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a>::::: {#fig-linux-os-map layout="<span class="co">[</span><span class="ot">1,1</span><span class="co">]</span>"}</span>
+<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a>::: {}</span>
+<span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a><span class="al">![How Linux processes shell commands: User → Shell → Kernel → File system → Hardware](ubuntu/linux-architecture-process.png)</span></span>
+<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb10-100"><a href="#cb10-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-101"><a href="#cb10-101" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="in">`/var/lib`</span>: apt and dpkg databases, for instance, respectively stored under <span class="in">`dpkg`</span>, and <span class="in">`/apt`</span></span>
-<span id="cb10-102"><a href="#cb10-102" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="in">`/var/cache`</span>: metadata caches for faster execution</span>
+<span id="cb10-101"><a href="#cb10-101" aria-hidden="true" tabindex="-1"></a>::: {}</span>
+<span id="cb10-102"><a href="#cb10-102" aria-hidden="true" tabindex="-1"></a><span class="al">![Ubuntu / FHS package and path layout (system vs user locations)](ubuntu/ubuntu_package_structure.png)</span></span>
 <span id="cb10-103"><a href="#cb10-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`/usr/local/`</span>, or <span class="in">`$HOME/.local`</span> stores executables that require custom compilation with <span class="in">`make`</span>, or <span class="in">`qmake`</span>, rendered from manual archives:</span>
+<span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a><span class="al">![Filesystem hierarchy from the root `/`](ubuntu/linux-filesystem-tree.png)</span></span>
 <span id="cb10-105"><a href="#cb10-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="in">`bin`</span>, <span class="in">`sbin`</span> for executables</span>
-<span id="cb10-107"><a href="#cb10-107" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="in">`share`</span> for icons (under subfolder <span class="in">`icons`</span>) and desktop configuration, documentation under <span class="in">`/doc`</span></span>
-<span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="in">`lib`</span> for extensions of a given executable (such as packages in R, or modules in Python)</span>
-<span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>This folder hierarchy follows the <span class="co">[</span><span class="ot">XDG Base Directory Specification</span><span class="co">](https://specifications.freedesktop.org/basedir/latest/)</span></span>
-<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-111"><a href="#cb10-111" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`/tmp`</span> for temporary folders, cleaned after <span class="in">`reboot`</span></span>
-<span id="cb10-112"><a href="#cb10-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-113"><a href="#cb10-113" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`/run`</span> for sockets, namely used for controlling all the protocols running in the background for connecting to a server, such as the <span class="in">`ssh-agent`</span></span>
+<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a><span class="al">![Directory roles as a “city” map (every path has a job)](ubuntu/linux-filesystem-city.png)</span></span>
+<span id="cb10-107"><a href="#cb10-107" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a>Linux at a glance. **Left:** how a shell command travels through OS layers (user space → shell → kernel → file system → hardware). **Right:** filesystem layout — Ubuntu package paths, the hierarchical tree from <span class="in">`/`</span>, and directory roles as a city map. Illustrations inspired by <span class="co">[</span><span class="ot">@qa_insights (Quality Insights) on Instagram</span><span class="co">](https://www.instagram.com/p/DaepEm0j_hb/?utm_source=ig_web_copy_link&amp;igsh=NTc4MTIwNjQ2YQ%3D%3D&amp;img_index=4)</span>; directory “city” framing in the same teaching-poster style. For fundamentals, see also the <span class="co">[</span><span class="ot">Filesystem Hierarchy Standard (FHS)</span><span class="co">](https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html)</span>, the <span class="co">[</span><span class="ot">XDG Base Directory Specification</span><span class="co">](https://specifications.freedesktop.org/basedir/latest/)</span>, and the <span class="co">[</span><span class="ot">Linux Documentation Project</span><span class="co">](https://tldp.org/)</span>.</span>
+<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a>:::::</span>
+<span id="cb10-111"><a href="#cb10-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-112"><a href="#cb10-112" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true" title="Main folders and path roles"}</span>
+<span id="cb10-113"><a href="#cb10-113" aria-hidden="true" tabindex="-1"></a>Everything under Linux hangs from the **root** <span class="in">`/`</span> (a forward slash — paths are case-sensitive). Think of the tree as a city map: each top-level directory has a fixed job (@fig-linux-os-map).</span>
 <span id="cb10-114"><a href="#cb10-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-115"><a href="#cb10-115" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`~/.config/systemd`</span>: lists all processes that keep on running in the background, such as Cursor updates, or OneDrive synchronisations.</span>
-<span id="cb10-116"><a href="#cb10-116" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb10-117"><a href="#cb10-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-118"><a href="#cb10-118" aria-hidden="true" tabindex="-1"></a><span class="fu">## Recommended updating policy of Ubuntu</span></span>
-<span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-120"><a href="#cb10-120" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Use the maintained helper script</span>
-<span id="cb10-121"><a href="#cb10-121" aria-hidden="true" tabindex="-1"></a>    <span class="co">[</span><span class="ot">`ubuntu/update_os.sh`</span><span class="co">](ubuntu/update_os.sh)</span>. It runs the usual</span>
-<span id="cb10-122"><a href="#cb10-122" aria-hidden="true" tabindex="-1"></a>    <span class="in">`apt`</span> update / upgrade / cleanup path, but **refuses kernel package</span>
-<span id="cb10-123"><a href="#cb10-123" aria-hidden="true" tabindex="-1"></a>    changes when any installed DKMS module is missing or broken** for the</span>
-<span id="cb10-124"><a href="#cb10-124" aria-hidden="true" tabindex="-1"></a>    running (or newest) kernel — so a partial upgrade cannot leave you</span>
-<span id="cb10-125"><a href="#cb10-125" aria-hidden="true" tabindex="-1"></a>    without drivers such as webcam relays, NVIDIA, or VirtualBox.</span>
-<span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-127"><a href="#cb10-127" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Make it executable and run it with admin rights:</span>
-<span id="cb10-128"><a href="#cb10-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-129"><a href="#cb10-129" aria-hidden="true" tabindex="-1"></a>    <span class="in">```{#lst-update-script .bash lst-cap="Run the Ubuntu update helper"}</span></span>
-<span id="cb10-130"><a href="#cb10-130" aria-hidden="true" tabindex="-1"></a><span class="in">    chmod +x ubuntu/update_os.sh</span></span>
-<span id="cb10-131"><a href="#cb10-131" aria-hidden="true" tabindex="-1"></a><span class="in">    sudo ./ubuntu/update_os.sh</span></span>
-<span id="cb10-132"><a href="#cb10-132" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
-<span id="cb10-133"><a href="#cb10-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-134"><a href="#cb10-134" aria-hidden="true" tabindex="-1"></a>    To force a kernel upgrade anyway (only if you accept a broken DKMS</span>
-<span id="cb10-135"><a href="#cb10-135" aria-hidden="true" tabindex="-1"></a>    stack): <span class="in">`sudo FORCE_KERNEL_UPGRADE=1 ./ubuntu/update_os.sh`</span>.</span>
-<span id="cb10-136"><a href="#cb10-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-137"><a href="#cb10-137" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Reboot the system with <span class="in">`reboot`</span> when a new kernel was installed.</span>
-<span id="cb10-138"><a href="#cb10-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-139"><a href="#cb10-139" aria-hidden="true" tabindex="-1"></a>::: {.callout-caution collapse="true" title="Ubuntu partial updates"}</span>
-<span id="cb10-140"><a href="#cb10-140" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Partial updates breaking key driver components occur more often with Ubuntu compared to Microsoft, since Linux tends to provide lots of separate, modular packages while Windows ships large and standalone bundles — **Consequence: more issues with updates, especially if the network connection dropped, and the newest versions of the packages were not fully installed.**</span></span>
-<span id="cb10-141"><a href="#cb10-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-142"><a href="#cb10-142" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb10-143"><a href="#cb10-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-144"><a href="#cb10-144" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; General recommendations:</span></span>
-<span id="cb10-145"><a href="#cb10-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-146"><a href="#cb10-146" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
-<span id="cb10-147"><a href="#cb10-147" aria-hidden="true" tabindex="-1"></a><span class="co"># to be run daily</span></span>
-<span id="cb10-148"><a href="#cb10-148" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
-<span id="cb10-149"><a href="#cb10-149" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt upgrade</span>
-<span id="cb10-150"><a href="#cb10-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-151"><a href="#cb10-151" aria-hidden="true" tabindex="-1"></a><span class="co"># to be run monthly</span></span>
-<span id="cb10-152"><a href="#cb10-152" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt full-upgrade</span>
+<span id="cb10-115"><a href="#cb10-115" aria-hidden="true" tabindex="-1"></a>**Core hierarchy**</span>
+<span id="cb10-116"><a href="#cb10-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-117"><a href="#cb10-117" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Path <span class="pp">|</span> Role <span class="pp">|</span></span>
+<span id="cb10-118"><a href="#cb10-118" aria-hidden="true" tabindex="-1"></a><span class="pp">|------------------|----------------------------------|</span></span>
+<span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`/`</span> <span class="pp">|</span> Root of the tree; all absolute paths start here. <span class="pp">|</span></span>
+<span id="cb10-120"><a href="#cb10-120" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`/home`</span> <span class="pp">|</span> Per-user homes (e.g. <span class="in">`/home/&lt;user&gt;`</span>); your documents and configs live here. <span class="pp">|</span></span>
+<span id="cb10-121"><a href="#cb10-121" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`/root`</span> <span class="pp">|</span> Home directory of the <span class="in">`root`</span> administrator (not the same as <span class="in">`/`</span>). <span class="pp">|</span></span>
+<span id="cb10-122"><a href="#cb10-122" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`/etc`</span> <span class="pp">|</span> System-wide configuration (<span class="in">`apt`</span> sources, network, services). <span class="pp">|</span></span>
+<span id="cb10-123"><a href="#cb10-123" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`/bin`</span>, <span class="in">`/sbin`</span> <span class="pp">|</span> Essential command binaries (user vs admin-oriented). On modern Ubuntu many of these are merged into <span class="in">`/usr`</span>. <span class="pp">|</span></span>
+<span id="cb10-124"><a href="#cb10-124" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`/usr`</span> <span class="pp">|</span> Read-only applications, libraries, and shared data installed by the distribution. <span class="pp">|</span></span>
+<span id="cb10-125"><a href="#cb10-125" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`/opt`</span> <span class="pp">|</span> Optional / third-party self-contained application bundles (often **not** on <span class="in">`$PATH`</span> until you add a symlink). <span class="pp">|</span></span>
+<span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`/var`</span> <span class="pp">|</span> Variable data that grows over time: logs, caches, databases, spools. <span class="pp">|</span></span>
+<span id="cb10-127"><a href="#cb10-127" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`/tmp`</span> <span class="pp">|</span> Temporary files; often cleared on reboot. <span class="pp">|</span></span>
+<span id="cb10-128"><a href="#cb10-128" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`/mnt`</span>, <span class="in">`/media`</span> <span class="pp">|</span> Mount points for disks, USB drives, and other external storage. <span class="pp">|</span></span>
+<span id="cb10-129"><a href="#cb10-129" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`/dev`</span> <span class="pp">|</span> Device nodes (hardware exposed as files). <span class="pp">|</span></span>
+<span id="cb10-130"><a href="#cb10-130" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`/proc`</span>, <span class="in">`/sys`</span> <span class="pp">|</span> Live kernel / process / hardware interfaces (virtual filesystems). <span class="pp">|</span></span>
+<span id="cb10-131"><a href="#cb10-131" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`/lib`</span>, <span class="in">`/lib64`</span> <span class="pp">|</span> Shared libraries needed by core programs. <span class="pp">|</span></span>
+<span id="cb10-132"><a href="#cb10-132" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`/boot`</span> <span class="pp">|</span> Kernel and bootloader files. <span class="pp">|</span></span>
+<span id="cb10-133"><a href="#cb10-133" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`/run`</span> <span class="pp">|</span> Runtime state (PID files, sockets such as <span class="in">`ssh-agent`</span>). <span class="pp">|</span></span>
+<span id="cb10-134"><a href="#cb10-134" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`/lost+found`</span> <span class="pp">|</span> Recovered fragments after filesystem checks. <span class="pp">|</span></span>
+<span id="cb10-135"><a href="#cb10-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-136"><a href="#cb10-136" aria-hidden="true" tabindex="-1"></a>**`/usr` versus `/var`**</span>
+<span id="cb10-137"><a href="#cb10-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-138"><a href="#cb10-138" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`/usr`</span> is meant for *mostly read-only* executables and shared assets shipped by packages.</span>
+<span id="cb10-139"><a href="#cb10-139" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`/var`</span> is written continuously:</span>
+<span id="cb10-140"><a href="#cb10-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-141"><a href="#cb10-141" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="in">`/var/lib`</span>: state databases (e.g. <span class="in">`dpkg`</span>, <span class="in">`apt`</span>)</span>
+<span id="cb10-142"><a href="#cb10-142" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="in">`/var/cache`</span>: downloadable / rebuildable caches</span>
+<span id="cb10-143"><a href="#cb10-143" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="in">`/var/log`</span>: service and system logs (first stop when an app misbehaves)</span>
+<span id="cb10-144"><a href="#cb10-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-145"><a href="#cb10-145" aria-hidden="true" tabindex="-1"></a>**Custom builds and per-user tools**</span>
+<span id="cb10-146"><a href="#cb10-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-147"><a href="#cb10-147" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`/usr/local/`</span> (system-wide, needs <span class="in">`sudo`</span>) and <span class="in">`$HOME/.local`</span> (user-only) hold software built with <span class="in">`make`</span> / <span class="in">`qmake`</span> or installed outside APT:</span>
+<span id="cb10-148"><a href="#cb10-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-149"><a href="#cb10-149" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="in">`bin`</span>, <span class="in">`sbin`</span> — executables</span>
+<span id="cb10-150"><a href="#cb10-150" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="in">`share`</span> — icons (<span class="in">`icons/`</span>), desktop entries, docs (<span class="in">`doc/`</span>)</span>
+<span id="cb10-151"><a href="#cb10-151" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="in">`lib`</span> — extensions (R packages, Python modules, shared objects)</span>
+<span id="cb10-152"><a href="#cb10-152" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>User layout follows the <span class="co">[</span><span class="ot">XDG Base Directory Specification</span><span class="co">](https://specifications.freedesktop.org/basedir/latest/)</span> (<span class="in">`~/.config`</span>, <span class="in">`~/.local/share`</span>, <span class="in">`~/.cache`</span>, …)</span>
 <span id="cb10-153"><a href="#cb10-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-154"><a href="#cb10-154" aria-hidden="true" tabindex="-1"></a><span class="co">## clean deprecated dependencies</span></span>
-<span id="cb10-155"><a href="#cb10-155" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt autoremove</span>
-<span id="cb10-156"><a href="#cb10-156" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt autoclean</span>
-<span id="cb10-157"><a href="#cb10-157" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-158"><a href="#cb10-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-159"><a href="#cb10-159" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb10-160"><a href="#cb10-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-161"><a href="#cb10-161" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Deal with driver issues</span></span>
-<span id="cb10-162"><a href="#cb10-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-163"><a href="#cb10-163" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
-<span id="cb10-164"><a href="#cb10-164" aria-hidden="true" tabindex="-1"></a><span class="co">## Check for Broken Packages</span></span>
-<span id="cb10-165"><a href="#cb10-165" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dpkg <span class="at">--configure</span> <span class="at">-a</span></span>
-<span id="cb10-166"><a href="#cb10-166" aria-hidden="true" tabindex="-1"></a><span class="co">## Install missing dependencies</span></span>
-<span id="cb10-167"><a href="#cb10-167" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt <span class="at">-f</span> install</span>
-<span id="cb10-168"><a href="#cb10-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-169"><a href="#cb10-169" aria-hidden="true" tabindex="-1"></a><span class="co">## List all Hardware Driver Errors</span></span>
-<span id="cb10-170"><a href="#cb10-170" aria-hidden="true" tabindex="-1"></a><span class="fu">dmesg</span> <span class="at">-l</span> err,crit,alert,emerg</span>
-<span id="cb10-171"><a href="#cb10-171" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-172"><a href="#cb10-172" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb10-154"><a href="#cb10-154" aria-hidden="true" tabindex="-1"></a>**Runtime and background services**</span>
+<span id="cb10-155"><a href="#cb10-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-156"><a href="#cb10-156" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`/tmp`</span> — scratch space; do not store lasting work there.</span>
+<span id="cb10-157"><a href="#cb10-157" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`/run`</span> — sockets and ephemeral service state (e.g. <span class="in">`ssh-agent`</span>).</span>
+<span id="cb10-158"><a href="#cb10-158" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`~/.config/systemd`</span> — user units that keep running after login (Cursor updates, OneDrive sync, …).</span>
+<span id="cb10-159"><a href="#cb10-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-160"><a href="#cb10-160" aria-hidden="true" tabindex="-1"></a>**Memory aid**</span>
+<span id="cb10-161"><a href="#cb10-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-162"><a href="#cb10-162" aria-hidden="true" tabindex="-1"></a>Start at <span class="in">`/`</span> → configure in <span class="in">`/etc`</span> → run tools from <span class="in">`/bin`</span> or <span class="in">`/usr`</span> → optional apps in <span class="in">`/opt`</span> → inspect logs in <span class="in">`/var`</span> → monitor live state via <span class="in">`/proc`</span> and <span class="in">`/sys`</span>.</span>
+<span id="cb10-163"><a href="#cb10-163" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb10-164"><a href="#cb10-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-165"><a href="#cb10-165" aria-hidden="true" tabindex="-1"></a><span class="fu">## Recommended updating policy of Ubuntu</span></span>
+<span id="cb10-166"><a href="#cb10-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-167"><a href="#cb10-167" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Use the maintained helper script</span>
+<span id="cb10-168"><a href="#cb10-168" aria-hidden="true" tabindex="-1"></a>    <span class="co">[</span><span class="ot">`ubuntu/update_os.sh`</span><span class="co">](ubuntu/update_os.sh)</span>. It runs the usual</span>
+<span id="cb10-169"><a href="#cb10-169" aria-hidden="true" tabindex="-1"></a>    <span class="in">`apt`</span> update / upgrade / cleanup path, but **refuses kernel package</span>
+<span id="cb10-170"><a href="#cb10-170" aria-hidden="true" tabindex="-1"></a>    changes when any installed DKMS module is missing or broken** for the</span>
+<span id="cb10-171"><a href="#cb10-171" aria-hidden="true" tabindex="-1"></a>    running (or newest) kernel — so a partial upgrade cannot leave you</span>
+<span id="cb10-172"><a href="#cb10-172" aria-hidden="true" tabindex="-1"></a>    without drivers such as webcam relays, NVIDIA, or VirtualBox.</span>
 <span id="cb10-173"><a href="#cb10-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-174"><a href="#cb10-174" aria-hidden="true" tabindex="-1"></a><span class="fu">## Monitor processes running in the background, and on startup</span></span>
+<span id="cb10-174"><a href="#cb10-174" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Make it executable and run it with admin rights:</span>
 <span id="cb10-175"><a href="#cb10-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-176"><a href="#cb10-176" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`systemctl list-unit-files --type=service --state=running --user`</span> to list all processes running in the background, even after rebooting, restrained to the user-level.</span>
-<span id="cb10-177"><a href="#cb10-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-178"><a href="#cb10-178" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>Alternatively, processes at the system-level are stored under <span class="in">`/lib/systemd/system/`</span></span>
-<span id="cb10-179"><a href="#cb10-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-180"><a href="#cb10-180" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`systemctl status &lt;service&gt;`</span> retrieves current status</span>
-<span id="cb10-181"><a href="#cb10-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-182"><a href="#cb10-182" aria-hidden="true" tabindex="-1"></a><span class="fu">## Network protocols, and connection troubleshoots</span></span>
+<span id="cb10-176"><a href="#cb10-176" aria-hidden="true" tabindex="-1"></a>    <span class="in">```{#lst-update-script .bash lst-cap="Run the Ubuntu update helper"}</span></span>
+<span id="cb10-177"><a href="#cb10-177" aria-hidden="true" tabindex="-1"></a><span class="in">    chmod +x ubuntu/update_os.sh</span></span>
+<span id="cb10-178"><a href="#cb10-178" aria-hidden="true" tabindex="-1"></a><span class="in">    sudo ./ubuntu/update_os.sh</span></span>
+<span id="cb10-179"><a href="#cb10-179" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
+<span id="cb10-180"><a href="#cb10-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-181"><a href="#cb10-181" aria-hidden="true" tabindex="-1"></a>    To force a kernel upgrade anyway (only if you accept a broken DKMS</span>
+<span id="cb10-182"><a href="#cb10-182" aria-hidden="true" tabindex="-1"></a>    stack): <span class="in">`sudo FORCE_KERNEL_UPGRADE=1 ./ubuntu/update_os.sh`</span>.</span>
 <span id="cb10-183"><a href="#cb10-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-184"><a href="#cb10-184" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Two IP protocols for Wi-Fi: <span class="in">`IPv4`</span> versus <span class="in">`IPv6`</span>.</span>
+<span id="cb10-184"><a href="#cb10-184" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Reboot the system with <span class="in">`reboot`</span> when a new kernel was installed.</span>
 <span id="cb10-185"><a href="#cb10-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-186"><a href="#cb10-186" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip title="The two Internet protocols, namely IPv4 vs IPv6"}</span>
-<span id="cb10-187"><a href="#cb10-187" aria-hidden="true" tabindex="-1"></a>IPv4 is older, but still prevailing in many websites, such as GitHub, or OneDrive:</span>
+<span id="cb10-186"><a href="#cb10-186" aria-hidden="true" tabindex="-1"></a>::: {.callout-caution collapse="true" title="Ubuntu partial updates"}</span>
+<span id="cb10-187"><a href="#cb10-187" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Partial updates breaking key driver components occur more often with Ubuntu compared to Microsoft, since Linux tends to provide lots of separate, modular packages while Windows ships large and standalone bundles — **Consequence: more issues with updates, especially if the network connection dropped, and the newest versions of the packages were not fully installed.**</span></span>
 <span id="cb10-188"><a href="#cb10-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-189"><a href="#cb10-189" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Uses 32-bit addresses (e.g. <span class="in">`192.168.1.10`</span>)</span>
-<span id="cb10-190"><a href="#cb10-190" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Used by **most websites**, CDNs, VPNs, corporate services</span>
-<span id="cb10-191"><a href="#cb10-191" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>But the 32-bit limitation hinders the number of available IP addresses.</span>
+<span id="cb10-189"><a href="#cb10-189" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb10-190"><a href="#cb10-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-191"><a href="#cb10-191" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; General recommendations:</span></span>
 <span id="cb10-192"><a href="#cb10-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-193"><a href="#cb10-193" aria-hidden="true" tabindex="-1"></a>IPv6 is newer, but not universally supported:</span>
-<span id="cb10-194"><a href="#cb10-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-195"><a href="#cb10-195" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Uses 128-bit addresses (e.g. <span class="in">`2a01:cb14:86a7::1`</span>)</span>
-<span id="cb10-196"><a href="#cb10-196" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Supported by modern ISPs and operating systems</span>
-<span id="cb10-197"><a href="#cb10-197" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Some networks provide **IPv6-only**, with no IPv4 fallback. Especially the case with Microsoft services, governmental or academic websites.</span>
-<span id="cb10-198"><a href="#cb10-198" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb10-199"><a href="#cb10-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-200"><a href="#cb10-200" aria-hidden="true" tabindex="-1"></a><span class="fu">### Symptom: Wi-Fi connects, but some websites fail</span></span>
-<span id="cb10-201"><a href="#cb10-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-202"><a href="#cb10-202" aria-hidden="true" tabindex="-1"></a>On Ubuntu **24.04 (Noble)**, NetworkManager may show the link as connected while `ip` lists **only IPv6** addresses. Sites that need IPv4 (or that resolve poorly without it) then fail — e.g. <span class="in">`curl https://github.com`</span> or <span class="in">`curl https://onedrive.live.com`</span> hang or return *Cannot connect*. Eduroam or a phone hotspot often work; some home routers (e.g. Orange Livebox) expose the bug clearly.</span>
-<span id="cb10-203"><a href="#cb10-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-204"><a href="#cb10-204" aria-hidden="true" tabindex="-1"></a>**Root cause (not “IPv6-only router”):** under Noble, NetworkManager’s DHCP helper lives at `/usr/libexec/nm-dhcp-helper`, but the stock AppArmor profile for `dhclient` still allows only the old path `/usr/lib/NetworkManager/nm-dhcp-helper`. `dhclient` obtains a lease (`DHCPOFFER` / `DHCPACK`), then AppArmor **denies** the helper → NetworkManager never applies IPv4^<span class="co">[</span><span class="ot">See @fig-nm-dhcp-apparmor and Launchpad bugs [#2083017](https://bugs.launchpad.net/ubuntu/+source/apparmor/+bug/2083017), [#2116733](https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/2116733).</span><span class="co">]</span></span>
+<span id="cb10-193"><a href="#cb10-193" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb10-194"><a href="#cb10-194" aria-hidden="true" tabindex="-1"></a><span class="co"># to be run daily</span></span>
+<span id="cb10-195"><a href="#cb10-195" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb10-196"><a href="#cb10-196" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt upgrade</span>
+<span id="cb10-197"><a href="#cb10-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-198"><a href="#cb10-198" aria-hidden="true" tabindex="-1"></a><span class="co"># to be run monthly</span></span>
+<span id="cb10-199"><a href="#cb10-199" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt full-upgrade</span>
+<span id="cb10-200"><a href="#cb10-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-201"><a href="#cb10-201" aria-hidden="true" tabindex="-1"></a><span class="co">## clean deprecated dependencies</span></span>
+<span id="cb10-202"><a href="#cb10-202" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt autoremove</span>
+<span id="cb10-203"><a href="#cb10-203" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt autoclean</span>
+<span id="cb10-204"><a href="#cb10-204" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb10-205"><a href="#cb10-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-206"><a href="#cb10-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-207"><a href="#cb10-207" aria-hidden="true" tabindex="-1"></a><span class="al">![Wi-Fi DHCP under Ubuntu Noble: AppArmor blocks the moved nm-dhcp-helper until the profile is patched](ubuntu/nm-dhcp-apparmor-noble.png)</span>{#fig-nm-dhcp-apparmor}</span>
-<span id="cb10-208"><a href="#cb10-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-209"><a href="#cb10-209" aria-hidden="true" tabindex="-1"></a><span class="fu">### Permanent fix</span></span>
-<span id="cb10-210"><a href="#cb10-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-211"><a href="#cb10-211" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Run @lst-run-fix-nm-dhcp. The script in @lst-fix-nm-dhcp-apparmor (file: <span class="co">[</span><span class="ot">`ubuntu/fix-nm-dhcp-apparmor.sh`</span><span class="co">](ubuntu/fix-nm-dhcp-apparmor.sh)</span>) patches <span class="in">`/etc/apparmor.d/sbin.dhclient`</span> for <span class="in">`/usr/libexec/nm-dhcp-helper`</span>, sets NetworkManager to <span class="in">`dhcp=dhclient`</span>, softens Wi-Fi powersave, reloads AppArmor, and restarts NetworkManager.</span>
-<span id="cb10-212"><a href="#cb10-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-213"><a href="#cb10-213" aria-hidden="true" tabindex="-1"></a><span class="in">```{#lst-run-fix-nm-dhcp .bash lst-cap="Make the AppArmor DHCP fix executable and run it"}</span></span>
-<span id="cb10-214"><a href="#cb10-214" aria-hidden="true" tabindex="-1"></a><span class="in">chmod +x ubuntu/fix-nm-dhcp-apparmor.sh</span></span>
-<span id="cb10-215"><a href="#cb10-215" aria-hidden="true" tabindex="-1"></a><span class="in">sudo ./ubuntu/fix-nm-dhcp-apparmor.sh</span></span>
-<span id="cb10-216"><a href="#cb10-216" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-217"><a href="#cb10-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-218"><a href="#cb10-218" aria-hidden="true" tabindex="-1"></a><span class="in">```{#lst-fix-nm-dhcp-apparmor .bash include="ubuntu/fix-nm-dhcp-apparmor.sh" lst-cap="fix-nm-dhcp-apparmor.sh — allow /usr/libexec/nm-dhcp-helper under AppArmor"}</span></span>
-<span id="cb10-219"><a href="#cb10-219" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-206"><a href="#cb10-206" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb10-207"><a href="#cb10-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-208"><a href="#cb10-208" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Deal with driver issues</span></span>
+<span id="cb10-209"><a href="#cb10-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-210"><a href="#cb10-210" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb10-211"><a href="#cb10-211" aria-hidden="true" tabindex="-1"></a><span class="co">## Check for Broken Packages</span></span>
+<span id="cb10-212"><a href="#cb10-212" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dpkg <span class="at">--configure</span> <span class="at">-a</span></span>
+<span id="cb10-213"><a href="#cb10-213" aria-hidden="true" tabindex="-1"></a><span class="co">## Install missing dependencies</span></span>
+<span id="cb10-214"><a href="#cb10-214" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt <span class="at">-f</span> install</span>
+<span id="cb10-215"><a href="#cb10-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-216"><a href="#cb10-216" aria-hidden="true" tabindex="-1"></a><span class="co">## List all Hardware Driver Errors</span></span>
+<span id="cb10-217"><a href="#cb10-217" aria-hidden="true" tabindex="-1"></a><span class="fu">dmesg</span> <span class="at">-l</span> err,crit,alert,emerg</span>
+<span id="cb10-218"><a href="#cb10-218" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-219"><a href="#cb10-219" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb10-220"><a href="#cb10-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-221"><a href="#cb10-221" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Reconnect to the Wi-Fi network using the GUI, then check the success of the patch:</span>
+<span id="cb10-221"><a href="#cb10-221" aria-hidden="true" tabindex="-1"></a><span class="fu">## Monitor processes running in the background, and on startup</span></span>
 <span id="cb10-222"><a href="#cb10-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-223"><a href="#cb10-223" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb10-224"><a href="#cb10-224" aria-hidden="true" tabindex="-1"></a><span class="ex">ip</span> <span class="at">-br</span> addr show <span class="op">&lt;</span>wifi-network-name<span class="op">&gt;</span> <span class="co"># e.g. wlp2s0f0</span></span>
-<span id="cb10-225"><a href="#cb10-225" aria-hidden="true" tabindex="-1"></a><span class="fu">ping</span> <span class="at">-4</span> <span class="at">-c</span> 2 1.1.1.1 <span class="co"># should return "64 bytes from 1.1.1.1: icmp_seq=1 ttl=55 time=1.24 ms"</span></span>
-<span id="cb10-226"><a href="#cb10-226" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-4</span> <span class="at">-sI</span> <span class="at">--max-time</span> 8 https://github.com <span class="kw">|</span> <span class="fu">head</span> <span class="at">-3</span> <span class="co"># should return "HTTP/2 200"</span></span>
-<span id="cb10-227"><a href="#cb10-227" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-223"><a href="#cb10-223" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`systemctl list-unit-files --type=service --state=running --user`</span> to list all processes running in the background, even after rebooting, restrained to the user-level.</span>
+<span id="cb10-224"><a href="#cb10-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-225"><a href="#cb10-225" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>Alternatively, processes at the system-level are stored under <span class="in">`/lib/systemd/system/`</span></span>
+<span id="cb10-226"><a href="#cb10-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-227"><a href="#cb10-227" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`systemctl status &lt;service&gt;`</span> retrieves current status</span>
 <span id="cb10-228"><a href="#cb10-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-229"><a href="#cb10-229" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pimp your shell: switch from boring Bash to fancy `Zsh`</span></span>
+<span id="cb10-229"><a href="#cb10-229" aria-hidden="true" tabindex="-1"></a><span class="fu">## Network protocols, and connection troubleshoots</span></span>
 <span id="cb10-230"><a href="#cb10-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-231"><a href="#cb10-231" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Installation script:</span>
+<span id="cb10-231"><a href="#cb10-231" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Two IP protocols for Wi-Fi: <span class="in">`IPv4`</span> versus <span class="in">`IPv6`</span>.</span>
 <span id="cb10-232"><a href="#cb10-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-233"><a href="#cb10-233" aria-hidden="true" tabindex="-1"></a><span class="in">```{#lst-zsh-install .bash lst-cap="Install Zsh, set it as default shell, and install Oh My Zsh"}</span></span>
-<span id="cb10-234"><a href="#cb10-234" aria-hidden="true" tabindex="-1"></a><span class="in">sudo apt update</span></span>
-<span id="cb10-235"><a href="#cb10-235" aria-hidden="true" tabindex="-1"></a><span class="in">sudo apt install zsh</span></span>
-<span id="cb10-236"><a href="#cb10-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-237"><a href="#cb10-237" aria-hidden="true" tabindex="-1"></a><span class="in">## change the default shell shebang</span></span>
-<span id="cb10-238"><a href="#cb10-238" aria-hidden="true" tabindex="-1"></a><span class="in">chsh -s $(which zsh) ## modify /etc/passwd repository</span></span>
-<span id="cb10-239"><a href="#cb10-239" aria-hidden="true" tabindex="-1"></a><span class="in">reboot # required log out for effective changes</span></span>
-<span id="cb10-240"><a href="#cb10-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-241"><a href="#cb10-241" aria-hidden="true" tabindex="-1"></a><span class="in">## check if zsh is used by default (also the theme is modified)</span></span>
-<span id="cb10-242"><a href="#cb10-242" aria-hidden="true" tabindex="-1"></a><span class="in">getent passwd "$USER" # returns "/home/bastien:/usr/bin/zsh"</span></span>
-<span id="cb10-243"><a href="#cb10-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-244"><a href="#cb10-244" aria-hidden="true" tabindex="-1"></a><span class="in">## Install advanced customisation of the shell with Oh My Zsh addon</span></span>
-<span id="cb10-245"><a href="#cb10-245" aria-hidden="true" tabindex="-1"></a><span class="in">sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" # create automatically the ~/.zshrc configuration file</span></span>
-<span id="cb10-246"><a href="#cb10-246" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-247"><a href="#cb10-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-248"><a href="#cb10-248" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **You should keep the original ~/.bashrc as a fallback for Bash**.</span></span>
-<span id="cb10-249"><a href="#cb10-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-250"><a href="#cb10-250" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Install the modern alternative to <span class="in">`ls`</span>, namely <span class="in">`eza`</span></span>
-<span id="cb10-251"><a href="#cb10-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-252"><a href="#cb10-252" aria-hidden="true" tabindex="-1"></a><span class="in">```{#lst-eza-install .bash lst-cap="Install eza from the community APT repository"}</span></span>
-<span id="cb10-253"><a href="#cb10-253" aria-hidden="true" tabindex="-1"></a><span class="in"># install the gpg command</span></span>
-<span id="cb10-254"><a href="#cb10-254" aria-hidden="true" tabindex="-1"></a><span class="in">sudo apt update</span></span>
-<span id="cb10-255"><a href="#cb10-255" aria-hidden="true" tabindex="-1"></a><span class="in">sudo apt install -y gpg</span></span>
-<span id="cb10-256"><a href="#cb10-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-257"><a href="#cb10-257" aria-hidden="true" tabindex="-1"></a><span class="in"># install eza</span></span>
-<span id="cb10-258"><a href="#cb10-258" aria-hidden="true" tabindex="-1"></a><span class="in">wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg</span></span>
-<span id="cb10-259"><a href="#cb10-259" aria-hidden="true" tabindex="-1"></a><span class="in">echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list</span></span>
-<span id="cb10-260"><a href="#cb10-260" aria-hidden="true" tabindex="-1"></a><span class="in">sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list</span></span>
-<span id="cb10-261"><a href="#cb10-261" aria-hidden="true" tabindex="-1"></a><span class="in">sudo apt update</span></span>
-<span id="cb10-262"><a href="#cb10-262" aria-hidden="true" tabindex="-1"></a><span class="in">sudo apt install -y eza</span></span>
+<span id="cb10-233"><a href="#cb10-233" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip title="The two Internet protocols, namely IPv4 vs IPv6"}</span>
+<span id="cb10-234"><a href="#cb10-234" aria-hidden="true" tabindex="-1"></a>IPv4 is older, but still prevailing in many websites, such as GitHub, or OneDrive:</span>
+<span id="cb10-235"><a href="#cb10-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-236"><a href="#cb10-236" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Uses 32-bit addresses (e.g. <span class="in">`192.168.1.10`</span>)</span>
+<span id="cb10-237"><a href="#cb10-237" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Used by **most websites**, CDNs, VPNs, corporate services</span>
+<span id="cb10-238"><a href="#cb10-238" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>But the 32-bit limitation hinders the number of available IP addresses.</span>
+<span id="cb10-239"><a href="#cb10-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-240"><a href="#cb10-240" aria-hidden="true" tabindex="-1"></a>IPv6 is newer, but not universally supported:</span>
+<span id="cb10-241"><a href="#cb10-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-242"><a href="#cb10-242" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Uses 128-bit addresses (e.g. <span class="in">`2a01:cb14:86a7::1`</span>)</span>
+<span id="cb10-243"><a href="#cb10-243" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Supported by modern ISPs and operating systems</span>
+<span id="cb10-244"><a href="#cb10-244" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Some networks provide **IPv6-only**, with no IPv4 fallback. Especially the case with Microsoft services, governmental or academic websites.</span>
+<span id="cb10-245"><a href="#cb10-245" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb10-246"><a href="#cb10-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-247"><a href="#cb10-247" aria-hidden="true" tabindex="-1"></a><span class="fu">### Symptom: Wi-Fi connects, but some websites fail</span></span>
+<span id="cb10-248"><a href="#cb10-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-249"><a href="#cb10-249" aria-hidden="true" tabindex="-1"></a>On Ubuntu **24.04 (Noble)**, NetworkManager may show the link as connected while `ip` lists **only IPv6** addresses. Sites that need IPv4 (or that resolve poorly without it) then fail — e.g. <span class="in">`curl https://github.com`</span> or <span class="in">`curl https://onedrive.live.com`</span> hang or return *Cannot connect*. Eduroam or a phone hotspot often work; some home routers (e.g. Orange Livebox) expose the bug clearly.</span>
+<span id="cb10-250"><a href="#cb10-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-251"><a href="#cb10-251" aria-hidden="true" tabindex="-1"></a>**Root cause (not “IPv6-only router”):** under Noble, NetworkManager’s DHCP helper lives at `/usr/libexec/nm-dhcp-helper`, but the stock AppArmor profile for `dhclient` still allows only the old path `/usr/lib/NetworkManager/nm-dhcp-helper`. `dhclient` obtains a lease (`DHCPOFFER` / `DHCPACK`), then AppArmor **denies** the helper → NetworkManager never applies IPv4^<span class="co">[</span><span class="ot">See @fig-nm-dhcp-apparmor and Launchpad bugs [#2083017](https://bugs.launchpad.net/ubuntu/+source/apparmor/+bug/2083017), [#2116733](https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/2116733).</span><span class="co">]</span></span>
+<span id="cb10-252"><a href="#cb10-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-253"><a href="#cb10-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-254"><a href="#cb10-254" aria-hidden="true" tabindex="-1"></a><span class="al">![Wi-Fi DHCP under Ubuntu Noble: AppArmor blocks the moved nm-dhcp-helper until the profile is patched](ubuntu/nm-dhcp-apparmor-noble.png)</span>{#fig-nm-dhcp-apparmor}</span>
+<span id="cb10-255"><a href="#cb10-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-256"><a href="#cb10-256" aria-hidden="true" tabindex="-1"></a><span class="fu">### Permanent fix</span></span>
+<span id="cb10-257"><a href="#cb10-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-258"><a href="#cb10-258" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Run @lst-run-fix-nm-dhcp. The script in @lst-fix-nm-dhcp-apparmor (file: <span class="co">[</span><span class="ot">`ubuntu/fix-nm-dhcp-apparmor.sh`</span><span class="co">](ubuntu/fix-nm-dhcp-apparmor.sh)</span>) patches <span class="in">`/etc/apparmor.d/sbin.dhclient`</span> for <span class="in">`/usr/libexec/nm-dhcp-helper`</span>, sets NetworkManager to <span class="in">`dhcp=dhclient`</span>, softens Wi-Fi powersave, reloads AppArmor, and restarts NetworkManager.</span>
+<span id="cb10-259"><a href="#cb10-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-260"><a href="#cb10-260" aria-hidden="true" tabindex="-1"></a><span class="in">```{#lst-run-fix-nm-dhcp .bash lst-cap="Make the AppArmor DHCP fix executable and run it"}</span></span>
+<span id="cb10-261"><a href="#cb10-261" aria-hidden="true" tabindex="-1"></a><span class="in">chmod +x ubuntu/fix-nm-dhcp-apparmor.sh</span></span>
+<span id="cb10-262"><a href="#cb10-262" aria-hidden="true" tabindex="-1"></a><span class="in">sudo ./ubuntu/fix-nm-dhcp-apparmor.sh</span></span>
 <span id="cb10-263"><a href="#cb10-263" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb10-264"><a href="#cb10-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-265"><a href="#cb10-265" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Change the behaviour of the shell:</span>
-<span id="cb10-266"><a href="#cb10-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-267"><a href="#cb10-267" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**System-wide**: all executables installed under `/usr` folder can be called directly from the `$PATH`. For third-party apps stored under `/opt`, you must **add a symlink** redirecting to your local folder: <span class="in">`sudo ln -s /opt/&lt;appName&gt; /usr/local/bin/&lt;appName&gt;`</span>.</span>
-<span id="cb10-268"><a href="#cb10-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-269"><a href="#cb10-269" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**User-level**: customise `.bashrc` (and `.zshrc` if using the `.zsh` fancy shebang) — **Only affects the current user**, see my own <span class="co">[</span><span class="ot">`.zshrc` configuration file</span><span class="co">](../Config/zsh/.zshrc)</span>, and below <span class="in">`ls`</span> output @fig-bash-ls.</span>
-<span id="cb10-270"><a href="#cb10-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-271"><a href="#cb10-271" aria-hidden="true" tabindex="-1"></a>::: {#fig-bash-ls layout-nrow="2"}</span>
-<span id="cb10-272"><a href="#cb10-272" aria-hidden="true" tabindex="-1"></a><span class="al">![Modified behaviour of the `ls` output](bash/ls_output.png)</span></span>
-<span id="cb10-273"><a href="#cb10-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-274"><a href="#cb10-274" aria-hidden="true" tabindex="-1"></a><span class="al">![Modified behaviour of the `ll` output, displaying in addition to file names their sizes, permission rights, and original owner](bash/ll_output.png)</span></span>
+<span id="cb10-265"><a href="#cb10-265" aria-hidden="true" tabindex="-1"></a><span class="in">```{#lst-fix-nm-dhcp-apparmor .bash include="ubuntu/fix-nm-dhcp-apparmor.sh" lst-cap="fix-nm-dhcp-apparmor.sh — allow /usr/libexec/nm-dhcp-helper under AppArmor"}</span></span>
+<span id="cb10-266"><a href="#cb10-266" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-267"><a href="#cb10-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-268"><a href="#cb10-268" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Reconnect to the Wi-Fi network using the GUI, then check the success of the patch:</span>
+<span id="cb10-269"><a href="#cb10-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-270"><a href="#cb10-270" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb10-271"><a href="#cb10-271" aria-hidden="true" tabindex="-1"></a><span class="ex">ip</span> <span class="at">-br</span> addr show <span class="op">&lt;</span>wifi-network-name<span class="op">&gt;</span> <span class="co"># e.g. wlp2s0f0</span></span>
+<span id="cb10-272"><a href="#cb10-272" aria-hidden="true" tabindex="-1"></a><span class="fu">ping</span> <span class="at">-4</span> <span class="at">-c</span> 2 1.1.1.1 <span class="co"># should return "64 bytes from 1.1.1.1: icmp_seq=1 ttl=55 time=1.24 ms"</span></span>
+<span id="cb10-273"><a href="#cb10-273" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-4</span> <span class="at">-sI</span> <span class="at">--max-time</span> 8 https://github.com <span class="kw">|</span> <span class="fu">head</span> <span class="at">-3</span> <span class="co"># should return "HTTP/2 200"</span></span>
+<span id="cb10-274"><a href="#cb10-274" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb10-275"><a href="#cb10-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-276"><a href="#cb10-276" aria-hidden="true" tabindex="-1"></a><span class="al">![The `la` output displays in addition to the `ll` output the hidden files (traditionally starting with a `.`)](bash/la_output.png)</span></span>
+<span id="cb10-276"><a href="#cb10-276" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pimp your shell: switch from boring Bash to fancy `Zsh`</span></span>
 <span id="cb10-277"><a href="#cb10-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-278"><a href="#cb10-278" aria-hidden="true" tabindex="-1"></a><span class="al">![The `lt` output is a combination of both `ls` and `tree` to display the hierarchical structure of a folder](bash/lt_output.png)</span></span>
+<span id="cb10-278"><a href="#cb10-278" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Installation script:</span>
 <span id="cb10-279"><a href="#cb10-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-280"><a href="#cb10-280" aria-hidden="true" tabindex="-1"></a>Visual representation of my customised <span class="in">`ls`</span> commands to display the content of a folder from a Bash terminal.</span>
-<span id="cb10-281"><a href="#cb10-281" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb10-282"><a href="#cb10-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-283"><a href="#cb10-283" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Useful resources:</span></span>
-<span id="cb10-284"><a href="#cb10-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-285"><a href="#cb10-285" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">shell shortcuts</span><span class="co">](https://blog.hofstede.it/shell-tricks-that-actually-make-life-easier-and-save-your-sanity/)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb10-280"><a href="#cb10-280" aria-hidden="true" tabindex="-1"></a><span class="in">```{#lst-zsh-install .bash lst-cap="Install Zsh, set it as default shell, and install Oh My Zsh"}</span></span>
+<span id="cb10-281"><a href="#cb10-281" aria-hidden="true" tabindex="-1"></a><span class="in">sudo apt update</span></span>
+<span id="cb10-282"><a href="#cb10-282" aria-hidden="true" tabindex="-1"></a><span class="in">sudo apt install zsh</span></span>
+<span id="cb10-283"><a href="#cb10-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-284"><a href="#cb10-284" aria-hidden="true" tabindex="-1"></a><span class="in">## change the default shell shebang</span></span>
+<span id="cb10-285"><a href="#cb10-285" aria-hidden="true" tabindex="-1"></a><span class="in">chsh -s $(which zsh) ## modify /etc/passwd repository</span></span>
+<span id="cb10-286"><a href="#cb10-286" aria-hidden="true" tabindex="-1"></a><span class="in">reboot # required log out for effective changes</span></span>
+<span id="cb10-287"><a href="#cb10-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-288"><a href="#cb10-288" aria-hidden="true" tabindex="-1"></a><span class="in">## check if zsh is used by default (also the theme is modified)</span></span>
+<span id="cb10-289"><a href="#cb10-289" aria-hidden="true" tabindex="-1"></a><span class="in">getent passwd "$USER" # returns "/home/bastien:/usr/bin/zsh"</span></span>
+<span id="cb10-290"><a href="#cb10-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-291"><a href="#cb10-291" aria-hidden="true" tabindex="-1"></a><span class="in">## Install advanced customisation of the shell with Oh My Zsh addon</span></span>
+<span id="cb10-292"><a href="#cb10-292" aria-hidden="true" tabindex="-1"></a><span class="in">sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" # create automatically the ~/.zshrc configuration file</span></span>
+<span id="cb10-293"><a href="#cb10-293" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-294"><a href="#cb10-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-295"><a href="#cb10-295" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **You should keep the original ~/.bashrc as a fallback for Bash**.</span></span>
+<span id="cb10-296"><a href="#cb10-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-297"><a href="#cb10-297" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Install the modern alternative to <span class="in">`ls`</span>, namely <span class="in">`eza`</span></span>
+<span id="cb10-298"><a href="#cb10-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-299"><a href="#cb10-299" aria-hidden="true" tabindex="-1"></a><span class="in">```{#lst-eza-install .bash lst-cap="Install eza from the community APT repository"}</span></span>
+<span id="cb10-300"><a href="#cb10-300" aria-hidden="true" tabindex="-1"></a><span class="in"># install the gpg command</span></span>
+<span id="cb10-301"><a href="#cb10-301" aria-hidden="true" tabindex="-1"></a><span class="in">sudo apt update</span></span>
+<span id="cb10-302"><a href="#cb10-302" aria-hidden="true" tabindex="-1"></a><span class="in">sudo apt install -y gpg</span></span>
+<span id="cb10-303"><a href="#cb10-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-304"><a href="#cb10-304" aria-hidden="true" tabindex="-1"></a><span class="in"># install eza</span></span>
+<span id="cb10-305"><a href="#cb10-305" aria-hidden="true" tabindex="-1"></a><span class="in">wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg</span></span>
+<span id="cb10-306"><a href="#cb10-306" aria-hidden="true" tabindex="-1"></a><span class="in">echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list</span></span>
+<span id="cb10-307"><a href="#cb10-307" aria-hidden="true" tabindex="-1"></a><span class="in">sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list</span></span>
+<span id="cb10-308"><a href="#cb10-308" aria-hidden="true" tabindex="-1"></a><span class="in">sudo apt update</span></span>
+<span id="cb10-309"><a href="#cb10-309" aria-hidden="true" tabindex="-1"></a><span class="in">sudo apt install -y eza</span></span>
+<span id="cb10-310"><a href="#cb10-310" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-311"><a href="#cb10-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-312"><a href="#cb10-312" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Change the behaviour of the shell:</span>
+<span id="cb10-313"><a href="#cb10-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-314"><a href="#cb10-314" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**System-wide**: all executables installed under `/usr` folder can be called directly from the `$PATH`. For third-party apps stored under `/opt`, you must **add a symlink** redirecting to your local folder: <span class="in">`sudo ln -s /opt/&lt;appName&gt; /usr/local/bin/&lt;appName&gt;`</span>.</span>
+<span id="cb10-315"><a href="#cb10-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-316"><a href="#cb10-316" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**User-level**: customise `.bashrc` (and `.zshrc` if using the `.zsh` fancy shebang) — **Only affects the current user**, see my own <span class="co">[</span><span class="ot">`.zshrc` configuration file</span><span class="co">](../Config/zsh/.zshrc)</span>, and below <span class="in">`ls`</span> output @fig-bash-ls.</span>
+<span id="cb10-317"><a href="#cb10-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-318"><a href="#cb10-318" aria-hidden="true" tabindex="-1"></a>::: {#fig-bash-ls layout-nrow="2"}</span>
+<span id="cb10-319"><a href="#cb10-319" aria-hidden="true" tabindex="-1"></a><span class="al">![Modified behaviour of the `ls` output](bash/ls_output.png)</span></span>
+<span id="cb10-320"><a href="#cb10-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-321"><a href="#cb10-321" aria-hidden="true" tabindex="-1"></a><span class="al">![Modified behaviour of the `ll` output, displaying in addition to file names their sizes, permission rights, and original owner](bash/ll_output.png)</span></span>
+<span id="cb10-322"><a href="#cb10-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-323"><a href="#cb10-323" aria-hidden="true" tabindex="-1"></a><span class="al">![The `la` output displays in addition to the `ll` output the hidden files (traditionally starting with a `.`)](bash/la_output.png)</span></span>
+<span id="cb10-324"><a href="#cb10-324" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-325"><a href="#cb10-325" aria-hidden="true" tabindex="-1"></a><span class="al">![The `lt` output is a combination of both `ls` and `tree` to display the hierarchical structure of a folder](bash/lt_output.png)</span></span>
+<span id="cb10-326"><a href="#cb10-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-327"><a href="#cb10-327" aria-hidden="true" tabindex="-1"></a>Visual representation of my customised <span class="in">`ls`</span> commands to display the content of a folder from a Bash terminal.</span>
+<span id="cb10-328"><a href="#cb10-328" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb10-329"><a href="#cb10-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-330"><a href="#cb10-330" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Useful resources:</span></span>
+<span id="cb10-331"><a href="#cb10-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-332"><a href="#cb10-332" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">shell shortcuts</span><span class="co">](https://blog.hofstede.it/shell-tricks-that-actually-make-life-easier-and-save-your-sanity/)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

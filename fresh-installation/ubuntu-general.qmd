@@ -7,7 +7,7 @@ title: "Ubuntu general guidelines"
 
 [^ubu-1]: Returns `amd64` in my case
 
-## Recommended system libraries to install
+## Preamble: recommended system libraries to install
 
 ```{#lst-system-libs .bash lst-cap="Install recommended system libraries"}
 # Install system libs
@@ -93,26 +93,73 @@ The user does not require root.
 
 ------------------------------------------------------------------------
 
-![Detailed structure of Ubuntu package layout](ubuntu/ubuntu_package_structure.png){#fig-ubuntu-package-structure}
+::::: {#fig-linux-os-map layout="[1,1]"}
+::: {}
+![How Linux processes shell commands: User → Shell → Kernel → File system → Hardware](ubuntu/linux-architecture-process.png)
+:::
 
-::: {.callout-note collapse="true" title="Specific folders"}
--   `usr` folder stores *read-only* executables, while `/var` is regularly written upon changes:
+::: {}
+![Ubuntu / FHS package and path layout (system vs user locations)](ubuntu/ubuntu_package_structure.png)
 
-    -   `/var/lib`: apt and dpkg databases, for instance, respectively stored under `dpkg`, and `/apt`
-    -   `/var/cache`: metadata caches for faster execution
+![Filesystem hierarchy from the root `/`](ubuntu/linux-filesystem-tree.png)
 
--   `/usr/local/`, or `$HOME/.local` stores executables that require custom compilation with `make`, or `qmake`, rendered from manual archives:
+![Directory roles as a “city” map (every path has a job)](ubuntu/linux-filesystem-city.png)
+:::
 
-    -   `bin`, `sbin` for executables
-    -   `share` for icons (under subfolder `icons`) and desktop configuration, documentation under `/doc`
-    -   `lib` for extensions of a given executable (such as packages in R, or modules in Python)
-    -   This folder hierarchy follows the [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir/latest/)
+Linux at a glance. **Left:** how a shell command travels through OS layers (user space → shell → kernel → file system → hardware). **Right:** filesystem layout — Ubuntu package paths, the hierarchical tree from `/`, and directory roles as a city map. Illustrations inspired by [@qa_insights (Quality Insights) on Instagram](https://www.instagram.com/p/DaepEm0j_hb/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ%3D%3D&img_index=4); directory “city” framing in the same teaching-poster style. For fundamentals, see also the [Filesystem Hierarchy Standard (FHS)](https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html), the [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir/latest/), and the [Linux Documentation Project](https://tldp.org/).
+:::::
 
--   `/tmp` for temporary folders, cleaned after `reboot`
+::: {.callout-note collapse="true" title="Main folders and path roles"}
+Everything under Linux hangs from the **root** `/` (a forward slash — paths are case-sensitive). Think of the tree as a city map: each top-level directory has a fixed job (@fig-linux-os-map).
 
--   `/run` for sockets, namely used for controlling all the protocols running in the background for connecting to a server, such as the `ssh-agent`
+**Core hierarchy**
 
--   `~/.config/systemd`: lists all processes that keep on running in the background, such as Cursor updates, or OneDrive synchronisations.
+| Path | Role |
+|------------------|----------------------------------|
+| `/` | Root of the tree; all absolute paths start here. |
+| `/home` | Per-user homes (e.g. `/home/<user>`); your documents and configs live here. |
+| `/root` | Home directory of the `root` administrator (not the same as `/`). |
+| `/etc` | System-wide configuration (`apt` sources, network, services). |
+| `/bin`, `/sbin` | Essential command binaries (user vs admin-oriented). On modern Ubuntu many of these are merged into `/usr`. |
+| `/usr` | Read-only applications, libraries, and shared data installed by the distribution. |
+| `/opt` | Optional / third-party self-contained application bundles (often **not** on `$PATH` until you add a symlink). |
+| `/var` | Variable data that grows over time: logs, caches, databases, spools. |
+| `/tmp` | Temporary files; often cleared on reboot. |
+| `/mnt`, `/media` | Mount points for disks, USB drives, and other external storage. |
+| `/dev` | Device nodes (hardware exposed as files). |
+| `/proc`, `/sys` | Live kernel / process / hardware interfaces (virtual filesystems). |
+| `/lib`, `/lib64` | Shared libraries needed by core programs. |
+| `/boot` | Kernel and bootloader files. |
+| `/run` | Runtime state (PID files, sockets such as `ssh-agent`). |
+| `/lost+found` | Recovered fragments after filesystem checks. |
+
+**`/usr` versus `/var`**
+
+-   `/usr` is meant for *mostly read-only* executables and shared assets shipped by packages.
+-   `/var` is written continuously:
+
+    -   `/var/lib`: state databases (e.g. `dpkg`, `apt`)
+    -   `/var/cache`: downloadable / rebuildable caches
+    -   `/var/log`: service and system logs (first stop when an app misbehaves)
+
+**Custom builds and per-user tools**
+
+-   `/usr/local/` (system-wide, needs `sudo`) and `$HOME/.local` (user-only) hold software built with `make` / `qmake` or installed outside APT:
+
+    -   `bin`, `sbin` — executables
+    -   `share` — icons (`icons/`), desktop entries, docs (`doc/`)
+    -   `lib` — extensions (R packages, Python modules, shared objects)
+    -   User layout follows the [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir/latest/) (`~/.config`, `~/.local/share`, `~/.cache`, …)
+
+**Runtime and background services**
+
+-   `/tmp` — scratch space; do not store lasting work there.
+-   `/run` — sockets and ephemeral service state (e.g. `ssh-agent`).
+-   `~/.config/systemd` — user units that keep running after login (Cursor updates, OneDrive sync, …).
+
+**Memory aid**
+
+Start at `/` → configure in `/etc` → run tools from `/bin` or `/usr` → optional apps in `/opt` → inspect logs in `/var` → monitor live state via `/proc` and `/sys`.
 :::
 
 ## Recommended updating policy of Ubuntu
