@@ -80,6 +80,14 @@ Machine-readable, human-readable, and sort-friendly
   Architecture” (or equivalent) section summarising the end-to-end
   workflow. Keep raw model outputs distinct from standardised evaluation
   artefacts when relevant.
+- **PDF → Markdown (literature / notes / reviews):** when ingesting a
+  PDF for vignettes, articles, or slide rebuilds, convert it locally with
+  Stephen Turner’s **[pdfdown](https://stephenturner.github.io/pdfdown/)**
+  (browser drop-zone; everything runs locally) **before** rewriting prose.
+  Prefer the resulting Markdown as the textual source of truth; use
+  `pdftoppm` only for page screenshots / figures that pdfdown does not
+  recover cleanly. Do not invent content from PDF memory when a
+  conversion is available in the workspace.
 - README badges: add flat-square shields tailored to stacks actually used
   in this project (R / key CRAN packages / methods), for example:
 
@@ -164,6 +172,9 @@ This repo uses **[Air](https://posit-dev.github.io/air/)** (`air.toml`) and
 - Document with **roxygen2**; run `devtools::document()`.
 - Before interactive testing: `devtools::load_all()`.
 - Validate with `devtools::check()` (notes OK; avoid warnings/errors).
+- Before committing or pushing changes that touch exported functions,
+  pkgdown config (`_pkgdown.yml`), vignettes, or docs workflows, run a
+  local pkgdown build (`pkgdown::build_site()`) and fix failures first.
 - Prefer **usethis** and **devtools** workflows for package tasks
   (tests, docs, DESCRIPTION, GitHub Actions helpers, etc.).
 
@@ -319,7 +330,8 @@ Follow
 | Tabular data | `dplyr`, `tidyr`, `tibble` (`data.table` if needed) |
 | Out-of-memory data | `duckdb` |
 | Plotting | `ggplot2`; heatmaps: `ComplexHeatmap`; interactive: `ggiraph` |
-| Slide / HTML tables | `reactable` (prefer over static Markdown tables in reveal.js) |
+| Static tables (vignettes / Quarto HTML) | `tinytable` (prefer over `knitr::kable`, `kableExtra`, `flextable`) |
+| Slide / HTML interactive tables | `reactable` (prefer over static Markdown tables in reveal.js) |
 | Discrete ggplot scales | named vectors via `stats::setNames()` |
 | Input checks | `checkmate` |
 | Messages | `cli` |
@@ -342,12 +354,70 @@ unused Suggests/Imports without need.
 
 DeCovarT keeps **two separate citation streams**. Do not mix them.
 
-## A. Literature (Zotero → Better BibTeX → Git)
+## A. Literature (Zotero → citation keys → Git)
 
 **Source of truth** for papers / books / theses is the author's
-[Zotero library](https://www.zotero.org/bastienchassagnol/library) with
-**Better BibTeX (BBT)** citation keys. Do **not** invent BibTeX entries or
-citekeys; add the item in Zotero first, then export.
+[Zotero library](https://www.zotero.org/bastienchassagnol/library).
+Do **not** invent BibTeX entries, citekeys, or DOIs; add the item in
+Zotero first, then export. Missing metadata may be completed only via
+the deterministic Crossref enrichment CLI below (never by unconstrained
+LLM guessing).
+
+### Citation keys: Zotero 8+ native vs Better BibTeX
+
+From **Zotero 8 onward** (this machine runs **Zotero 9**), citation keys
+are a first-class field in `zotero.sqlite`
+(`fields.fieldName = 'citationKey'`). That is enough for `zotc` and for
+stable citekeys when the same formula is set under
+Edit → Settings → Cite → Citation Key.
+
+**Better BibTeX (BBT) is optional** once native keys are populated. Keep
+BBT only for extras (auto-export on change, rich formulas, Better
+BibLaTeX, pull export). Otherwise export with Zotero’s built-in BibTeX
+into `inst/REFERENCES.bib` / `article/decovart_library.bib`, then
+`python3 scripts/check_bibliography.py --clean`. Prefer **native**
+`citationKey` over a legacy `better-bibtex.sqlite` table; copy or open
+the DB with `immutable=1` when the desktop app holds a lock.
+
+### Zotcurate (`zotc`) — collection curation from documents
+
+Use **[zotcurate](https://github.com/jeetsukumaran/zotcurate)** to bridge
+`.bib` / `.qmd` / CSV citation keys and Zotero collections. Prefer **CSV**
+for tabular outputs; prefer **YAML** for collection-hierarchy snapshots.
+
+```bash
+sudo chown -R "$(whoami):$(whoami)" ~/.local ~/.zotc ~/.venvs   # once if needed
+bash scripts/install_zotcurate_home.sh
+```
+
+| Path | Role |
+|------|------|
+| `~/.local/bin/zotc` | Wrapper with `-z ~/Zotero/zotero.sqlite` |
+| `~/.zotc/*` | Credentials (chmod 600; never commit) |
+| `~/Zotero/zotero.sqlite` | Desktop DB + native citation keys |
+
+Library ID: `7172053`.
+
+**Collection membership (leaf only):** assign **exactly one** collection —
+the **most specific leaf** matching the paper (e.g.
+`…/3) feature selection: one-vs-all/ii) multivariate approaches`).
+Do **not** also attach the parent or higher ancestors. Prefer one
+accurate leaf over parent+child duplicates.
+
+**Inputs for missing-citation checks:** `.bib`, `.tex`, `.qmd` (and CSV
+for collection sync). Ad-hoc collection exports such as
+`IV) build signature matrix.bib` are merge sources only — keep them
+gitignored at the repo root; after merging run `--clean`.
+
+**Both directions:**
+
+1. **Zotero → Git:** export → `check_bibliography.py --clean` (article
+   copy is the `--clean` upstream when both files exist).
+2. **Git/docs → Zotero:** `zotc keys extract` then
+   `collection add|create` (dry-run first); new items via Web API /
+   desktop → **leaf only** → native citekey → re-export → `--clean`.
+3. Software tools → `packages.bib`, not Zotero literature.
+
 
 | Path | Consumer |
 |------|----------|
@@ -357,10 +427,68 @@ citekeys; add the item in Zotero first, then export.
 - Exactly these two literature copies (independent, kept in sync).
 - After every Zotero export: `python3 scripts/check_bibliography.py --clean`
   (allowed fields only; DOI-dedupe; sync both copies).
-- Allowed fields: `title`, `author`, `year`, `journal` **or**
-  `howpublished`, `doi`, `volume`, `isbn`. Strip everything else.
+- Allowed fields (whitelist enforced by `scripts/check_bibliography.py`):
+  `title`, `author`, `editor`, `year`, `journal`, `booktitle`,
+  `publisher`, `howpublished`, `doi`, `volume`, `number`, `pages`,
+  `isbn`, `issn`, `edition`, `school`, `institution`, `url`.
+  Strip everything else.
+- Required fields by type (Rdpack / `utils::bibentry`):
+  - `@article` — `title`, `author`, `year`, `journal`
+  - `@book` — `title`, `year`, `publisher`, plus `author` **or** `editor`
+  - `@incollection` — `title`, `author`, `year`, `booktitle`, `publisher`
+  - `@phdthesis` / `@mastersthesis` — `title`, `author`, `year`, `school`
+  - `@techreport` — `title`, `author`, `year`, `institution`
 - Pre-commit hook `check-bibliography` validates literature hygiene and
   `article/main.tex` citekeys (against literature **and** `packages.bib`).
+
+### Completing missing fields (Crossref + bibtex-tidy)
+
+When BibTeX / Rdpack validation fails because metadata is incomplete:
+
+1. Enrich incomplete entries with the repo CLI (DOI-first, then
+   title/author/year Crossref search; merge **missing fields only**;
+   never overwrite existing values; never invent DOIs):
+
+```bash
+python3 scripts/bib_enrich.py \
+  inst/REFERENCES.bib --write --backup \
+  --min-score 92 --report .cursor/bib-enrichment.json
+```
+
+2. Review `.cursor/bib-enrichment.json` and the git diff. Reject records
+   marked `ambiguous`. Manually verify any `unresolved` / `partial`
+   entries (prefer Zotero correction, then re-export).
+3. Normalise formatting with `bibtex-tidy`:
+
+```bash
+npx bibtex-tidy@1.14.0 inst/REFERENCES.bib \
+  --modify --curly --numeric --sort=key
+```
+
+If `bibtex-tidy@latest` is stable on your machine, prefer latest. If it
+crashes (e.g. current Node 22 edge cases), pin to `@1.14.0` and/or
+upgrade Node.js to the latest LTS release.
+
+4. Sync both literature copies and validate:
+
+```bash
+python3 scripts/check_bibliography.py --clean
+python3 scripts/check_bibliography.py
+```
+
+Install once (user-level with `uv`, no sudo; keeps tooling in home
+directory instead of this repository):
+
+```bash
+uv venv ~/.venvs/bib-enrich
+uv pip install --python ~/.venvs/bib-enrich/bin/python \
+  bibtexparser httpx rapidfuzz typer rich
+~/.venvs/bib-enrich/bin/python -c \
+  "import bibtexparser, httpx, rapidfuzz, typer, rich; print('OK')"
+# then run:
+# python3 scripts/bib_enrich.py ...
+# bibtex-tidy via npx; prefer latest Node.js LTS
+```
 
 GitHub issues — DOI bridge:
 
@@ -458,6 +586,89 @@ claims), respect these limits unless the user explicitly overrides them:
   matter for understanding or speed.
 - Keep vignettes reproducible; avoid duplicating the full Article word
   budget—cross-link the paper and package help pages.
+- For **static** tables in vignettes / Quarto HTML, prefer
+  [`tinytable`](https://vincentarelbundock.github.io/tinytable/)
+  (`tinytable::tt()`) over `knitr::kable()`, `kableExtra`, or
+  `flextable`. Embed maths in cells with `$...$` (double backslashes in
+  R strings) as in the
+  [tinytable math section](https://vincentarelbundock.github.io/tinytable/vignettes/format.html#math);
+  set `options(tinytable_html_mathjax = TRUE)` in the setup chunk when
+  needed. Keep `reactable` for interactive slide / dashboard tables.
+
+### Quarto Markdown conventions (vignettes and `.qmd`)
+
+Prefer constructs that render cleanly in HTML / pkgdown and stay
+readable in source. Follow Quarto
+[cross-references](https://quarto.org/docs/authoring/cross-references.html)
+for figures, tables, equations, sections, and callouts.
+
+### Package and method names (backticks)
+
+In `.qmd` / `.Rmd` prose, put **package**, **software tool**, and
+**named method** labels in inline code spans so they stand out from
+ordinary English:
+
+```markdown
+`limma`, `edgeR`, `DESeq2`, `BioQC`, `AutoGeneS`, `INDEED`,
+`MixSim`, `CARNIVAL`, `CORNETO`, `SCTransform`
+```
+
+- Prefer `` `limma` `` over bare Limma / limma in running text.
+- Keep citation keys (`@R-limma`) and mathematical notation unchanged.
+- Do not backtick generic statistical terms (ANOVA, Gini coefficient,
+  Shannon entropy, nested CV) unless they are a software product name.
+- Mermaid node labels may keep short plain names for readability.
+
+### Lists (Visual Editor–safe; Quarto basics only)
+
+Use **only** the basic Quarto / Pandoc list forms documented at
+[Markdown Basics — Lists](https://quarto.org/docs/authoring/markdown-basics.html#lists):
+
+```markdown
+* unordered list
+  + sub-item 1
+  + sub-item 2
+    - sub-sub-item 1
+
+1. ordered list
+2. item 2
+   - sub-item nested under 2
+```
+
+Rules for every `.qmd` / `.Rmd` / `.md` document in this repo:
+
+- **Allowed:** unordered lists (`-`, `*`, `+`) and ordered lists
+  (`1.`, `2.`, …), including nesting as above.
+- **Forbidden:** Pandoc **example lists** (`(@)`, `(@label)`, or any
+  line that Pandoc parses as Example-style). In particular:
+  - never write `(@eq-…)`, `(@fig-…)`, `(@sec-…)` as a list marker;
+  - never hard-wrap a parenthetical so the next line begins with
+    `@label)` (e.g. `(see @sec-foo,` / newline / `  @sec-bar) …`) —
+    that is parsed as an example list and blocks Visual Mode
+    (“Document contains example lists…”). Keep such cites on one line
+    or rephrase as `see @sec-foo and @sec-bar`.
+- **Forbidden:** Markdown task / checkbox lists (`- [ ]`, `- [x]`).
+- **Do not** use unicode step markers (`- ① …`, `- ② …`) as a
+  substitute for ordered lists; use real `1.` / `2.` lists instead.
+- Cross-references stay mid-sentence: `see @eq-…`, `see @sec-…`
+  (never wrapped as `(@eq-…)`).
+- **Warnings / notes:** prefer labelled Quarto callouts with
+  cross-references (e.g. `::: {#nte-foo .callout-warning}` … `:::` then
+  `@nte-foo`), not raw blockquotes with pasted emoji glyphs. See
+  [callout cross-references](https://quarto.org/docs/authoring/cross-references.html#callouts).
+- **Emoji / icons:** when an emoji shortcode is needed in Markdown,
+  use GitHub-style `:name:` tokens from
+  [rxaviers/emoji-cheat-sheet](https://gist.github.com/rxaviers/7360908)
+  (e.g. `:warning:`, `:information_source:`), not literal unicode
+  emoji characters typed into the source. Enable Quarto emoji support
+  in the document YAML when shortcodes must render (`from: markdown+emoji`
+  or the project’s established emoji setup).
+- Label major headings with `{#sec-…}` and cross-link with `@sec-…`
+  within a document; across vignettes use pkgdown HTML links
+  (e.g. `[synthetic scenarios](synthetic-scenarios.html#sec-…)`).
+- Keep Visual Editor–hostile syntax out of vignettes unless a feature
+  (callouts, shortcodes) is intentionally required for the published
+  HTML and documented here.
 
 ## Scientific voice and self-review (no Consensus required)
 
@@ -603,13 +814,21 @@ Source materials often exist as PDF, PowerPoint, and Markdown of the
 same talk. Prefer this order:
 
 1. **Markdown** — structure and wording for Quarto authoring.
-2. **PDF** — recover missing figures and layout (page screenshots via
-   `pdftoppm`, or Stephen Turner’s **pdfdown**:
-   <https://stephenturner.github.io/pdfdown/>).
-3. **PPTX** — extract embedded graphics when PDF rasterisation is poor.
+2. **PDF** — first convert text with **pdfdown**
+   (<https://stephenturner.github.io/pdfdown/>); then recover missing
+   figures / layout via `pdftoppm` page screenshots when needed.
+3. **Open-source GitHub repositories** — when the goal is to retrieve
+   the *content and core API / functionality* of a tool or package from
+   its public repo (README, source layout, entry points), use the
+   online **repo2txt** helper
+   (<https://repo2txt.simplebasedomain.com/>) to produce a compact text
+   dump before summarising or drafting docs. Prefer this over
+   indiscriminate cloning when you only need an overview.
+4. **PPTX** — extract embedded graphics when PDF rasterisation is poor.
 
 Rebuild as Quarto reveal.js with Slidecrafting patterns; do not ship
-raw PDF/PPTX as the live deck.
+raw PDF/PPTX as the live deck. Apply the same pdfdown-first rule when
+parsing review PDFs or other literature PDFs into vignette drafts.
 
 ## 3. Slide design lessons
 
@@ -620,10 +839,50 @@ raw PDF/PPTX as the live deck.
   back to curated PDF/PPTX page images when the original graphic is
   essential and hard to redraw.
 - For tables in slides, use **reactable** (interactive HTML), not static
-  Markdown / knitr tables, unless the user asks otherwise. Keep tables
-  small enough for the viewport (`pagination`, compact columns).
+  Markdown / knitr / tinytable tables, unless the user asks otherwise.
+  Keep tables small enough for the viewport (`pagination`, compact
+  columns). For **vignette** static tables, prefer `tinytable` instead
+  (see Preferred R dependencies and Tables: tinytable vs reactable).
 - For equations, always define indexes and other notation on the slide
   (or on the previous slide).
+
+### High-quality scientific images (Nature Methods target)
+
+- Aim for **Nature Methods** visual style: clear scientific message,
+  minimal decorative effects, high contrast, and consistent typography.
+- Prefer equations and mathematically precise notation when concepts are
+  model-based; export equation-heavy diagrams as vector assets (SVG/PDF)
+  whenever possible.
+- Use multi-panel layouts (`A`, `B`, `C`, …) when several concepts are
+  needed to explain one claim; each panel should answer one precise
+  question.
+- Keep style minimalist and interpretation-first: avoid visual clutter,
+  3D effects, and ornamental graphics that do not support inference.
+- When creating or revising generated illustrations in `slides/index.qmd`
+  and included section files, apply this same panel and readability
+  discipline.
+
+### Mermaid rendering constraints (README, vignettes, slides)
+
+- Do **not** use plain code fences like ```` ``` mermaid ```` for figures
+  intended to render in Quarto outputs; use executable Mermaid chunks.
+  Minimal pattern:
+  - opening fence: ```` ```{mermaid} ````
+  - options: `%%| label: fig-example` and
+    `%%| fig-cap: "Example caption."`
+  - diagram body: e.g. `flowchart TD` then `A --> B`
+  - closing fence: ```` ``` ````
+
+- Cross-reference Mermaid figures with Quarto labels (`@fig-...`), as
+  documented at
+  <https://quarto.org/docs/authoring/diagrams.html#cross-references>.
+- Set Mermaid theme to **sandstone** for consistency unless a slide
+  context explicitly requires another documented theme.
+- For reveal.js decks, keep Mermaid configured under `format: revealjs:`
+  and verify rendering in both `quarto preview` and `quarto render`.
+- For PDF/Word paths using Mermaid, use the installed
+  `chrome-headless-shell` backend and verify rendered output rather than
+  raw diagram source.
 
 ### Citations and cross-references
 
@@ -636,6 +895,20 @@ raw PDF/PPTX as the live deck.
   `@tbl-…` / `@eq-…`. See
   <https://quarto.org/docs/authoring/cross-references.html>.
 - Do not silently drop citations when converting legacy slides.
+
+### Tables: tinytable (static) vs reactable (interactive)
+
+- **Vignettes / static Quarto HTML:** use `tinytable::tt()` by default.
+  Do not introduce `knitr::kable()`, `kableExtra`, or `flextable` for
+  new static tables unless the user asks. For maths in cells, write
+  `$\\kappa_2$`-style strings (double backslashes) and follow
+  <https://vincentarelbundock.github.io/tinytable/vignettes/format.html#math>;
+  enable `options(tinytable_html_mathjax = TRUE)` in setup when HTML
+  needs inline MathJax for table cells.
+- **Reveal.js slides / interactive HTML:** prefer `reactable` over
+  static Markdown / knitr / tinytable tables unless the user asks
+  otherwise. Keep tables small enough for the viewport
+  (`pagination`, compact columns).
 
 ### Tables with reactable
 
@@ -691,8 +964,8 @@ it.
 ### Figures and attribution
 
 - Check whether requested assets already exist locally before creating
-  new ones. Prefer `slides/images/` (or `slides/images/figures/`) with
-  relative paths from the slide source.
+  new ones. Prefer `slides/images/` with relative paths from the slide
+  source.
 - Enable the **attribution** reveal.js plugin
   (`quarto-ext/attribution`) in YAML:
 
@@ -715,7 +988,7 @@ revealjs-plugins:
   content:
 
 ```markdown
-![Immune balance seesaw](images/figures/fig-immune-balance.png){#fig-immune-balance}
+![Immune balance seesaw](images/immune-balance.png){#fig-immune-balance}
 ```
 
 ### Editing guardrails

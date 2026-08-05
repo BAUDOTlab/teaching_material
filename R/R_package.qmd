@@ -1,3 +1,12 @@
+---
+title: "R programming guidelines"
+resources:
+  - package-workshop/GroupMeeting_packaging_09032026.pdf
+  - package-workshop/How2Package_installation_workshop.html
+  - package-workshop/How2Package.css
+  - package-workshop/How2Package_installation_workshop.Rmd
+---
+
 # R programming guidelines
 
 This guide consolidates package development practice using modern recommendations from the tidyverse ecosystem, especially *R Packages* (2nd edition) by Hadley Wickham and Jenny Bryan.
@@ -253,6 +262,7 @@ The following diagrams summarise package construction, build, installation, and 
 ### 1) High-level package lifecycle
 
 ```{mermaid}
+%%{init: {'theme': 'neutral', 'themeVariables': { 'primaryColor': '#eef6fb', 'primaryTextColor': '#111827', 'lineColor': '#334155', 'secondaryColor': '#f8fafc', 'tertiaryColor': '#ffffff', 'background': 'transparent'}}}%%
 flowchart LR
     A["Source package<br/>editable files<br/>nothing compiled"] --> B["Bundle (tar.gz)<br/>single compressed archive<br/>distribution artefact"]
     B --> C["Binary package<br/>platform-specific build<br/>compiled where needed"]
@@ -263,6 +273,7 @@ flowchart LR
 ### 2) What changes between source, bundle, and binary
 
 ```{mermaid}
+%%{init: {'theme': 'neutral', 'themeVariables': { 'primaryColor': '#eef6fb', 'primaryTextColor': '#111827', 'lineColor': '#334155', 'secondaryColor': '#f8fafc', 'tertiaryColor': '#ffffff', 'background': 'transparent'}}}%%
 flowchart LR
     subgraph S["Source"]
       S1["DESCRIPTION"]
@@ -313,6 +324,7 @@ flowchart LR
 ### 3) Command-driven workflow (construction to load)
 
 ```{mermaid}
+%%{init: {'theme': 'neutral', 'themeVariables': { 'primaryColor': '#eef6fb', 'primaryTextColor': '#111827', 'lineColor': '#334155', 'secondaryColor': '#f8fafc', 'tertiaryColor': '#ffffff', 'background': 'transparent'}}}%%
 flowchart TD
     A["Create scaffolding<br/>usethis::create_package()"] --> B["Write code + docs<br/>R/, roxygen comments"]
     B --> C["Generate docs + namespace<br/>devtools::document()"]
@@ -322,3 +334,38 @@ flowchart TD
     F --> G["Install locally<br/>devtools::install()"]
     G --> H["Load in session<br/>library(pkg) or pkg::fun"]
 ```
+
+
+## Extra resources {#sec-r-extra}
+
+Packaging workshop materials (relocated under `R/package-workshop/`).
+
+::: {.content-visible when-format="pdf"}
+Group meeting slides on packaging:
+
+{{< pdf R/package-workshop/GroupMeeting_packaging_09032026.pdf >}}
+
+Source R Markdown for the companion installation workshop:
+`R/package-workshop/How2Package_installation_workshop.Rmd` (in the repository).
+:::
+
+::: {.content-visible when-format="html"}
+Interactive installation workshop (HTML + CSS):
+
+```{=html}
+<iframe
+  src="package-workshop/How2Package_installation_workshop.html"
+  width="100%"
+  height="720"
+  style="border: 1px solid #cbd5e1; border-radius: 6px; background: #fff;"
+  title="How2Package installation workshop"
+  loading="lazy"></iframe>
+```
+
+Stylesheet shipped beside the page:
+[`How2Package.css`](package-workshop/How2Package.css).
+
+Source notebook (linked R Markdown used to build the HTML notes):
+
+[How2Package_installation_workshop.Rmd](package-workshop/How2Package_installation_workshop.Rmd){target="_blank"}
+:::

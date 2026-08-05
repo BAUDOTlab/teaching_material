@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,10 +10,16 @@
 
 <title>5&nbsp; AMU tools and remote servers – Team teaching material</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -70,15 +76,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../fresh-installation/software.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-faf89fa80f40e827c4a38c4cac6f7ea7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-b371e7532866634e68a12358962fee4b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/embedpdf-1.0.2/embedpdf.css" rel="stylesheet">
 <script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -154,10 +160,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Team teaching material</a> 
-        <div class="sidebar-tools-main tools-wide">
+        <div class="sidebar-tools-main">
     <a href="https://github.com/BAUDOTlab/teaching_material" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <a href="../team-teaching-material.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
-    <a href="https://www.linkedin.com/sharing/share-offsite/?url=|url|" title="LinkedIn" class="quarto-navigation-tool px-1" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
 </div>
     </div>
       </div>
@@ -226,14 +231,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../fresh-installation/network-troubleshooting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Network protocols and Wi-Fi troubleshooting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../R/R_package.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">R programming guidelines</span></span></a>
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">R programming guidelines</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../latex/latex-guidelines.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Modern LaTeX guidelines</span></span></a>
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Modern LaTeX guidelines</span></span></a>
   </div>
 </li>
       </ul>
@@ -418,7 +429,7 @@ Listing&nbsp;5.3: server id
 </div>
 </figure>
 </div>
-<p>Identity on a Linux server is defined by the combination of username, <code>UID</code> (user ID), and <code>GID</code> (group ID), plus membership of project groups. More detail is available in the <a href="../Server Management/Server_Management.pdf">Server Management tutorial</a>.</p>
+<p>Identity on a Linux server is defined by the combination of username, <code>UID</code> (user ID), and <code>GID</code> (group ID), plus membership of project groups. More detail is in the embedded <a href="amu/Server_Management.pdf">Server Management handbook</a> below (<a href="#sec-mmg" class="quarto-xref"><span>Section 5.2.2</span></a>).</p>
 </div>
 </div>
 </div>
@@ -617,13 +628,15 @@ Table&nbsp;5.2: Main options for a customised <code>ssh</code> connection
 </section>
 <section id="sec-mmg" class="level3" data-number="5.2.2">
 <h3 data-number="5.2.2" class="anchored" data-anchor-id="sec-mmg"><span class="header-section-number">5.2.2</span> MMG cluster and recommendations for project management</h3>
-<p>As soon as collaboration is involved, follow these project tips:</p>
+<p>As soon as collaboration is involved:</p>
 <ul>
 <li>Initialise <code>git</code> and GitHub at the real start of the project.</li>
-<li>Keep work under <code>/mnt/&lt;cluster-name&gt;/projects/</code> only (nothing long-lived in your home directory except quick tests).</li>
-<li>When creating the project, set group and user permissions carefully, following the guidelines in <a href="https://github.com/BAUDOTlab/teaching_material/blob/main/Server%20Management/Server_Management.pdf">Server_Management.pdf</a>, section <strong>Creating a New Project</strong>.</li>
-<li>Maintain a <code>README.md</code> at the root of the projects tree with one short line per directory summarising the study’s overarching objective.</li>
+<li>Keep long-lived work under <code>/mnt/&lt;cluster-name&gt;/projects/</code> (home is for quick tests only).</li>
+<li>Set group/user permissions carefully when creating a project.</li>
+<li>Keep a root <code>README.md</code> with one short line per project directory.</li>
 </ul>
+<p>The lab’s server handbook (creating projects, permissions, shared storage) is embedded below.</p>
+<div class="embedpdf" data-src="amu/Server_Management.pdf" data-renderer="auto" data-width="100%" data-height="640px"><a href="amu/Server_Management.pdf" download="">Download PDF file.</a></div>
 
 
 <!-- -->
@@ -732,16 +745,16 @@ Table&nbsp;5.2: Main options for a customised <code>ssh</code> connection
     }
     function toggleCodeHandler(show) {
       return function(e) {
-        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-        for (let i=0; i<detailsSrc.length; i++) {
-          const details = detailsSrc[i].parentElement;
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
           if (show) {
             details.open = true;
           } else {
             details.removeAttribute("open");
           }
         }
-        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
         const fromCls = show ? "hidden" : "unhidden";
         const toCls = show ? "unhidden" : "hidden";
         for (let i=0; i<cellCodeDivs.length; i++) {
@@ -1105,253 +1118,261 @@ Table&nbsp;5.2: Main options for a customised <code>ssh</code> connection
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "AMU tools and remote servers"</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Core numerical tools provided by AMU {#sec-amu-tools}</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="an">resources:</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">  - amu/Server_Management.pdf</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>List of <span class="co">[</span><span class="ot">numerical tools used at AMU</span><span class="co">](https://www.univ-amu.fr/fr/public/les-outils-numeriques-damu)</span>.</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">## Core numerical tools provided by AMU {#sec-amu-tools}</span></span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">### AMU VPN (GlobalProtect) {#sec-amu-vpn}</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>List of <span class="co">[</span><span class="ot">numerical tools used at AMU</span><span class="co">](https://www.univ-amu.fr/fr/public/les-outils-numeriques-damu)</span>.</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>Staff and students often need the AMU VPN to reach internal services</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>(clusters, library resources, some web apps) from outside the campus</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>network. Official documentation:</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">AMU VPN overview (DUD)</span><span class="co">](https://dud.univ-amu.fr/fr/connexion-reseau-prive-virtuel-vpn-damu)</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">Strong authentication (2FA)</span><span class="co">](https://dud.univ-amu.fr/fr/authentification-forte?check_logged_in=1)</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    — enrol / confirm your second factor **before** relying on VPN from</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    home</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>AMU currently ships **Palo Alto GlobalProtect**. On Linux, prefer the</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>**graphical UI** package rather than the CLI-only build suggested in some</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>internal notes: the tray icon makes connect / disconnect and portal URL</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>errors much easier to diagnose.</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Download the latest Linux archive from the shared AMU folder</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    ([GlobalProtect Linux builds on</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    AMUbox](https://amubox.univ-amu.fr/s/eppLBPxfdqoLarj?dir=/)).</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    Filenames look like <span class="in">`PanGPLinux-6.3.3-c22.tgz`</span> — always take the</span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    **newest** release available there.</span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Extract it locally:</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="fu">### AMU VPN (GlobalProtect) {#sec-amu-vpn}</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>Staff and students often need the AMU VPN to reach internal services</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>(clusters, library resources, some web apps) from outside the campus</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>network. Official documentation:</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">AMU VPN overview (DUD)</span><span class="co">](https://dud.univ-amu.fr/fr/connexion-reseau-prive-virtuel-vpn-damu)</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">Strong authentication (2FA)</span><span class="co">](https://dud.univ-amu.fr/fr/authentification-forte?check_logged_in=1)</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    — enrol / confirm your second factor **before** relying on VPN from</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    home</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>AMU currently ships **Palo Alto GlobalProtect**. On Linux, prefer the</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>**graphical UI** package rather than the CLI-only build suggested in some</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>internal notes: the tray icon makes connect / disconnect and portal URL</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>errors much easier to diagnose.</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Download the latest Linux archive from the shared AMU folder</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    ([GlobalProtect Linux builds on</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    AMUbox](https://amubox.univ-amu.fr/s/eppLBPxfdqoLarj?dir=/)).</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    Filenames look like <span class="in">`PanGPLinux-6.3.3-c22.tgz`</span> — always take the</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    **newest** release available there.</span>
 <span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    <span class="in">```{#lst-amu-vpn-extract .bash lst-cap="Extract GlobalProtect Linux archive"}</span></span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="in">    tar -xfv PanGPLinux-*.tgz</span></span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="in">    cd PanGPLinux-*   ## adjust to the extracted directory name</span></span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="in">    ls *.deb          ## you should see both CLI and UI packages</span></span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Install the **UI** <span class="in">`.deb`</span> with <span class="in">`apt`</span> so dependencies resolve cleanly</span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>    (replace the version string with the file you downloaded):</span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>    <span class="in">```{#lst-amu-vpn-install .bash lst-cap="Install GlobalProtect UI .deb"}</span></span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a><span class="in">    sudo apt install ./GlobalProtect_UI_deb-*.deb</span></span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
-<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>    ::: {.callout-tip collapse="true" title="If apt cannot find local dependencies"}</span>
-<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>    Fall back to <span class="in">`sudo dpkg -i ./GlobalProtect_UI_deb-*.deb`</span> then</span>
-<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>    <span class="in">`sudo apt -f install`</span> to finish broken dependencies.</span>
-<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>    :::</span>
-<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>Log out and back in (or reboot) if the panel icons do not appear.</span>
-<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>    You should then see the GlobalProtect indicator(s) in the top bar.</span>
-<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>    Open the UI, set the AMU portal / gateway as documented by DUD, and</span>
-<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>    authenticate with your university account **plus** strong</span>
-<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>    authentication when prompted.</span>
-<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a><span class="ss">5.  </span>Smoke-test by opening an internal URL that is blocked off-campus</span>
-<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>    without VPN. If connection fails, check 2FA enrolment first, then</span>
-<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>    reinstall / update from the AMUbox archive (versions move quickly).</span>
-<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a><span class="fu">### AMUZoom {#sec-amuzoom}</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Extract it locally:</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    <span class="in">```{#lst-amu-vpn-extract .bash lst-cap="Extract GlobalProtect Linux archive"}</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="in">    tar -xfv PanGPLinux-*.tgz</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="in">    cd PanGPLinux-*   ## adjust to the extracted directory name</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="in">    ls *.deb          ## you should see both CLI and UI packages</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Install the **UI** <span class="in">`.deb`</span> with <span class="in">`apt`</span> so dependencies resolve cleanly</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>    (replace the version string with the file you downloaded):</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>    <span class="in">```{#lst-amu-vpn-install .bash lst-cap="Install GlobalProtect UI .deb"}</span></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a><span class="in">    sudo apt install ./GlobalProtect_UI_deb-*.deb</span></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>    ::: {.callout-tip collapse="true" title="If apt cannot find local dependencies"}</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>    Fall back to <span class="in">`sudo dpkg -i ./GlobalProtect_UI_deb-*.deb`</span> then</span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>    <span class="in">`sudo apt -f install`</span> to finish broken dependencies.</span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>    :::</span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>Log out and back in (or reboot) if the panel icons do not appear.</span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>    You should then see the GlobalProtect indicator(s) in the top bar.</span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>    Open the UI, set the AMU portal / gateway as documented by DUD, and</span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>    authenticate with your university account **plus** strong</span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>    authentication when prompted.</span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a><span class="ss">5.  </span>Smoke-test by opening an internal URL that is blocked off-campus</span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>    without VPN. If connection fails, check 2FA enrolment first, then</span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>    reinstall / update from the AMUbox archive (versions move quickly).</span>
 <span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Retrieve the latest version, choosing the proper Linux distribution</span>
-<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>    and OS architecture under [Zoom</span>
-<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>    downloads](https://zoom.us/download?os=linux). Also available</span>
-<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>    <span class="co">[</span><span class="ot">online</span><span class="co">](https://univ-amu-fr.zoom.us/)</span>. It is strongly recommended to</span>
-<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>    install Zoom locally.</span>
-<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Run <span class="in">`sudo apt install ./zoom_amd64.deb`</span>.</span>
-<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>**Log in with your university email address using SSO.** The account</span>
-<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a>    provides unlimited meetings by default; use the domain</span>
-<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>    <span class="in">`univ-amu-fr`</span>.<span class="ot">[^amu-1]</span></span>
-<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a><span class="ot">[^amu-1]: </span>Alternatively, use the web version available</span>
-<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>    <span class="co">[</span><span class="ot">here</span><span class="co">](https://univ-amu-fr.zoom.us/meeting#/upcoming)</span>.</span>
-<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>Two settings matter when creating a Zoom meeting so that any external</span>
-<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>user with the password can log in and share their screen (see</span>
-<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>@fig-zoom):</span>
-<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>::: {#fig-zoom layout-ncol="2"}</span>
-<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a><span class="al">![Zoom first login](amu/zoom_options_amu_1.png)</span></span>
-<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a><span class="al">![Zoom second step of login](amu/zoom_options_amu_2.png)</span></span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a><span class="fu">### AMUZoom {#sec-amuzoom}</span></span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Retrieve the latest version, choosing the proper Linux distribution</span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>    and OS architecture under [Zoom</span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>    downloads](https://zoom.us/download?os=linux). Also available</span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>    <span class="co">[</span><span class="ot">online</span><span class="co">](https://univ-amu-fr.zoom.us/)</span>. It is strongly recommended to</span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>    install Zoom locally.</span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Run <span class="in">`sudo apt install ./zoom_amd64.deb`</span>.</span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>**Log in with your university email address using SSO.** The account</span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>    provides unlimited meetings by default; use the domain</span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a>    <span class="in">`univ-amu-fr`</span>.<span class="ot">[^amu-1]</span></span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a><span class="ot">[^amu-1]: </span>Alternatively, use the web version available</span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>    <span class="co">[</span><span class="ot">here</span><span class="co">](https://univ-amu-fr.zoom.us/meeting#/upcoming)</span>.</span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>Two settings matter when creating a Zoom meeting so that any external</span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>user with the password can log in and share their screen (see</span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>@fig-zoom):</span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>::: {#fig-zoom layout-ncol="2"}</span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a><span class="al">![Zoom first login](amu/zoom_options_amu_1.png)</span></span>
 <span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a>Be careful to select the second, non-default option if you want to allow</span>
-<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a>external users without an AMU email address to join your Zoom session.</span>
-<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a>Further resources:</span>
+<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a><span class="al">![Zoom second step of login](amu/zoom_options_amu_2.png)</span></span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a>Be careful to select the second, non-default option if you want to allow</span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a>external users without an AMU email address to join your Zoom session.</span>
+<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>[Guidelines for Zoom meeting creation and</span>
-<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a>    management](https://dud.univ-amu.fr/fr/amuzoom-animer-reunion-classe-virtuelle#section-1.1)</span>
-<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>[Video</span>
-<span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a>    tutorial](https://amupod.univ-amu.fr/video/6375-expresso-cipe-016-webinaire-que-pouvez-vous-faire-avec-zoom/)</span>
-<span id="cb7-95"><a href="#cb7-95" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>[Guidelines for</span>
-<span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a>    students](https://dud.univ-amu.fr/se-connecter-classe-virtuelle-amu-zoom-etudiants?check_logged_in=1)</span>
-<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-98"><a href="#cb7-98" aria-hidden="true" tabindex="-1"></a><span class="fu">### WooClap for QCMs {#sec-wooclap}</span></span>
+<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a>Further resources:</span>
+<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>[Guidelines for Zoom meeting creation and</span>
+<span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a>    management](https://dud.univ-amu.fr/fr/amuzoom-animer-reunion-classe-virtuelle#section-1.1)</span>
+<span id="cb7-95"><a href="#cb7-95" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>[Video</span>
+<span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a>    tutorial](https://amupod.univ-amu.fr/video/6375-expresso-cipe-016-webinaire-que-pouvez-vous-faire-avec-zoom/)</span>
+<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>[Guidelines for</span>
+<span id="cb7-98"><a href="#cb7-98" aria-hidden="true" tabindex="-1"></a>    students](https://dud.univ-amu.fr/se-connecter-classe-virtuelle-amu-zoom-etudiants?check_logged_in=1)</span>
 <span id="cb7-99"><a href="#cb7-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a>Go to <span class="co">[</span><span class="ot">WooClap</span><span class="co">](https://www.wooclap.com/)</span> and use your **institutional</span>
-<span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a>email address** for single sign-on across platforms.</span>
-<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a><span class="fu">## Working with a remote server {#sec-remote-server}</span></span>
+<span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a><span class="fu">### WooClap for QCMs {#sec-wooclap}</span></span>
+<span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a>Go to <span class="co">[</span><span class="ot">WooClap</span><span class="co">](https://www.wooclap.com/)</span> and use your **institutional</span>
+<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a>email address** for single sign-on across platforms.</span>
 <span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a>Prefer **Cursor** or **VS Code** with the Remote SSH extension for</span>
-<span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a>everyday remote development: the editor runs locally while the terminal,</span>
-<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a>language servers, and compute run on the cluster. Avoid relying on</span>
-<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a>hosted desktop IDEs or notebook servers on the cluster for routine</span>
-<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a>work.<span class="ot">[^amu-2]</span></span>
-<span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a><span class="ot">[^amu-2]: </span>A practical split is: develop and test on small examples</span>
-<span id="cb7-112"><a href="#cb7-112" aria-hidden="true" tabindex="-1"></a>    locally in Cursor, then scale on the server via Remote SSH or the</span>
-<span id="cb7-113"><a href="#cb7-113" aria-hidden="true" tabindex="-1"></a>    command line.</span>
-<span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true" title="Retrieve your identity on the server"}</span>
-<span id="cb7-116"><a href="#cb7-116" aria-hidden="true" tabindex="-1"></a><span class="in">```{#lst-server-id .bash lst-cap="server id"}</span></span>
-<span id="cb7-117"><a href="#cb7-117" aria-hidden="true" tabindex="-1"></a><span class="in">id ${USER}</span></span>
-<span id="cb7-118"><a href="#cb7-118" aria-hidden="true" tabindex="-1"></a><span class="in"># Example (local-style groups):</span></span>
-<span id="cb7-119"><a href="#cb7-119" aria-hidden="true" tabindex="-1"></a><span class="in"># uid=1001(bastien) gid=1001(bastien) groups=1001(bastien),4(adm),...</span></span>
-<span id="cb7-120"><a href="#cb7-120" aria-hidden="true" tabindex="-1"></a><span class="in">#</span></span>
-<span id="cb7-121"><a href="#cb7-121" aria-hidden="true" tabindex="-1"></a><span class="in"># Example on the MMG cluster (project group):</span></span>
-<span id="cb7-122"><a href="#cb7-122" aria-hidden="true" tabindex="-1"></a><span class="in"># uid=1007(&lt;your-username&gt;) gid=1007(&lt;your-username&gt;) groups=1007(&lt;your-username&gt;),1043(&lt;project-group&gt;)</span></span>
-<span id="cb7-123"><a href="#cb7-123" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-124"><a href="#cb7-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-125"><a href="#cb7-125" aria-hidden="true" tabindex="-1"></a>Identity on a Linux server is defined by the combination of username,</span>
-<span id="cb7-126"><a href="#cb7-126" aria-hidden="true" tabindex="-1"></a><span class="in">`UID`</span> (user ID), and <span class="in">`GID`</span> (group ID), plus membership of project</span>
-<span id="cb7-127"><a href="#cb7-127" aria-hidden="true" tabindex="-1"></a>groups. More detail is available in the [Server Management</span>
-<span id="cb7-128"><a href="#cb7-128" aria-hidden="true" tabindex="-1"></a>tutorial](../Server%20Management/Server_Management.pdf).</span>
-<span id="cb7-129"><a href="#cb7-129" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb7-130"><a href="#cb7-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-131"><a href="#cb7-131" aria-hidden="true" tabindex="-1"></a><span class="fu">### SSH configuration {#sec-ssh-config}</span></span>
+<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a><span class="fu">## Working with a remote server {#sec-remote-server}</span></span>
+<span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a>Prefer **Cursor** or **VS Code** with the Remote SSH extension for</span>
+<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a>everyday remote development: the editor runs locally while the terminal,</span>
+<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a>language servers, and compute run on the cluster. Avoid relying on</span>
+<span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a>hosted desktop IDEs or notebook servers on the cluster for routine</span>
+<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a>work.<span class="ot">[^amu-2]</span></span>
+<span id="cb7-112"><a href="#cb7-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-113"><a href="#cb7-113" aria-hidden="true" tabindex="-1"></a><span class="ot">[^amu-2]: </span>A practical split is: develop and test on small examples</span>
+<span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a>    locally in Cursor, then scale on the server via Remote SSH or the</span>
+<span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a>    command line.</span>
+<span id="cb7-116"><a href="#cb7-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-117"><a href="#cb7-117" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true" title="Retrieve your identity on the server"}</span>
+<span id="cb7-118"><a href="#cb7-118" aria-hidden="true" tabindex="-1"></a><span class="in">```{#lst-server-id .bash lst-cap="server id"}</span></span>
+<span id="cb7-119"><a href="#cb7-119" aria-hidden="true" tabindex="-1"></a><span class="in">id ${USER}</span></span>
+<span id="cb7-120"><a href="#cb7-120" aria-hidden="true" tabindex="-1"></a><span class="in"># Example (local-style groups):</span></span>
+<span id="cb7-121"><a href="#cb7-121" aria-hidden="true" tabindex="-1"></a><span class="in"># uid=1001(bastien) gid=1001(bastien) groups=1001(bastien),4(adm),...</span></span>
+<span id="cb7-122"><a href="#cb7-122" aria-hidden="true" tabindex="-1"></a><span class="in">#</span></span>
+<span id="cb7-123"><a href="#cb7-123" aria-hidden="true" tabindex="-1"></a><span class="in"># Example on the MMG cluster (project group):</span></span>
+<span id="cb7-124"><a href="#cb7-124" aria-hidden="true" tabindex="-1"></a><span class="in"># uid=1007(&lt;your-username&gt;) gid=1007(&lt;your-username&gt;) groups=1007(&lt;your-username&gt;),1043(&lt;project-group&gt;)</span></span>
+<span id="cb7-125"><a href="#cb7-125" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-126"><a href="#cb7-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-127"><a href="#cb7-127" aria-hidden="true" tabindex="-1"></a>Identity on a Linux server is defined by the combination of username,</span>
+<span id="cb7-128"><a href="#cb7-128" aria-hidden="true" tabindex="-1"></a><span class="in">`UID`</span> (user ID), and <span class="in">`GID`</span> (group ID), plus membership of project</span>
+<span id="cb7-129"><a href="#cb7-129" aria-hidden="true" tabindex="-1"></a>groups. More detail is in the embedded [Server Management</span>
+<span id="cb7-130"><a href="#cb7-130" aria-hidden="true" tabindex="-1"></a>handbook](amu/Server_Management.pdf) below (@sec-mmg).</span>
+<span id="cb7-131"><a href="#cb7-131" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb7-132"><a href="#cb7-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-133"><a href="#cb7-133" aria-hidden="true" tabindex="-1"></a>The dual aim is to avoid typing your password on every connection and to</span>
-<span id="cb7-134"><a href="#cb7-134" aria-hidden="true" tabindex="-1"></a>keep a safe, reusable list of remote hosts.</span>
-<span id="cb7-135"><a href="#cb7-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-136"><a href="#cb7-136" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Set up SSH remote access (key-based authentication). The remote</span>
-<span id="cb7-137"><a href="#cb7-137" aria-hidden="true" tabindex="-1"></a>    machine needs <span class="in">`openssh-server`</span>:</span>
-<span id="cb7-138"><a href="#cb7-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-139"><a href="#cb7-139" aria-hidden="true" tabindex="-1"></a><span class="in">```{#lst-openssh-server .bash lst-cap="openssh server"}</span></span>
-<span id="cb7-140"><a href="#cb7-140" aria-hidden="true" tabindex="-1"></a><span class="in">## remote server must have openssh-server installed</span></span>
-<span id="cb7-141"><a href="#cb7-141" aria-hidden="true" tabindex="-1"></a><span class="in">sudo apt install openssh-server</span></span>
-<span id="cb7-142"><a href="#cb7-142" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-143"><a href="#cb7-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-144"><a href="#cb7-144" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Generate an Ed25519 public–private key pair on your **local**</span>
-<span id="cb7-145"><a href="#cb7-145" aria-hidden="true" tabindex="-1"></a>    machine:<span class="ot">[^amu-3]</span></span>
-<span id="cb7-146"><a href="#cb7-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-147"><a href="#cb7-147" aria-hidden="true" tabindex="-1"></a><span class="ot">[^amu-3]: </span>A passphrase is not compulsory, but it is safer if the disk is</span>
-<span id="cb7-148"><a href="#cb7-148" aria-hidden="true" tabindex="-1"></a>    copied or stolen.</span>
-<span id="cb7-149"><a href="#cb7-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-150"><a href="#cb7-150" aria-hidden="true" tabindex="-1"></a><span class="in">```{#lst-ssh-keygen .bash lst-cap="ssh keygen"}</span></span>
-<span id="cb7-151"><a href="#cb7-151" aria-hidden="true" tabindex="-1"></a><span class="in">ssh-keygen -t ed25519 -C "your_email@example.com"</span></span>
-<span id="cb7-152"><a href="#cb7-152" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-153"><a href="#cb7-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-154"><a href="#cb7-154" aria-hidden="true" tabindex="-1"></a>This creates:</span>
+<span id="cb7-133"><a href="#cb7-133" aria-hidden="true" tabindex="-1"></a><span class="fu">### SSH configuration {#sec-ssh-config}</span></span>
+<span id="cb7-134"><a href="#cb7-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-135"><a href="#cb7-135" aria-hidden="true" tabindex="-1"></a>The dual aim is to avoid typing your password on every connection and to</span>
+<span id="cb7-136"><a href="#cb7-136" aria-hidden="true" tabindex="-1"></a>keep a safe, reusable list of remote hosts.</span>
+<span id="cb7-137"><a href="#cb7-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-138"><a href="#cb7-138" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Set up SSH remote access (key-based authentication). The remote</span>
+<span id="cb7-139"><a href="#cb7-139" aria-hidden="true" tabindex="-1"></a>    machine needs <span class="in">`openssh-server`</span>:</span>
+<span id="cb7-140"><a href="#cb7-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-141"><a href="#cb7-141" aria-hidden="true" tabindex="-1"></a><span class="in">```{#lst-openssh-server .bash lst-cap="openssh server"}</span></span>
+<span id="cb7-142"><a href="#cb7-142" aria-hidden="true" tabindex="-1"></a><span class="in">## remote server must have openssh-server installed</span></span>
+<span id="cb7-143"><a href="#cb7-143" aria-hidden="true" tabindex="-1"></a><span class="in">sudo apt install openssh-server</span></span>
+<span id="cb7-144"><a href="#cb7-144" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-145"><a href="#cb7-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-146"><a href="#cb7-146" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Generate an Ed25519 public–private key pair on your **local**</span>
+<span id="cb7-147"><a href="#cb7-147" aria-hidden="true" tabindex="-1"></a>    machine:<span class="ot">[^amu-3]</span></span>
+<span id="cb7-148"><a href="#cb7-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-149"><a href="#cb7-149" aria-hidden="true" tabindex="-1"></a><span class="ot">[^amu-3]: </span>A passphrase is not compulsory, but it is safer if the disk is</span>
+<span id="cb7-150"><a href="#cb7-150" aria-hidden="true" tabindex="-1"></a>    copied or stolen.</span>
+<span id="cb7-151"><a href="#cb7-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-152"><a href="#cb7-152" aria-hidden="true" tabindex="-1"></a><span class="in">```{#lst-ssh-keygen .bash lst-cap="ssh keygen"}</span></span>
+<span id="cb7-153"><a href="#cb7-153" aria-hidden="true" tabindex="-1"></a><span class="in">ssh-keygen -t ed25519 -C "your_email@example.com"</span></span>
+<span id="cb7-154"><a href="#cb7-154" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb7-155"><a href="#cb7-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-156"><a href="#cb7-156" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`~/.ssh/id_ed25519`</span> (private key)</span>
-<span id="cb7-157"><a href="#cb7-157" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`~/.ssh/id_ed25519.pub`</span> (public key)</span>
-<span id="cb7-158"><a href="#cb7-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-159"><a href="#cb7-159" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Copy your public key to the server with</span>
-<span id="cb7-160"><a href="#cb7-160" aria-hidden="true" tabindex="-1"></a>    <span class="in">`ssh-copy-id username@server_ip`</span>. After that, password login is no</span>
-<span id="cb7-161"><a href="#cb7-161" aria-hidden="true" tabindex="-1"></a>    longer required for that host.</span>
-<span id="cb7-162"><a href="#cb7-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-163"><a href="#cb7-163" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>(Optional) Keep a <span class="in">`~/.ssh/config`</span> entry per cluster. Aliases such as</span>
-<span id="cb7-164"><a href="#cb7-164" aria-hidden="true" tabindex="-1"></a>    <span class="in">`ssh ifb-core`</span> then suffice, and the same file is what Cursor / VS</span>
-<span id="cb7-165"><a href="#cb7-165" aria-hidden="true" tabindex="-1"></a>    Code Remote SSH uses to list hosts. Example:</span>
-<span id="cb7-166"><a href="#cb7-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-167"><a href="#cb7-167" aria-hidden="true" tabindex="-1"></a><span class="in">```{#lst-ssh-config .bash lst-cap="ssh config"}</span></span>
-<span id="cb7-168"><a href="#cb7-168" aria-hidden="true" tabindex="-1"></a><span class="in">## Alias for the host connection: either "ifb-core" or "ifb"</span></span>
-<span id="cb7-169"><a href="#cb7-169" aria-hidden="true" tabindex="-1"></a><span class="in">Host ifb-core ifb</span></span>
-<span id="cb7-170"><a href="#cb7-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-171"><a href="#cb7-171" aria-hidden="true" tabindex="-1"></a><span class="in">  ## The real hostname (or IP) of the remote server</span></span>
-<span id="cb7-172"><a href="#cb7-172" aria-hidden="true" tabindex="-1"></a><span class="in">  HostName core.cluster.france-bioinformatique.fr</span></span>
-<span id="cb7-173"><a href="#cb7-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-174"><a href="#cb7-174" aria-hidden="true" tabindex="-1"></a><span class="in">  ## Username used on the remote machine</span></span>
-<span id="cb7-175"><a href="#cb7-175" aria-hidden="true" tabindex="-1"></a><span class="in">  User &lt;your-ifb-username&gt;</span></span>
-<span id="cb7-176"><a href="#cb7-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-177"><a href="#cb7-177" aria-hidden="true" tabindex="-1"></a><span class="in">  ## Path to your private SSH key</span></span>
-<span id="cb7-178"><a href="#cb7-178" aria-hidden="true" tabindex="-1"></a><span class="in">  IdentityFile ~/.ssh/id_ed25519</span></span>
-<span id="cb7-179"><a href="#cb7-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-180"><a href="#cb7-180" aria-hidden="true" tabindex="-1"></a><span class="in">  ## Force SSH to use ONLY the key above</span></span>
-<span id="cb7-181"><a href="#cb7-181" aria-hidden="true" tabindex="-1"></a><span class="in">  IdentitiesOnly yes</span></span>
-<span id="cb7-182"><a href="#cb7-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-183"><a href="#cb7-183" aria-hidden="true" tabindex="-1"></a><span class="in">  ## Authentication order: key, then keyboard-interactive, then password</span></span>
-<span id="cb7-184"><a href="#cb7-184" aria-hidden="true" tabindex="-1"></a><span class="in">  PreferredAuthentications publickey,keyboard-interactive,password</span></span>
-<span id="cb7-185"><a href="#cb7-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-186"><a href="#cb7-186" aria-hidden="true" tabindex="-1"></a><span class="in">  ## Add this key to ssh-agent when used</span></span>
-<span id="cb7-187"><a href="#cb7-187" aria-hidden="true" tabindex="-1"></a><span class="in">  AddKeysToAgent yes</span></span>
-<span id="cb7-188"><a href="#cb7-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-189"><a href="#cb7-189" aria-hidden="true" tabindex="-1"></a><span class="in"># Host configuration for the MMG cluster</span></span>
-<span id="cb7-190"><a href="#cb7-190" aria-hidden="true" tabindex="-1"></a><span class="in">Host mmg-sb-05 new-mmg-cluster</span></span>
-<span id="cb7-191"><a href="#cb7-191" aria-hidden="true" tabindex="-1"></a><span class="in">  HostName &lt;mmg-server-hostname-or-ip&gt;</span></span>
-<span id="cb7-192"><a href="#cb7-192" aria-hidden="true" tabindex="-1"></a><span class="in">  Port &lt;non-default-ssh-port&gt;  # prefer a non-22 port when the cluster provides one</span></span>
-<span id="cb7-193"><a href="#cb7-193" aria-hidden="true" tabindex="-1"></a><span class="in">  User &lt;your-mmg-username&gt;</span></span>
-<span id="cb7-194"><a href="#cb7-194" aria-hidden="true" tabindex="-1"></a><span class="in">  IdentityFile ~/.ssh/id_ed25519</span></span>
-<span id="cb7-195"><a href="#cb7-195" aria-hidden="true" tabindex="-1"></a><span class="in">  IdentitiesOnly yes</span></span>
-<span id="cb7-196"><a href="#cb7-196" aria-hidden="true" tabindex="-1"></a><span class="in">  PubkeyAuthentication yes</span></span>
-<span id="cb7-197"><a href="#cb7-197" aria-hidden="true" tabindex="-1"></a><span class="in">  PreferredAuthentications publickey,keyboard-interactive,password</span></span>
-<span id="cb7-198"><a href="#cb7-198" aria-hidden="true" tabindex="-1"></a><span class="in">  AddKeysToAgent yes</span></span>
-<span id="cb7-199"><a href="#cb7-199" aria-hidden="true" tabindex="-1"></a><span class="in">  ForwardX11 yes</span></span>
-<span id="cb7-200"><a href="#cb7-200" aria-hidden="true" tabindex="-1"></a><span class="in">  ForwardX11Trusted yes</span></span>
-<span id="cb7-201"><a href="#cb7-201" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-202"><a href="#cb7-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-203"><a href="#cb7-203" aria-hidden="true" tabindex="-1"></a>A fuller host configuration (including default X11 forwarding) is</span>
-<span id="cb7-204"><a href="#cb7-204" aria-hidden="true" tabindex="-1"></a>available under</span>
-<span id="cb7-205"><a href="#cb7-205" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">config-ssh</span><span class="co">](../Config/ssh-hosts/.ssh/config)</span>.</span>
-<span id="cb7-206"><a href="#cb7-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-207"><a href="#cb7-207" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true" title="SSH configuration recommendations"}</span>
-<span id="cb7-208"><a href="#cb7-208" aria-hidden="true" tabindex="-1"></a>On older Ubuntu setups, <span class="in">`ssh-agent`</span> / <span class="in">`ssh-add`</span> may not start by</span>
-<span id="cb7-209"><a href="#cb7-209" aria-hidden="true" tabindex="-1"></a>default. Enable the user service with</span>
-<span id="cb7-210"><a href="#cb7-210" aria-hidden="true" tabindex="-1"></a><span class="in">`systemctl --user enable --now ssh-agent`</span>.</span>
-<span id="cb7-211"><a href="#cb7-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-212"><a href="#cb7-212" aria-hidden="true" tabindex="-1"></a>See @tbl-ssh-guidelines and @fig-ssh-connection for a concise checklist</span>
-<span id="cb7-213"><a href="#cb7-213" aria-hidden="true" tabindex="-1"></a>and an overview of the first connection.</span>
-<span id="cb7-214"><a href="#cb7-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-215"><a href="#cb7-215" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Practice <span class="pp">|</span> Why <span class="pp">|</span></span>
-<span id="cb7-216"><a href="#cb7-216" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------------------------|--------------------------------------------|</span></span>
-<span id="cb7-217"><a href="#cb7-217" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Prefer Ed25519 keys <span class="pp">|</span> Small, fast, modern default. <span class="pp">|</span></span>
-<span id="cb7-218"><a href="#cb7-218" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Use a passphrase on the key <span class="pp">|</span> Protects the key if the disk is copied or stolen. <span class="pp">|</span></span>
-<span id="cb7-219"><a href="#cb7-219" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`~/.ssh/config`</span> per host <span class="pp">|</span> Aliases and login options in one place. <span class="pp">|</span></span>
-<span id="cb7-220"><a href="#cb7-220" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Never commit private keys <span class="pp">|</span> Keep <span class="in">`id_*`</span> out of Git and cloud-synced folders. <span class="pp">|</span></span>
-<span id="cb7-221"><a href="#cb7-221" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`ssh-copy-id`</span> once per host <span class="pp">|</span> Standard way to populate <span class="in">`authorized_keys`</span>. <span class="pp">|</span></span>
-<span id="cb7-222"><a href="#cb7-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-223"><a href="#cb7-223" aria-hidden="true" tabindex="-1"></a>: SSH recommended practices {#tbl-ssh-guidelines}</span>
+<span id="cb7-156"><a href="#cb7-156" aria-hidden="true" tabindex="-1"></a>This creates:</span>
+<span id="cb7-157"><a href="#cb7-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-158"><a href="#cb7-158" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`~/.ssh/id_ed25519`</span> (private key)</span>
+<span id="cb7-159"><a href="#cb7-159" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`~/.ssh/id_ed25519.pub`</span> (public key)</span>
+<span id="cb7-160"><a href="#cb7-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-161"><a href="#cb7-161" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Copy your public key to the server with</span>
+<span id="cb7-162"><a href="#cb7-162" aria-hidden="true" tabindex="-1"></a>    <span class="in">`ssh-copy-id username@server_ip`</span>. After that, password login is no</span>
+<span id="cb7-163"><a href="#cb7-163" aria-hidden="true" tabindex="-1"></a>    longer required for that host.</span>
+<span id="cb7-164"><a href="#cb7-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-165"><a href="#cb7-165" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>(Optional) Keep a <span class="in">`~/.ssh/config`</span> entry per cluster. Aliases such as</span>
+<span id="cb7-166"><a href="#cb7-166" aria-hidden="true" tabindex="-1"></a>    <span class="in">`ssh ifb-core`</span> then suffice, and the same file is what Cursor / VS</span>
+<span id="cb7-167"><a href="#cb7-167" aria-hidden="true" tabindex="-1"></a>    Code Remote SSH uses to list hosts. Example:</span>
+<span id="cb7-168"><a href="#cb7-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-169"><a href="#cb7-169" aria-hidden="true" tabindex="-1"></a><span class="in">```{#lst-ssh-config .bash lst-cap="ssh config"}</span></span>
+<span id="cb7-170"><a href="#cb7-170" aria-hidden="true" tabindex="-1"></a><span class="in">## Alias for the host connection: either "ifb-core" or "ifb"</span></span>
+<span id="cb7-171"><a href="#cb7-171" aria-hidden="true" tabindex="-1"></a><span class="in">Host ifb-core ifb</span></span>
+<span id="cb7-172"><a href="#cb7-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-173"><a href="#cb7-173" aria-hidden="true" tabindex="-1"></a><span class="in">  ## The real hostname (or IP) of the remote server</span></span>
+<span id="cb7-174"><a href="#cb7-174" aria-hidden="true" tabindex="-1"></a><span class="in">  HostName core.cluster.france-bioinformatique.fr</span></span>
+<span id="cb7-175"><a href="#cb7-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-176"><a href="#cb7-176" aria-hidden="true" tabindex="-1"></a><span class="in">  ## Username used on the remote machine</span></span>
+<span id="cb7-177"><a href="#cb7-177" aria-hidden="true" tabindex="-1"></a><span class="in">  User &lt;your-ifb-username&gt;</span></span>
+<span id="cb7-178"><a href="#cb7-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-179"><a href="#cb7-179" aria-hidden="true" tabindex="-1"></a><span class="in">  ## Path to your private SSH key</span></span>
+<span id="cb7-180"><a href="#cb7-180" aria-hidden="true" tabindex="-1"></a><span class="in">  IdentityFile ~/.ssh/id_ed25519</span></span>
+<span id="cb7-181"><a href="#cb7-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-182"><a href="#cb7-182" aria-hidden="true" tabindex="-1"></a><span class="in">  ## Force SSH to use ONLY the key above</span></span>
+<span id="cb7-183"><a href="#cb7-183" aria-hidden="true" tabindex="-1"></a><span class="in">  IdentitiesOnly yes</span></span>
+<span id="cb7-184"><a href="#cb7-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-185"><a href="#cb7-185" aria-hidden="true" tabindex="-1"></a><span class="in">  ## Authentication order: key, then keyboard-interactive, then password</span></span>
+<span id="cb7-186"><a href="#cb7-186" aria-hidden="true" tabindex="-1"></a><span class="in">  PreferredAuthentications publickey,keyboard-interactive,password</span></span>
+<span id="cb7-187"><a href="#cb7-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-188"><a href="#cb7-188" aria-hidden="true" tabindex="-1"></a><span class="in">  ## Add this key to ssh-agent when used</span></span>
+<span id="cb7-189"><a href="#cb7-189" aria-hidden="true" tabindex="-1"></a><span class="in">  AddKeysToAgent yes</span></span>
+<span id="cb7-190"><a href="#cb7-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-191"><a href="#cb7-191" aria-hidden="true" tabindex="-1"></a><span class="in"># Host configuration for the MMG cluster</span></span>
+<span id="cb7-192"><a href="#cb7-192" aria-hidden="true" tabindex="-1"></a><span class="in">Host mmg-sb-05 new-mmg-cluster</span></span>
+<span id="cb7-193"><a href="#cb7-193" aria-hidden="true" tabindex="-1"></a><span class="in">  HostName &lt;mmg-server-hostname-or-ip&gt;</span></span>
+<span id="cb7-194"><a href="#cb7-194" aria-hidden="true" tabindex="-1"></a><span class="in">  Port &lt;non-default-ssh-port&gt;  # prefer a non-22 port when the cluster provides one</span></span>
+<span id="cb7-195"><a href="#cb7-195" aria-hidden="true" tabindex="-1"></a><span class="in">  User &lt;your-mmg-username&gt;</span></span>
+<span id="cb7-196"><a href="#cb7-196" aria-hidden="true" tabindex="-1"></a><span class="in">  IdentityFile ~/.ssh/id_ed25519</span></span>
+<span id="cb7-197"><a href="#cb7-197" aria-hidden="true" tabindex="-1"></a><span class="in">  IdentitiesOnly yes</span></span>
+<span id="cb7-198"><a href="#cb7-198" aria-hidden="true" tabindex="-1"></a><span class="in">  PubkeyAuthentication yes</span></span>
+<span id="cb7-199"><a href="#cb7-199" aria-hidden="true" tabindex="-1"></a><span class="in">  PreferredAuthentications publickey,keyboard-interactive,password</span></span>
+<span id="cb7-200"><a href="#cb7-200" aria-hidden="true" tabindex="-1"></a><span class="in">  AddKeysToAgent yes</span></span>
+<span id="cb7-201"><a href="#cb7-201" aria-hidden="true" tabindex="-1"></a><span class="in">  ForwardX11 yes</span></span>
+<span id="cb7-202"><a href="#cb7-202" aria-hidden="true" tabindex="-1"></a><span class="in">  ForwardX11Trusted yes</span></span>
+<span id="cb7-203"><a href="#cb7-203" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-204"><a href="#cb7-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-205"><a href="#cb7-205" aria-hidden="true" tabindex="-1"></a>A fuller host configuration (including default X11 forwarding) is</span>
+<span id="cb7-206"><a href="#cb7-206" aria-hidden="true" tabindex="-1"></a>available under</span>
+<span id="cb7-207"><a href="#cb7-207" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">config-ssh</span><span class="co">](../Config/ssh-hosts/.ssh/config)</span>.</span>
+<span id="cb7-208"><a href="#cb7-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-209"><a href="#cb7-209" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true" title="SSH configuration recommendations"}</span>
+<span id="cb7-210"><a href="#cb7-210" aria-hidden="true" tabindex="-1"></a>On older Ubuntu setups, <span class="in">`ssh-agent`</span> / <span class="in">`ssh-add`</span> may not start by</span>
+<span id="cb7-211"><a href="#cb7-211" aria-hidden="true" tabindex="-1"></a>default. Enable the user service with</span>
+<span id="cb7-212"><a href="#cb7-212" aria-hidden="true" tabindex="-1"></a><span class="in">`systemctl --user enable --now ssh-agent`</span>.</span>
+<span id="cb7-213"><a href="#cb7-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-214"><a href="#cb7-214" aria-hidden="true" tabindex="-1"></a>See @tbl-ssh-guidelines and @fig-ssh-connection for a concise checklist</span>
+<span id="cb7-215"><a href="#cb7-215" aria-hidden="true" tabindex="-1"></a>and an overview of the first connection.</span>
+<span id="cb7-216"><a href="#cb7-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-217"><a href="#cb7-217" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Practice <span class="pp">|</span> Why <span class="pp">|</span></span>
+<span id="cb7-218"><a href="#cb7-218" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------------------------|--------------------------------------------|</span></span>
+<span id="cb7-219"><a href="#cb7-219" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Prefer Ed25519 keys <span class="pp">|</span> Small, fast, modern default. <span class="pp">|</span></span>
+<span id="cb7-220"><a href="#cb7-220" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Use a passphrase on the key <span class="pp">|</span> Protects the key if the disk is copied or stolen. <span class="pp">|</span></span>
+<span id="cb7-221"><a href="#cb7-221" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`~/.ssh/config`</span> per host <span class="pp">|</span> Aliases and login options in one place. <span class="pp">|</span></span>
+<span id="cb7-222"><a href="#cb7-222" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Never commit private keys <span class="pp">|</span> Keep <span class="in">`id_*`</span> out of Git and cloud-synced folders. <span class="pp">|</span></span>
+<span id="cb7-223"><a href="#cb7-223" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`ssh-copy-id`</span> once per host <span class="pp">|</span> Standard way to populate <span class="in">`authorized_keys`</span>. <span class="pp">|</span></span>
 <span id="cb7-224"><a href="#cb7-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-225"><a href="#cb7-225" aria-hidden="true" tabindex="-1"></a><span class="al">![Overview of an initial SSH connection](ssh/ssh-initiate-connection.png)</span>{#fig-ssh-connection}</span>
+<span id="cb7-225"><a href="#cb7-225" aria-hidden="true" tabindex="-1"></a>: SSH recommended practices {#tbl-ssh-guidelines}</span>
 <span id="cb7-226"><a href="#cb7-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-227"><a href="#cb7-227" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Option <span class="pp">|</span> Purpose <span class="pp">|</span> Effect on X11 <span class="pp">|</span></span>
-<span id="cb7-228"><a href="#cb7-228" aria-hidden="true" tabindex="-1"></a><span class="pp">|------------------|------------------|------------------------------------|</span></span>
-<span id="cb7-229"><a href="#cb7-229" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`-X`</span> <span class="pp">|</span> X11 forwarding (untrusted) <span class="pp">|</span> Runs GUI apps remotely <span class="pp">|</span></span>
-<span id="cb7-230"><a href="#cb7-230" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`-Y`</span> <span class="pp">|</span> X11 forwarding (trusted) <span class="pp">|</span> Runs all GUI apps remotely <span class="pp">|</span></span>
-<span id="cb7-231"><a href="#cb7-231" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`-C`</span> <span class="pp">|</span> Compression <span class="pp">|</span> Reduces network usage; can help GUI over slow links <span class="pp">|</span></span>
-<span id="cb7-232"><a href="#cb7-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-233"><a href="#cb7-233" aria-hidden="true" tabindex="-1"></a>: Main options for a customised <span class="in">`ssh`</span> connection {#tbl-ssh-connexion}</span>
-<span id="cb7-234"><a href="#cb7-234" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb7-235"><a href="#cb7-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-236"><a href="#cb7-236" aria-hidden="true" tabindex="-1"></a><span class="fu">### MMG cluster and recommendations for project management {#sec-mmg}</span></span>
+<span id="cb7-227"><a href="#cb7-227" aria-hidden="true" tabindex="-1"></a><span class="al">![Overview of an initial SSH connection](ssh/ssh-initiate-connection.png)</span>{#fig-ssh-connection}</span>
+<span id="cb7-228"><a href="#cb7-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-229"><a href="#cb7-229" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Option <span class="pp">|</span> Purpose <span class="pp">|</span> Effect on X11 <span class="pp">|</span></span>
+<span id="cb7-230"><a href="#cb7-230" aria-hidden="true" tabindex="-1"></a><span class="pp">|------------------|------------------|------------------------------------|</span></span>
+<span id="cb7-231"><a href="#cb7-231" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`-X`</span> <span class="pp">|</span> X11 forwarding (untrusted) <span class="pp">|</span> Runs GUI apps remotely <span class="pp">|</span></span>
+<span id="cb7-232"><a href="#cb7-232" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`-Y`</span> <span class="pp">|</span> X11 forwarding (trusted) <span class="pp">|</span> Runs all GUI apps remotely <span class="pp">|</span></span>
+<span id="cb7-233"><a href="#cb7-233" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`-C`</span> <span class="pp">|</span> Compression <span class="pp">|</span> Reduces network usage; can help GUI over slow links <span class="pp">|</span></span>
+<span id="cb7-234"><a href="#cb7-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-235"><a href="#cb7-235" aria-hidden="true" tabindex="-1"></a>: Main options for a customised <span class="in">`ssh`</span> connection {#tbl-ssh-connexion}</span>
+<span id="cb7-236"><a href="#cb7-236" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb7-237"><a href="#cb7-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-238"><a href="#cb7-238" aria-hidden="true" tabindex="-1"></a>As soon as collaboration is involved, follow these project tips:</span>
+<span id="cb7-238"><a href="#cb7-238" aria-hidden="true" tabindex="-1"></a><span class="fu">### MMG cluster and recommendations for project management {#sec-mmg}</span></span>
 <span id="cb7-239"><a href="#cb7-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-240"><a href="#cb7-240" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Initialise <span class="in">`git`</span> and GitHub at the real start of the project.</span>
-<span id="cb7-241"><a href="#cb7-241" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Keep work under <span class="in">`/mnt/&lt;cluster-name&gt;/projects/`</span> only (nothing</span>
-<span id="cb7-242"><a href="#cb7-242" aria-hidden="true" tabindex="-1"></a>    long-lived in your home directory except quick tests).</span>
-<span id="cb7-243"><a href="#cb7-243" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>When creating the project, set group and user permissions carefully,</span>
-<span id="cb7-244"><a href="#cb7-244" aria-hidden="true" tabindex="-1"></a>    following the guidelines in</span>
-<span id="cb7-245"><a href="#cb7-245" aria-hidden="true" tabindex="-1"></a>    <span class="co">[</span><span class="ot">Server_Management.pdf</span><span class="co">](https://github.com/BAUDOTlab/teaching_material/blob/main/Server%20Management/Server_Management.pdf)</span>,</span>
-<span id="cb7-246"><a href="#cb7-246" aria-hidden="true" tabindex="-1"></a>    section **Creating a New Project**.</span>
-<span id="cb7-247"><a href="#cb7-247" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Maintain a <span class="in">`README.md`</span> at the root of the projects tree with one</span>
-<span id="cb7-248"><a href="#cb7-248" aria-hidden="true" tabindex="-1"></a>    short line per directory summarising the study’s overarching</span>
-<span id="cb7-249"><a href="#cb7-249" aria-hidden="true" tabindex="-1"></a>    objective.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb7-240"><a href="#cb7-240" aria-hidden="true" tabindex="-1"></a>As soon as collaboration is involved:</span>
+<span id="cb7-241"><a href="#cb7-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-242"><a href="#cb7-242" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Initialise <span class="in">`git`</span> and GitHub at the real start of the project.</span>
+<span id="cb7-243"><a href="#cb7-243" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Keep long-lived work under <span class="in">`/mnt/&lt;cluster-name&gt;/projects/`</span> (home is</span>
+<span id="cb7-244"><a href="#cb7-244" aria-hidden="true" tabindex="-1"></a>    for quick tests only).</span>
+<span id="cb7-245"><a href="#cb7-245" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Set group/user permissions carefully when creating a project.</span>
+<span id="cb7-246"><a href="#cb7-246" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Keep a root <span class="in">`README.md`</span> with one short line per project directory.</span>
+<span id="cb7-247"><a href="#cb7-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-248"><a href="#cb7-248" aria-hidden="true" tabindex="-1"></a>The lab’s server handbook (creating projects, permissions, shared</span>
+<span id="cb7-249"><a href="#cb7-249" aria-hidden="true" tabindex="-1"></a>storage) is embedded below.</span>
+<span id="cb7-250"><a href="#cb7-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-251"><a href="#cb7-251" aria-hidden="true" tabindex="-1"></a>::: {.content-visible when-format="html"}</span>
+<span id="cb7-252"><a href="#cb7-252" aria-hidden="true" tabindex="-1"></a>{{&lt; pdf amu/Server_Management.pdf width="100%" height="640px" &gt;}}</span>
+<span id="cb7-253"><a href="#cb7-253" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-254"><a href="#cb7-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-255"><a href="#cb7-255" aria-hidden="true" tabindex="-1"></a>::: {.content-visible when-format="pdf"}</span>
+<span id="cb7-256"><a href="#cb7-256" aria-hidden="true" tabindex="-1"></a>{{&lt; pdf fresh-installation/amu/Server_Management.pdf &gt;}}</span>
+<span id="cb7-257"><a href="#cb7-257" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
@@ -1367,6 +1388,12 @@ Table&nbsp;5.2: Main options for a customised <code>ssh</code> connection
     <li class="nav-item compact">
     <a class="nav-link active" href="https://github.com/BAUDOTlab/teaching_material" aria-current="page">
       <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/company/marseille-medical-genetics/posts/?feedView=all">
+      <i class="bi bi-linkedin" role="img">
 </i> 
     </a>
   </li>  
@@ -1411,4 +1438,5 @@ Table&nbsp;5.2: Main options for a customised <code>ssh</code> connection
 
 
 <script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-contrib/embedpdf-1.0.2/embedpdf-viewer.js" type="module"></script>
 </body></html>

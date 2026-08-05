@@ -4,7 +4,7 @@ title: "Modern LaTeX guidelines"
 
 Modern LaTeX (and Quarto ↔ LaTeX) practice emphasises **semantic markup**,
 modular projects, and packages that stay maintainable
-(`amsmath`, `biblatex`, `cleveref`, `siunitx`, …).
+(`amsmath`, `cleveref`, `siunitx`, clean `.bib` workflows, …).
 
 Useful references:
 
@@ -87,21 +87,16 @@ HTML workflows, `kableExtra` / paged tables are often enough.
 
 ## Bibliography and citations {#sec-latex-bib}
 
-Prefer **biblatex** + biber over legacy BibTeX-only workflows:
-
-``` latex
-\usepackage[
-  backend=biber,
-  style=authoryear
-]{biblatex}
-```
-
-Use `csquotes` and `\enquote{...}`. Page-aware cites:
-`\autocite[p.~8]{LR89}`. Validate / clean `.bib` files (remove noisy
-fields such as `abstract`, `file`, `urldate` when unused) with tools like
-[biblatex-linter](https://biblatex-linter.herokuapp.com/validate),
-[BibTeX Tidy](https://flamingtempura.github.io/), and sources such as
+Prefer a **clean `.bib` maintained from Zotero + Better BibTeX** (see the
+software chapter) and Quarto / Pandoc citation syntax in teaching
+materials. For classic LaTeX manuscripts, stick to a simple BibTeX /
+`natbib` workflow — keep the bibliography file hygienic (allowed fields
+only) and validate with tools such as
+[BibTeX Tidy](https://flamingtempura.github.io/) and
 [DBLP](https://dblp.uni-trier.de/).
+
+Use `csquotes` and `\enquote{...}` for quotations. Page-aware cites remain
+useful (`\cite[p.~8]{LR89}` or the equivalent in your chosen package).
 
 ## Cross-references {#sec-latex-xref}
 
@@ -129,6 +124,13 @@ Prefer `\cref{eq:model}` / `\Cref{...}` / `\crefrange{...}` over manual
 | Graphics | `tikz`, `pgfplots` (and TikZ for Nature Methods DAGs) |
 | Code | `listings` or `minted` (needs Pygments) |
 
+## Anti-patterns {#sec-latex-antipatterns}
+
+Avoid `$$…$$` in classic LaTeX sources, `eqnarray`, decorative `\\`,
+deprecated font switches, hardcoded visual markup, and habitual `[H]`
+floats. Prefer semantic structure, modular files, modern packages, and
+Quarto-compatible syntax when the deliverable is a website or vignette.
+
 ## Quarto ↔ LaTeX mapping {#sec-latex-quarto}
 
 | LaTeX | Quarto / Markdown |
@@ -155,15 +157,3 @@ Example Quarto table chunk (illustrative only):
 
 Then: `See @tbl-summary.`
 
-## Compilation and quality {#sec-latex-qa}
-
--   Automate with `latexmk -pdf main.tex`.
--   Build figures as `standalone` documents when useful.
--   Lint / review: TeXtidote, ChkTeX, `refcheck`, `showkeys`.
-
-## Anti-patterns {#sec-latex-antipatterns}
-
-Avoid `$$…$$` in classic LaTeX sources, `eqnarray`, decorative `\\`,
-deprecated font switches, hardcoded visual markup, and habitual `[H]`
-floats. Prefer semantic structure, modular files, modern packages, and
-Quarto-compatible syntax when the deliverable is a website or vignette.

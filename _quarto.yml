@@ -14,6 +14,7 @@ project:
     - fresh-installation/software.qmd
     - fresh-installation/amu-and-server.qmd
     - fresh-installation/onedrive.qmd
+    - fresh-installation/network-troubleshooting.qmd
     - R/R_package.qmd
     - latex/latex-guidelines.qmd
 
@@ -36,13 +37,14 @@ book:
         - fresh-installation/amu-and-server.qmd
   appendices:
     - fresh-installation/onedrive.qmd
+    - fresh-installation/network-troubleshooting.qmd
     - R/R_package.qmd
     - latex/latex-guidelines.qmd
   repo-url: https://github.com/BAUDOTlab/teaching_material
   site-url: https://baudotlab.github.io/teaching_material/
   repo-branch: main
   repo-actions: [edit, issue, source]
-  sharing: [linkedin]
+  sharing: []
   open-graph: true
   downloads: [pdf]
   page-footer:
@@ -53,6 +55,8 @@ book:
     right:
       - icon: github
         href: https://github.com/BAUDOTlab/teaching_material
+      - icon: linkedin
+        href: https://www.linkedin.com/company/marseille-medical-genetics/posts/?feedView=all
 
 # =========================
 # Shared document defaults

@@ -94,7 +94,6 @@ but are not sandboxed and are harder to remove cleanly.
 
 2.  Configure your access to GitHub:
 
-    <!-- -->
 
     i.  Choose either SSH or HTTPS.
     ii. For HTTPS, create one token per device under
@@ -103,11 +102,9 @@ but are not sandboxed and are harder to remove cleanly.
         `repo` and related read scopes. Copy it once — **it will not be
         shown again**.
 
-    <!-- -->
 
 3.  General options to configure:
 
-    <!-- -->
 
     i.  Use the command line (this also creates `~/.gitconfig`):
 
@@ -149,11 +146,9 @@ but are not sandboxed and are harder to remove cleanly.
           helper = store
         ```
 
-    <!-- -->
 
 4.  Avoid typing your password for every login:
 
-    <!-- -->
 
     i.  For HTTPS + personal access token (PAT), use
         `git config --global credential.helper store` for **permanent**
@@ -163,7 +158,6 @@ but are not sandboxed and are harder to remove cleanly.
         for temporary access[^soft-3].
     ii. Or define an SSH key and use the SSH remote URL.
 
-    <!-- -->
 
 [^soft-3]: Time-out units are seconds; `3600` is one hour.
 
@@ -560,7 +554,6 @@ sudo apt install zulip
 [^soft-7]: On many Ubuntu installs a newer Java (e.g. 21) is already
     present; keep Java 17 available for Cytoscape.
 
-    <!-- -->
 
     i.  Retrieve the [latest
         version](http://www.cytoscape.org/download.html).
@@ -568,9 +561,19 @@ sudo apt install zulip
     iii. Run with `bash <filename.sh>`.
     iv. Launch with `Cytoscape &`.
 
-    <!-- -->
 
 ## Zotero {#sec-zotero}
+
+::: {#wrn-zotero-version .callout-warning}
+**Zotero major versions change the Settings UI and feature set.** These
+notes assume **Zotero 7** (current stable line as of this writing —
+menus under **Edit → Settings…**). If you are still on Zotero 6, labels
+differ (Preferences vs Settings). Always check *Help → About Zotero*
+before following screenshots, and re-import Better BibTeX preferences
+after an upgrade.
+:::
+
+### Install and launch
 
 1.  Install Java support for the LibreOffice plug-in:
 
@@ -579,28 +582,25 @@ sudo apt install libreoffice-java-common -y
 ```
 
 2.  Retrieve the latest stable build from
-    <https://www.zotero.org/download/>[^soft-8].
+    <https://www.zotero.org/download/> (or fetch the archive with
+    `curl`).
 
 3.  Extract and link the executable (@lst-zotero-install), then install
-    the Zotero Connector in your browser:
-
-[^soft-8]: Alternatively, download the archive with `curl`.
+    the [Zotero Connector](https://www.zotero.org/download/connectors) in
+    your browser:
 
 ```{#lst-zotero-install .bash lst-cap="Extract and link Zotero"}
 #!/bin/bash
-
 ## part I: extract archive
 sudo tar -xjf zotero.tar.bz2 -C /opt
 sudo mv /opt/Zotero_linux-x86_64 /opt/zotero
-
 ## Part II: add the executable to PATH
 sudo ln -s /opt/zotero/zotero /usr/local/bin/zotero
 ```
 
 4.  (Optional) Create a desktop launcher at
-    `~/.local/share/applications/zotero.desktop` with the content in
-    @lst-zotero-desktop, then make it executable:
-    `chmod +x ~/.local/share/applications/zotero.desktop`.
+    `~/.local/share/applications/zotero.desktop` (@lst-zotero-desktop),
+    then `chmod +x ~/.local/share/applications/zotero.desktop`.
 
 ```{#lst-zotero-desktop .ini lst-cap="Zotero desktop entry"}
 [Desktop Entry]
@@ -615,36 +615,101 @@ MimeType=text/plain;x-scheme-handler/zotero;application/x-research-info-systems;
 X-GNOME-SingleWindow=true
 ```
 
-5.  Inspired by the [Zotero hacks
-    tutorial](https://habr.com/en/articles/443798/), keep article files
-    synced across machines while controlling what Zotero stores in the
-    cloud:
+### Better BibTeX and local storage
 
-    <!-- -->
+5.  Install **Better BibTeX** (clean citation keys and `.bib` export):
 
-    i.  Add the plug-ins **Better BibTeX** (needed for exporting a clean
-        `.bib` file) and **Zotmoov** (replaces the older ZotFile
-        extension for filing PDFs by author name).
-    ii. Edit Zotero preferences[^soft-9]:
-        -   Uncheck automatic web-page snapshots (reduces clutter from
-            many small files).
-        -   Uncheck full-text sync.
-        -   Under **Edit → Settings → Advanced**, keep separate:
-            -   the **base directory** (the folder synced by your file
-                sharing software), and
-            -   a **custom data directory** in a different location,
-                managed by Zotero itself (@fig-zotero-advanced).
+    -   Download the latest `.xpi` from
+        [Better BibTeX](https://retorque.re/zotero-better-bibtex/).
+    -   In Zotero: **Tools → Plugins → Install plugin from file…**, then
+        restart.
+    -   Harmonise citation-key patterns across machines (e.g.
+        `[auth:lower][year][journal:lower:abbr]`).
+    -   After upgrades, restore settings via
+        **Edit → Settings → Better BibTeX → Import preferences**.
 
-[^soft-9]: Uniformity across platforms matters more than any single
-    absolute path.
+::: {#fig-zotero-config layout-ncol="3"}
+![Advanced / general settings (keep the library local)](zotero/zotero_advanced_settings.png)
 
-![Zotero advanced database configuration](zotero/zotero-advanced-configuration.png){#fig-zotero-advanced}
+![Better BibTeX citation-key and export preferences](zotero/zotero_better_bibtex_preferences.png)
 
-    iii. Configure **Better BibTeX** citation keys the same way on every
-         machine (for example
-         `[auth:lower][year][journal:lower:abbr]`).
+![Linked / stored file location — prefer a local folder, not OneDrive](zotero/zotero_folder_storage.png)
 
-    <!-- -->
+Core Zotero configuration: keep the SQLite library and stored PDFs on
+**local disk** (for example `~/Zotero/`). Avoid syncing the data directory
+through OneDrive/Dropbox — use Zotero Sync for metadata and optional file
+storage, or linked files under a path that is *not* a cloud-synced tree
+used for active Git projects (@wrn-onedrive-exclusive in the OneDrive
+appendix).
+:::
+
+### Citations in Cursor / Quarto (preferred authoring path)
+
+Favour inserting citations from Zotero **inside Cursor’s Quarto visual
+editor**, which can populate the document bibliography automatically via
+the Zotero connection
+([Quarto visual editor — Zotero citations](https://quarto.org/docs/tools/vscode/visual-editor.html#zotero-citations)):
+
+1.  Enable Zotero in Quarto / Cursor visual mode (Zotero desktop must be
+    running; Better BibTeX improves key stability).
+2.  Insert citations from the visual editor citation UI — Quarto writes
+    `[@citekey]` and can maintain the linked `.bib`.
+3.  Keep literature `.bib` files under Git; keep software citations in a
+    separate `packages.bib` when your project uses that split.
+
+### Two-way sync with zotcurate (`zotc`) and project rules
+
+[zotcurate](https://github.com/jeetsukumaran/zotcurate) bridges citation
+keys in `.qmd` / `.bib` / `.tex` and Zotero **collections**. Project
+`.cursorrules` (Bibliography section) encode the hygiene rules: leaf-only
+collection membership, allowed BibTeX fields, and
+`check_bibliography.py --clean` after every export.
+
+```{mermaid}
+%%| label: fig-zotero-flow
+%%| fig-cap: "Bidirectional literature workflow (summary)"
+%%{init: {'theme': 'neutral'}}%%
+flowchart LR
+  Z[Zotero + Better BibTeX<br/>local ~/Zotero] -->|export .bib| G[Git literature .bib]
+  G -->|check_bibliography --clean| G
+  Q[Quarto / Cursor<br/>visual citations] -->|[@keys]| G
+  G -->|zotc keys extract| C[zotcurate]
+  C -->|collection add leaf-only| Z
+  P[packages.bib] -.->|software only| Q
+```
+
+![How `.cursorrules` + zotcurate keep Zotero collections and document citekeys aligned across formats](zotero/zotero-zotcurate-sync.png){#fig-zotero-zotcurate-sync}
+
+**Both directions (as used in lab projects):**
+
+1.  **Zotero → Git:** export → `python3 scripts/check_bibliography.py --clean`.
+2.  **Git / docs → Zotero:** `zotc keys extract` then
+    `collection add|create` (dry-run first); assign each item to
+    **exactly one leaf collection**.
+3.  Software tools → `packages.bib`, not the Zotero literature library.
+
+### Shortcuts and power options
+
+![Zotero shortcut preferences (restart required after changes)](zotero/zotero-shortcuts.png){#fig-zotero-shortcuts}
+
+Useful defaults (Linux; change under **Edit → Settings → Shortcuts**):
+
+| Action | Typical shortcut |
+|--------------------------------------|------------------|
+| New item | {{< kbd Ctrl-Shift-N >}} |
+| New note | {{< kbd Ctrl-Shift-O >}} |
+| Focus libraries pane | {{< kbd Ctrl-Shift-L >}} |
+| Quick search | {{< kbd Ctrl-Shift-K >}} |
+| Copy citations | {{< kbd Ctrl-Shift-A >}} |
+| Copy items | {{< kbd Ctrl-Shift-C >}} |
+
+Additional habits:
+
+-   In **Advanced search** results, hold {{< kbd Ctrl >}} while clicking
+    an item to reveal / jump to its location in the library tree.
+-   Hold {{< kbd Shift >}} to multi-select a contiguous block of items,
+    then batch-update Better BibTeX citekeys (right-click → Better BibTeX
+    → generate / refresh keys).
 
 ## Quarto, R and Cursor {#sec-r-quarto-cursor}
 
@@ -664,7 +729,6 @@ echo "deb [signed-by=/etc/apt/keyrings/cran.gpg] https://cloud.r-project.org/bin
 
 2.  Install R:
 
-    <!-- -->
 
     i.  Install base packages:
 
@@ -702,11 +766,9 @@ sudo apt install \
   libgsl-dev
 ```
 
-    <!-- -->
 
 3.  Configure a default CRAN mirror:
 
-    <!-- -->
 
     i.  The official mirror <https://cloud.r-project.org> is the most
         up to date.
@@ -720,7 +782,6 @@ echo 'options(repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/<
   >> ~/.Rprofile
 ```
 
-    <!-- -->
 
 4.  Install packages in a reproducible way (project lockfiles, `renv`,
     or a curated meta-package). Stephen Turner’s tidyverse-oriented
@@ -862,7 +923,6 @@ uv python install 3.14
 
 3.  Pin the Python version at one of two levels:
 
-    <!-- -->
 
     i.  Project level: `uv python pin 3.14`.
     ii. User level:
@@ -872,7 +932,6 @@ cd ~
 echo "3.14" > ~/.python-version
 ```
 
-    <!-- -->
 
 4.  Prefer `uv tool install` (instead of `pipx`) for CLI utilities —
     formatters, notebook tools, hooks, and so on. As with `pipx`, these
@@ -1020,29 +1079,24 @@ sudo apt install ./cursor_2.0.77_amd64.deb
 ::: {#tip-cursor-export .callout-tip title="Export Cursor settings"}
 1.  Export the core settings:
 
-    <!-- -->
 
     i.  Open the Command Palette (`Ctrl/Cmd + Shift + P`), then search
         for **Preferences: Open Settings (JSON)**.
     ii. Copy that file onto the new device.
     iii. Default Linux path: `~/.config/Cursor/User/settings.json`.
 
-    <!-- -->
 
 2.  Export keyboard shortcuts:
 
-    <!-- -->
 
     i.  Open **Preferences: Open Keyboard Shortcuts (JSON)**.
     ii. Copy `keybindings.json` to
         `~/.config/Cursor/User/keybindings.json` on the new machine.
 
-    <!-- -->
 
 3.  (**Main difference from VS Code**.) Export the extension list
     manually:
 
-    <!-- -->
 
     i.  List extensions with
         `cursor --list-extensions > extensions.txt`. To also record each
@@ -1056,7 +1110,6 @@ grep -v '^\s*#' ~/.config/Cursor/User/extensions.txt \
   | xargs -I{} cursor --install-extension {}
 ```
 
-    <!-- -->
 
 More detail (including symlink automation) is in
 [*Sync Cursor Settings the Dotfiles
@@ -1065,6 +1118,12 @@ Way*](https://dev.to/0916dhkim/sync-cursor-settings-the-dotfiles-way-20c9).
 For syncing configuration across many users, see also Benjamin’s notes
 and
 [Cursor Config Sync](https://open-vsx.org/extension/KushalCodes/cursor-config-sync).
+
+![Map of the main sections hard-coded in `Config/.cursor/.cursorrules` (structure, R, bibliography, writing, LaTeX, slides)](../Config/.cursor/cursorrules-map.png){#fig-cursorrules-map}
+
+The figure summarises what those rules enforce for agents and humans:
+project layout, R package hygiene, Zotero/bibliography sync, Nature
+Methods–style writing, LaTeX semantics, and Quarto reveal.js slidecraft.
 :::
 
 ## Password manager: Bitwarden {#sec-bitwarden}

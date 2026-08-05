@@ -9,6 +9,7 @@ This site is built with [Quarto](https://quarto.org) as a **book** project. Use 
 -   [Software to install](fresh-installation/software.qmd)
 -   [AMU tools and remote servers](fresh-installation/amu-and-server.qmd)
 -   Appendices: [OneDrive](fresh-installation/onedrive.qmd),
+    [Network / Wi-Fi](fresh-installation/network-troubleshooting.qmd),
     [R package guidelines](R/R_package.qmd),
     [Modern LaTeX](latex/latex-guidelines.qmd)
 

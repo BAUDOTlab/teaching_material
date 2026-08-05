@@ -1,5 +1,7 @@
 ---
 title: "AMU tools and remote servers"
+resources:
+  - amu/Server_Management.pdf
 ---
 
 ## Core numerical tools provided by AMU {#sec-amu-tools}
@@ -124,8 +126,8 @@ id ${USER}
 
 Identity on a Linux server is defined by the combination of username,
 `UID` (user ID), and `GID` (group ID), plus membership of project
-groups. More detail is available in the [Server Management
-tutorial](../Server%20Management/Server_Management.pdf).
+groups. More detail is in the embedded [Server Management
+handbook](amu/Server_Management.pdf) below (@sec-mmg).
 :::
 
 ### SSH configuration {#sec-ssh-config}
@@ -235,15 +237,21 @@ and an overview of the first connection.
 
 ### MMG cluster and recommendations for project management {#sec-mmg}
 
-As soon as collaboration is involved, follow these project tips:
+As soon as collaboration is involved:
 
 -   Initialise `git` and GitHub at the real start of the project.
--   Keep work under `/mnt/<cluster-name>/projects/` only (nothing
-    long-lived in your home directory except quick tests).
--   When creating the project, set group and user permissions carefully,
-    following the guidelines in
-    [Server_Management.pdf](https://github.com/BAUDOTlab/teaching_material/blob/main/Server%20Management/Server_Management.pdf),
-    section **Creating a New Project**.
--   Maintain a `README.md` at the root of the projects tree with one
-    short line per directory summarising the study’s overarching
-    objective.
+-   Keep long-lived work under `/mnt/<cluster-name>/projects/` (home is
+    for quick tests only).
+-   Set group/user permissions carefully when creating a project.
+-   Keep a root `README.md` with one short line per project directory.
+
+The lab’s server handbook (creating projects, permissions, shared
+storage) is embedded below.
+
+::: {.content-visible when-format="html"}
+{{< pdf amu/Server_Management.pdf width="100%" height="640px" >}}
+:::
+
+::: {.content-visible when-format="pdf"}
+{{< pdf fresh-installation/amu/Server_Management.pdf >}}
+:::
