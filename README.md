@@ -1,21 +1,33 @@
-# Team Teaching Repository
+# Team teaching material
 
-This repo stores the teaching materials of Anaïs Baudot's team. Each folder contains the different files and code for the topic. Refer to each folder's README for a more detailed explanation on the teaching.
+Teaching resources for Anaïs Baudot’s team, published as a
+[Quarto](https://quarto.org) **book**.
 
-## Table of Content
+- **Site:** <https://baudotlab.github.io/teaching_material/>
+- **PDF:** [team-teaching-material.pdf](docs/team-teaching-material.pdf)
+- **Milestone tag:** [`v2.0.0`](https://github.com/BAUDOTlab/teaching_material/releases/tag/v2.0.0)
+  (Quarto book layout; legacy SNF folder retired)
 
-### [Similarity Network Fusion](/SNF)
+## Book contents
 
-A hands-on to master SNF techniques and visualisation through Cytoscape. The data is not included but is available publicly online.
+| Chapter / appendix | Path |
+|--------------------|------|
+| Welcome | [`index.qmd`](index.qmd) |
+| Team onboarding | [`onboarding/onboarding.qmd`](onboarding/onboarding.qmd) |
+| Ubuntu general guidelines | [`fresh-installation/ubuntu-general.qmd`](fresh-installation/ubuntu-general.qmd) |
+| Software to install | [`fresh-installation/software.qmd`](fresh-installation/software.qmd) |
+| AMU tools and remote servers | [`fresh-installation/amu-and-server.qmd`](fresh-installation/amu-and-server.qmd) |
+| OneDrive (appendix) | [`fresh-installation/onedrive.qmd`](fresh-installation/onedrive.qmd) |
+| Network / Wi-Fi (appendix) | [`fresh-installation/network-troubleshooting.qmd`](fresh-installation/network-troubleshooting.qmd) |
+| R package guidelines (appendix) | [`R/R_package.qmd`](R/R_package.qmd) |
+| Modern LaTeX (appendix) | [`latex/latex-guidelines.qmd`](latex/latex-guidelines.qmd) |
 
-### [Git](/Git)
+Build locally with `quarto render` (HTML and PDF land in `docs/`).
 
-Multiple resources to learn how to use Git and GitHub or Gitlab, as PDF documents. Some include practical examples too.
+## Other materials in this repository
 
-### [Linux](/Linux)
-
-Resources to start (nearly) from scratch configuration, and installation of the most popular software with Linux distribution (focusing on Ubuntu architectures). Feel free to suggest inclusion of relevant applications, or report errors / better approaches. 
-
-### [Package development](/R/package-workshop)
-
-This workshop is about how to create a (basic) package in R and Python using the package development tools. It will present the development ecosystem, and it's not going into depth on each key point. At the end of the workshop, users create a package :).
+| Topic | Path |
+|-------|------|
+| Git / GitHub / GitLab notes | [`Git/`](Git/) |
+| R packaging workshop sources | [`R/package-workshop/`](R/package-workshop/) |
+| Shared Cursor / shell / R configs | [`Config/`](Config/) |
