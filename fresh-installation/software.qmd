@@ -83,6 +83,8 @@ but are not sandboxed and are harder to remove cleanly.
 
 ## Git and GitHub configuration {#sec-git-config}
 
+![Git general workflow](git/git-workflow.png){#fig-git-workflow}
+
 ![Overview of recommended GitHub security and collaboration practices](git/github-best-practices.png){#fig-github-best-practices}
 
 1.  GitHub often requires two-factor authentication; set it under
