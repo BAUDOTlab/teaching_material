@@ -1,0 +1,747 @@
+---
+title: "How2Package"
+output: 
+  rmdformats::material:
+    use_bookdown: true
+    thumbnails: false
+    css: "How2Package.css"
+date: "2026-03-09"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+
+# **R** - Packages installation
+
+## R
+
+Install `R` on your machine:
+```{bash r}
+sudo apt install r-base
+```
+
+## R IDE
+
+You can use the IDE that you prefer:
+
+- `Rstudio`: see [website](https://posit.co/download/rstudio-desktop/) for installation
+- `VS code`: see [website](https://code.visualstudio.com/) for installation
+
+## Required R packages
+
+You need the following packages for the workshop. Installations are made directly in R (inside a specific environment if you want).
+
+
+- [devtools](https://devtools.r-lib.org/) makes package development easier. 
+```{r rDevtools}
+install.packages("devtools")
+```
+
+- [usethis](https://usethis.r-lib.org/) automates repetitive tasks during package development.
+```{r rUsethis}
+install.packages("usethis")
+```
+
+- [testthat](https://testthat.r-lib.org/) makes testing fun (at least, it make it easier and less painful). 
+```{r rTestthat}
+install.packages("testthat")
+```
+
+- [roxygen2](https://roxygen2.r-lib.org/) generate automatically documentation from source code and comments.
+```{r rRoxygen2}
+install.packages("roxygen2")
+```
+
+- [pkgdown](https://pkgdown.r-lib.org/) builds website for r packages.
+```{r rPkgdown}
+install.packages("pkgdown")
+```
+
+# **Python** - Packages installation
+
+## Python
+
+Install `Python` on your machine.
+```{bash_py}
+sudo apt install python3 python-is-python3
+```
+
+You also need `pip` and `pipx`.
+```{bash_pyPip}
+python -m ensurepip --upgrade
+pip install pipx
+```
+
+## Python IDE
+
+You can use the IDE that you prefer:
+
+- `pycharm`: see [website](https://www.jetbrains.com/pycharm/) for installation
+- `spyder`: see [website](https://www.spyder-ide.org/) for installation
+- `VS code`: see [website](https://code.visualstudio.com/) for installation
+- `Rstudio`: see [website](https://posit.co/download/rstudio-desktop/) for installation
+
+## Required python packages
+
+You need the following packages for the workshop. Installations are made using command lines (inside a specific environment if you want).
+
+- [Cookiecutter](https://github.com/cookiecutter/cookiecutter) creates the package structure. 
+```{bash_pyCookie}
+pip install cookiecutter
+```
+
+- [poetry](https://python-poetry.org/) helps managing package in python. 
+```{bash_pyPoetry}
+pipx install poetry
+```
+
+- [pytest](https://docs.pytest.org/en/stable/) makes easy tests in python package.
+```{bash_pyPytest}
+pip install -U pytest
+pip install pytest-cov
+```
+
+- [Sphinx](https://www.sphinx-doc.org/en/master/) allows automatic documentation generation.
+```{bash_pySphinx}
+pip install -U sphinx
+pip install sphinx-autoapi
+pip install sphinx-rtd-theme
+pip install myst-nb
+```
+
+`sphinx-autoapi`, `sphinx-rtd-theme`, `myst-nb` packages are used in this workshop. You can develop package without these packages.
+
+### Packages for the main script
+
+```{bash_pyPackages}
+pip install freezegun
+pip install rich
+```
+
+# Package structure {.tabset .tabset-pills}
+
+First, create the **package structure**. 
+
+## R {-}
+
+In Rstudio, load the `devtools` library and create the structure using `usethis` library.
+
+```{r}
+library("devtools")
+library("usethis")
+usethis::create_package("hello")
+```
+
+Reload the `devtools` package after R has restarted. 
+```{r}
+library("devtools")
+```
+
+To access later to your package in Rstudio, open the `hello.Rproj` file. 
+
+## Python {-}
+
+In your terminal, create the package structure using `cookiecutter`.
+```{bash}
+cookiecutter https://github.com/py-pkgs/py-pkgs-cookiecutter.git
+```
+
+`Cookiecutter` will use the package structure template creating by Tomas Beuzen and Tiffany Timbers in this books: [Py-Pkgs](https://py-pkgs.org/). 
+
+It will ask you some questions to create the first essentials files that need a package.
+
+# Metadata {.tabset .tabset-pills}
+
+Package needs these to most important metadata files: 
+
+- `README`
+- `LICENSE`
+
+There are some others interesting metadata files, but we don't see them in this workshop. 
+
+## R {-}
+
+In Rstudio, create a `README` file and update it with the necessary information.
+```{r}
+usethis::use_readme_rmd()
+```
+
+After update, render it. You need to render it after each modification of the file.
+```{r}
+devtools::build_readme()
+```
+
+Then, create the `LICENSE` file with the license you choose. Here, we use a MIT license.
+```{r}
+usethis::use_mit_license()
+```
+
+Then, use roxygen to generate the documentation and load the complete package. I recommend to use these two commands each time you modify the package.
+```{r}
+devtools::document()
+devtools::load_all()
+```
+
+It could be also useful to check the package often. 
+```{r}
+devtools::check()
+```
+
+## Python {-}
+
+The `README` and `LICENSE` files are automatically created based on your answers. You can of course update these two files if needed. 
+
+# Writing code {.tabset .tabset-pills}
+
+Now, it's the funny part! You will create the main body of the package: coding part! Create a script with functions to display the current date and time in a fancy way. 
+
+You will write three functions:
+
+- `currentTime` function: return the current date and time 
+- `displayTime` function: display the current date and time
+- `TT` function: retrieve the current date and time and display it
+
+## R {-}
+In Rstudio, create a R forlder with a `hello` R script.
+```{r}
+usethis::use_r("hello")
+```
+
+Then, write the following three functions in the script:
+```{r}
+currentTime <- function(){
+    #' Return current time
+    #'
+    #'
+    current_time <- base::Sys.Date()
+    return(current_time)
+}
+
+displayTime <- function(current_time, style){
+    #' Display current time. User can choose the format.
+    #'
+    #'
+    cat(crayon::blue("Hello", "world!\n"))
+    if(style == "full"){
+        print(current_time)
+    }
+    if(style == "year"){
+        print(format(current_time, "%Y"))
+    }
+    if(style == "month"){
+        print(format(current_time, "%b"))
+    }
+    if(style == "day"){
+        print(format(current_time, "%d"))
+    }
+}
+
+TT <- function(style){
+    #' Display current time
+    #'
+    #'
+    x <- currentTime()
+    displayTime(x, style)
+}
+```
+
+Don't forget to generate the documentation and load the complete package.
+```{r}
+devtools::load_all()
+devtools::document()
+```
+
+Check if everything is ok.
+```{r}
+devtools::check()
+```
+
+Install it et try it.
+```{r}
+devtools::install()
+library("hello")
+hello::TT("full")
+```
+
+## Python {-}
+
+In the ``src/`` folder, you can find the ``hello`` folder with a python script inside. Create the following three functions.
+```{python}
+from datetime import datetime
+from rich import print
+
+def currentTime():
+    """Extract current time"""
+    current_time = datetime.now()
+    return(current_time)
+
+def displayTime(current_time, style):
+    """Display current time. User can choose the format."""
+    print("Hello, [bold magenta]World[/bold magenta]!", ":vampire:")
+    match style:
+        case "full":
+            print(current_time)
+        case "year":
+            print(current_time.year)
+        case "month":
+            print(current_time.month)
+        case "day":
+            print(current_time.day)
+        case _:
+            print("Sorry, I don't understand, use full, year, month or day")
+
+def TT(style):
+    """Display current time"""
+    x = currentTime()
+    displayTime(x, style)
+```
+
+Install it et try it. (go to the scr repo and run poetry ?)
+
+```{bash}
+poetry install
+```
+
+Go to the `src/hello/` folder. In python, import the `hello` package and run it. 
+```{python}
+import hello
+hello.TT("full")
+```
+
+# Setup {.tabset .tabset-pills}
+
+Explicit the packages you used in your package. 
+
+## R {-}
+
+The `displayTime()` function needs the `crayon` package. You need to specify it using `crayon::` when you call the function and also in the function documentation using `@import`. 
+```{r}
+displayTime <- function(current_time, style){
+    #' Display current time. User can choose the format.
+    #'
+    #' @import crayon
+    #' 
+    cat(crayon::blue("Hello", "world!\n"))
+    if(style == "full"){
+        print(current_time)
+    }
+    if(style == "year"){
+        print(format(current_time, "%Y"))
+    }
+    if(style == "month"){
+        print(format(current_time, "%b"))
+    }
+    if(style == "day"){
+        print(format(current_time, "%d"))
+    }
+}
+```
+
+Then, update the doc, load the complete package and check it.
+```{r}
+devtools::document()
+devtools::load_all()
+devtools::check()
+```
+
+You have an error. There is something with the `crayon` package. You need to add it in the `DESCRIPTION` file in the `import` statement.
+```{r}
+usethis::use_package("crayon")
+```
+
+Check again. The error disappears.
+```{r}
+devtools::document()
+devtools::load_all()
+devtools::check()
+```
+
+Now, you can install your package and try it! Call the `TT()` function.
+```{r}
+devtools::install()
+library(hello)
+hello::TT("full")
+```
+
+You still don't see the `TT()` function. None of the three functions are imported and so visible by the user. You need to add an `@export` in the function documentation. 
+```{r}
+TT <- function(style){
+    #' Display current time
+    #'
+    #' @export
+    x <- currentTime()
+    displayTime(x, style)
+}
+```
+
+Install again your package.
+```{r}
+devtools::document()
+devtools::load_all()
+devtools::check()
+devtools::install()
+library(hello)
+hello::TT("full")
+```
+
+## Python {-}
+
+We use `datetime` and `rich` packages. These packages are a requirement to use your package.
+So we need to specify it somewhere. 
+In the `.toml` file. 
+
+```{bash}
+poetry add datetime
+poetry add rich
+```
+
+Retry to install, import it and call the TT function.
+```{bash}
+poetry install
+```
+
+In python, import and call your package.
+```{python}
+from hello import hello
+hello.TT("full")
+```
+
+
+# Tests {.tabset .tabset-pills}
+
+Now, we want to verify if functions are working as expected. 
+
+## R {-}
+
+First, create the structure of the test in your package. Don't forget the input parameter `3`. It corresponds to the last version of the package.
+```{r}
+usethis::use_testthat(3)
+```
+
+Then, create a test file for the current functions file.
+```{r}
+usethis::use_test()
+```
+
+Write a test function for the `currentTime()` function.
+```{r}
+test_that("currentTime function", {
+    expected_time = base::Sys.Date()
+    current_time = currentTime()
+    expect_equal(current_time, expected_time)
+})
+```
+
+Then, as usual, load the complete package and run the tests.
+```{r}
+devtools::document()
+devtools::load_all()
+devtools::test()
+```
+
+If you check your package, no warning anymore.
+```{r}
+devtools::check()
+```
+
+You can check again the package.
+```{r}
+devtools::check()
+```
+
+## Python {-}
+
+In the `test/` forlder, you already have a test script. Write the function test inside.
+```{python}
+from hello import hello
+from freezegun import freeze_time 
+from datetime import datetime
+
+@freeze_time("2021-02-03")
+
+def test_currentTime():
+    """Test currentTime function"""
+    expected = datetime.now()
+    actual = hello.currentTime()
+    assert actual == expected
+```
+
+As before, we need some package and specify them. 
+```{bash}
+poetry add --group dev pytest
+poetry add --group dev freezegun
+poetry add --group dev pytest-cov
+```
+
+Then, you can run tests. You can aslo see the test coverage of your package (i.e. % of functions with a test).
+```{bash}
+poetry run pytest tests/
+poetry run pytest tests/ --cov=hello
+```
+
+# Documentation {.tabset .tabset-pills}
+
+Documentation (functions, user manual, examples etc ...) are very important for the user but also for you, in 6 months. I think it's almost important as the code. 
+
+## R {-}
+
+**Function documentation**
+
+In R, function documentations start with `#'`. The first line is for the title. The second paragraph is for the short description of the function. The third paragraph is for the details. Input parameters are defined using `@param` and output parameters using `@returns`.
+
+```{r}
+currentTime <- function(){
+    #' Extract current time
+    #'
+    #' @returns the current time in Date format
+    #'
+    current_time <- base::Sys.Date()
+    return(current_time)
+}
+
+
+displayTime <- function(current_time, style){
+    #' Display current time.
+    #'
+    #' User can choose the format.
+    #' * \code{style = full}: print the current time (e.g. \code{2026-03-07})
+    #' * \code{style = year}: print the current year (e.g. \code{2026})
+    #' * \code{style = month}: print the current month (e.g. \code{03})
+    #' * \code{style = day}: print the current day (e.g. \code{07})
+    #'
+    #' @param current_time current time in Date format
+    #' @param style character vector of the date printing. Can be: \code{full},
+    #' \code{year}, \code{month} or \code{day}.
+    #'
+    #' @import crayon
+    #'
+    cat(crayon::blue("Hello", "world!\n"))
+    if(style == "full"){
+        print(current_time)
+    }
+    if(style == "year"){
+        print(format(current_time, "%Y"))
+    }
+    if(style == "month"){
+        print(format(current_time, "%b"))
+    }
+    if(style == "day"){
+        print(format(current_time, "%d"))
+    }
+}
+
+TT <- function(style){
+    #' Display current time in a fancy way!
+    #'
+    #' User can choose the format.
+    #' * \code{style = full}: print the current time (e.g. \code{2026-03-07})
+    #' * \code{style = year}: print the current year (e.g. \code{2026})
+    #' * \code{style = month}: print the current month (e.g. \code{03})
+    #' * \code{style = day}: print the current day (e.g. \code{07})
+    #'
+    #' @param style character vector of the date printing. Can be: \code{full},
+    #' \code{year}, \code{month} or \code{day}.
+    #'
+    #' @export
+    x <- currentTime()
+    displayTime(x, style)
+}
+```
+
+Then, update the documentation and load the complete package.
+```{r}
+devtools::document()
+devtools::load_all()
+```
+
+Look the documentation of the `TT()` function. 
+```{r}
+?TT
+```
+
+**Function examples**
+
+You can also add examples to your function. It will give details to the user on how to call it. We add examples only for the exported functions. Others will be not visible for users. 
+
+```{r}
+TT <- function(style){
+    #' Display current time in a fancy way!
+    #'
+    #' User can choose the format.
+    #' * \code{style = full}: print the current time (e.g. \code{2026-03-07})
+    #' * \code{style = year}: print the current year (e.g. \code{2026})
+    #' * \code{style = month}: print the current month (e.g. \code{03})
+    #' * \code{style = day}: print the current day (e.g. \code{07})
+    #'
+    #' @param style character vector of the date printing. Can be: \code{full},
+    #' \code{year}, \code{month} or \code{day}.
+    #'
+    #' @examples
+    #' library("hello")
+    #'
+    #' style = "full"
+    #' TT(style)
+    #'
+    #' style = "year"
+    #' TT(style)
+    #'
+    #' style = "month"
+    #' TT(style)
+    #'
+    #' style = "day"
+    #' TT(style)
+    #'
+    #' @export
+    x <- currentTime()
+    displayTime(x, style)
+}
+```
+
+Then, update the documentation and load the complete package.
+```{r}
+devtools::document()
+devtools::load_all()
+```
+
+Look the documentation of the `TT()` function.
+```{r}
+?TT
+```
+
+**Vignettes**
+
+Vignettes will explain in details how your package is working. It's the user manual. 
+
+Create a vignette. 
+```{r}
+usethis::use_vignette("hello-vignette")
+```
+
+Then, update the documentation and load the complete package. 
+```{r}
+devtools::document()
+devtools::load_all()
+```
+
+**Website**
+
+It's possible to generate automatically a website of your package using `pkgdown`. It will take all your documentation and build a website.
+
+```{r}
+usethis::use_pkgdown()
+pkgdown::build_site()
+```
+
+Open the `index.html` file saved in the `docs/` folder.
+
+## Python {-}
+
+**Function documentation**
+
+In Python, function documentations are between `""" doc """`. The first line is the title. In this workshop, you are using the [Sphinx docstring format](https://sphinx-rtd-tutorial.readthedocs.io/en/latest/docstrings.html). Others formats exist but we don't use them here.
+```{python}
+def currentTime():
+    """Extract current time
+    
+    :return: current date and time
+    :rtype: datetime.datetime object
+
+    """
+    current_time = datetime.now()
+    return(current_time)
+
+def displayTime(current_time, style):
+    """Display current time. User can choose the format.
+
+    :param current_time: current date and time
+    :type current_time: datetime.datetime object
+    :param style: `full`, `year`, `month` or `day`
+    :type style: string
+
+    """
+    print("Hello, [bold magenta]World[/bold magenta]!", ":vampire:")
+    match style:
+        case "full":
+            print(current_time)
+        case "year":
+            print(current_time.year)
+        case "month":
+            print(current_time.month)
+        case "day":
+            print(current_time.day)
+        case _:
+            print("Sorry, I don't understand, use full, year, month or day")
+
+def TT(style):
+    """Display current time
+
+    :param style: `full`, `year`, `month` or `day`
+    :type style: string
+
+    """
+    x = currentTime()
+    displayTime(x, style)
+```
+
+Then, add the packages used to generate the automatic documentation.
+```{bash}
+poetry add --group dev myst-nb sphinx-autoapi sphinx-rtd-theme
+```
+
+Docs structure is already created, you don't need to do it. Sphinx comes with a script called sphinx-quickstart that sets up a source directory for documentation.
+```{bash}
+cd docs/
+make html
+```
+
+# Installation {.tabset .tabset-pills}
+
+## R {-}
+
+To install your package, first check and build it. 
+```{r}
+devtools::check()
+devtools::build()
+```
+
+If you want to submit your package to `Bioconductor`, there is the `BiocCheck()` function. 
+```{r}
+BiocCheck::BiocCheck("../hello_0.0.0.9000.tar.gz")
+```
+
+Then, install it and import it.
+```{r}
+devtools::install()
+library("hello")
+```
+
+If you want to uninstall a package, run in Rstudio:
+```{r}
+remove.packages("hello")
+```
+
+
+## Python {-}
+
+To install your package, built it.
+```{bash}
+poetry build
+```
+
+Then, install it. 
+```{bash}
+pip install --force-reinstall dist/hello-0.1.0-py3-none-any.whl
+```
+
+In python, import it.
+```{python}
+from hello import hello
+```
+
+If you want to uninstall a package, run in Rstudio:
+```{bash}
+pip uninstall hello
+```
+
+
