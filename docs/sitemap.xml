@@ -2,11 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://baudotlab.github.io/teaching_material/index.html</loc>
-    <lastmod>2026-08-05T20:09:26.196Z</lastmod>
-  </url>
-  <url>
-    <loc>https://baudotlab.github.io/teaching_material/onboarding/onboarding.html</loc>
-    <lastmod>2026-07-24T15:43:49.767Z</lastmod>
+    <lastmod>2026-09-04T09:21:11.134Z</lastmod>
   </url>
   <url>
     <loc>https://baudotlab.github.io/teaching_material/fresh-installation/ubuntu-general.html</loc>
@@ -14,7 +10,7 @@
   </url>
   <url>
     <loc>https://baudotlab.github.io/teaching_material/fresh-installation/software.html</loc>
-    <lastmod>2026-08-05T20:11:58.306Z</lastmod>
+    <lastmod>2026-08-23T14:37:19.349Z</lastmod>
   </url>
   <url>
     <loc>https://baudotlab.github.io/teaching_material/fresh-installation/amu-and-server.html</loc>
@@ -38,6 +34,6 @@
   </url>
   <url>
     <loc>https://baudotlab.github.io/teaching_material/team-teaching-material.pdf</loc>
-    <lastmod>2026-08-05T20:13:54.738Z</lastmod>
+    <lastmod>2026-09-04T09:21:49.233Z</lastmod>
   </url>
 </urlset>

@@ -13,7 +13,6 @@ Teaching resources for Anaïs Baudot’s team, published as a
 | Chapter / appendix | Path |
 |--------------------|------|
 | Welcome | [`index.qmd`](index.qmd) |
-| Team onboarding | [`onboarding/onboarding.qmd`](onboarding/onboarding.qmd) |
 | Ubuntu general guidelines | [`fresh-installation/ubuntu-general.qmd`](fresh-installation/ubuntu-general.qmd) |
 | Software to install | [`fresh-installation/software.qmd`](fresh-installation/software.qmd) |
 | AMU tools and remote servers | [`fresh-installation/amu-and-server.qmd`](fresh-installation/amu-and-server.qmd) |
