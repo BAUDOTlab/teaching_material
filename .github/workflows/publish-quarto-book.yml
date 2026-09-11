@@ -21,7 +21,7 @@ on:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -31,12 +31,13 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     permissions:
       contents: write
       pages: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Quarto
         uses: quarto-dev/quarto-actions/setup@v2
@@ -63,9 +64,16 @@ jobs:
           packages: any::rmarkdown, any::downlit, any::xml2
           cache-version: 1
 
+      # Mermaid → PNG for PDF hangs for hours if no Chrome/Edge is present
+      # https://quarto.org/docs/authoring/diagrams.html
+      - name: Install Chrome Headless Shell
+        run: quarto install chrome-headless-shell --no-prompt
+
       - name: Render book (HTML + PDF)
         run: quarto render
+
       - name: Publish to GitHub Pages
+        if: github.event_name != 'pull_request'
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages

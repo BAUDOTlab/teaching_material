@@ -4,6 +4,9 @@
 .Ruserdata
 .Rproj
 
+# Local scratch (any repo path beginning with temp, e.g. temp_rag_…)
+/temp*
+
 # Quarto book / site build output (published via GitHub Actions, not committed)
 .quarto/
 
