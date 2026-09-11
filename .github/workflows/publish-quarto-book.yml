@@ -46,14 +46,20 @@ jobs:
         with:
           tinytex: true
 
+      # Quarto still probes for Rscript (knitr). Use distro R, not r-lib/setup-r,
+      # which previously stalled for ~15 minutes.
+      - name: Install Rscript
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends r-base-core
+
       # Mermaid → PNG for PDF hangs for hours if no Chrome/Edge is present
       # https://quarto.org/docs/authoring/diagrams.html
       - name: Install Chrome Headless Shell
         run: quarto install chrome-headless-shell --no-prompt
 
-      # `ci` profile turns off HTML code-link so this job does not need R/downlit
+      # Markdown-only book: no R/downlit. `freeze: auto` reuses `_freeze/`
+      # when sources are unchanged (https://quarto.org/docs/projects/code-execution.html#freeze).
       - name: Render book (HTML + PDF)
-        run: quarto render --profile ci
+        run: quarto render
 
       - name: Publish to GitHub Pages
         if: github.event_name != 'pull_request'

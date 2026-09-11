@@ -1,4 +1,0 @@
-# CI profile: skip downlit code-link so the Pages job does not need R.
-format:
-  html:
-    code-link: false

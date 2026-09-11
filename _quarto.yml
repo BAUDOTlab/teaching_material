@@ -83,7 +83,7 @@ format:
     code-fold: true
     code-tools: true
     code-summary: "Show the code"
-    code-link: true # Useful, but can feel busy in prose-heavy chapters
+    code-link: false
     code-overflow: wrap
     code-copy: hover
     crossrefs-hover: true
@@ -108,7 +108,9 @@ execute:
   message: false
   warning: false
   error: false
-  freeze: true # Avoid repeated execution when inputs are unchanged
+  # Re-execute only when a source file changes
+  # https://quarto.org/docs/projects/code-execution.html#freeze
+  freeze: auto
 
 #### Code and knitr formatting ####
 knitr:
