@@ -340,16 +340,6 @@ flowchart TD
 
 Packaging workshop materials (relocated under `R/package-workshop/`).
 
-::: {.content-visible when-format="pdf"}
-Group meeting slides on packaging:
-
-{{< pdf R/package-workshop/GroupMeeting_packaging_09032026.pdf >}}
-
-Source R Markdown for the companion installation workshop:
-`R/package-workshop/How2Package_installation_workshop.Rmd` (in the repository).
-:::
-
-::: {.content-visible when-format="html"}
 Interactive installation workshop (HTML + CSS):
 
 ```{=html}
@@ -368,4 +358,3 @@ Stylesheet shipped beside the page:
 Source notebook (linked R Markdown used to build the HTML notes):
 
 [How2Package_installation_workshop.Rmd](package-workshop/How2Package_installation_workshop.Rmd){target="_blank"}
-:::

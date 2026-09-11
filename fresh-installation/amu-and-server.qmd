@@ -248,10 +248,4 @@ As soon as collaboration is involved:
 The lab’s server handbook (creating projects, permissions, shared
 storage) is embedded below.
 
-::: {.content-visible when-format="html"}
 {{< pdf amu/Server_Management.pdf width="100%" height="640px" >}}
-:::
-
-::: {.content-visible when-format="pdf"}
-{{< pdf fresh-installation/amu/Server_Management.pdf >}}
-:::
