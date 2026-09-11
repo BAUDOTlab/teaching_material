@@ -4,7 +4,6 @@ Teaching resources for Anaïs Baudot’s team, published as a
 [Quarto](https://quarto.org) **book**.
 
 - **Site:** <https://baudotlab.github.io/teaching_material/>
-- **PDF:** [team-teaching-material.pdf](docs/team-teaching-material.pdf)
 - **Milestone tag:** [`v2.0.0`](https://github.com/BAUDOTlab/teaching_material/releases/tag/v2.0.0)
   (Quarto book layout; legacy SNF folder retired)
 

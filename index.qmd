@@ -12,7 +12,5 @@ This site is built with [Quarto](https://quarto.org) as a **book** project. Use 
     [R package guidelines](R/R_package.qmd),
     [Modern LaTeX](latex/latex-guidelines.qmd)
 
-Download the compiled book as a single PDF: [team-teaching-material.pdf](team-teaching-material.pdf).
-
 For Git notes, the packaging workshop, and shared configs, see the project
 `README.md` in the repository root.

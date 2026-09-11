@@ -24,8 +24,6 @@ book:
   title: "Team teaching material"
   description: "Teaching resources (Linux installation guide and more)."
   author: "Bastien Chassagnol, Benjamin Loire, Morgane, Philippe, Marielle"
-  # Stable PDF basename on the site (e.g. docs/team-teaching-material.pdf)
-  output-file: team-teaching-material
   chapters:
     - index.qmd
     - part: "Fresh Ubuntu installation"
@@ -44,7 +42,6 @@ book:
   repo-actions: [edit, issue, source]
   sharing: []
   open-graph: true
-  downloads: [pdf]
   page-footer:
     center:  |
        Written by Bastien CHASSAGNOL and Benjamin LOIRE, with suggestions from Marielle, Kenza, Morgane and Philippe. This book is built with <a href="https://quarto.org/">Quarto</a>.
@@ -89,12 +86,6 @@ format:
     crossrefs-hover: true
     footnotes-hover: true
     citations-hover: true
-  pdf:
-    documentclass: scrbook
-    pdf-engine: lualatex
-    monofont: "DejaVu Sans Mono"
-    latex-auto-install: true
-    latex-max-runs: 5
 
 # =========================
 # Filters and execution
@@ -143,7 +134,7 @@ crossref:
 # =========================
 license: "MIT"
 copyright:
-  holder: Bastien C.
+  holder: Bastien C., Morgane C., Marielle P., Philippe D.
 lang: en-GB
 subject: "Linux tutorial"
 citation: true # Returns with the URL of the website

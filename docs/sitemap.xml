@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://baudotlab.github.io/teaching_material/index.html</loc>
-    <lastmod>2026-09-04T09:21:11.134Z</lastmod>
+    <lastmod>2026-09-11T10:00:21.573Z</lastmod>
   </url>
   <url>
     <loc>https://baudotlab.github.io/teaching_material/fresh-installation/ubuntu-general.html</loc>
@@ -31,9 +31,5 @@
   <url>
     <loc>https://baudotlab.github.io/teaching_material/latex/latex-guidelines.html</loc>
     <lastmod>2026-09-11T08:20:10.138Z</lastmod>
-  </url>
-  <url>
-    <loc>https://baudotlab.github.io/teaching_material/team-teaching-material.pdf</loc>
-    <lastmod>2026-09-11T08:29:57.653Z</lastmod>
   </url>
 </urlset>

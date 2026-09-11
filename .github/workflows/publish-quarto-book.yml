@@ -43,17 +43,10 @@ jobs:
         uses: quarto-dev/quarto-actions/setup@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tinytex: true
-
-      # Mermaid → PNG for PDF hangs for hours if no Chrome/Edge is present
-      # https://quarto.org/docs/authoring/diagrams.html
-      - name: Install Chrome Headless Shell
-        run: quarto install chrome-headless-shell --no-prompt
 
       # Markdown-only book: no R/downlit. `freeze: auto` reuses `_freeze/`
       # when sources are unchanged (https://quarto.org/docs/projects/code-execution.html#freeze).
-      - name: Render book (HTML + PDF)
+      - name: Render book (HTML)
         run: quarto render
 
       - name: Publish to GitHub Pages
