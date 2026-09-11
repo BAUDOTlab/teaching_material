@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Team teaching material",
     "section": "",
-    "text": "This site is built with Quarto as a book project. Use the table of contents to browse:\n\nUbuntu general guidelines\nSoftware to install\nAMU tools and remote servers\nAppendices: OneDrive, Network / Wi-Fi, R package guidelines, Modern LaTeX\n\nDownload the compiled book as a single PDF: team-teaching-material.pdf.\nFor Git notes, the packaging workshop, and shared configs, see the project README.md in the repository root.",
+    "text": "This site is built with Quarto as a book project. Use the table of contents to browse:\n\nUbuntu general guidelines\nSoftware to install\nAMU tools and remote servers\nAppendices: OneDrive, Network / Wi-Fi, R package guidelines, Modern LaTeX\n\nFor Git notes, the packaging workshop, and shared configs, see the project README.md in the repository root.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Welcome</span>"
     ]
