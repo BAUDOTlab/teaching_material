@@ -46,11 +46,6 @@ jobs:
         with:
           tinytex: true
 
-      # Quarto still probes for Rscript (knitr). Use distro R, not r-lib/setup-r,
-      # which previously stalled for ~15 minutes.
-      - name: Install Rscript
-        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends r-base-core
-
       # Mermaid → PNG for PDF hangs for hours if no Chrome/Edge is present
       # https://quarto.org/docs/authoring/diagrams.html
       - name: Install Chrome Headless Shell

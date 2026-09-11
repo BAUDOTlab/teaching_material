@@ -575,7 +575,7 @@
     "href": "latex/latex-guidelines.html",
     "title": "Appendix D — Modern LaTeX guidelines",
     "section": "",
-    "text": "D.1 Document structure\nModern LaTeX (and Quarto ↔︎ LaTeX) practice emphasises semantic markup, modular projects, and packages that stay maintainable (amsmath, biblatex, cleveref, siunitx, …).\nUseful references:\nFor Nature Methods-style manuscripts in this lab, prefer TikZ / vector figures for model DAGs and equation panels; keep Mermaid for README / vignettes unless you export a journal-ready figure. See also the scientific-writing rules in .cursorrules.\nFor theses and large papers use \\frontmatter, \\mainmatter, and \\backmatter, with a master file and modular folders:",
+    "text": "D.1 Document structure\nModern LaTeX (and Quarto ↔︎ LaTeX) practice emphasises semantic markup, modular projects, and packages that stay maintainable (amsmath, cleveref, siunitx, clean .bib workflows, …).\nUseful references:\nFor Nature Methods-style manuscripts in this lab, prefer TikZ / vector figures for model DAGs and equation panels; keep Mermaid for README / vignettes unless you export a journal-ready figure. See also the scientific-writing rules in .cursorrules.\nFor theses and large papers use \\frontmatter, \\mainmatter, and \\backmatter, with a master file and modular folders:",
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>D</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
@@ -586,7 +586,7 @@
     "href": "latex/latex-guidelines.html#sec-latex-structure",
     "title": "Appendix D — Modern LaTeX guidelines",
     "section": "",
-    "text": "project/\n├── main.tex\n├── preamble/\n├── chapters/\n├── figures/\n├── bibliography/\n└── appendices/\n\n\n\\include{...} for chapters; \\input{...} for preamble snippets.\n\n\\includeonly{...} while debugging to compile a subset of chapters.",
+    "text": "project/\n├── main.tex\n├── preamble/\n├── chapters/\n├── figures/\n├── bibliography/\n└── appendices/\n\n\\include{...} for chapters; \\input{...} for preamble snippets.\n\\includeonly{...} while debugging to compile a subset of chapters.",
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>D</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
@@ -596,7 +596,7 @@
     "objectID": "latex/latex-guidelines.html#sec-latex-spacing",
     "href": "latex/latex-guidelines.html#sec-latex-spacing",
     "title": "Appendix D — Modern LaTeX guidelines",
-    "section": "\nD.2 Spacing and paragraphs",
+    "section": "D.2 Spacing and paragraphs",
     "text": "D.2 Spacing and paragraphs\nPrefer semantic spacing (\\medskip, \\bigskip) or a global \\setlength{\\parskip}{1ex} over scattered \\\\. Set \\setlength{\\parindent}{1em} (or local \\noindent) rather than absolute hacks when relative lengths suffice.",
     "crumbs": [
       "Appendices",
@@ -607,7 +607,7 @@
     "objectID": "latex/latex-guidelines.html#sec-latex-math",
     "href": "latex/latex-guidelines.html#sec-latex-math",
     "title": "Appendix D — Modern LaTeX guidelines",
-    "section": "\nD.3 Mathematical typesetting",
+    "section": "D.3 Mathematical typesetting",
     "text": "D.3 Mathematical typesetting\nAvoid $$ ... $$ in pure LaTeX documents. Prefer amsmath environments: equation, align, split, multline, gather, cases. Do not use obsolete eqnarray, or array merely to fake multiline displays.\nOperators: never fake them with \\text{var}(X). Use \\operatorname{var}(X) or declare them globally:\n\\DeclareMathOperator{\\cov}{cov}\n\\DeclareMathOperator{\\cor}{cor}\n\\DeclareMathOperator{\\varop}{var}\nMulti-character identifiers: \\mathit{Delta} / \\mathrm{Delta}. Descriptive subscripts upright: x_{\\mathrm{max}}. Split long lines with align and indentation; stack indices with \\substack. Upright Greek where appropriate via upgreek.",
     "crumbs": [
       "Appendices",
@@ -618,8 +618,8 @@
     "objectID": "latex/latex-guidelines.html#sec-latex-text",
     "href": "latex/latex-guidelines.html#sec-latex-text",
     "title": "Appendix D — Modern LaTeX guidelines",
-    "section": "\nD.4 Text formatting",
-    "text": "D.4 Text formatting\n\n\nDeprecated\nPreferred\n\n\n\n\\bf\n\\textbf{}\n\n\n\\it\n\\textit{}\n\n\n\\em\n\\emph{}\n\n\n\nSmall caps: \\textsc{sql}. Typography: --- (em dash), -- (en dash); place footnotes after punctuation; emphasise with \\emph{}.",
+    "section": "D.4 Text formatting",
+    "text": "D.4 Text formatting\n\n\n\nDeprecated\nPreferred\n\n\n\n\n\\bf\n\\textbf{}\n\n\n\\it\n\\textit{}\n\n\n\\em\n\\emph{}\n\n\n\nSmall caps: \\textsc{sql}. Typography: --- (em dash), -- (en dash); place footnotes after punctuation; emphasise with \\emph{}.",
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>D</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
@@ -629,7 +629,7 @@
     "objectID": "latex/latex-guidelines.html#sec-latex-floats",
     "href": "latex/latex-guidelines.html#sec-latex-floats",
     "title": "Appendix D — Modern LaTeX guidelines",
-    "section": "\nD.5 Figures and tables",
+    "section": "D.5 Figures and tables",
     "text": "D.5 Figures and tables\nPrefer float placement [tbp] over aggressive [h!] / [H]. Inside floats use \\centering, not a nested center environment. Captions: caption with singlelinecheck=off when lists appear in captions.\nTables: booktabs, longtable, tabularx. See also Generating better LaTeX tables and LaTeX Tables generator. In Quarto / HTML workflows, kableExtra / paged tables are often enough.",
     "crumbs": [
       "Appendices",
@@ -640,8 +640,8 @@
     "objectID": "latex/latex-guidelines.html#sec-latex-bib",
     "href": "latex/latex-guidelines.html#sec-latex-bib",
     "title": "Appendix D — Modern LaTeX guidelines",
-    "section": "\nD.6 Bibliography and citations",
-    "text": "D.6 Bibliography and citations\nPrefer biblatex + biber over legacy BibTeX-only workflows:\n\\usepackage[\n  backend=biber,\n  style=authoryear\n]{biblatex}\nUse csquotes and \\enquote{...}. Page-aware cites: \\autocite[p.~8]{LR89}. Validate / clean .bib files (remove noisy fields such as abstract, file, urldate when unused) with tools like biblatex-linter, BibTeX Tidy, and sources such as DBLP.",
+    "section": "D.6 Bibliography and citations",
+    "text": "D.6 Bibliography and citations\nPrefer a clean .bib maintained from Zotero + Better BibTeX (see the software chapter) and Quarto / Pandoc citation syntax in teaching materials. For classic LaTeX manuscripts, stick to a simple BibTeX / natbib workflow — keep the bibliography file hygienic (allowed fields only) and validate with tools such as BibTeX Tidy and DBLP.\nUse csquotes and \\enquote{...} for quotations. Page-aware cites remain useful (\\cite[p.~8]{LR89} or the equivalent in your chosen package).",
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>D</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
@@ -651,7 +651,7 @@
     "objectID": "latex/latex-guidelines.html#sec-latex-xref",
     "href": "latex/latex-guidelines.html#sec-latex-xref",
     "title": "Appendix D — Modern LaTeX guidelines",
-    "section": "\nD.7 Cross-references",
+    "section": "D.7 Cross-references",
     "text": "D.7 Cross-references\n\\usepackage{cleveref}\nPrefer \\cref{eq:model} / \\Cref{...} / \\crefrange{...} over manual Eq.~(\\ref{...}).",
     "crumbs": [
       "Appendices",
@@ -662,7 +662,7 @@
     "objectID": "latex/latex-guidelines.html#sec-latex-lists",
     "href": "latex/latex-guidelines.html#sec-latex-lists",
     "title": "Appendix D — Modern LaTeX guidelines",
-    "section": "\nD.8 Lists",
+    "section": "D.8 Lists",
     "text": "D.8 Lists\n\\usepackage{enumitem}\n\\begin{enumerate}[label=(\\alph*)]",
     "crumbs": [
       "Appendices",
@@ -673,30 +673,8 @@
     "objectID": "latex/latex-guidelines.html#sec-latex-packages",
     "href": "latex/latex-guidelines.html#sec-latex-packages",
     "title": "Appendix D — Modern LaTeX guidelines",
-    "section": "\nD.9 Recommended packages",
-    "text": "D.9 Recommended packages\n\n\n\n\n\n\nDomain\nPackages\n\n\n\nMathematics\n\namsmath, amssymb, mathtools (+ systeme / domain packs if needed)\n\n\nTheorems\n\namsthm or ntheorem; boxes via tcolorbox / mdframed\n\n\n\nUnits\n\nsiunitx (\\num{1e6}, \\unit{\\micro\\meter}, …)\n\n\nGraphics\n\ntikz, pgfplots (and TikZ for Nature Methods DAGs)\n\n\nCode\n\nlistings or minted (needs Pygments)",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
-    ]
-  },
-  {
-    "objectID": "latex/latex-guidelines.html#sec-latex-quarto",
-    "href": "latex/latex-guidelines.html#sec-latex-quarto",
-    "title": "Appendix D — Modern LaTeX guidelines",
-    "section": "\nD.10 Quarto ↔︎ LaTeX mapping",
-    "text": "D.10 Quarto ↔︎ LaTeX mapping\n\n\nLaTeX\nQuarto / Markdown\n\n\n\n\\citep{Smith2020}\n[@Smith2020]\n\n\n\\citet{Smith2020}\n@Smith2020\n\n\n\\( x + y \\)\n$x + y$\n\n\nnumbered display math\n\n$$ ... $$ {#eq-square} then @eq-square\n\n\n\n\\section{Introduction}\n# Introduction\n\n\n\\href{URL}{Text}\n[Text](URL)\n\n\n\\url{URL}\n&lt;URL&gt;\n\n\n\n\\textit / \\textbf\n\n\n*…* / **…**\n\n\n\n\\footnote{…}\n\n^[…] or [^id]\n\n\n\nfigure / table refs\n\n@fig-… / @tbl-…\n\n\n\n\nExample Quarto table chunk (illustrative only):\n\n::: {#tbl-summary .cell tbl-cap='Summary statistics'}\n\n:::\nThen: See @tbl-summary.",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
-    ]
-  },
-  {
-    "objectID": "latex/latex-guidelines.html#sec-latex-qa",
-    "href": "latex/latex-guidelines.html#sec-latex-qa",
-    "title": "Appendix D — Modern LaTeX guidelines",
-    "section": "\nD.11 Compilation and quality",
-    "text": "D.11 Compilation and quality\n\nAutomate with latexmk -pdf main.tex.\nBuild figures as standalone documents when useful.\nLint / review: TeXtidote, ChkTeX, refcheck, showkeys.",
+    "section": "D.9 Recommended packages",
+    "text": "D.9 Recommended packages\n\n\n\n\n\n\n\nDomain\nPackages\n\n\n\n\nMathematics\namsmath, amssymb, mathtools (+ systeme / domain packs if needed)\n\n\nTheorems\namsthm or ntheorem; boxes via tcolorbox / mdframed\n\n\nUnits\nsiunitx (\\num{1e6}, \\unit{\\micro\\meter}, …)\n\n\nGraphics\ntikz, pgfplots (and TikZ for Nature Methods DAGs)\n\n\nCode\nlistings or minted (needs Pygments)",
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>D</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
@@ -706,8 +684,19 @@
     "objectID": "latex/latex-guidelines.html#sec-latex-antipatterns",
     "href": "latex/latex-guidelines.html#sec-latex-antipatterns",
     "title": "Appendix D — Modern LaTeX guidelines",
-    "section": "\nD.12 Anti-patterns",
-    "text": "D.12 Anti-patterns\nAvoid $$…$$ in classic LaTeX sources, eqnarray, decorative \\\\, deprecated font switches, hardcoded visual markup, and habitual [H] floats. Prefer semantic structure, modular files, modern packages, and Quarto-compatible syntax when the deliverable is a website or vignette.",
+    "section": "D.10 Anti-patterns",
+    "text": "D.10 Anti-patterns\nAvoid $$…$$ in classic LaTeX sources, eqnarray, decorative \\\\, deprecated font switches, hardcoded visual markup, and habitual [H] floats. Prefer semantic structure, modular files, modern packages, and Quarto-compatible syntax when the deliverable is a website or vignette.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
+    ]
+  },
+  {
+    "objectID": "latex/latex-guidelines.html#sec-latex-quarto",
+    "href": "latex/latex-guidelines.html#sec-latex-quarto",
+    "title": "Appendix D — Modern LaTeX guidelines",
+    "section": "D.11 Quarto ↔︎ LaTeX mapping",
+    "text": "D.11 Quarto ↔︎ LaTeX mapping\n\n\n\nLaTeX\nQuarto / Markdown\n\n\n\n\n\\citep{Smith2020}\n[@Smith2020]\n\n\n\\citet{Smith2020}\n@Smith2020\n\n\n\\( x + y \\)\n$x + y$\n\n\nnumbered display math\n$$ ... $$ {#eq-square} then @eq-square\n\n\n\\section{Introduction}\n# Introduction\n\n\n\\href{URL}{Text}\n[Text](URL)\n\n\n\\url{URL}\n&lt;URL&gt;\n\n\n\\textit / \\textbf\n*…* / **…**\n\n\n\\footnote{…}\n^[…] or [^id]\n\n\nfigure / table refs\n@fig-… / @tbl-…",
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>D</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"

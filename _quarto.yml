@@ -102,6 +102,8 @@ format:
 # filters:
 #   - highlight-text
 
+# Markdown-only chapters: do not select the knitr engine (that requires Rscript).
+engine: markdown
 execute:
   echo: false
   eval: true

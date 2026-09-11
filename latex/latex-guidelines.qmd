@@ -145,15 +145,3 @@ Quarto-compatible syntax when the deliverable is a website or vignette.
 | `\textit` / `\textbf` | `*…*` / `**…**` |
 | `\footnote{…}` | `^[…]` or `[^id]` |
 | figure / table refs | `@fig-…` / `@tbl-…` |
-
-Example Quarto table chunk (illustrative only):
-
-```` markdown
-```{r}
-#| label: tbl-summary
-#| tbl-cap: "Summary statistics"
-```
-````
-
-Then: `See @tbl-summary.`
-
