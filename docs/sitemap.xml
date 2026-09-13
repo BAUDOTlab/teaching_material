@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://baudotlab.github.io/teaching_material/index.html</loc>
-    <lastmod>2026-09-11T10:00:21.573Z</lastmod>
+    <lastmod>2026-09-13T08:30:56.288Z</lastmod>
   </url>
   <url>
     <loc>https://baudotlab.github.io/teaching_material/fresh-installation/ubuntu-general.html</loc>
@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://baudotlab.github.io/teaching_material/fresh-installation/software.html</loc>
-    <lastmod>2026-08-23T14:37:19.349Z</lastmod>
+    <lastmod>2026-09-13T08:30:15.017Z</lastmod>
   </url>
   <url>
     <loc>https://baudotlab.github.io/teaching_material/fresh-installation/amu-and-server.html</loc>
@@ -27,6 +27,10 @@
   <url>
     <loc>https://baudotlab.github.io/teaching_material/R/R_package.html</loc>
     <lastmod>2026-09-11T10:03:38.027Z</lastmod>
+  </url>
+  <url>
+    <loc>https://baudotlab.github.io/teaching_material/Git/git-guidelines.html</loc>
+    <lastmod>2026-09-13T08:30:47.252Z</lastmod>
   </url>
   <url>
     <loc>https://baudotlab.github.io/teaching_material/latex/latex-guidelines.html</loc>

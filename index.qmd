@@ -10,7 +10,5 @@ This site is built with [Quarto](https://quarto.org) as a **book** project. Use 
 -   Appendices: [OneDrive](fresh-installation/onedrive.qmd),
     [Network / Wi-Fi](fresh-installation/network-troubleshooting.qmd),
     [R package guidelines](R/R_package.qmd),
+    [Git and GitHub](Git/git-guidelines.qmd),
     [Modern LaTeX](latex/latex-guidelines.qmd)
-
-For Git notes, the packaging workshop, and shared configs, see the project
-`README.md` in the repository root.

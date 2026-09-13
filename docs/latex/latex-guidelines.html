@@ -8,7 +8,7 @@
 
 <meta name="description" content="Teaching resources (Linux installation guide and more).">
 
-<title>Appendix D — Modern LaTeX guidelines – Team teaching material</title>
+<title>Appendix E — Modern LaTeX guidelines – Team teaching material</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../R/R_package.html" rel="prev">
+<link href="../Git/git-guidelines.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -119,10 +119,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </script>
 
 
-<meta property="og:title" content="Appendix D — Modern LaTeX guidelines – Team teaching material">
+<meta property="og:title" content="Appendix E — Modern LaTeX guidelines – Team teaching material">
 <meta property="og:description" content="Teaching resources (Linux installation guide and more).">
 <meta property="og:site_name" content="Team teaching material">
-<meta name="citation_title" content="Appendix D — Modern LaTeX guidelines">
+<meta name="citation_title" content="Appendix E — Modern LaTeX guidelines">
 <meta name="citation_fulltext_html_url" content="https://baudotlab.github.io/teaching_material/latex/latex-guidelines.html">
 <meta name="citation_language" content="en-GB">
 </head>
@@ -136,7 +136,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../fresh-installation/onedrive.html">Appendices</a></li><li class="breadcrumb-item"><a href="../latex/latex-guidelines.html"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Modern LaTeX guidelines</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../fresh-installation/onedrive.html">Appendices</a></li><li class="breadcrumb-item"><a href="../latex/latex-guidelines.html"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Modern LaTeX guidelines</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -228,8 +228,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../Git/git-guidelines.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Git and GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../latex/latex-guidelines.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Modern LaTeX guidelines</span></span></a>
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Modern LaTeX guidelines</span></span></a>
   </div>
 </li>
       </ul>
@@ -244,26 +250,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-latex-structure" id="toc-sec-latex-structure" class="nav-link active" data-scroll-target="#sec-latex-structure"><span class="header-section-number">D.1</span> Document structure</a></li>
-  <li><a href="#sec-latex-spacing" id="toc-sec-latex-spacing" class="nav-link" data-scroll-target="#sec-latex-spacing"><span class="header-section-number">D.2</span> Spacing and paragraphs</a></li>
-  <li><a href="#sec-latex-math" id="toc-sec-latex-math" class="nav-link" data-scroll-target="#sec-latex-math"><span class="header-section-number">D.3</span> Mathematical typesetting</a></li>
-  <li><a href="#sec-latex-text" id="toc-sec-latex-text" class="nav-link" data-scroll-target="#sec-latex-text"><span class="header-section-number">D.4</span> Text formatting</a></li>
-  <li><a href="#sec-latex-floats" id="toc-sec-latex-floats" class="nav-link" data-scroll-target="#sec-latex-floats"><span class="header-section-number">D.5</span> Figures and tables</a></li>
-  <li><a href="#sec-latex-bib" id="toc-sec-latex-bib" class="nav-link" data-scroll-target="#sec-latex-bib"><span class="header-section-number">D.6</span> Bibliography and citations</a></li>
-  <li><a href="#sec-latex-xref" id="toc-sec-latex-xref" class="nav-link" data-scroll-target="#sec-latex-xref"><span class="header-section-number">D.7</span> Cross-references</a></li>
-  <li><a href="#sec-latex-lists" id="toc-sec-latex-lists" class="nav-link" data-scroll-target="#sec-latex-lists"><span class="header-section-number">D.8</span> Lists</a></li>
-  <li><a href="#sec-latex-packages" id="toc-sec-latex-packages" class="nav-link" data-scroll-target="#sec-latex-packages"><span class="header-section-number">D.9</span> Recommended packages</a></li>
-  <li><a href="#sec-latex-antipatterns" id="toc-sec-latex-antipatterns" class="nav-link" data-scroll-target="#sec-latex-antipatterns"><span class="header-section-number">D.10</span> Anti-patterns</a></li>
-  <li><a href="#sec-latex-quarto" id="toc-sec-latex-quarto" class="nav-link" data-scroll-target="#sec-latex-quarto"><span class="header-section-number">D.11</span> Quarto ↔︎ LaTeX mapping</a></li>
+  <li><a href="#sec-latex-structure" id="toc-sec-latex-structure" class="nav-link active" data-scroll-target="#sec-latex-structure"><span class="header-section-number">E.1</span> Document structure</a></li>
+  <li><a href="#sec-latex-spacing" id="toc-sec-latex-spacing" class="nav-link" data-scroll-target="#sec-latex-spacing"><span class="header-section-number">E.2</span> Spacing and paragraphs</a></li>
+  <li><a href="#sec-latex-math" id="toc-sec-latex-math" class="nav-link" data-scroll-target="#sec-latex-math"><span class="header-section-number">E.3</span> Mathematical typesetting</a></li>
+  <li><a href="#sec-latex-text" id="toc-sec-latex-text" class="nav-link" data-scroll-target="#sec-latex-text"><span class="header-section-number">E.4</span> Text formatting</a></li>
+  <li><a href="#sec-latex-floats" id="toc-sec-latex-floats" class="nav-link" data-scroll-target="#sec-latex-floats"><span class="header-section-number">E.5</span> Figures and tables</a></li>
+  <li><a href="#sec-latex-bib" id="toc-sec-latex-bib" class="nav-link" data-scroll-target="#sec-latex-bib"><span class="header-section-number">E.6</span> Bibliography and citations</a></li>
+  <li><a href="#sec-latex-xref" id="toc-sec-latex-xref" class="nav-link" data-scroll-target="#sec-latex-xref"><span class="header-section-number">E.7</span> Cross-references</a></li>
+  <li><a href="#sec-latex-lists" id="toc-sec-latex-lists" class="nav-link" data-scroll-target="#sec-latex-lists"><span class="header-section-number">E.8</span> Lists</a></li>
+  <li><a href="#sec-latex-packages" id="toc-sec-latex-packages" class="nav-link" data-scroll-target="#sec-latex-packages"><span class="header-section-number">E.9</span> Recommended packages</a></li>
+  <li><a href="#sec-latex-antipatterns" id="toc-sec-latex-antipatterns" class="nav-link" data-scroll-target="#sec-latex-antipatterns"><span class="header-section-number">E.10</span> Anti-patterns</a></li>
+  <li><a href="#sec-latex-quarto" id="toc-sec-latex-quarto" class="nav-link" data-scroll-target="#sec-latex-quarto"><span class="header-section-number">E.11</span> Quarto ↔︎ LaTeX mapping</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/BAUDOTlab/teaching_material/edit/main/latex/latex-guidelines.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/BAUDOTlab/teaching_material/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/BAUDOTlab/teaching_material/blob/main/latex/latex-guidelines.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../fresh-installation/onedrive.html">Appendices</a></li><li class="breadcrumb-item"><a href="../latex/latex-guidelines.html"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Modern LaTeX guidelines</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../fresh-installation/onedrive.html">Appendices</a></li><li class="breadcrumb-item"><a href="../latex/latex-guidelines.html"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Modern LaTeX guidelines</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Appendix D — Modern LaTeX guidelines</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Appendix E — Modern LaTeX guidelines</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -289,8 +295,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><a href="https://pandoc.org/MANUAL.html">Pandoc Markdown</a></li>
 </ul>
 <p>For <strong>Nature Methods</strong>-style manuscripts in this lab, prefer TikZ / vector figures for model DAGs and equation panels; keep Mermaid for README / vignettes unless you export a journal-ready figure. See also the scientific-writing rules in <code>.cursorrules</code>.</p>
-<section id="sec-latex-structure" class="level2" data-number="D.1">
-<h2 data-number="D.1" class="anchored" data-anchor-id="sec-latex-structure"><span class="header-section-number">D.1</span> Document structure</h2>
+<section id="sec-latex-structure" class="level2" data-number="E.1">
+<h2 data-number="E.1" class="anchored" data-anchor-id="sec-latex-structure"><span class="header-section-number">E.1</span> Document structure</h2>
 <p>For theses and large papers use <code>\frontmatter</code>, <code>\mainmatter</code>, and <code>\backmatter</code>, with a master file and modular folders:</p>
 <pre class="text"><code>project/
 ├── main.tex
@@ -304,12 +310,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>\includeonly{...}</code> while debugging to compile a subset of chapters.</li>
 </ul>
 </section>
-<section id="sec-latex-spacing" class="level2" data-number="D.2">
-<h2 data-number="D.2" class="anchored" data-anchor-id="sec-latex-spacing"><span class="header-section-number">D.2</span> Spacing and paragraphs</h2>
+<section id="sec-latex-spacing" class="level2" data-number="E.2">
+<h2 data-number="E.2" class="anchored" data-anchor-id="sec-latex-spacing"><span class="header-section-number">E.2</span> Spacing and paragraphs</h2>
 <p>Prefer semantic spacing (<code>\medskip</code>, <code>\bigskip</code>) or a global <code>\setlength{\parskip}{1ex}</code> over scattered <code>\\</code>. Set <code>\setlength{\parindent}{1em}</code> (or local <code>\noindent</code>) rather than absolute hacks when relative lengths suffice.</p>
 </section>
-<section id="sec-latex-math" class="level2" data-number="D.3">
-<h2 data-number="D.3" class="anchored" data-anchor-id="sec-latex-math"><span class="header-section-number">D.3</span> Mathematical typesetting</h2>
+<section id="sec-latex-math" class="level2" data-number="E.3">
+<h2 data-number="E.3" class="anchored" data-anchor-id="sec-latex-math"><span class="header-section-number">E.3</span> Mathematical typesetting</h2>
 <p>Avoid <code>$$ ... $$</code> in pure LaTeX documents. Prefer <code>amsmath</code> environments: <code>equation</code>, <code>align</code>, <code>split</code>, <code>multline</code>, <code>gather</code>, <code>cases</code>. Do <strong>not</strong> use obsolete <code>eqnarray</code>, or <code>array</code> merely to fake multiline displays.</p>
 <p>Operators: never fake them with <code>\text{var}(X)</code>. Use <code>\operatorname{var}(X)</code> or declare them globally:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode latex code-with-copy"><code class="sourceCode latex"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\DeclareMathOperator</span>{<span class="fu">\cov</span>}{cov}</span>
@@ -317,8 +323,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">\DeclareMathOperator</span>{<span class="fu">\varop</span>}{var}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Multi-character identifiers: <code>\mathit{Delta}</code> / <code>\mathrm{Delta}</code>. Descriptive subscripts upright: <code>x_{\mathrm{max}}</code>. Split long lines with <code>align</code> and indentation; stack indices with <code>\substack</code>. Upright Greek where appropriate via <code>upgreek</code>.</p>
 </section>
-<section id="sec-latex-text" class="level2" data-number="D.4">
-<h2 data-number="D.4" class="anchored" data-anchor-id="sec-latex-text"><span class="header-section-number">D.4</span> Text formatting</h2>
+<section id="sec-latex-text" class="level2" data-number="E.4">
+<h2 data-number="E.4" class="anchored" data-anchor-id="sec-latex-text"><span class="header-section-number">E.4</span> Text formatting</h2>
 <table class="table">
 <thead>
 <tr class="header">
@@ -343,28 +349,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 <p>Small caps: <code>\textsc{sql}</code>. Typography: <code>---</code> (em dash), <code>--</code> (en dash); place footnotes after punctuation; emphasise with <code>\emph{}</code>.</p>
 </section>
-<section id="sec-latex-floats" class="level2" data-number="D.5">
-<h2 data-number="D.5" class="anchored" data-anchor-id="sec-latex-floats"><span class="header-section-number">D.5</span> Figures and tables</h2>
+<section id="sec-latex-floats" class="level2" data-number="E.5">
+<h2 data-number="E.5" class="anchored" data-anchor-id="sec-latex-floats"><span class="header-section-number">E.5</span> Figures and tables</h2>
 <p>Prefer float placement <code>[tbp]</code> over aggressive <code>[h!]</code> / <code>[H]</code>. Inside floats use <code>\centering</code>, not a nested <code>center</code> environment. Captions: <code>caption</code> with <code>singlelinecheck=off</code> when lists appear in captions.</p>
 <p>Tables: <code>booktabs</code>, <code>longtable</code>, <code>tabularx</code>. See also <a href="http://www.tug.org/pracjourn/2007-1/mori/mori.pdf">Generating better LaTeX tables</a> and <a href="https://www.latex-tables.com/">LaTeX Tables generator</a>. In Quarto / HTML workflows, <code>kableExtra</code> / paged tables are often enough.</p>
 </section>
-<section id="sec-latex-bib" class="level2" data-number="D.6">
-<h2 data-number="D.6" class="anchored" data-anchor-id="sec-latex-bib"><span class="header-section-number">D.6</span> Bibliography and citations</h2>
+<section id="sec-latex-bib" class="level2" data-number="E.6">
+<h2 data-number="E.6" class="anchored" data-anchor-id="sec-latex-bib"><span class="header-section-number">E.6</span> Bibliography and citations</h2>
 <p>Prefer a <strong>clean <code>.bib</code> maintained from Zotero + Better BibTeX</strong> (see the software chapter) and Quarto / Pandoc citation syntax in teaching materials. For classic LaTeX manuscripts, stick to a simple BibTeX / <code>natbib</code> workflow — keep the bibliography file hygienic (allowed fields only) and validate with tools such as <a href="https://flamingtempura.github.io/">BibTeX Tidy</a> and <a href="https://dblp.uni-trier.de/">DBLP</a>.</p>
 <p>Use <code>csquotes</code> and <code>\enquote{...}</code> for quotations. Page-aware cites remain useful (<code>\cite[p.~8]{LR89}</code> or the equivalent in your chosen package).</p>
 </section>
-<section id="sec-latex-xref" class="level2" data-number="D.7">
-<h2 data-number="D.7" class="anchored" data-anchor-id="sec-latex-xref"><span class="header-section-number">D.7</span> Cross-references</h2>
+<section id="sec-latex-xref" class="level2" data-number="E.7">
+<h2 data-number="E.7" class="anchored" data-anchor-id="sec-latex-xref"><span class="header-section-number">E.7</span> Cross-references</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode latex code-with-copy"><code class="sourceCode latex"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>{<span class="ex">cleveref</span>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Prefer <code>\cref{eq:model}</code> / <code>\Cref{...}</code> / <code>\crefrange{...}</code> over manual <code>Eq.~(\ref{...})</code>.</p>
 </section>
-<section id="sec-latex-lists" class="level2" data-number="D.8">
-<h2 data-number="D.8" class="anchored" data-anchor-id="sec-latex-lists"><span class="header-section-number">D.8</span> Lists</h2>
+<section id="sec-latex-lists" class="level2" data-number="E.8">
+<h2 data-number="E.8" class="anchored" data-anchor-id="sec-latex-lists"><span class="header-section-number">E.8</span> Lists</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode latex code-with-copy"><code class="sourceCode latex"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>{<span class="ex">enumitem</span>}</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">enumerate</span>}[label=(<span class="fu">\alph*</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="sec-latex-packages" class="level2" data-number="D.9">
-<h2 data-number="D.9" class="anchored" data-anchor-id="sec-latex-packages"><span class="header-section-number">D.9</span> Recommended packages</h2>
+<section id="sec-latex-packages" class="level2" data-number="E.9">
+<h2 data-number="E.9" class="anchored" data-anchor-id="sec-latex-packages"><span class="header-section-number">E.9</span> Recommended packages</h2>
 <table class="table">
 <colgroup>
 <col style="width: 32%">
@@ -400,12 +406,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="sec-latex-antipatterns" class="level2" data-number="D.10">
-<h2 data-number="D.10" class="anchored" data-anchor-id="sec-latex-antipatterns"><span class="header-section-number">D.10</span> Anti-patterns</h2>
+<section id="sec-latex-antipatterns" class="level2" data-number="E.10">
+<h2 data-number="E.10" class="anchored" data-anchor-id="sec-latex-antipatterns"><span class="header-section-number">E.10</span> Anti-patterns</h2>
 <p>Avoid <code>$$…$$</code> in classic LaTeX sources, <code>eqnarray</code>, decorative <code>\\</code>, deprecated font switches, hardcoded visual markup, and habitual <code>[H]</code> floats. Prefer semantic structure, modular files, modern packages, and Quarto-compatible syntax when the deliverable is a website or vignette.</p>
 </section>
-<section id="sec-latex-quarto" class="level2" data-number="D.11">
-<h2 data-number="D.11" class="anchored" data-anchor-id="sec-latex-quarto"><span class="header-section-number">D.11</span> Quarto ↔︎ LaTeX mapping</h2>
+<section id="sec-latex-quarto" class="level2" data-number="E.11">
+<h2 data-number="E.11" class="anchored" data-anchor-id="sec-latex-quarto"><span class="header-section-number">E.11</span> Quarto ↔︎ LaTeX mapping</h2>
 <table class="table">
 <thead>
 <tr class="header">
@@ -916,8 +922,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
-      <a href="../R/R_package.html" class="pagination-link" aria-label="R programming guidelines">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">R programming guidelines</span></span>
+      <a href="../Git/git-guidelines.html" class="pagination-link" aria-label="Git and GitHub">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Git and GitHub</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

@@ -83,6 +83,10 @@ but are not sandboxed and are harder to remove cleanly.
 
 ## Git and GitHub configuration {#sec-git-config}
 
+For the full appendix (commands, GitHub UI, advanced topics, and
+training exercises), see
+[Git and GitHub](../Git/git-guidelines.html).
+
 ![Git general workflow](git/git-workflow.png){#fig-git-workflow}
 
 ![Overview of recommended GitHub security and collaboration practices](git/github-best-practices.png){#fig-github-best-practices}
@@ -117,9 +121,8 @@ but are not sandboxed and are harder to remove cleanly.
 
     ii. Or edit `~/.gitconfig` directly (more prone to indentation
         errors). A default configuration is shown in @lst-gitconfig;
-        for a fuller description of options, see
-        [Formation Git 2024, a tutorial by
-        Benjamin](../Git/formation_git_2024.pdf):
+        for a fuller description of options, see the
+        [Git and GitHub appendix](../Git/git-guidelines.html#sec-git-setup):
 
         ```{#lst-gitconfig .gitconfig lst-cap="Example ~/.gitconfig"}
         [user]

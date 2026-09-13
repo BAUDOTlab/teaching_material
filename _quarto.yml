@@ -15,6 +15,7 @@ project:
     - fresh-installation/onedrive.qmd
     - fresh-installation/network-troubleshooting.qmd
     - R/R_package.qmd
+    - Git/git-guidelines.qmd
     - latex/latex-guidelines.qmd
 
 # =========================
@@ -35,6 +36,7 @@ book:
     - fresh-installation/onedrive.qmd
     - fresh-installation/network-troubleshooting.qmd
     - R/R_package.qmd
+    - Git/git-guidelines.qmd
     - latex/latex-guidelines.qmd
   repo-url: https://github.com/BAUDOTlab/teaching_material
   site-url: https://baudotlab.github.io/teaching_material/
