@@ -2,34 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://baudotlab.github.io/teaching_material/index.html</loc>
-    <lastmod>2026-09-11T19:20:20.034Z</lastmod>
+    <lastmod>2026-09-13T08:42:29.161Z</lastmod>
   </url>
   <url>
     <loc>https://baudotlab.github.io/teaching_material/fresh-installation/ubuntu-general.html</loc>
-    <lastmod>2026-09-11T19:20:19.993Z</lastmod>
+    <lastmod>2026-09-13T08:42:29.123Z</lastmod>
   </url>
   <url>
     <loc>https://baudotlab.github.io/teaching_material/fresh-installation/software.html</loc>
-    <lastmod>2026-09-11T19:20:19.990Z</lastmod>
+    <lastmod>2026-09-13T08:42:29.120Z</lastmod>
   </url>
   <url>
     <loc>https://baudotlab.github.io/teaching_material/fresh-installation/amu-and-server.html</loc>
-    <lastmod>2026-09-11T19:20:19.962Z</lastmod>
+    <lastmod>2026-09-13T08:42:29.096Z</lastmod>
   </url>
   <url>
     <loc>https://baudotlab.github.io/teaching_material/fresh-installation/onedrive.html</loc>
-    <lastmod>2026-09-11T19:20:19.975Z</lastmod>
+    <lastmod>2026-09-13T08:42:29.108Z</lastmod>
   </url>
   <url>
     <loc>https://baudotlab.github.io/teaching_material/fresh-installation/network-troubleshooting.html</loc>
-    <lastmod>2026-09-11T19:20:19.975Z</lastmod>
+    <lastmod>2026-09-13T08:42:29.107Z</lastmod>
   </url>
   <url>
     <loc>https://baudotlab.github.io/teaching_material/R/R_package.html</loc>
-    <lastmod>2026-09-11T19:20:19.622Z</lastmod>
+    <lastmod>2026-09-13T08:42:28.728Z</lastmod>
+  </url>
+  <url>
+    <loc>https://baudotlab.github.io/teaching_material/Git/git-guidelines.html</loc>
+    <lastmod>2026-09-13T08:42:28.704Z</lastmod>
   </url>
   <url>
     <loc>https://baudotlab.github.io/teaching_material/latex/latex-guidelines.html</loc>
-    <lastmod>2026-09-11T19:20:20.034Z</lastmod>
+    <lastmod>2026-09-13T08:42:29.161Z</lastmod>
   </url>
 </urlset>

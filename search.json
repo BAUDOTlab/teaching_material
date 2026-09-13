@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Team teaching material",
     "section": "",
-    "text": "This site is built with Quarto as a book project. Use the table of contents to browse:\n\nUbuntu general guidelines\nSoftware to install\nAMU tools and remote servers\nAppendices: OneDrive, Network / Wi-Fi, R package guidelines, Modern LaTeX\n\nFor Git notes, the packaging workshop, and shared configs, see the project README.md in the repository root.",
+    "text": "This site is built with Quarto as a book project. Use the table of contents to browse:\n\nUbuntu general guidelines\nSoftware to install\nAMU tools and remote servers\nAppendices: OneDrive, Network / Wi-Fi, R package guidelines, Git and GitHub, Modern LaTeX",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Welcome</span>"
     ]
@@ -102,7 +102,7 @@
     "href": "fresh-installation/software.html",
     "title": "3  Software to install",
     "section": "",
-    "text": "3.1 Git and GitHub configuration",
+    "text": "3.1 Git and GitHub configuration\nFor the full appendix (commands, GitHub UI, advanced topics, and training exercises), see Git and GitHub.",
     "crumbs": [
       "Fresh Ubuntu installation",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Software to install</span>"
@@ -113,7 +113,7 @@
     "href": "fresh-installation/software.html#sec-git-config",
     "title": "3  Software to install",
     "section": "",
-    "text": "Figure 3.2: Git general workflow\n\n\n\n\n\n\n\n\n\nFigure 3.3: Overview of recommended GitHub security and collaboration practices\n\n\n\n\nGitHub often requires two-factor authentication; set it under https://github.com/settings/security (see also Figure 3.3). Prefer a passkey if your device supports it (Linux often does not), or an authenticator app such as Microsoft Authenticator. Avoid SMS + mobile phone as the sole second factor.\nConfigure your access to GitHub:\n\nChoose either SSH or HTTPS.\nFor HTTPS, create one token per device under https://github.com/settings/tokens. Name the token after your laptop, its configuration, and owner. Assign at least the repo and related read scopes. Copy it once — it will not be shown again.\n\nGeneral options to configure:\n\nUse the command line (this also creates ~/.gitconfig):\n\n\n\nListing 3.1: Set global Git identity\n\n\ngit config --global user.name \"&lt;your-github-username&gt;\"\ngit config --global user.email \"&lt;your.email@example.org&gt;\"\n\n\n\nOr edit ~/.gitconfig directly (more prone to indentation errors). A default configuration is shown in Listing 3.2; for a fuller description of options, see Formation Git 2024, a tutorial by Benjamin:\n\n\n\nListing 3.2: Example ~/.gitconfig\n\n\n[user]\n  name = &lt;your-github-username&gt;\n  email = &lt;your.email@example.org&gt;\n## modern default git options\n[init]\n  defaultBranch = main\n\n## simplifying solving git conflicts + troubleshoot solving\n[merge]\n  conflictstyle = zdiff3\n[rerere]\n  enabled = true\n\n## tolerate distinct end of lines\n[core]\n  autocrlf = input\n\n## visualisation\n[tag]\n  sort = version:refname\n[branch]\n  sort = -committerdate\n[credential]\n  helper = store\n\n\n\n\nAvoid typing your password for every login:\n\nFor HTTPS + personal access token (PAT), use git config --global credential.helper store for permanent storage of the credential (consider whether the on-disk store should be encrypted), or git config --global credential.helper 'cache --timeout=3600' for temporary access3.\nOr define an SSH key and use the SSH remote URL.",
+    "text": "Figure 3.2: Git general workflow\n\n\n\n\n\n\n\n\n\nFigure 3.3: Overview of recommended GitHub security and collaboration practices\n\n\n\n\nGitHub often requires two-factor authentication; set it under https://github.com/settings/security (see also Figure 3.3). Prefer a passkey if your device supports it (Linux often does not), or an authenticator app such as Microsoft Authenticator. Avoid SMS + mobile phone as the sole second factor.\nConfigure your access to GitHub:\n\nChoose either SSH or HTTPS.\nFor HTTPS, create one token per device under https://github.com/settings/tokens. Name the token after your laptop, its configuration, and owner. Assign at least the repo and related read scopes. Copy it once — it will not be shown again.\n\nGeneral options to configure:\n\nUse the command line (this also creates ~/.gitconfig):\n\n\n\nListing 3.1: Set global Git identity\n\n\ngit config --global user.name \"&lt;your-github-username&gt;\"\ngit config --global user.email \"&lt;your.email@example.org&gt;\"\n\n\n\nOr edit ~/.gitconfig directly (more prone to indentation errors). A default configuration is shown in Listing 3.2; for a fuller description of options, see the Git and GitHub appendix:\n\n\n\nListing 3.2: Example ~/.gitconfig\n\n\n[user]\n  name = &lt;your-github-username&gt;\n  email = &lt;your.email@example.org&gt;\n## modern default git options\n[init]\n  defaultBranch = main\n\n## simplifying solving git conflicts + troubleshoot solving\n[merge]\n  conflictstyle = zdiff3\n[rerere]\n  enabled = true\n\n## tolerate distinct end of lines\n[core]\n  autocrlf = input\n\n## visualisation\n[tag]\n  sort = version:refname\n[branch]\n  sort = -committerdate\n[credential]\n  helper = store\n\n\n\n\nAvoid typing your password for every login:\n\nFor HTTPS + personal access token (PAT), use git config --global credential.helper store for permanent storage of the credential (consider whether the on-disk store should be encrypted), or git config --global credential.helper 'cache --timeout=3600' for temporary access3.\nOr define an SSH key and use the SSH remote URL.",
     "crumbs": [
       "Fresh Ubuntu installation",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Software to install</span>"
@@ -571,135 +571,190 @@
     ]
   },
   {
-    "objectID": "latex/latex-guidelines.html",
-    "href": "latex/latex-guidelines.html",
-    "title": "Appendix D — Modern LaTeX guidelines",
+    "objectID": "Git/git-guidelines.html",
+    "href": "Git/git-guidelines.html",
+    "title": "Appendix D — Git and GitHub",
     "section": "",
-    "text": "D.1 Document structure\nModern LaTeX (and Quarto ↔︎ LaTeX) practice emphasises semantic markup, modular projects, and packages that stay maintainable (amsmath, cleveref, siunitx, clean .bib workflows, …).\nUseful references:\nFor Nature Methods-style manuscripts in this lab, prefer TikZ / vector figures for model DAGs and equation panels; keep Mermaid for README / vignettes unless you export a journal-ready figure. See also the scientific-writing rules in .cursorrules.\nFor theses and large papers use \\frontmatter, \\mainmatter, and \\backmatter, with a master file and modular folders:",
+    "text": "D.1 Git and GitHub setup\nThis appendix collects team recommendations and tutorials for git and GitHub. It complements the short setup notes in the software chapter.",
     "crumbs": [
       "Appendices",
-      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Git and GitHub</span>"
+    ]
+  },
+  {
+    "objectID": "Git/git-guidelines.html#sec-git-setup",
+    "href": "Git/git-guidelines.html#sec-git-setup",
+    "title": "Appendix D — Git and GitHub",
+    "section": "",
+    "text": "Figure D.1: Git general workflow\n\n\n\n\n\n\n\n\n\nFigure D.2: Recommended GitHub security and collaboration practices\n\n\n\n\nD.1.1 Accounts, authentication, and remotes\nGit works locally; GitHub (or GitLab, etc.) is a remote you sync with. For day-to-day work on this team:\n\nEnable two-factor authentication on GitHub (https://github.com/settings/security). Prefer a passkey or an authenticator app; avoid SMS as the only second factor (Figure D.2).\nChoose SSH (recommended) or HTTPS:\n\nSSH: ssh-keygen, add the public key under GitHub → Settings → SSH and GPG keys, then clone with a git@github.com:… URI.\nHTTPS: create a personal access token per machine (https://github.com/settings/tokens) with at least repo scope. Store it once; GitHub will not show it again.\n\nSet your identity (required for every commit):\n\n\n\nListing D.1: Global Git identity\n\n\ngit config --global user.name \"&lt;your-github-username&gt;\"\ngit config --global user.email \"&lt;your.email@example.org&gt;\"\n\n\n\nRecommended global options (edit ~/.gitconfig or use git config --global):\n\n\n\nListing D.2: Example ~/.gitconfig\n\n\n[user]\n  name = &lt;your-github-username&gt;\n  email = &lt;your.email@example.org&gt;\n[init]\n  defaultBranch = main\n[merge]\n  conflictstyle = zdiff3\n[rerere]\n  enabled = true\n[core]\n  autocrlf = input\n[tag]\n  sort = version:refname\n[branch]\n  sort = -committerdate\n[pull]\n  rebase = true\n[push]\n  autoSetupRemote = true\n\n\n\nconflictstyle = zdiff3 and rerere make conflict resolution easier; defaultBranch = main matches current forges; pull.rebase keeps history linear when you prefer rebase over merge commits.\nCredentials: for HTTPS, credential.helper store (persistent) or credential.helper 'cache --timeout=3600' (one hour). For SSH, use the SSH remote URL and an agent if you protect your key with a passphrase.\nOptional aliases (examples): st = status, co = checkout, br = branch, lg = log --oneline --graph.\n\nFuller background (configuration levels, aliases, environmental impact of large blobs) is in the formation notes: Download PDF file.Download formation Git 2024 (PDF).\n\n\nD.1.2 Starting a project\n\n\n\n\n\n\n\nSituation\nSteps\n\n\n\n\nExisting GitHub repo\ngit clone git@github.com:ORG/REPO.git\n\n\nLocal folder, new remote\ngit init → create empty repo on GitHub → git remote add origin … → git branch -M main → git add → git commit → git push -u origin main\n\n\n\nAfter cloning, git pull / git push keep you aligned with origin/main (or your tracked branch).",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Git and GitHub</span>"
+    ]
+  },
+  {
+    "objectID": "Git/git-guidelines.html#sec-git-commands",
+    "href": "Git/git-guidelines.html#sec-git-commands",
+    "title": "Appendix D — Git and GitHub",
+    "section": "D.2 Essential Git commands",
+    "text": "D.2 Essential Git commands\n\nD.2.1 Repository basics\nGit tracks snapshots of files. A repository is a folder containing a hidden .git directory.\n\n\n\nListing D.3: Create a repository\n\n\nmkdir my-project && cd my-project\ngit init\ngit status\n\n\n\n\n\nD.2.2 The three states\nWorking tree  →  staging (index)  →  repository (commits)\n  modified          staged              committed\n\n\n\n\n\n\n\nGoal\nCommand\n\n\n\n\nStage changes\ngit add &lt;file&gt; or git add .\n\n\nCommit\ngit commit -m \"Short, informative message\"\n\n\nInspect\ngit status, git diff, git log --oneline --graph\n\n\nSync remote\ngit pull then git push (same branch name when possible)\n\n\n\n\n\nD.2.3 Branches\nUse branches for features, fixes, and experiments so main stays stable.\n\n\n\nListing D.4: Branch workflow\n\n\ngit branch feature-x\ngit switch feature-x    # or: git checkout -b feature-x\n# … edit, add, commit …\ngit switch main\ngit merge feature-x\n\n\n\nRebase replays your branch on top of another tip (linear history); merge joins histories (may create a merge commit). After git rebase main on a feature branch, fast-forward main with git merge feature-x when appropriate.\n\n\nD.2.4 Undoing work\n\n\n\n\n\n\n\nSituation\nSafe approach\n\n\n\n\nNot committed, discard file changes\ngit restore &lt;file&gt;\n\n\nStaged, unstage\ngit restore --staged &lt;file&gt;\n\n\nLast commit, keep changes\ngit reset --soft HEAD~1\n\n\nLast commit, discard locally (unpushed)\ngit reset --hard HEAD~1 (destructive)\n\n\nUndo on a shared branch\ngit revert &lt;commit&gt; (new commit)\n\n\n\nStash uncommitted work before risky operations: git stash → … → git stash pop.\n\n\nD.2.5 Quick reference (cheat sheet)\n\nDownload PDF file.Download GitKraken cheat sheet (PDF)\n\nCommand tables and workflows (stash, interactive rebase, bare backup repos) are summarised in: Download PDF file.Download Git basic commands (PDF).",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Git and GitHub</span>"
+    ]
+  },
+  {
+    "objectID": "Git/git-guidelines.html#sec-github-resources",
+    "href": "Git/git-guidelines.html#sec-github-resources",
+    "title": "Appendix D — Git and GitHub",
+    "section": "D.3 GitHub resources",
+    "text": "D.3 GitHub resources\nBenjamin Loire’s user guide covers the forge UI and daily Git commands in one place: Download PDF file.Download Git user guide (PDF).\n\nD.3.1 Repository page\n\nBranches — switch the tree you browse on the website.\nCode — SSH clone URL (prefer SSH over HTTPS when using keys).\nCommits — full history of the current branch.\nIssues — bugs, questions, tasks; use labels (bug, enhancement, question) and assignees to coordinate.\nPull requests — propose merging a branch; reviewers comment on Files changed; merge via merge commit, squash, or rebase.\nActions — CI/CD (tests, site builds); see this book’s workflow as an example.\nProjects / Settings — planning boards and repository configuration.\n\n\n\nD.3.2 Pull requests and issues\nLink issues with #123. Closing keywords in a PR description (fixes #42, closes #42, …) can auto-close issues when the PR merges.\n\n\nD.3.3 Troubleshooting\n\n\n\n\n\n\n\nProblem\nWhat to try\n\n\n\n\npush rejected\ngit pull --rebase (or merge), resolve conflicts, push again\n\n\nCannot switch branch\nCommit, stash, or discard local changes first\n\n\nLost commit after reset\ngit reflog, then git reset --hard HEAD@{n} to recover",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Git and GitHub</span>"
+    ]
+  },
+  {
+    "objectID": "Git/git-guidelines.html#sec-git-advanced",
+    "href": "Git/git-guidelines.html#sec-git-advanced",
+    "title": "Appendix D — Git and GitHub",
+    "section": "D.4 Advanced topics",
+    "text": "D.4 Advanced topics\n\nD.4.1 Formation slides\nSlides from the team Git training (French): Download PDF file.\n\n\nD.4.2 Exercise solutions\nWork through the exercises in the slides, then open each solution below (commands assume a GitLab training repo; on GitHub, replace the host in clone URLs).\n\nClone Rumengol/formation_M4DI_2024 (GitLab) with SSH or HTTPS. This creates formation_M4DI_2024 on main, downloads files at the latest commit, and keeps full history. Explore commits and remote branches (git branch -r). Compare feature_1 and feat_revcomp: one branch history is cleaner than the other.\ngit clone git@gitlab.com:Rumengol/formation_M4DI_2024.git\ncd formation_M4DI_2024\ngit log --oneline --graph --all\n\n\nCheck out the feature branch, rebase onto main, then fast-forward main (linear history).\ngit checkout feat_revcomp\ngit rebase main\ngit checkout main\ngit merge feat_revcomp   # fast-forward\nAfter rebase, commit hashes on the feature branch change; use branch names or HEAD~n, not old SHAs.\n\n\nCheck out feature_1 locally, return to main, merge (creates a merge commit with two parents).\ngit checkout feature_1\ngit checkout main\ngit merge feature_1\nUse git log --graph and git diff to compare branch quality. Parent operators: HEAD^1 / HEAD^2 for merge parents; HEAD~n walks the first-parent line only.\n\n\nIdentify the commit (message may not mention the rename — write exhaustive commit messages). Revert that commit; Git opens an editor for the revert message.\ngit revert 50db10d\nFor a merge commit, use -m 1 to choose which parent to keep, e.g. git revert 6e9f520 -m 1.\n\n\nTo drop the last two commits and uncommitted work on tracked files, stash or commit first, then:\ngit reset --hard HEAD~2\n--hard is destructive for the working tree; only use when you are sure nothing important is unstaged.\n\n\nIf a reset was a mistake, find the old tip in the reflog and reset back:\ngit reflog\ngit reset --hard HEAD@{1}\nCommits that left git log may still appear in reflog for a while.\n\nFull walkthrough (French): Download PDF file.Download exercise solutions (PDF).\n\n\nD.4.3 Rewriting history and git revert\ngit reset moves branch pointers and can rewrite local history; git revert is the safe choice on shared branches because it adds a new commit that undoes an earlier one.\n\n\n\n\n\n\nFigure D.3: git revert looks straightforward until it throws a conflict. Here is why that happens (ByteByteGo).\n\n\n\nWhat git revert does: unlike reset, revert does not rewrite history. It creates a new commit that undoes the changes from an earlier one. History stays traceable and safe for shared branches.\nWhy revert conflicts happen: a later commit changed the same lines as the commit you are undoing.\nExample (Figure D.3):\n\nCommit C2 added a feature.\nCommit C3 changed those same lines.\nReverting C2 collides with C3; Git cannot guess the correct text, so you get a revert conflict.\n\nHow to resolve:\n\nRun git revert C2.\nGit pauses at the conflict.\nEdit the file, remove conflict markers.\ngit add the file.\ngit revert --continue.\n\nGit then records a new commit that undoes C2 while keeping C3 intact.\nFurther reading: internal model (git add / objects), git reset soft/mixed/hard, fetch vs pull, and team practices — see Download PDF file. and the embedded guides above.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Git and GitHub</span>"
+    ]
+  },
+  {
+    "objectID": "latex/latex-guidelines.html",
+    "href": "latex/latex-guidelines.html",
+    "title": "Appendix E — Modern LaTeX guidelines",
+    "section": "",
+    "text": "E.1 Document structure\nModern LaTeX (and Quarto ↔︎ LaTeX) practice emphasises semantic markup, modular projects, and packages that stay maintainable (amsmath, cleveref, siunitx, clean .bib workflows, …).\nUseful references:\nFor Nature Methods-style manuscripts in this lab, prefer TikZ / vector figures for model DAGs and equation panels; keep Mermaid for README / vignettes unless you export a journal-ready figure. See also the scientific-writing rules in .cursorrules.\nFor theses and large papers use \\frontmatter, \\mainmatter, and \\backmatter, with a master file and modular folders:",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>E</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
     ]
   },
   {
     "objectID": "latex/latex-guidelines.html#sec-latex-structure",
     "href": "latex/latex-guidelines.html#sec-latex-structure",
-    "title": "Appendix D — Modern LaTeX guidelines",
+    "title": "Appendix E — Modern LaTeX guidelines",
     "section": "",
     "text": "project/\n├── main.tex\n├── preamble/\n├── chapters/\n├── figures/\n├── bibliography/\n└── appendices/\n\n\\include{...} for chapters; \\input{...} for preamble snippets.\n\\includeonly{...} while debugging to compile a subset of chapters.",
     "crumbs": [
       "Appendices",
-      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
+      "<span class='chapter-number'>E</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
     ]
   },
   {
     "objectID": "latex/latex-guidelines.html#sec-latex-spacing",
     "href": "latex/latex-guidelines.html#sec-latex-spacing",
-    "title": "Appendix D — Modern LaTeX guidelines",
-    "section": "D.2 Spacing and paragraphs",
-    "text": "D.2 Spacing and paragraphs\nPrefer semantic spacing (\\medskip, \\bigskip) or a global \\setlength{\\parskip}{1ex} over scattered \\\\. Set \\setlength{\\parindent}{1em} (or local \\noindent) rather than absolute hacks when relative lengths suffice.",
+    "title": "Appendix E — Modern LaTeX guidelines",
+    "section": "E.2 Spacing and paragraphs",
+    "text": "E.2 Spacing and paragraphs\nPrefer semantic spacing (\\medskip, \\bigskip) or a global \\setlength{\\parskip}{1ex} over scattered \\\\. Set \\setlength{\\parindent}{1em} (or local \\noindent) rather than absolute hacks when relative lengths suffice.",
     "crumbs": [
       "Appendices",
-      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
+      "<span class='chapter-number'>E</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
     ]
   },
   {
     "objectID": "latex/latex-guidelines.html#sec-latex-math",
     "href": "latex/latex-guidelines.html#sec-latex-math",
-    "title": "Appendix D — Modern LaTeX guidelines",
-    "section": "D.3 Mathematical typesetting",
-    "text": "D.3 Mathematical typesetting\nAvoid $$ ... $$ in pure LaTeX documents. Prefer amsmath environments: equation, align, split, multline, gather, cases. Do not use obsolete eqnarray, or array merely to fake multiline displays.\nOperators: never fake them with \\text{var}(X). Use \\operatorname{var}(X) or declare them globally:\n\\DeclareMathOperator{\\cov}{cov}\n\\DeclareMathOperator{\\cor}{cor}\n\\DeclareMathOperator{\\varop}{var}\nMulti-character identifiers: \\mathit{Delta} / \\mathrm{Delta}. Descriptive subscripts upright: x_{\\mathrm{max}}. Split long lines with align and indentation; stack indices with \\substack. Upright Greek where appropriate via upgreek.",
+    "title": "Appendix E — Modern LaTeX guidelines",
+    "section": "E.3 Mathematical typesetting",
+    "text": "E.3 Mathematical typesetting\nAvoid $$ ... $$ in pure LaTeX documents. Prefer amsmath environments: equation, align, split, multline, gather, cases. Do not use obsolete eqnarray, or array merely to fake multiline displays.\nOperators: never fake them with \\text{var}(X). Use \\operatorname{var}(X) or declare them globally:\n\\DeclareMathOperator{\\cov}{cov}\n\\DeclareMathOperator{\\cor}{cor}\n\\DeclareMathOperator{\\varop}{var}\nMulti-character identifiers: \\mathit{Delta} / \\mathrm{Delta}. Descriptive subscripts upright: x_{\\mathrm{max}}. Split long lines with align and indentation; stack indices with \\substack. Upright Greek where appropriate via upgreek.",
     "crumbs": [
       "Appendices",
-      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
+      "<span class='chapter-number'>E</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
     ]
   },
   {
     "objectID": "latex/latex-guidelines.html#sec-latex-text",
     "href": "latex/latex-guidelines.html#sec-latex-text",
-    "title": "Appendix D — Modern LaTeX guidelines",
-    "section": "D.4 Text formatting",
-    "text": "D.4 Text formatting\n\n\n\nDeprecated\nPreferred\n\n\n\n\n\\bf\n\\textbf{}\n\n\n\\it\n\\textit{}\n\n\n\\em\n\\emph{}\n\n\n\nSmall caps: \\textsc{sql}. Typography: --- (em dash), -- (en dash); place footnotes after punctuation; emphasise with \\emph{}.",
+    "title": "Appendix E — Modern LaTeX guidelines",
+    "section": "E.4 Text formatting",
+    "text": "E.4 Text formatting\n\n\n\nDeprecated\nPreferred\n\n\n\n\n\\bf\n\\textbf{}\n\n\n\\it\n\\textit{}\n\n\n\\em\n\\emph{}\n\n\n\nSmall caps: \\textsc{sql}. Typography: --- (em dash), -- (en dash); place footnotes after punctuation; emphasise with \\emph{}.",
     "crumbs": [
       "Appendices",
-      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
+      "<span class='chapter-number'>E</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
     ]
   },
   {
     "objectID": "latex/latex-guidelines.html#sec-latex-floats",
     "href": "latex/latex-guidelines.html#sec-latex-floats",
-    "title": "Appendix D — Modern LaTeX guidelines",
-    "section": "D.5 Figures and tables",
-    "text": "D.5 Figures and tables\nPrefer float placement [tbp] over aggressive [h!] / [H]. Inside floats use \\centering, not a nested center environment. Captions: caption with singlelinecheck=off when lists appear in captions.\nTables: booktabs, longtable, tabularx. See also Generating better LaTeX tables and LaTeX Tables generator. In Quarto / HTML workflows, kableExtra / paged tables are often enough.",
+    "title": "Appendix E — Modern LaTeX guidelines",
+    "section": "E.5 Figures and tables",
+    "text": "E.5 Figures and tables\nPrefer float placement [tbp] over aggressive [h!] / [H]. Inside floats use \\centering, not a nested center environment. Captions: caption with singlelinecheck=off when lists appear in captions.\nTables: booktabs, longtable, tabularx. See also Generating better LaTeX tables and LaTeX Tables generator. In Quarto / HTML workflows, kableExtra / paged tables are often enough.",
     "crumbs": [
       "Appendices",
-      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
+      "<span class='chapter-number'>E</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
     ]
   },
   {
     "objectID": "latex/latex-guidelines.html#sec-latex-bib",
     "href": "latex/latex-guidelines.html#sec-latex-bib",
-    "title": "Appendix D — Modern LaTeX guidelines",
-    "section": "D.6 Bibliography and citations",
-    "text": "D.6 Bibliography and citations\nPrefer a clean .bib maintained from Zotero + Better BibTeX (see the software chapter) and Quarto / Pandoc citation syntax in teaching materials. For classic LaTeX manuscripts, stick to a simple BibTeX / natbib workflow — keep the bibliography file hygienic (allowed fields only) and validate with tools such as BibTeX Tidy and DBLP.\nUse csquotes and \\enquote{...} for quotations. Page-aware cites remain useful (\\cite[p.~8]{LR89} or the equivalent in your chosen package).",
+    "title": "Appendix E — Modern LaTeX guidelines",
+    "section": "E.6 Bibliography and citations",
+    "text": "E.6 Bibliography and citations\nPrefer a clean .bib maintained from Zotero + Better BibTeX (see the software chapter) and Quarto / Pandoc citation syntax in teaching materials. For classic LaTeX manuscripts, stick to a simple BibTeX / natbib workflow — keep the bibliography file hygienic (allowed fields only) and validate with tools such as BibTeX Tidy and DBLP.\nUse csquotes and \\enquote{...} for quotations. Page-aware cites remain useful (\\cite[p.~8]{LR89} or the equivalent in your chosen package).",
     "crumbs": [
       "Appendices",
-      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
+      "<span class='chapter-number'>E</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
     ]
   },
   {
     "objectID": "latex/latex-guidelines.html#sec-latex-xref",
     "href": "latex/latex-guidelines.html#sec-latex-xref",
-    "title": "Appendix D — Modern LaTeX guidelines",
-    "section": "D.7 Cross-references",
-    "text": "D.7 Cross-references\n\\usepackage{cleveref}\nPrefer \\cref{eq:model} / \\Cref{...} / \\crefrange{...} over manual Eq.~(\\ref{...}).",
+    "title": "Appendix E — Modern LaTeX guidelines",
+    "section": "E.7 Cross-references",
+    "text": "E.7 Cross-references\n\\usepackage{cleveref}\nPrefer \\cref{eq:model} / \\Cref{...} / \\crefrange{...} over manual Eq.~(\\ref{...}).",
     "crumbs": [
       "Appendices",
-      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
+      "<span class='chapter-number'>E</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
     ]
   },
   {
     "objectID": "latex/latex-guidelines.html#sec-latex-lists",
     "href": "latex/latex-guidelines.html#sec-latex-lists",
-    "title": "Appendix D — Modern LaTeX guidelines",
-    "section": "D.8 Lists",
-    "text": "D.8 Lists\n\\usepackage{enumitem}\n\\begin{enumerate}[label=(\\alph*)]",
+    "title": "Appendix E — Modern LaTeX guidelines",
+    "section": "E.8 Lists",
+    "text": "E.8 Lists\n\\usepackage{enumitem}\n\\begin{enumerate}[label=(\\alph*)]",
     "crumbs": [
       "Appendices",
-      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
+      "<span class='chapter-number'>E</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
     ]
   },
   {
     "objectID": "latex/latex-guidelines.html#sec-latex-packages",
     "href": "latex/latex-guidelines.html#sec-latex-packages",
-    "title": "Appendix D — Modern LaTeX guidelines",
-    "section": "D.9 Recommended packages",
-    "text": "D.9 Recommended packages\n\n\n\n\n\n\n\nDomain\nPackages\n\n\n\n\nMathematics\namsmath, amssymb, mathtools (+ systeme / domain packs if needed)\n\n\nTheorems\namsthm or ntheorem; boxes via tcolorbox / mdframed\n\n\nUnits\nsiunitx (\\num{1e6}, \\unit{\\micro\\meter}, …)\n\n\nGraphics\ntikz, pgfplots (and TikZ for Nature Methods DAGs)\n\n\nCode\nlistings or minted (needs Pygments)",
+    "title": "Appendix E — Modern LaTeX guidelines",
+    "section": "E.9 Recommended packages",
+    "text": "E.9 Recommended packages\n\n\n\n\n\n\n\nDomain\nPackages\n\n\n\n\nMathematics\namsmath, amssymb, mathtools (+ systeme / domain packs if needed)\n\n\nTheorems\namsthm or ntheorem; boxes via tcolorbox / mdframed\n\n\nUnits\nsiunitx (\\num{1e6}, \\unit{\\micro\\meter}, …)\n\n\nGraphics\ntikz, pgfplots (and TikZ for Nature Methods DAGs)\n\n\nCode\nlistings or minted (needs Pygments)",
     "crumbs": [
       "Appendices",
-      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
+      "<span class='chapter-number'>E</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
     ]
   },
   {
     "objectID": "latex/latex-guidelines.html#sec-latex-antipatterns",
     "href": "latex/latex-guidelines.html#sec-latex-antipatterns",
-    "title": "Appendix D — Modern LaTeX guidelines",
-    "section": "D.10 Anti-patterns",
-    "text": "D.10 Anti-patterns\nAvoid $$…$$ in classic LaTeX sources, eqnarray, decorative \\\\, deprecated font switches, hardcoded visual markup, and habitual [H] floats. Prefer semantic structure, modular files, modern packages, and Quarto-compatible syntax when the deliverable is a website or vignette.",
+    "title": "Appendix E — Modern LaTeX guidelines",
+    "section": "E.10 Anti-patterns",
+    "text": "E.10 Anti-patterns\nAvoid $$…$$ in classic LaTeX sources, eqnarray, decorative \\\\, deprecated font switches, hardcoded visual markup, and habitual [H] floats. Prefer semantic structure, modular files, modern packages, and Quarto-compatible syntax when the deliverable is a website or vignette.",
     "crumbs": [
       "Appendices",
-      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
+      "<span class='chapter-number'>E</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
     ]
   },
   {
     "objectID": "latex/latex-guidelines.html#sec-latex-quarto",
     "href": "latex/latex-guidelines.html#sec-latex-quarto",
-    "title": "Appendix D — Modern LaTeX guidelines",
-    "section": "D.11 Quarto ↔︎ LaTeX mapping",
-    "text": "D.11 Quarto ↔︎ LaTeX mapping\n\n\n\nLaTeX\nQuarto / Markdown\n\n\n\n\n\\citep{Smith2020}\n[@Smith2020]\n\n\n\\citet{Smith2020}\n@Smith2020\n\n\n\\( x + y \\)\n$x + y$\n\n\nnumbered display math\n$$ ... $$ {#eq-square} then @eq-square\n\n\n\\section{Introduction}\n# Introduction\n\n\n\\href{URL}{Text}\n[Text](URL)\n\n\n\\url{URL}\n&lt;URL&gt;\n\n\n\\textit / \\textbf\n*…* / **…**\n\n\n\\footnote{…}\n^[…] or [^id]\n\n\nfigure / table refs\n@fig-… / @tbl-…",
+    "title": "Appendix E — Modern LaTeX guidelines",
+    "section": "E.11 Quarto ↔︎ LaTeX mapping",
+    "text": "E.11 Quarto ↔︎ LaTeX mapping\n\n\n\nLaTeX\nQuarto / Markdown\n\n\n\n\n\\citep{Smith2020}\n[@Smith2020]\n\n\n\\citet{Smith2020}\n@Smith2020\n\n\n\\( x + y \\)\n$x + y$\n\n\nnumbered display math\n$$ ... $$ {#eq-square} then @eq-square\n\n\n\\section{Introduction}\n# Introduction\n\n\n\\href{URL}{Text}\n[Text](URL)\n\n\n\\url{URL}\n&lt;URL&gt;\n\n\n\\textit / \\textbf\n*…* / **…**\n\n\n\\footnote{…}\n^[…] or [^id]\n\n\nfigure / table refs\n@fig-… / @tbl-…",
     "crumbs": [
       "Appendices",
-      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
+      "<span class='chapter-number'>E</span>  <span class='chapter-title'>Modern LaTeX guidelines</span>"
     ]
   }
 ]
